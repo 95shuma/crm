@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
@@ -60,14 +61,17 @@ public class Patient {
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column
-    private Long role_id;
+    @OneToMany
+    private Set<Role> role_id;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column
-    private Long registration_place_id;
+    @OneToMany
+    private Set<RegistrationPlace> registration_place_id;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column
-    private Long hospital_id;
+    @OneToMany
+    private Set<Hospital> hospital_id;
 
 }

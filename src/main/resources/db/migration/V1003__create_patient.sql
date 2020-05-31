@@ -1,5 +1,5 @@
 CREATE TABLE `patients` (
-                            id BIGINT NOT NULL PRIMARY KEY,
+                            id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
                            `inn` VARCHAR(64) NOT NULL,
                            `password` VARCHAR(64) NOT NULL,
                            `document_number` VARCHAR(64) NOT NULL,
