@@ -1,5 +1,5 @@
 CREATE TABLE `patients` (
-                           `id` LONG AUTO_INCREMENT NOT NULL PRIMARY KEY,
+                            id BIGINT NOT NULL PRIMARY KEY,
                            `inn` VARCHAR(64) NOT NULL,
                            `password` VARCHAR(64) NOT NULL,
                            `document_number` VARCHAR(64) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE `patients` (
                            `surname` VARCHAR(64) NOT NULL,
                            `middle_name` VARCHAR(64) NOT NULL,
                            `birth_date` DATE NOT NULL,
-                           `gender` INT NOT NULL,
+                           `gender` VARCHAR(64) NOT NULL,
                            `role_id` LONG NOT NULL,
                            `registration_place_id` LONG NOT NULL,
                            `hospital_id` LONG NOT NULL
