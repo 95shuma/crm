@@ -1,13 +1,18 @@
 package com.project.crm.backend.model.catalog;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.*;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Set;
 
+@Data
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@Entity
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,4 +71,7 @@ public class Doctor {
     @NotBlank(message = "Обязательное поле")
     @Column
     private Long position_id;
+
+    @OneToMany(mappedBy = "doctor")
+    Set<Journal> journals;
 }

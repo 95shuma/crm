@@ -74,4 +74,6 @@ public class Patient {
     @OneToMany
     private Set<Hospital> hospital_id;
 
+    @OneToMany(mappedBy = "patient")
+    Set<Journal> journals;
 }
