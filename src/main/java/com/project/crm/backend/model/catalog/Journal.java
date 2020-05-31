@@ -1,5 +1,7 @@
 package com.project.crm.backend.model.catalog;
 
+import com.project.crm.backend.model.Doctor;
+import com.project.crm.backend.model.Patient;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,5 +1,9 @@
-package com.project.crm.backend.model.catalog;
+package com.project.crm.backend.model;
 
+import com.project.crm.backend.model.catalog.Hospital;
+import com.project.crm.backend.model.catalog.Journal;
+import com.project.crm.backend.model.catalog.RegistrationPlace;
+import com.project.crm.backend.model.catalog.Role;
 import lombok.*;
 
 import javax.persistence.*;
