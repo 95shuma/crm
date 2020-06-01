@@ -1,0 +1,6 @@
+CREATE TABLE hospitals (
+  id BIGINT NOT NULL,
+  name VARCHAR(256) NOT NULL,
+  address VARCHAR(256) NOT NULL,
+  PRIMARY KEY (id)
+);
