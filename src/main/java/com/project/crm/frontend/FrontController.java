@@ -1,30 +1,25 @@
 package com.project.crm.frontend;
 
-import com.project.crm.backend.repository.DoctorRepo;
-import com.project.crm.backend.repository.PatientRepo;
+import com.project.crm.backend.services.AdministratorService;
+import com.project.crm.backend.services.DoctorService;
+import com.project.crm.backend.services.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.security.Principal;
 
 @Controller
 @RequestMapping
 @AllArgsConstructor
 public class FrontController {
-    private final PatientRepo patientRepo;
-    private final DoctorRepo doctorRepo;
+    private final AdministratorService administratorService;
+    private final DoctorService doctorService;
+    private final PatientService patientService;
 
     @GetMapping("/login")
     public String loginPage(Model model, @RequestParam(required = false, defaultValue = "false") Boolean error, Principal principal) {
-
         model.addAttribute("error", error);
-        if (principal != null){
-            var user = patientRepo.getOne(Long.parseLong(principal.getName()));
-        }
         return "login";
     }
     @GetMapping("/default")
@@ -32,7 +27,9 @@ public class FrontController {
         model.addAttribute("error", error);
         if(principal != null){
             model.addAttribute("isLoggedIn", true);
-            if (doctorRepo.existsByInn(principal.getName())){
+            if (administratorService.existByInn(principal.getName())){
+                return "redirect:/admin";
+            } else if (doctorService.existByInn(principal.getName())){
                 return "redirect:/doctor";
             } else {
                 return "redirect:/patient";
@@ -40,24 +37,5 @@ public class FrontController {
         } else {
             return "redirect:/login";
         }
-    }
-
-    @GetMapping("/patient")
-    public String prPage(Model model, @RequestParam(required = false, defaultValue = "false") Boolean error, Principal principal) {
-
-        model.addAttribute("error", error);
-        if (principal != null){
-            var user = patientRepo.getOne(Long.parseLong(principal.getName()));
-        }
-        return "patient";
-    }
-    @GetMapping("/doctor")
-    public String dctPage(Model model, @RequestParam(required = false, defaultValue = "false") Boolean error, Principal principal) {
-
-        model.addAttribute("error", error);
-        if (principal != null){
-            var user = patientRepo.getOne(Long.parseLong(principal.getName()));
-        }
-        return "doctor";
     }
 }

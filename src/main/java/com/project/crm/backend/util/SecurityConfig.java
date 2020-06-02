@@ -47,6 +47,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // Войти как администратор ЛПУ
+        String fetchAdminsQuery = "select inn, password, enabled"
+                + " from admins"
+                + " where inn = ?";
+
+        String fetchRolesQuery3 = "select a1.inn, a2.name"
+                + " from admins a1, roles a2"
+                + " where a1.role_id = a2.id"
+                + " and a1.inn = ?";
+
+        auth.jdbcAuthentication()
+                .usersByUsernameQuery(fetchAdminsQuery)
+                .authoritiesByUsernameQuery(fetchRolesQuery3)
+                .dataSource(dataSource);
         // Войти как доктор
         String fetchDoctorsQuery = "select inn, password, enabled"
                 + " from doctor"
