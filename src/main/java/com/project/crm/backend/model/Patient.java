@@ -80,4 +80,8 @@ public class Patient {
 
     @OneToMany(mappedBy = "patient")
     Set<Journal> journals;
+
+    @Column
+    @Builder.Default
+    private boolean enabled = true;
 }

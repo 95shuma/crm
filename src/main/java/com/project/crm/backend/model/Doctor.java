@@ -79,4 +79,8 @@ public class Doctor {
 
     @OneToMany(mappedBy = "doctor")
     Set<Journal> journals;
+
+    @Column
+    @Builder.Default
+    private boolean enabled = true;
 }
