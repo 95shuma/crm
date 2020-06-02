@@ -1,6 +1,6 @@
 package com.project.crm.backend.model;
 
-import com.project.crm.backend.model.catalog.Journal;
+import com.project.crm.backend.model.catalog.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -59,19 +59,23 @@ public class Doctor {
 
     @NotBlank(message = "Обязательное поле")
     @Column
-    private Long role_id;
+    @OneToMany
+    private Set<Role> role_id;
 
     @NotBlank(message = "Обязательное поле")
     @Column
-    private Long registration_place_id;
+    @OneToMany
+    private Set<RegistrationPlace> registration_place_id;
 
     @NotBlank(message = "Обязательное поле")
     @Column
-    private Long hospital_id;
+    @OneToMany
+    private Set<Hospital> hospital_id;
 
     @NotBlank(message = "Обязательное поле")
     @Column
-    private Long position_id;
+    @OneToMany
+    private Set<Position> position_id;
 
     @OneToMany(mappedBy = "doctor")
     Set<Journal> journals;
