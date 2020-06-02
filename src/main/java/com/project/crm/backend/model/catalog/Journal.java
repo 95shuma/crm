@@ -22,9 +22,19 @@ public class Journal {
     @ManyToOne @JoinColumn(name= "patient_id")
     private Patient patient;
 
+    @ManyToOne @JoinColumn(name= "hospital_id")
+    private Hospital hospital;
+
     @ManyToOne @JoinColumn(name= "doctor_id")
     private Doctor doctor;
 
+    @ManyToOne @JoinColumn(name= "registrar_id")
+    private Doctor registrar;
+
+    @ManyToOne @JoinColumn(name= "registration_type_id")
+    private RegistrationType registrationType;
     @Column
     private LocalDateTime dateTime;
+    @Column
+    private String reason;
 }
