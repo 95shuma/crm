@@ -60,8 +60,11 @@ public class Administrator {
     private String gender;
 
     @NotBlank(message = "Это поле не должно быть пустым")
+    @OneToOne
+    private Role role;
+
     @Column
-    @OneToMany
-    private Set<Role> role_id;
+    @Builder.Default
+    private boolean enabled = true;
 
 }

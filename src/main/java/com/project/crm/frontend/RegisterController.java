@@ -1,5 +1,6 @@
 package com.project.crm.frontend;
 
+import com.project.crm.backend.model.Administrator;
 import com.project.crm.backend.model.Doctor;
 import com.project.crm.backend.model.Patient;
 import com.project.crm.backend.model.catalog.Hospital;
@@ -16,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -48,6 +50,11 @@ public class RegisterController {
     @Autowired
     private RoleRepo roleRepo;
 
+    @Autowired
+    private AdministratorRepo administratorRepo;
+
+    @Autowired RegionRepo regionRepo;
+
     @GetMapping("/doctorRegister")
     public String doctorRegisterPage(Model model){
 
@@ -75,6 +82,18 @@ public class RegisterController {
     @GetMapping("/adminHCF")
     public String adminHCFPage(Model model){
         return "adminHCF";
+    }
+
+    @GetMapping("/admin")
+    public String getAdmin(){ return "admin-page";}
+
+    @GetMapping("/admin/reg-admin-hospital")
+    public String regAdminHospital() {return "reg-admin-hospital";}
+
+    @GetMapping("/admin/reg-hospital")
+    public String regHospital(Model model){
+        model.addAttribute("regions",regionRepo.findAll());
+        return "reg-hospital";
     }
 
     @PostMapping("/doctorRegister")
@@ -134,6 +153,46 @@ public class RegisterController {
         patientRepo.save(patient);
 
         return "redirect:/";
+    }
+
+    @PostMapping("/admin/reg-admin-hospital")
+    public String addAdminHospital(@Valid AdminHospitalRegisterForm adminHospitalRegisterForm,
+                                   BindingResult validationResult,
+                                   RedirectAttributes attributes){
+        if (validationResult.hasFieldErrors()) {
+            attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
+            return "redirect:/admin/reg-admin-hospital";
+        }
+
+        Set<Role>roles = new HashSet<>();
+        roles.add(roleRepo.findRoleById(Long.parseLong(adminHospitalRegisterForm.getRole_id())));
+
+        var admin = Administrator.builder()
+                .inn(adminHospitalRegisterForm.getInn())
+                .password(encoder.encode(adminHospitalRegisterForm.getPassword()))
+                .document_number(adminHospitalRegisterForm.getDocument_number())
+                .full_name(adminHospitalRegisterForm.getSurname()+" "+adminHospitalRegisterForm.getName()+" "+adminHospitalRegisterForm.getMiddle_name())
+                .name(adminHospitalRegisterForm.getName())
+                .surname(adminHospitalRegisterForm.getSurname())
+                .middle_name(adminHospitalRegisterForm.getMiddle_name())
+                .birth_date(adminHospitalRegisterForm.getBirth_date())
+                .gender(adminHospitalRegisterForm.getGender())
+                .role(roleRepo.findRoleById(Long.parseLong(adminHospitalRegisterForm.getRole_id())))
+                .build();
+
+        administratorRepo.save(admin);
+
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/reg-hospital")
+    public String addHospital(@RequestParam("name") String name, @RequestParam("region_id") Long region_id){
+        Hospital hospital = Hospital.builder()
+                .name(name)
+                .region(regionRepo.findRegionById(region_id))
+                .build();
+        hospitalRepo.save(hospital);
+        return "redirect:/admin";
     }
 
 }
