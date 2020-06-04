@@ -8,13 +8,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Set;
 
 @Data
 @Entity
-@Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -63,20 +61,17 @@ public class Patient {
     @Column(length = 64)
     private String gender;
 
-    @NotBlank(message = "Это поле не должно быть пустым")
-    @Column
-    @OneToMany
-    private Set<Role> role_id;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    @NotBlank(message = "Это поле не должно быть пустым")
-    @Column
-    @OneToMany
-    private Set<RegistrationPlace> registration_place_id;
+    @ManyToOne
+    @JoinColumn(name = "registration_place_id")
+    private RegistrationPlace registrationPlace;
 
-    @NotBlank(message = "Это поле не должно быть пустым")
-    @Column
-    @OneToMany
-    private Set<Hospital> hospital_id;
+    @ManyToOne
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital;
 
     @OneToMany(mappedBy = "patient")
     Set<Journal> journals;

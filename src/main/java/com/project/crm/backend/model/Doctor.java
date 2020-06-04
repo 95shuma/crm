@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Set;
 
 @Data
@@ -58,24 +58,10 @@ public class Doctor {
     private String gender;
 
     @NotBlank(message = "Обязательное поле")
-    @Column
-    @OneToMany
-    private Set<Role> role_id;
+    @ManyToOne
+    @JoinColumn(name = "registration_place_id")
+    private RegistrationPlace registration_place_id;
 
-    @NotBlank(message = "Обязательное поле")
-    @Column
-    @OneToMany
-    private Set<RegistrationPlace> registration_place_id;
-
-    @NotBlank(message = "Обязательное поле")
-    @Column
-    @OneToMany
-    private Set<Hospital> hospital_id;
-
-    @NotBlank(message = "Обязательное поле")
-    @Column
-    @OneToMany
-    private Set<Position> position_id;
 
     @OneToMany(mappedBy = "doctor")
     Set<Journal> journals;
