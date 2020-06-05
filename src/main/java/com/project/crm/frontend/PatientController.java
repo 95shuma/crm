@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping
@@ -83,7 +84,13 @@ public class PatientController {
                 .build();
         journalRepo.save(journal);
 
-        return "redirect:/patientAppointment";
+        return "redirect:/patientAppointmentCheck";
 
+    }
+    @GetMapping("/patientAppointmentCheck")
+    public String patientAppointmentCheckPage(Model model){
+        UUID uuid = UUID.randomUUID();
+        model.addAttribute("random", uuid);
+        return "patientAppointmentCheck";
     }
 }

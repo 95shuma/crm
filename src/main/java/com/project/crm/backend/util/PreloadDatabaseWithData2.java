@@ -163,6 +163,7 @@ public class PreloadDatabaseWithData2 {
             registrationPlaceRepo.saveAll(hospital_doctor);*/
             //--<======================== hospital_doctor ========================
             //--<======================== hospitals ========================
+
             List <Hospital> hospitalList = new ArrayList<>();
             for (int i = 0; i < faker.number().numberBetween(30, 50); i++){
                 hospitalList.add(Hospital.builder()
