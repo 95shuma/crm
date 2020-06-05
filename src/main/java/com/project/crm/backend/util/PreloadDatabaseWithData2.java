@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
-public class PreloadDatabaseWithData {
+public class PreloadDatabaseWithData2 {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
