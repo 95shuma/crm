@@ -18,4 +18,6 @@ public class RegistrationPlace {
     private String name;
 
     private String code_place;
+
+    private int groupCode;
 }

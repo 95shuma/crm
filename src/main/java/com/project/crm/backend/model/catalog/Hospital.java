@@ -16,6 +16,8 @@ public class Hospital {
 
     private String name;
 
-    @OneToOne
-    private Region region;
+    @ManyToOne
+    private RegistrationPlace registrationPlace;
+
+    private String address;
 }

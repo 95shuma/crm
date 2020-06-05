@@ -60,7 +60,7 @@ public class Administrator {
     private String gender;
 
     @NotBlank(message = "Это поле не должно быть пустым")
-    @OneToOne
+    @ManyToOne
     private Role role;
 
     @Column

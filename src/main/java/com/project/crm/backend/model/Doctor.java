@@ -64,7 +64,7 @@ public class Doctor {
 
 
     @OneToMany(mappedBy = "doctor")
-    Set<Journal> journals;
+    private Set<Journal> journals;
 
     @Column
     @Builder.Default

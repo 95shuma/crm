@@ -53,7 +53,7 @@ public class RegisterController {
     @Autowired
     private AdministratorRepo administratorRepo;
 
-    @Autowired RegionRepo regionRepo;
+    //@Autowired RegionRepo regionRepo;
 
     @GetMapping("/doctorRegister")
     public String doctorRegisterPage(Model model){
@@ -90,11 +90,11 @@ public class RegisterController {
     @GetMapping("/admin/reg-admin-hospital")
     public String regAdminHospital() {return "reg-admin-hospital";}
 
-    @GetMapping("/admin/reg-hospital")
+  /*  @GetMapping("/admin/reg-hospital")
     public String regHospital(Model model){
         model.addAttribute("regions",regionRepo.findAll());
         return "reg-hospital";
-    }
+    }*/
 
     @PostMapping("/doctorRegister")
     public String doctorRegister(@Valid DoctorRegisterForm doctorRegisterForm,
@@ -185,7 +185,7 @@ public class RegisterController {
         return "redirect:/admin";
     }
 
-    @PostMapping("/admin/reg-hospital")
+  /*  @PostMapping("/admin/reg-hospital")
     public String addHospital(@RequestParam("name") String name, @RequestParam("region_id") Long region_id){
         Hospital hospital = Hospital.builder()
                 .name(name)
@@ -193,6 +193,6 @@ public class RegisterController {
                 .build();
         hospitalRepo.save(hospital);
         return "redirect:/admin";
-    }
+    }*/
 
 }
