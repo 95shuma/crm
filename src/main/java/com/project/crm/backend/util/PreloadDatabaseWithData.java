@@ -55,7 +55,6 @@ public class PreloadDatabaseWithData {
         patientRepo.findAll().stream().forEach(obj -> {
             innList.add(obj.getInn());
         });
-
         innList.stream().forEach(inn -> {
             if (inn.equals(newInn)){
                 makeNew.set(false);
@@ -69,12 +68,16 @@ public class PreloadDatabaseWithData {
     }
     //чтобы не было совпадений
     @Bean
-    CommandLineRunner fillDatabase(AdministratorRepo administratorRepo, DoctorRepo doctorRepo, PatientRepo patientRepo, RegistrationPlaceRepo registrationPlaceRepo, HospitalRepo hospitalRepo){
+    CommandLineRunner fillDatabase(AdministratorRepo administratorRepo, DoctorRepo doctorRepo,
+                                   PatientRepo patientRepo,             RegistrationPlaceRepo registrationPlaceRepo,
+                                   HospitalRepo hospitalRepo){
         return (args) -> {
             administratorRepo.deleteAll();
             doctorRepo.deleteAll();
             patientRepo.deleteAll();
+            hospitalRepo.deleteAll();
             registrationPlaceRepo.deleteAll();
+
 
             //--<======================== registration_places ========================
             List <RegistrationPlace> registrationPlaceList = new ArrayList<>();
@@ -148,7 +151,7 @@ public class PreloadDatabaseWithData {
             patientRepo.saveAll(patientList);
             //--<======================== Patient ========================
             //--<======================== hospital_doctor ========================
-            List <RegistrationPlace> hospital_doctor = new ArrayList<>();
+            /*List <RegistrationPlace> hospital_doctor = new ArrayList<>();
             for (int i = 0; i < faker.number().numberBetween(30, 50); i++){
                 registrationPlaceList.add(RegistrationPlace.builder()
                         .name(faker.address().fullAddress())
@@ -157,7 +160,7 @@ public class PreloadDatabaseWithData {
                         .build()
                 );
             }
-            registrationPlaceRepo.saveAll(registrationPlaceList);
+            registrationPlaceRepo.saveAll(hospital_doctor);*/
             //--<======================== hospital_doctor ========================
             //--<======================== hospitals ========================
             List <Hospital> hospitalList = new ArrayList<>();
