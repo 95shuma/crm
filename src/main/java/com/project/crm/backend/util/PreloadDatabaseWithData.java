@@ -85,7 +85,7 @@ public class PreloadDatabaseWithData {
                 registrationPlaceList.add(RegistrationPlace.builder()
                         .name(faker.address().fullAddress())
                         .code_place(faker.number().digits(14))
-                        .groupCode(0)
+                        .group_code(0)
                         .build()
                 );
             }
