@@ -6,24 +6,22 @@ import com.github.javafaker.service.RandomService;
 import com.project.crm.backend.model.Administrator;
 import com.project.crm.backend.model.Doctor;
 import com.project.crm.backend.model.Patient;
-import com.project.crm.backend.repository.AdministratorRepo;
-import com.project.crm.backend.repository.DoctorRepo;
-import com.project.crm.backend.repository.PatientRepo;
-import com.project.crm.backend.repository.RoleRepo;
-import org.apache.tomcat.jni.Local;
+import com.project.crm.backend.model.catalog.Hospital;
+import com.project.crm.backend.model.catalog.RegistrationPlace;
+import com.project.crm.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.print.Doc;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
@@ -34,7 +32,7 @@ public class PreloadDatabaseWithData {
     RoleRepo roleRepo;
 
     private static final Random rn = new Random();
-    private static final Faker faker = new Faker();
+    private static final Faker faker = new Faker(new Locale("ru"));
     private static final FakeValuesService fakeValuesService = new FakeValuesService(
             new Locale("en-GB"), new RandomService()
     );
@@ -44,13 +42,52 @@ public class PreloadDatabaseWithData {
         else
             return "female";
     }
+    private String returnUniqueINN(AdministratorRepo  administratorRepo, DoctorRepo doctorRepo, PatientRepo patientRepo){
+        List<String> innList = new ArrayList<>();
+        String newInn = faker.number().digits(14);
+        AtomicBoolean makeNew = new AtomicBoolean(true);
+        administratorRepo.findAll().stream().forEach(obj -> {
+            innList.add(obj.getInn());
+        });
+        doctorRepo.findAll().stream().forEach(obj -> {
+            innList.add(obj.getInn());
+        });
+        patientRepo.findAll().stream().forEach(obj -> {
+            innList.add(obj.getInn());
+        });
 
+        innList.stream().forEach(inn -> {
+            if (inn.equals(newInn)){
+                makeNew.set(false);
+            }
+        });
+        if (makeNew.get()){
+            return newInn;
+        } else {
+            return returnUniqueINN(administratorRepo, doctorRepo, patientRepo);
+        }
+    }
+    //чтобы не было совпадений
     @Bean
-    CommandLineRunner fillDatabase(AdministratorRepo administratorRepo, DoctorRepo doctorRepo, PatientRepo patientRepo){
+    CommandLineRunner fillDatabase(AdministratorRepo administratorRepo, DoctorRepo doctorRepo, PatientRepo patientRepo, RegistrationPlaceRepo registrationPlaceRepo, HospitalRepo hospitalRepo){
         return (args) -> {
             administratorRepo.deleteAll();
             doctorRepo.deleteAll();
             patientRepo.deleteAll();
+            registrationPlaceRepo.deleteAll();
+
+            //--<======================== registration_places ========================
+            List <RegistrationPlace> registrationPlaceList = new ArrayList<>();
+            for (int i = 0; i < faker.number().numberBetween(30, 50); i++){
+                registrationPlaceList.add(RegistrationPlace.builder()
+                        .name(faker.address().fullAddress())
+                        .code_place(faker.number().digits(14))
+                        .groupCode(0)
+                        .build()
+                );
+            }
+            registrationPlaceRepo.saveAll(registrationPlaceList);
+            //-->======================== registration_places ========================
             //--<======================== Admin ========================
             String[] adminName = {" ", faker.name().lastName(), faker.name().firstName(), faker.name().lastName()};
             administratorRepo.save(Administrator.builder()
@@ -70,33 +107,33 @@ public class PreloadDatabaseWithData {
             );
             //--<======================== Admin ========================
             //--<======================== Doctor ========================
-            /*List <Doctor> doctorList = new ArrayList<>();
-            for (int i = 0; i < faker.number().numberBetween(4,7); i++){
+            List <Doctor> doctorList = new ArrayList<>();
+            for (int i = 0; i < faker.number().numberBetween(15, 30); i++){
                 doctorList.add(Doctor.builder()
-                        .id(Long.parseLong("1"))
-                        .inn("admin")
-                        .password(passwordEncoder.encode("admin"))
+                        .inn(returnUniqueINN(administratorRepo, doctorRepo, patientRepo))
+                        .password(passwordEncoder.encode("123"))
                         .document_number(faker.lorem().fixedString(2).concat(faker.number().digits(7)))
                         .full_name(faker.name().fullName())
                         .surname(faker.name().lastName())
                         .name(faker.name().firstName())
                         .middle_name(faker.name().lastName())
                         .birth_date(faker.date().birthday())
-                        .gender("male")
+                        .gender(getRandomGender())
+                        .registration_place_id(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
                         .enabled(true)
                         .build()
                 );
             }
-
-            doctorRepo.saveAll(doctorList);*/
-            //--<======================== Doctor ========================
+            doctorRepo.saveAll(doctorList);
+            //-->======================== Doctor ========================
             //--<======================== Patient ========================
             List <Patient> patientList = new ArrayList<>();
-            for (int i = 0; i < faker.number().numberBetween(4,7); i++){
+            for (int i = 0; i < faker.number().numberBetween(10, 15); i++){
                 patientList.add(Patient.builder()
-                        .inn(faker.number().digits(14))
+                        .id(Long.parseLong("1"))
+                        .inn(returnUniqueINN(administratorRepo, doctorRepo, patientRepo))
                         .password(passwordEncoder.encode("123"))
-                        .document_number(faker.lorem().fixedString(2).concat(faker.number().digits(7)))
+                        .document_number("ID".concat(faker.number().digits(7)))
                         .full_name(faker.name().fullName())
                         .surname(faker.name().lastName())
                         .name(faker.name().firstName())
@@ -108,9 +145,33 @@ public class PreloadDatabaseWithData {
                         .build()
                 );
             }
-
             patientRepo.saveAll(patientList);
             //--<======================== Patient ========================
+            //--<======================== hospital_doctor ========================
+            List <RegistrationPlace> hospital_doctor = new ArrayList<>();
+            for (int i = 0; i < faker.number().numberBetween(30, 50); i++){
+                registrationPlaceList.add(RegistrationPlace.builder()
+                        .name(faker.address().fullAddress())
+                        .code_place(faker.number().digits(14))
+                        .groupCode(0)
+                        .build()
+                );
+            }
+            registrationPlaceRepo.saveAll(registrationPlaceList);
+            //--<======================== hospital_doctor ========================
+            //--<======================== hospitals ========================
+            List <Hospital> hospitalList = new ArrayList<>();
+            for (int i = 0; i < faker.number().numberBetween(30, 50); i++){
+                hospitalList.add(Hospital.builder()
+                        .name(faker.company().name())
+                        .registrationPlace(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
+                        .address(faker.address().streetAddress())
+                        .build()
+                );
+            }
+            hospitalRepo.saveAll(hospitalList);
+            //--<======================== hospitals ========================
+
         };
     }
 }
