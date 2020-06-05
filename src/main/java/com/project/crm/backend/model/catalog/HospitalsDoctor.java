@@ -26,7 +26,7 @@ public class HospitalsDoctor {
     @ManyToOne @JoinColumn(name= "doctor_id")
     private Doctor doctor;
 
-    @ManyToOne @JoinColumn(name= "registration_type_id")
+    @ManyToOne @JoinColumn(name= "position_id")
     private Position position;
 
     @ManyToOne @JoinColumn(name= "role_id")

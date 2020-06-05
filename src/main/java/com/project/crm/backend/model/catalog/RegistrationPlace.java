@@ -20,4 +20,5 @@ public class RegistrationPlace {
     private String code_place;
 
     private Integer group_code;
+
 }

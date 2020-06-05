@@ -143,7 +143,7 @@ public class PreloadDatabaseWithData {
                         .middle_name(faker.name().lastName())
                         .birth_date(faker.date().birthday())
                         .gender(getRandomGender())
-                        .role(roleRepo.findRoleById(Long.parseLong("3")))
+                        .role_id(roleRepo.findRoleById(Long.parseLong("3")))
                         .enabled(true)
                         .build()
                 );

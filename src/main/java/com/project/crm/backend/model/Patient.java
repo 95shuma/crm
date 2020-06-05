@@ -64,15 +64,15 @@ public class Patient {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role role;
+    private Role role_id;
 
     @ManyToOne
     @JoinColumn(name = "registration_place_id")
-    private RegistrationPlace registrationPlace;
+    private RegistrationPlace registration_place_id;
 
     @ManyToOne
     @JoinColumn(name = "hospital_id")
-    private Hospital hospital;
+    private Hospital hospital_id;
 
     @OneToMany(mappedBy = "patient")
     private Set<Journal> journals;

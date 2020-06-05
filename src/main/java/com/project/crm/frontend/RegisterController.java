@@ -61,7 +61,7 @@ public class RegisterController {
         List<RegistrationPlace> registrationPlaces = registrationPlaceRepo.findAll();
 
         if (!model.containsAttribute("reg")) {
-            model.addAttribute("reg", new PatientRegisterForm());
+            model.addAttribute("reg", new DoctorRegisterForm());
         }
         model.addAttribute("registrationPlaces", registrationPlaces);
         return "doctorRegister";
@@ -146,9 +146,9 @@ public class RegisterController {
                 .middle_name(patientRegisterForm.getMiddle_name())
                 .birth_date(patientRegisterForm.getBirth_date())
                 .gender(patientRegisterForm.getGender())
-                .hospital(hospitalRepo.findByName(patientRegisterForm.getHospital_id()))
-                .role(roleRepo.findByName("пациент"))
-                .registrationPlace(registrationPlaceRepo.findByName(patientRegisterForm.getRegistration_place_id()))
+                .hospital_id(hospitalRepo.findByName(patientRegisterForm.getHospital_id()))
+                .role_id(roleRepo.findByName("пациент"))
+                .registration_place_id(registrationPlaceRepo.findByName(patientRegisterForm.getRegistration_place_id()))
                 .build();
 
         patientRepo.save(patient);
