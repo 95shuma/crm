@@ -8,4 +8,6 @@ import java.util.Set;
 
 public interface RegistrationPlaceRepo extends JpaRepository<RegistrationPlace, Long> {
     RegistrationPlace findByName(String name);
+    RegistrationPlace findRegistrationPlaceById(Long id);
+    List<RegistrationPlace> findAll();
 }

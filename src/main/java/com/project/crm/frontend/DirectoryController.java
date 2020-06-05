@@ -80,10 +80,12 @@ public class DirectoryController {
         return "redirect:/admin/create-role";
     }
     @PostMapping("/admin/addPlace")
-    public String addPlace(@RequestParam("name") String name, @RequestParam("code_place") String code_place){
+    public String addPlace(@RequestParam("name") String name, @RequestParam("code_place") String code_place,
+                           @RequestParam("groupCode") Integer groupCode){
         RegistrationPlace registrationPlace = RegistrationPlace.builder()
                 .name(name)
                 .code_place(code_place)
+                .group_code(groupCode)
                 .build();
         registrationPlaceRepo.save(registrationPlace);
         return "redirect:/admin/create-reg-place";

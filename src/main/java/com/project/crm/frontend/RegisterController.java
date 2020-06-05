@@ -90,11 +90,12 @@ public class RegisterController {
     @GetMapping("/admin/reg-admin-hospital")
     public String regAdminHospital() {return "reg-admin-hospital";}
 
-  /*  @GetMapping("/admin/reg-hospital")
+    @GetMapping("/admin/reg-hospital")
     public String regHospital(Model model){
-        model.addAttribute("regions",regionRepo.findAll());
+        List<RegistrationPlace> registrationPlaces = registrationPlaceRepo.findAll();
+        model.addAttribute("places",registrationPlaces);
         return "reg-hospital";
-    }*/
+    }
 
     @PostMapping("/doctorRegister")
     public String doctorRegister(@Valid DoctorRegisterForm doctorRegisterForm,
@@ -185,14 +186,16 @@ public class RegisterController {
         return "redirect:/admin";
     }
 
-  /*  @PostMapping("/admin/reg-hospital")
-    public String addHospital(@RequestParam("name") String name, @RequestParam("region_id") Long region_id){
+    @PostMapping("/admin/reg-hospital")
+    public String addHospital(@RequestParam("name") String name, @RequestParam("place_id") Long place_id,
+                              @RequestParam("street") String street, @RequestParam("house_num") String house_num){
         Hospital hospital = Hospital.builder()
                 .name(name)
-                .region(regionRepo.findRegionById(region_id))
+                .registrationPlace(registrationPlaceRepo.findRegistrationPlaceById(place_id))
+                .address(street+" "+house_num)
                 .build();
         hospitalRepo.save(hospital);
         return "redirect:/admin";
-    }*/
+    }
 
 }

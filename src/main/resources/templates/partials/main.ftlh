@@ -1,5 +1,5 @@
 <#import "/spring.ftl" as spring>
-<#macro renderWith title="Online-shop" scripts=[] styles=[] categories=[] dir="ltr">
+<#macro renderWith title="Med - CRM" scripts=[] styles=[] categories=[] dir="ltr">
     <!doctype html>
     <html lang="${.locale}" dir="${dir}">
     <head>

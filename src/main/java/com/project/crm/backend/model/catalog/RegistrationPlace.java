@@ -19,5 +19,5 @@ public class RegistrationPlace {
 
     private String code_place;
 
-    private int groupCode;
+    private Integer group_code;
 }

@@ -44,6 +44,12 @@
                         </#if>
                         <p><input placeholder="Введите новое место" name="name"></p>
                         <p><input placeholder="Введите новый код" name="code_place"></p>
+                        <p><b>Выберите группу:</b></p>
+                        <p><input type="radio" name="groupCode" value="${'0'}"> Город/Село</p>
+                        <p><input type="radio" name="groupCode" value="${'1'}"> Страна</p>
+                        <p><input type="radio" name="groupCode" value="${'2'}"> Область</p>
+                        <p><input type="radio" name="groupCode" value="${'3'}"> Район</p>
+                        <p><input type="radio" name="groupCode" value="${'4'}"> Сельское управление </p>
                         <button type="submit">Добавить</button>
                     </form>
                 </div>

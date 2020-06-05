@@ -9,11 +9,13 @@
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
                     <p><input minlength="5" maxlength="45" type="text" name="name" placeholder="Название ЛПУ"></p>
-                    <p><select name="region_id">
-                            <#list regions as region>
-                                <option value="${region.id}">${region.name}</option>
+                    <p><select name="place_id">
+                            <#list places as place>
+                                <option value="${place.id}">${place.name}</option>
                             </#list>
                         </select></p>
+                    <p><input minlength="1" maxlength="45" type="text" name="street" placeholder="Название улицы"></p>
+                    <p><input minlength="1" maxlength="45" type="text" name="house_num" placeholder="Номер дома"></p>
                     <button type="submit">Добавить</button>
                 </form>
             </div>
