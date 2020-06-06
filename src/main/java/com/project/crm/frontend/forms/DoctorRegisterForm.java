@@ -1,4 +1,4 @@
-package com.project.crm.frontend;
+package com.project.crm.frontend.forms;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.sql.Date;
 
 @Getter
 @Setter
-public class AdminHospitalRegisterForm {
+public class DoctorRegisterForm {
 
     @NotBlank(message = "Обязательное поле")
     @Size(min = 14, message = "Требуется ввести 14 цифр")
@@ -21,6 +21,9 @@ public class AdminHospitalRegisterForm {
 
     @NotBlank(message = "Обязательное поле")
     private String document_number = "";
+
+    @NotBlank(message = "Обязательное поле")
+    private String full_name = "";
 
     @NotBlank(message = "Обязательное поле")
     private String name = "";
@@ -38,5 +41,6 @@ public class AdminHospitalRegisterForm {
     private String gender = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String role_id = "";
+    private String registration_place_id = "";
+
 }

@@ -1,13 +1,15 @@
-package com.project.crm.frontend;
+package com.project.crm.frontend.controller;
 
 import com.project.crm.backend.model.Administrator;
 import com.project.crm.backend.model.Doctor;
 import com.project.crm.backend.model.Patient;
 import com.project.crm.backend.model.catalog.Hospital;
-import com.project.crm.backend.model.catalog.Position;
 import com.project.crm.backend.model.catalog.RegistrationPlace;
 import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.*;
+import com.project.crm.frontend.forms.AdminHospitalRegisterForm;
+import com.project.crm.frontend.forms.DoctorRegisterForm;
+import com.project.crm.frontend.forms.PatientRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,11 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Controller

@@ -1,4 +1,4 @@
-package com.project.crm.frontend;
+package com.project.crm.frontend.controller;
 
 import com.project.crm.backend.model.catalog.Position;
 import com.project.crm.backend.model.catalog.RegistrationPlace;

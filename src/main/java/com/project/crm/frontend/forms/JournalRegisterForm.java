@@ -1,4 +1,4 @@
-package com.project.crm.frontend;
+package com.project.crm.frontend.forms;
 
 import lombok.Getter;
 import lombok.Setter;
