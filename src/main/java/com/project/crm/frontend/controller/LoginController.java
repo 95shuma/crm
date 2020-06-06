@@ -1,4 +1,4 @@
-package com.project.crm.frontend;
+package com.project.crm.frontend.controller;
 
 import com.project.crm.backend.services.AdministratorService;
 import com.project.crm.backend.services.DoctorService;
