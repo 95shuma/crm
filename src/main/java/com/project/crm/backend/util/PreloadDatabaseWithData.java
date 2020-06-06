@@ -1,8 +1,6 @@
 package com.project.crm.backend.util;
 
 import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
 import com.project.crm.backend.model.Administrator;
 import com.project.crm.backend.model.Doctor;
 import com.project.crm.backend.model.Patient;
@@ -12,17 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -92,6 +86,7 @@ public class PreloadDatabaseWithData {
             registrationPlaceRepo.deleteAll();
             registrationTypeRepo.deleteAll();
             roleRepo.deleteAll();
+            positionRepo.deleteAll();
 
             int qty = rn.nextInt(30)+10;
 
@@ -124,7 +119,7 @@ public class PreloadDatabaseWithData {
             //-->======================== roles ========================
             //--<======================== hospitals ========================
             List <Hospital> hospitalList = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
+            for (int i = 0; i < 5; i++){
                 hospitalList.add(Hospital.builder()
                         .name(faker.company().name())
                         .registrationPlace(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
@@ -137,19 +132,16 @@ public class PreloadDatabaseWithData {
             //--<======================== positions ========================
             List <Position> positionList = new ArrayList<>();
             String[] positions = {"терапевт", "кардиолог", "лор", "детский врач", "офтальмолог"};
-            for (String position: positions){
-                positionList.add(Position.builder()
-                        .name(position)
-                        .build()
-                );
+            for (int i=0; i<positions.length; i++){
+                positionRepo.insertPositionWithId(Long.parseLong(Integer.toString(i+1)), positions[i]);
             }
-            for (int i = 0; i < qty; i++){
+            /*for (int i=0; i<qty; i++){
                 positionList.add(Position.builder()
                         .name(faker.job().position())
                         .build()
                 );
             }
-            positionRepo.saveAll(positionList);
+            positionRepo.saveAll(positionList);*/
             //-->======================== positions ========================
             //--------------------------------------------------- Справочники ---------------------------------------------------
             //--<======================== Admin ========================
@@ -172,7 +164,7 @@ public class PreloadDatabaseWithData {
             //-->======================== Admin ========================
             //--<======================== Doctor ========================
             List <Doctor> doctorList = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
+            for (int i = 0; i < (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9)); i++){           //Каждому ЛПУ нужен один Админ ЛПУ, //Каждому ЛПУ нужно 5 медработников, //Каждому ЛПУ нужно 9 врачей
                 doctorList.add(Doctor.builder()
                         .inn(returnUniqueINN(administratorRepo, doctorRepo, patientRepo))
                         .password(passwordEncoder.encode("123"))
@@ -194,7 +186,6 @@ public class PreloadDatabaseWithData {
             List <Patient> patientList = new ArrayList<>();
             for (int i = 0; i < qty; i++){
                 patientList.add(Patient.builder()
-                        .id(Long.parseLong("1"))
                         .inn(returnUniqueINN(administratorRepo, doctorRepo, patientRepo))
                         .password(passwordEncoder.encode("123"))
                         .document_number("ID".concat(faker.number().digits(7)))
@@ -231,15 +222,42 @@ public class PreloadDatabaseWithData {
             //-->======================== Journal ========================
             //--<======================== hospital_doctor ========================
             List <HospitalsDoctor> hospitalsDoctorsList = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                hospitalsDoctorsList.add(HospitalsDoctor.builder()
-                        .doctor(doctorRepo.findAll().get(rn.nextInt(doctorRepo.findAll().size())))
-                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
-                        .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                        .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(rn.nextInt(3)+2))))     //2 3 4
-                        .build()
-                );
-            }
+            //Задаем каждому доктору роль и ЛПУ
+                //Каждому ЛПУ нужен один Админ ЛПУ
+                //Каждому ЛПУ нужно 5+ медработников
+                //Каждому ЛПУ нужно 9+ врачей
+            AtomicInteger j = new AtomicInteger(0);
+            hospitalRepo.findAll().stream().forEach(hospital -> {
+                for (int i = 1; i <= (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9))/hospitalRepo.findAll().size(); i++){
+                    if (i == 1){
+                        hospitalsDoctorsList.add(HospitalsDoctor.builder()
+                                .doctor(doctorList.get(j.get()))
+                                .hospital(hospital)
+                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(3))))
+                                .build()
+                        );
+                    } else if (i > 1 && i <=6){
+                        hospitalsDoctorsList.add(HospitalsDoctor.builder()
+                                .doctor(doctorList.get(j.get()))
+                                .hospital(hospital)
+                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(4))))
+                                .build()
+                        );
+                    } else {
+                        hospitalsDoctorsList.add(HospitalsDoctor.builder()
+                                .doctor(doctorList.get(j.get()))
+                                .hospital(hospital)
+                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(2))))
+                                .build()
+                        );
+                    }
+                    j.set(j.get()+1);
+                }
+
+            });
             hospitalsDoctorRepo.saveAll(hospitalsDoctorsList);
             //-->======================== hospital_doctor ========================
 
