@@ -66,10 +66,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 + " from doctor"
                 + " where inn = ?";
 
-        String fetchRolesQuery2 = "select a1.inn, a2.name"
-                + " from doctor a1, roles a2"
-                + " where a1.role_id = a2.id"
-                + " and a1.inn = ?";
+        String fetchRolesQuery2 = "select a2.inn, a3.name"
+                + " from hospitals_doctor a1, doctor a2, roles a3"
+                + " where a1.doctor_id = a2.id"
+                + " and a1.role_id = a3.id"
+                + " and a2.inn = ?";
 
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(fetchDoctorsQuery)

@@ -1,7 +1,9 @@
 package com.project.crm.frontend.controller;
 
+import com.project.crm.backend.model.catalog.HospitalsDoctor;
 import com.project.crm.backend.services.AdministratorService;
 import com.project.crm.backend.services.DoctorService;
+import com.project.crm.backend.services.HospitalsDoctorService;
 import com.project.crm.backend.services.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import java.security.Principal;
 public class LoginController {
     private final AdministratorService administratorService;
     private final DoctorService doctorService;
+    private final HospitalsDoctorService hospitalsDoctorService;
     private final PatientService patientService;
 
     @GetMapping("/login")
@@ -27,9 +30,11 @@ public class LoginController {
         model.addAttribute("error", error);
         if(principal != null){
             model.addAttribute("isLoggedIn", true);
-            if (administratorService.existByInn(principal.getName())){
+            if (administratorService.existByInn(principal.getName())) {
                 return "redirect:/admin";
-            } else if (doctorService.existByInn(principal.getName())){
+            } else if (hospitalsDoctorService.existByInnForAdminHCF(principal.getName())){
+                return "redirect:/adminHCF";
+            } else if (hospitalsDoctorService.existByInnForDoctor(principal.getName())){
                 return "redirect:/doctor";
             } else {
                 return "redirect:/patient";
