@@ -81,7 +81,7 @@ public class PreloadDatabaseWithData2 {
                                     PatientRepo patientRepo,                    RegistrationPlaceRepo registrationPlaceRepo,
                                     HospitalRepo hospitalRepo,                  PositionRepo positionRepo,
                                     HospitalsDoctorRepo hospitalsDoctorRepo,    JournalRepo journalRepo,
-                                    RegistrationTypeRepo registrationTypeRepo){
+                                    RegistrationTypeRepo registrationTypeRepo,  RoleRepo roleRepo){
         return (args) -> {
             journalRepo.deleteAll();
             hospitalsDoctorRepo.deleteAll();
@@ -91,7 +91,7 @@ public class PreloadDatabaseWithData2 {
             hospitalRepo.deleteAll();
             registrationPlaceRepo.deleteAll();
             registrationTypeRepo.deleteAll();
-
+            roleRepo.deleteAll();
 
             int qty = rn.nextInt(30)+10;
 
@@ -119,6 +119,13 @@ public class PreloadDatabaseWithData2 {
             }
             registrationTypeRepo.saveAll(registrationTypeList);
             //-->======================== registration_types ========================
+            //--<======================== roles ========================
+            List <Role> roleList = new ArrayList<>();
+            String[] roles = {"cупер админ", "доктор", "админ ЛПУ", "млад мед персонал", "пациент"};
+            for (int i=0; i<roles.length; i++){
+                roleRepo.insertRoleWithId(Long.parseLong(Integer.toString(i+1)), roles[i]);
+            }
+            //-->======================== roles ========================
             //--<======================== hospitals ========================
             List <Hospital> hospitalList = new ArrayList<>();
             for (int i = 0; i < qty; i++){
