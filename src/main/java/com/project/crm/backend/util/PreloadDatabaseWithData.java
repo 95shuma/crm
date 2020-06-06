@@ -236,7 +236,7 @@ public class PreloadDatabaseWithData {
                         .doctor(doctorRepo.findAll().get(rn.nextInt(doctorRepo.findAll().size())))
                         .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
                         .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                        .role(roleRepo.findRoleById(Long.parseLong(getAnyDoctorRole())))     //2 4 5
+                        .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(rn.nextInt(3)+2))))     //2 3 4
                         .build()
                 );
             }
