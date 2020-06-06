@@ -111,13 +111,9 @@ public class PreloadDatabaseWithData2 {
             //--<======================== registration_types ========================
             List <RegistrationType> registrationTypeList = new ArrayList<>();
             String[] registrationTypes = {"по-телефону", "экстренно", "перенаправление", "по записи"};
-            for (String regType: registrationTypes){
-                registrationTypeList.add(RegistrationType.builder()
-                        .name(regType)
-                        .build()
-                );
+            for (int i=0; i<registrationTypes.length; i++){
+                registrationTypeRepo.insertTypesWithId(Long.parseLong(Integer.toString(i+1)), registrationTypes[i]);
             }
-            registrationTypeRepo.saveAll(registrationTypeList);
             //-->======================== registration_types ========================
             //--<======================== roles ========================
             List <Role> roleList = new ArrayList<>();
@@ -223,7 +219,7 @@ public class PreloadDatabaseWithData2 {
                 journalList.add(Journal.builder()
                         .doctor(doctorRepo.findAll().get(rn.nextInt(doctorRepo.findAll().size())))
                         .registrar(doctorRepo.findAll().get(rn.nextInt(doctorRepo.findAll().size())))
-                        .registrationType(registrationTypeRepo.findAll().get(rn.nextInt(registrationTypeRepo.findAll().size())))
+                        .registration_type(registrationTypeRepo.findAll().get(rn.nextInt(registrationTypeRepo.findAll().size())))
                         .patient(patientRepo.findAll().get(rn.nextInt(patientRepo.findAll().size())))
                         .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
                         .dateTime(faker.date().past(10, TimeUnit.DAYS))

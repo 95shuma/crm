@@ -18,5 +18,5 @@ public interface RoleRepo extends JpaRepository<Role, Long> {
      Role findRoleById(Long id);
      @Modifying
      @Query(value = "insert into roles (id, name)  values (:id, :name);", nativeQuery = true)
-     void insertRoleWithId(@Param("id") Long id, @Param("name") String number);
+     void insertRoleWithId(@Param("id") Long id, @Param("name") String name);
 }
