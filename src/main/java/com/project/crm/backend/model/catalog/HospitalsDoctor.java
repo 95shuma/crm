@@ -20,15 +20,15 @@ public class HospitalsDoctor {
     private Long id;
 
 
-    @ManyToOne @JoinColumn(name= "hospital_id")
+    @ManyToOne
     private Hospital hospital;
 
-    @ManyToOne @JoinColumn(name= "doctor_id")
+    @ManyToOne
     private Doctor doctor;
-
-    @ManyToOne @JoinColumn(name= "position_id")
+    
+    @ManyToOne
     private Position position;
 
-    @ManyToOne @JoinColumn(name= "role_id")
+    @ManyToOne
     private Role role;
 }
