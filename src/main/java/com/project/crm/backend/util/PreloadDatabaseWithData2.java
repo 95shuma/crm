@@ -6,10 +6,7 @@ import com.github.javafaker.service.RandomService;
 import com.project.crm.backend.model.Administrator;
 import com.project.crm.backend.model.Doctor;
 import com.project.crm.backend.model.Patient;
-import com.project.crm.backend.model.catalog.Hospital;
-import com.project.crm.backend.model.catalog.HospitalsDoctor;
-import com.project.crm.backend.model.catalog.Position;
-import com.project.crm.backend.model.catalog.RegistrationPlace;
+import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,11 +15,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -77,18 +77,20 @@ public class PreloadDatabaseWithData2 {
     }
     //чтобы не было совпадений
     @Bean
-    CommandLineRunner fillDatabase( AdministratorRepo administratorRepo,    DoctorRepo doctorRepo,
-                                    PatientRepo patientRepo,                RegistrationPlaceRepo registrationPlaceRepo,
-                                    HospitalRepo hospitalRepo,              PositionRepo positionRepo,
-                                    HospitalsDoctorRepo hospitalsDoctorRepo,JournalRepo journalRepo){
+    CommandLineRunner fillDatabase( AdministratorRepo administratorRepo,        DoctorRepo doctorRepo,
+                                    PatientRepo patientRepo,                    RegistrationPlaceRepo registrationPlaceRepo,
+                                    HospitalRepo hospitalRepo,                  PositionRepo positionRepo,
+                                    HospitalsDoctorRepo hospitalsDoctorRepo,    JournalRepo journalRepo,
+                                    RegistrationTypeRepo registrationTypeRepo){
         return (args) -> {
+            journalRepo.deleteAll();
+            hospitalsDoctorRepo.deleteAll();
             administratorRepo.deleteAll();
             doctorRepo.deleteAll();
             patientRepo.deleteAll();
             hospitalRepo.deleteAll();
             registrationPlaceRepo.deleteAll();
-            hospitalsDoctorRepo.deleteAll();
-            journalRepo.deleteAll();
+            registrationTypeRepo.deleteAll();
 
 
             int qty = rn.nextInt(30)+10;
@@ -106,6 +108,17 @@ public class PreloadDatabaseWithData2 {
             }
             registrationPlaceRepo.saveAll(registrationPlaceList);
             //-->======================== registration_places ========================
+            //--<======================== registration_types ========================
+            List <RegistrationType> registrationTypeList = new ArrayList<>();
+            String[] registrationTypes = {"по-телефону", "экстренно", "перенаправление", "по записи"};
+            for (String regType: registrationTypes){
+                registrationTypeList.add(RegistrationType.builder()
+                        .name(regType)
+                        .build()
+                );
+            }
+            registrationTypeRepo.saveAll(registrationTypeList);
+            //-->======================== registration_types ========================
             //--<======================== hospitals ========================
             List <Hospital> hospitalList = new ArrayList<>();
             for (int i = 0; i < qty; i++){
@@ -198,7 +211,20 @@ public class PreloadDatabaseWithData2 {
             patientRepo.saveAll(patientList);
             //-->======================== Patient ========================
             //--<======================== Journal ========================
-
+            List <Journal> journalList = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                journalList.add(Journal.builder()
+                        .doctor(doctorRepo.findAll().get(rn.nextInt(doctorRepo.findAll().size())))
+                        .registrar(doctorRepo.findAll().get(rn.nextInt(doctorRepo.findAll().size())))
+                        .registrationType(registrationTypeRepo.findAll().get(rn.nextInt(registrationTypeRepo.findAll().size())))
+                        .patient(patientRepo.findAll().get(rn.nextInt(patientRepo.findAll().size())))
+                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                        .dateTime(faker.date().past(10, TimeUnit.DAYS))
+                        .reason(faker.superhero().name())
+                        .build()
+                );
+            }
+            journalRepo.saveAll(journalList);
             //-->======================== Journal ========================
             //--<======================== hospital_doctor ========================
             List <HospitalsDoctor> hospitalsDoctorsList = new ArrayList<>();

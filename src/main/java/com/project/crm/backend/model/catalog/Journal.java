@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -34,7 +35,7 @@ public class Journal {
     @ManyToOne @JoinColumn(name= "registration_type_id")
     private RegistrationType registration_type;
     @Column
-    private LocalDateTime dateTime;
+    private Date dateTime;
     @Column
     private String reason;
 }
