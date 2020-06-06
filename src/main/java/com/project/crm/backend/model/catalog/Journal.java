@@ -35,7 +35,7 @@ public class Journal {
     @ManyToOne @JoinColumn(name= "registration_type_id")
     private RegistrationType registration_type;
     @Column
-    private Date dateTime;
+    private LocalDateTime dateTime;
     @Column
     private String reason;
 }

@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
-public class PreloadDatabaseWithData2 {
+public class PreloadDatabaseWithData {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
@@ -222,7 +222,7 @@ public class PreloadDatabaseWithData2 {
                         .registration_type(registrationTypeRepo.findAll().get(rn.nextInt(registrationTypeRepo.findAll().size())))
                         .patient(patientRepo.findAll().get(rn.nextInt(patientRepo.findAll().size())))
                         .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
-                        .dateTime(faker.date().past(10, TimeUnit.DAYS))
+                        .dateTime(LocalDateTime.now())
                         .reason(faker.superhero().name())
                         .build()
                 );
