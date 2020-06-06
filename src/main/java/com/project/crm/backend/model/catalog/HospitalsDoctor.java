@@ -25,7 +25,7 @@ public class HospitalsDoctor {
 
     @ManyToOne
     private Doctor doctor;
-    
+
     @ManyToOne
     private Position position;
 
