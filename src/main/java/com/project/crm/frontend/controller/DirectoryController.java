@@ -30,8 +30,6 @@ public class DirectoryController {
     private final RegistrationTypeService registrationTypeService;
     private final RoleService roleService;
     private final RegistrationPlaceService registrationPlaceService;
-    /*@Autowired
-    private RegistrationPlaceRepo registrationPlaceRepo;*/
 
     @GetMapping("/positions")
     public String positionPage(Model model){
@@ -56,37 +54,23 @@ public class DirectoryController {
 
     @PostMapping("/position")
     public String addNewPosition(@RequestParam("name") String name){
-        var position = Position.builder()
-                .name(name)
-                .build();
-        positionService.save(position);
+        positionService.saveByName(name);
         return "redirect:/positions";
     }
     @PostMapping("/registration_type")
     public String addNewRegistration_type(@RequestParam("name") String name){
-        var registration_type = RegistrationType.builder()
-                .name(name)
-                .build();
-        registrationTypeService.save(registration_type);
+        registrationTypeService.saveByName(name);
         return "redirect:/registration_types";
     }
     @PostMapping("/admin/addRole")
     public String addRole(@RequestParam("name") String name){
-        Role role = Role.builder()
-                .name(name)
-                .build();
-        roleService.save(role);
+        roleService.saveByName(name);
         return "redirect:/admin/create-role";
     }
     @PostMapping("/admin/addPlace")
     public String addPlace(@RequestParam("name") String name, @RequestParam("code_place") String code_place,
                            @RequestParam("groupCode") Integer groupCode){
-        RegistrationPlace registrationPlace = RegistrationPlace.builder()
-                .name(name)
-                .code_place(code_place)
-                .group_code(groupCode)
-                .build();
-        registrationPlaceService.save(registrationPlace);
+        registrationPlaceService.save(name, code_place, groupCode);
         return "redirect:/admin/create-reg-place";
     }
 }

@@ -18,8 +18,11 @@ public class RegistrationTypeService {
         return registrationTypeRepo.findAll();
     }
 
-    public void save(RegistrationType registrationType){
-        registrationTypeRepo.save(registrationType);
+    public void saveByName(String name){
+        var registration_type = RegistrationType.builder()
+                .name(name)
+                .build();
+        registrationTypeRepo.save(registration_type);
     }
 
     public RegistrationType getByName(String name){

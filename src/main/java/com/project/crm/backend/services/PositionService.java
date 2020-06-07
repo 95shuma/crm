@@ -20,7 +20,10 @@ public class PositionService {
         return positionRepo.findAll();
     }
 
-    public void save(Position position){
+    public void saveByName(String name){
+        var position = Position.builder()
+                .name(name)
+                .build();
         positionRepo.save(position);
     }
 

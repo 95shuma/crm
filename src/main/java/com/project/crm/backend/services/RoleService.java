@@ -18,7 +18,10 @@ public class RoleService {
         return roleRepo.findAll();
     }
 
-    public void save(Role role){
+    public void saveByName(String name){
+        Role role = Role.builder()
+                .name(name)
+                .build();
         roleRepo.save(role);
     }
 

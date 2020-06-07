@@ -56,12 +56,10 @@ public class DoctorController {
     }
     @PostMapping("/doctorAllAppointment")
     public String patientAllAppointment(@RequestParam("inn") String inn){
-        String text = "redirect:/doctorAllAppointment/" + inn;
-        return text;
+        return "redirect:/doctorAllAppointment/" + inn;
     }
     @PostMapping("/patientAllAppointment")
     public String doctorAllAppointment(@RequestParam("inn") String inn){
-        String text = "redirect:/patientAllAppointment/" + inn;
-        return text;
+        return "redirect:/patientAllAppointment/" + inn;
     }
 }

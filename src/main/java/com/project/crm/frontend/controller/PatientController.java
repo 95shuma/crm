@@ -37,16 +37,13 @@ public class PatientController {
     }
     @GetMapping("/patientAppointment")
     public String patientAppointmentPage(Model model){
-        List<Hospital> hospitals = hospitalService.getAll();
-        List<RegistrationType> registrationTypes = registrationTypeService.getAll();
-        List<HospitalsDoctor> hospitalsDoctors = hospitalsDoctorService.getAll();
 
         if (!model.containsAttribute("journal")) {
             model.addAttribute("journal", new JournalRegisterForm());
         }
-        model.addAttribute("hospitals", hospitals);
-        model.addAttribute("registrationTypes", registrationTypes);
-        model.addAttribute("hospitalsDoctors", hospitalsDoctors);
+        model.addAttribute("hospitals", hospitalService.getAll());
+        model.addAttribute("registrationTypes", registrationTypeService.getAll());
+        model.addAttribute("hospitalsDoctors", hospitalsDoctorService.getAll());
 
         return "patientAppointment";
     }
@@ -60,23 +57,15 @@ public class PatientController {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
             return "redirect:/patientAppointment";
         }
-        var journal = Journal.builder()
-                .doctor(doctorService.getByInn(journalRegisterForm.getDoctor()))
-                .hospital(hospitalService.getByName(journalRegisterForm.getHospital()))
-                .patient(patientService.getByInn(journalRegisterForm.getInn()))
-                .registration_type(registrationTypeService.getByName(journalRegisterForm.getRegistration_type()))
-                .reason(journalRegisterForm.getReason())
-                .dateTime(LocalDateTime.now())
-                .build();
-        journalService.save(journal);
+
+        journalService.save(journalRegisterForm);
 
         return "redirect:/patientAppointmentCheck";
 
     }
     @GetMapping("/patientAppointmentCheck")
     public String patientAppointmentCheckPage(Model model){
-        UUID uuid = UUID.randomUUID();
-        model.addAttribute("random", uuid);
+        model.addAttribute("random", UUID.randomUUID());
         return "patientAppointmentCheck";
     }
 }
