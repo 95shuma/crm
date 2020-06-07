@@ -1,10 +1,7 @@
 package com.project.crm.frontend.controller;
 
-import com.project.crm.backend.model.catalog.HospitalsDoctor;
 import com.project.crm.backend.services.AdministratorService;
-import com.project.crm.backend.services.DoctorService;
 import com.project.crm.backend.services.HospitalsDoctorService;
-import com.project.crm.backend.services.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

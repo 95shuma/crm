@@ -1,19 +1,10 @@
 package com.project.crm.frontend.controller;
 
-import com.project.crm.backend.model.catalog.Position;
-import com.project.crm.backend.model.catalog.RegistrationPlace;
-import com.project.crm.backend.model.catalog.RegistrationType;
-import com.project.crm.backend.model.catalog.Role;
-import com.project.crm.backend.repository.PositionRepo;
-import com.project.crm.backend.repository.RegistrationPlaceRepo;
-import com.project.crm.backend.repository.RegistrationTypeRepo;
-import com.project.crm.backend.repository.RoleRepo;
 import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.RegistrationPlaceService;
 import com.project.crm.backend.services.RegistrationTypeService;
 import com.project.crm.backend.services.RoleService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
