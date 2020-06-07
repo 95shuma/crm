@@ -7,6 +7,7 @@ import com.project.crm.backend.repository.PatientRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,7 @@ public class PatientService {
         repo.save(patient);
     }
 
-    public Optional<Patient> getByInn(String inn){
+    public Patient getByInn(String inn){
         return repo.findByInn(inn);
     }
 }

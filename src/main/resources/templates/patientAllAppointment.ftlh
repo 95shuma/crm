@@ -22,6 +22,7 @@
                     Жалоба
                 </th>
             </tr>
+            <#list journal as journal>
             <tr>
                 <th>
                     ${journal.dateTime}
@@ -39,6 +40,7 @@
                     ${journal.reason}
                 </th>
             </tr>
+            </#list>
         </table>
         <a href="/patient"><button>Выйти в личный кабинет</button></a>
         <#else>

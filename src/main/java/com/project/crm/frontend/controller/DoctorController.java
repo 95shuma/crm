@@ -38,12 +38,12 @@ public class DoctorController {
     }
     @GetMapping("/doctorAllAppointment/{inn}")
     public String doctorAllAppointmentPage(Model model, @PathVariable String inn){
-        model.addAttribute("journal", journalService.getByDoctor(doctorService.getByInn(inn).get()).get());
+        model.addAttribute("journal", journalService.getByDoctor(doctorService.getByInn(inn).getId()));
         return "doctorAllAppointment";
     }
     @GetMapping("/patientAllAppointment/{inn}")
     public String patientAllAppointmentPage(Model model, @PathVariable String inn){
-        model.addAttribute("journal", journalService.getByPatient(patientService.getByInn(inn).get()).get());
+        model.addAttribute("journal", journalService.getByPatient(patientService.getByInn(inn).getId()));
         return "patientAllAppointment";
     }
     @GetMapping("/doctorAllAppointment")

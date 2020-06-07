@@ -61,9 +61,9 @@ public class PatientController {
             return "redirect:/patientAppointment";
         }
         var journal = Journal.builder()
-                .doctor(doctorService.getByName(journalRegisterForm.getDoctor()))
+                .doctor(doctorService.getByInn(journalRegisterForm.getDoctor()))
                 .hospital(hospitalService.getByName(journalRegisterForm.getHospital()))
-                .patient(patientService.getByInn(journalRegisterForm.getInn()).get())
+                .patient(patientService.getByInn(journalRegisterForm.getInn()))
                 .registration_type(registrationTypeService.getByName(journalRegisterForm.getRegistration_type()))
                 .reason(journalRegisterForm.getReason())
                 .dateTime(LocalDateTime.now())

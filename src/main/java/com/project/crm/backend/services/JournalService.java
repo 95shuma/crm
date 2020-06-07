@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,12 +18,12 @@ public class JournalService {
     @Autowired
     JournalRepo journalRepo;
 
-    public Optional<Journal> getByDoctor(Doctor doctor){
-        return journalRepo.findByDoctor(doctor);
+    public List<Journal> getByDoctor(Long doctor){
+        return journalRepo.findByDoctor_Id(doctor);
     }
 
-    public Optional<Journal> getByPatient(Patient patient){
-        return journalRepo.findByPatient(patient);
+    public List<Journal> getByPatient(Long patient){
+        return journalRepo.findByPatient_Id(patient);
     }
 
     public void save(Journal journal){

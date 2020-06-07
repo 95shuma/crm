@@ -20,7 +20,7 @@
         <select name="doctor">
             <#if hospitalsDoctors??>
                 <#list hospitalsDoctors as hospitalsDoctors>
-                    <option name="doctor" value="${hospitalsDoctors.doctor.name}">${hospitalsDoctors.doctor.name} - ${hospitalsDoctors.role.name} - ${hospitalsDoctors.position.name} - ${hospitalsDoctors.hospital.name}</option>
+                    <option name="doctor" value="${hospitalsDoctors.doctor.inn}">${hospitalsDoctors.doctor.full_name} - ${hospitalsDoctors.role.name} - ${hospitalsDoctors.position.name} - ${hospitalsDoctors.hospital.name}</option>
                 </#list>
             </#if>
         </select>
