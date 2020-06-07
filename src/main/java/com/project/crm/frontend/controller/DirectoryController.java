@@ -39,7 +39,7 @@ public class DirectoryController {
     }
     @GetMapping("/admin/create-reg-place")
     public String placePage(Model model){
-        model.addAttribute("places",registrationTypeService.getAll());
+        model.addAttribute("places",registrationPlaceService.getAll());
         return "create-reg-place";
     }
 
