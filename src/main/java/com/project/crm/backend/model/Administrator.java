@@ -1,13 +1,11 @@
 package com.project.crm.backend.model;
 
-import com.project.crm.backend.model.catalog.Hospital;
-import com.project.crm.backend.model.catalog.Journal;
-import com.project.crm.backend.model.catalog.RegistrationPlace;
 import com.project.crm.backend.model.catalog.Role;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
@@ -17,8 +15,8 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Table(name = "patients")
-public class Patient {
+@Table(name = "admins")
+public class Administrator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,22 +60,12 @@ public class Patient {
     @Column(length = 64)
     private String gender;
 
+    @NotBlank(message = "Это поле не должно быть пустым")
     @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role_id;
-
-    @ManyToOne
-    @JoinColumn(name = "registration_place_id")
-    private RegistrationPlace registration_place_id;
-
-    @ManyToOne
-    @JoinColumn(name = "hospital_id")
-    private Hospital hospital_id;
-
-    @OneToMany(mappedBy = "patient")
-    private Set<Journal> journals;
+    private Role role;
 
     @Column
     @Builder.Default
     private boolean enabled = true;
+
 }

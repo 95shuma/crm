@@ -1,11 +1,12 @@
 package com.project.crm.backend.model;
 
-import com.project.crm.backend.model.catalog.Journal;
+import com.project.crm.backend.model.catalog.*;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -58,21 +59,15 @@ public class Doctor {
     private String gender;
 
     @NotBlank(message = "Обязательное поле")
-    @Column
-    private Long role_id;
+    @ManyToOne
+    @JoinColumn(name = "registration_place_id")
+    private RegistrationPlace registration_place_id;
 
-    @NotBlank(message = "Обязательное поле")
-    @Column
-    private Long registration_place_id;
-
-    @NotBlank(message = "Обязательное поле")
-    @Column
-    private Long hospital_id;
-
-    @NotBlank(message = "Обязательное поле")
-    @Column
-    private Long position_id;
 
     @OneToMany(mappedBy = "doctor")
-    Set<Journal> journals;
+    private Set<Journal> journals;
+
+    @Column
+    @Builder.Default
+    private boolean enabled = true;
 }
