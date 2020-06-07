@@ -1,6 +1,7 @@
 package com.project.crm.backend.services;
 
 
+import com.project.crm.backend.model.Administrator;
 import com.project.crm.backend.repository.AdministratorRepo;
 import com.project.crm.backend.repository.DoctorRepo;
 import lombok.AllArgsConstructor;
@@ -16,4 +17,7 @@ public class AdministratorService {
         return repo.existsByInn(inn);
     }
 
+    public void save(Administrator administrator){
+        repo.save(administrator);
+    }
 }

@@ -2,6 +2,7 @@ package com.project.crm.frontend.controller;
 
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.repository.*;
+import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.JournalRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,23 +24,12 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PatientController {
 
-    @Autowired
-    private JournalRepo journalRepo;
-
-    @Autowired
-    private HospitalRepo hospitalRepo;
-
-    @Autowired
-    private RegistrationTypeRepo registrationTypeRepo;
-
-    @Autowired
-    private DoctorRepo doctorRepo;
-
-    @Autowired
-    private HospitalsDoctorRepo hospitalsDoctorRepo;
-
-    @Autowired
-    private PatientRepo patientRepo;
+    private final JournalService journalService;
+    private final HospitalService hospitalService;
+    private final RegistrationTypeService registrationTypeService;
+    private final DoctorService doctorService;
+    private final HospitalsDoctorService hospitalsDoctorService;
+    private final PatientService patientService;
 
     @GetMapping("/patient")
     public String patientUIPage(Model model){
@@ -47,9 +37,9 @@ public class PatientController {
     }
     @GetMapping("/patientAppointment")
     public String patientAppointmentPage(Model model){
-        List<Hospital> hospitals = hospitalRepo.findAll();
-        List<RegistrationType> registrationTypes = registrationTypeRepo.findAll();
-        List<HospitalsDoctor> hospitalsDoctors = hospitalsDoctorRepo.findAll();
+        List<Hospital> hospitals = hospitalService.getAll();
+        List<RegistrationType> registrationTypes = registrationTypeService.getAll();
+        List<HospitalsDoctor> hospitalsDoctors = hospitalsDoctorService.getAll();
 
         if (!model.containsAttribute("journal")) {
             model.addAttribute("journal", new JournalRegisterForm());
@@ -71,14 +61,14 @@ public class PatientController {
             return "redirect:/patientAppointment";
         }
         var journal = Journal.builder()
-                .doctor(doctorRepo.findByName(journalRegisterForm.getDoctor()))
-                .hospital(hospitalRepo.findByName(journalRegisterForm.getHospital()))
-                .patient(patientRepo.findByInn(journalRegisterForm.getInn()).get())
-                .registration_type(registrationTypeRepo.findByName(journalRegisterForm.getRegistration_type()))
+                .doctor(doctorService.getByName(journalRegisterForm.getDoctor()))
+                .hospital(hospitalService.getByName(journalRegisterForm.getHospital()))
+                .patient(patientService.getByInn(journalRegisterForm.getInn()).get())
+                .registration_type(registrationTypeService.getByName(journalRegisterForm.getRegistration_type()))
                 .reason(journalRegisterForm.getReason())
                 .dateTime(LocalDateTime.now())
                 .build();
-        journalRepo.save(journal);
+        journalService.save(journal);
 
         return "redirect:/patientAppointmentCheck";
 

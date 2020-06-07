@@ -7,6 +7,9 @@ import com.project.crm.backend.model.catalog.RegistrationType;
 import com.project.crm.backend.repository.DoctorRepo;
 import com.project.crm.backend.repository.JournalRepo;
 import com.project.crm.backend.repository.PatientRepo;
+import com.project.crm.backend.services.DoctorService;
+import com.project.crm.backend.services.JournalService;
+import com.project.crm.backend.services.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +27,10 @@ import java.util.List;
 @RequestMapping
 @AllArgsConstructor
 public class DoctorController {
-    @Autowired
-    private JournalRepo journalRepo;
 
-    @Autowired
-    private DoctorRepo doctorRepo;
-
-    @Autowired
-    private PatientRepo patientRepo;
+    private final JournalService journalService;
+    private final DoctorService doctorService;
+    private final PatientService patientService;
 
     @GetMapping("/doctor")
     public String doctorUIPage(Model model, Principal principal){
@@ -39,12 +38,12 @@ public class DoctorController {
     }
     @GetMapping("/doctorAllAppointment/{inn}")
     public String doctorAllAppointmentPage(Model model, @PathVariable String inn){
-        model.addAttribute("journal", journalRepo.findByDoctor(doctorRepo.findByInn(inn).get()).get());
+        model.addAttribute("journal", journalService.getByDoctor(doctorService.getByInn(inn).get()).get());
         return "doctorAllAppointment";
     }
     @GetMapping("/patientAllAppointment/{inn}")
     public String patientAllAppointmentPage(Model model, @PathVariable String inn){
-        model.addAttribute("journal", journalRepo.findByPatient(patientRepo.findByInn(inn).get()).get());
+        model.addAttribute("journal", journalService.getByPatient(patientService.getByInn(inn).get()).get());
         return "patientAllAppointment";
     }
     @GetMapping("/doctorAllAppointment")

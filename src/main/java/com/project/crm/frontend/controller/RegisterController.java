@@ -7,6 +7,7 @@ import com.project.crm.backend.model.catalog.Hospital;
 import com.project.crm.backend.model.catalog.RegistrationPlace;
 import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.*;
+import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.AdminHospitalRegisterForm;
 import com.project.crm.frontend.forms.DoctorRegisterForm;
 import com.project.crm.frontend.forms.PatientRegisterForm;
@@ -33,31 +34,17 @@ import java.util.Set;
 public class RegisterController {
 
     private final PasswordEncoder encoder;
-
-    @Autowired
-    private DoctorRepo doctorRepo;
-
-    @Autowired
-    private PatientRepo patientRepo;
-
-    @Autowired
-    private RegistrationPlaceRepo registrationPlaceRepo;
-
-    @Autowired
-    private HospitalRepo hospitalRepo;
-
-    @Autowired
-    private RoleRepo roleRepo;
-
-    @Autowired
-    private AdministratorRepo administratorRepo;
-
-    //@Autowired RegionRepo regionRepo;
+    private final DoctorService doctorService;
+    private final PatientService patientService;
+    private final RegistrationPlaceService registrationPlaceService;
+    private final HospitalService hospitalService;
+    private final RoleService roleService;
+    private final AdministratorService administratorService;
 
     @GetMapping("/doctorRegister")
     public String doctorRegisterPage(Model model){
 
-        List<RegistrationPlace> registrationPlaces = registrationPlaceRepo.findAll();
+        List<RegistrationPlace> registrationPlaces = registrationPlaceService.getAll();
 
         if (!model.containsAttribute("reg")) {
             model.addAttribute("reg", new DoctorRegisterForm());
@@ -65,11 +52,12 @@ public class RegisterController {
         model.addAttribute("registrationPlaces", registrationPlaces);
         return "doctorRegister";
     }
+
     @GetMapping("/patientRegister")
     public String patientRegisterPage(Model model){
 
-        List<Hospital> hospitals = hospitalRepo.findAll();
-        List<RegistrationPlace> registrationPlaces = registrationPlaceRepo.findAll();
+        List<Hospital> hospitals = hospitalService.getAll();
+        List<RegistrationPlace> registrationPlaces = registrationPlaceService.getAll();
 
         if (!model.containsAttribute("reg")) {
             model.addAttribute("reg", new PatientRegisterForm());
@@ -91,7 +79,7 @@ public class RegisterController {
 
     @GetMapping("/admin/reg-hospital")
     public String regHospital(Model model){
-        List<RegistrationPlace> registrationPlaces = registrationPlaceRepo.findAll();
+        List<RegistrationPlace> registrationPlaces = registrationPlaceService.getAll();
         model.addAttribute("places",registrationPlaces);
         return "reg-hospital";
     }
@@ -117,10 +105,10 @@ public class RegisterController {
                 .middle_name(doctorRegisterForm.getMiddle_name())
                 .birth_date(doctorRegisterForm.getBirth_date())
                 .gender(doctorRegisterForm.getGender())
-                .registration_place_id(registrationPlaceRepo.findByName(doctorRegisterForm.getRegistration_place_id()))
+                .registration_place_id(registrationPlaceService.getByName(doctorRegisterForm.getRegistration_place_id()))
                 .build();
 
-        doctorRepo.save(doctor);
+        doctorService.save(doctor);
 
         return "redirect:/";
     }
@@ -145,12 +133,12 @@ public class RegisterController {
                 .middle_name(patientRegisterForm.getMiddle_name())
                 .birth_date(patientRegisterForm.getBirth_date())
                 .gender(patientRegisterForm.getGender())
-                .hospital_id(hospitalRepo.findByName(patientRegisterForm.getHospital_id()))
-                .role_id(roleRepo.findByName("пациент"))
-                .registration_place_id(registrationPlaceRepo.findByName(patientRegisterForm.getRegistration_place_id()))
+                .hospital_id(hospitalService.getByName(patientRegisterForm.getHospital_id()))
+                .role_id(roleService.getByName("пациент"))
+                .registration_place_id(registrationPlaceService.getByName(patientRegisterForm.getRegistration_place_id()))
                 .build();
 
-        patientRepo.save(patient);
+        patientService.save(patient);
 
         return "redirect:/";
     }
@@ -164,9 +152,6 @@ public class RegisterController {
             return "redirect:/admin/reg-admin-hospital";
         }
 
-        Set<Role>roles = new HashSet<>();
-        roles.add(roleRepo.findRoleById(Long.parseLong(adminHospitalRegisterForm.getRole_id())));
-
         var admin = Administrator.builder()
                 .inn(adminHospitalRegisterForm.getInn())
                 .password(encoder.encode(adminHospitalRegisterForm.getPassword()))
@@ -177,10 +162,10 @@ public class RegisterController {
                 .middle_name(adminHospitalRegisterForm.getMiddle_name())
                 .birth_date(adminHospitalRegisterForm.getBirth_date())
                 .gender(adminHospitalRegisterForm.getGender())
-                .role(roleRepo.findRoleById(Long.parseLong(adminHospitalRegisterForm.getRole_id())))
+                .role(roleService.getById(Long.parseLong(adminHospitalRegisterForm.getRole_id())))
                 .build();
 
-        administratorRepo.save(admin);
+        administratorService.save(admin);
 
         return "redirect:/admin";
     }
@@ -190,10 +175,10 @@ public class RegisterController {
                               @RequestParam("street") String street, @RequestParam("house_num") String house_num){
         Hospital hospital = Hospital.builder()
                 .name(name)
-                .registrationPlace(registrationPlaceRepo.findRegistrationPlaceById(place_id))
+                .registrationPlace(registrationPlaceService.getById(place_id))
                 .address(street+" "+house_num)
                 .build();
-        hospitalRepo.save(hospital);
+        hospitalService.save(hospital);
         return "redirect:/admin";
     }
 

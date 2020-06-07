@@ -8,6 +8,10 @@ import com.project.crm.backend.repository.PositionRepo;
 import com.project.crm.backend.repository.RegistrationPlaceRepo;
 import com.project.crm.backend.repository.RegistrationTypeRepo;
 import com.project.crm.backend.repository.RoleRepo;
+import com.project.crm.backend.services.PositionService;
+import com.project.crm.backend.services.RegistrationPlaceService;
+import com.project.crm.backend.services.RegistrationTypeService;
+import com.project.crm.backend.services.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,36 +26,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 public class DirectoryController {
 
-    @Autowired
-    private PositionRepo positionRepo;
-
-    @Autowired
-    private RegistrationTypeRepo registrationTypeRepo;
-
-    @Autowired
-    private RoleRepo roleRepo;
-
-    @Autowired
-    private RegistrationPlaceRepo registrationPlaceRepo;
+    private final PositionService positionService;
+    private final RegistrationTypeService registrationTypeService;
+    private final RoleService roleService;
+    private final RegistrationPlaceService registrationPlaceService;
+    /*@Autowired
+    private RegistrationPlaceRepo registrationPlaceRepo;*/
 
     @GetMapping("/positions")
     public String positionPage(Model model){
-        model.addAttribute("positions", positionRepo.findAll());
+        model.addAttribute("positions", positionService.getAll());
         return "positions";
     }
     @GetMapping("/registration_types")
     public String registrationTypePage(Model model){
-        model.addAttribute("registration_types", registrationTypeRepo.findAll());
+        model.addAttribute("registration_types", registrationTypeService.getAll());
         return "registration_types";
     }
     @GetMapping("/admin/create-role")
     public String rolePage(Model model){
-        model.addAttribute("roles",roleRepo.findAll());
+        model.addAttribute("roles",roleService.getAll());
         return "create-role";
     }
     @GetMapping("/admin/create-reg-place")
     public String placePage(Model model){
-        model.addAttribute("places",registrationPlaceRepo.findAll());
+        model.addAttribute("places",registrationTypeService.getAll());
         return "create-reg-place";
     }
 
@@ -60,7 +59,7 @@ public class DirectoryController {
         var position = Position.builder()
                 .name(name)
                 .build();
-        positionRepo.save(position);
+        positionService.save(position);
         return "redirect:/positions";
     }
     @PostMapping("/registration_type")
@@ -68,7 +67,7 @@ public class DirectoryController {
         var registration_type = RegistrationType.builder()
                 .name(name)
                 .build();
-        registrationTypeRepo.save(registration_type);
+        registrationTypeService.save(registration_type);
         return "redirect:/registration_types";
     }
     @PostMapping("/admin/addRole")
@@ -76,7 +75,7 @@ public class DirectoryController {
         Role role = Role.builder()
                 .name(name)
                 .build();
-        roleRepo.save(role);
+        roleService.save(role);
         return "redirect:/admin/create-role";
     }
     @PostMapping("/admin/addPlace")
@@ -87,7 +86,7 @@ public class DirectoryController {
                 .code_place(code_place)
                 .group_code(groupCode)
                 .build();
-        registrationPlaceRepo.save(registrationPlace);
+        registrationPlaceService.save(registrationPlace);
         return "redirect:/admin/create-reg-place";
     }
 }

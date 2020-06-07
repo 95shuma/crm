@@ -7,6 +7,7 @@ import com.project.crm.backend.util.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
@@ -37,6 +38,8 @@ public class HospitalsDoctorService {
         return rtn;
     }
 
-
+    public List<HospitalsDoctor> getAll(){
+        return repo.findAll();
+    }
 
 }

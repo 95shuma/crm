@@ -16,9 +16,7 @@ import java.security.Principal;
 @AllArgsConstructor
 public class LoginController {
     private final AdministratorService administratorService;
-    private final DoctorService doctorService;
     private final HospitalsDoctorService hospitalsDoctorService;
-    private final PatientService patientService;
 
     @GetMapping("/login")
     public String loginPage(Model model, @RequestParam(required = false, defaultValue = "false") Boolean error, Principal principal) {
