@@ -3,9 +3,7 @@ package com.project.crm.frontend.controller;
 import com.project.crm.backend.model.Administrator;
 import com.project.crm.backend.model.Doctor;
 import com.project.crm.backend.model.Patient;
-import com.project.crm.backend.model.catalog.Hospital;
-import com.project.crm.backend.model.catalog.RegistrationPlace;
-import com.project.crm.backend.model.catalog.Role;
+import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.AdminHospitalRegisterForm;
@@ -40,16 +38,24 @@ public class RegisterController {
     private final HospitalService hospitalService;
     private final RoleService roleService;
     private final AdministratorService administratorService;
+    private final PositionService positionService;
+    private final HospitalsDoctorService hospitalsDoctorService;
 
     @GetMapping("/doctorRegister")
     public String doctorRegisterPage(Model model){
 
         List<RegistrationPlace> registrationPlaces = registrationPlaceService.getAll();
+        List<Hospital> hospitals = hospitalService.getAll();
+        List<Role> roles = roleService.getAll();
+        List<Position> positions = positionService.getAll();
 
         if (!model.containsAttribute("reg")) {
             model.addAttribute("reg", new DoctorRegisterForm());
         }
         model.addAttribute("registrationPlaces", registrationPlaces);
+        model.addAttribute("hospitals", hospitals);
+        model.addAttribute("roles", roles);
+        model.addAttribute("positions", positions);
         return "doctorRegister";
     }
 
@@ -109,6 +115,15 @@ public class RegisterController {
                 .build();
 
         doctorService.save(doctor);
+
+        var doctor_hospital = HospitalsDoctor.builder()
+                .doctor(doctor)
+                .role(roleService.getByName(doctorRegisterForm.getRole_id()))
+                .hospital(hospitalService.getByName(doctorRegisterForm.getHospital_id()))
+                .position(positionService.getByName(doctorRegisterForm.getPosition_id()))
+               .build();
+
+        hospitalsDoctorService.save(doctor_hospital);
 
         return "redirect:/";
     }

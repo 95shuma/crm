@@ -1,6 +1,7 @@
 package com.project.crm.backend.services;
 
 
+import com.project.crm.backend.model.catalog.Hospital;
 import com.project.crm.backend.model.catalog.HospitalsDoctor;
 import com.project.crm.backend.repository.HospitalsDoctorRepo;
 import com.project.crm.backend.util.Constants;
@@ -40,6 +41,10 @@ public class HospitalsDoctorService {
 
     public List<HospitalsDoctor> getAll(){
         return repo.findAll();
+    }
+
+    public void save(HospitalsDoctor hospitalsDoctor){
+        repo.save(hospitalsDoctor);
     }
 
 }

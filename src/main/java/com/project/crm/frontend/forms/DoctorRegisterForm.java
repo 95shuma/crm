@@ -43,4 +43,13 @@ public class DoctorRegisterForm {
     @NotBlank(message = "Обязательное поле")
     private String registration_place_id = "";
 
+    @NotBlank(message = "Обязательное поле")
+    private String position_id = "";
+
+    @NotBlank(message = "Обязательное поле")
+    private String hospital_id = "";
+
+    @NotBlank(message = "Обязательное поле")
+    private String role_id = "";
+
 }

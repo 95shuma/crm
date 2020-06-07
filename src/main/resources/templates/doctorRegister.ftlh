@@ -37,6 +37,32 @@
                 </#list>
             </#if>
         </select>
+        <h4>Выберите должность врача</h4>
+        <select id="position_id" name="position_id">
+            <#if positions??>
+                <#list positions as position>
+                    <option name="position_id">${position.name}</option>
+                </#list>
+            </#if>
+        </select>
+        <h4>Выберите роль врача</h4>
+        <select id="role_id" name="role_id">
+            <#if roles??>
+                <#list roles as role>
+                        <#if role.id == 2 || role.id == 4>
+                            <option name="role_id">${role.name}</option>
+                        </#if>
+                </#list>
+            </#if>
+        </select>
+        <h4>Выберите ЛПУ врача</h4>
+        <select id="hospital_id" name="hospital_id">
+            <#if hospitals??>
+                <#list hospitals as hospital>
+                    <option name="hospital_id">${hospital.name}</option>
+                </#list>
+            </#if>
+        </select>
         <button type="submit">Зарегистрироваться</button>
         <div>
             <#if errors??>
