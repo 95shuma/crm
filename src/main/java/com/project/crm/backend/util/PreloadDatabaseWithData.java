@@ -6,6 +6,7 @@ import com.project.crm.backend.model.Doctor;
 import com.project.crm.backend.model.Patient;
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.repository.*;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -21,10 +22,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
+@AllArgsConstructor
 public class PreloadDatabaseWithData {
-    @Autowired
+
     PasswordEncoder passwordEncoder;
-    @Autowired
     RoleRepo roleRepo;
 
     private static final Random rn = new Random();
@@ -96,8 +97,8 @@ public class PreloadDatabaseWithData {
             for (int i = 0; i < qty; i++){
                 registrationPlaceList.add(RegistrationPlace.builder()
                         .name(faker.address().fullAddress())
-                        .code_place(faker.number().digits(14))
-                        .group_code(0)
+                        .codePlace(faker.number().digits(14))
+                        .groupCode(0)
                         .build()
                 );
             }
@@ -150,12 +151,12 @@ public class PreloadDatabaseWithData {
                     .id(Long.parseLong("1"))
                     .inn("admin")
                     .password(passwordEncoder.encode("admin"))
-                    .document_number("ID".concat(faker.number().digits(7)))
-                    .full_name(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
+                    .documentNumber("ID".concat(faker.number().digits(7)))
+                    .fullName(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
                     .surname(adminName[1])
                     .name(adminName[2])
-                    .middle_name(adminName[3])
-                    .birth_date(faker.date().birthday())
+                    .middleName(adminName[3])
+                    .birthDate(faker.date().birthday())
                     .gender(getRandomGender())
                     .role(roleRepo.findRoleById(Long.parseLong("1")))
                     .enabled(true)
@@ -168,14 +169,14 @@ public class PreloadDatabaseWithData {
                 doctorList.add(Doctor.builder()
                         .inn(returnUniqueINN(administratorRepo, doctorRepo, patientRepo))
                         .password(passwordEncoder.encode("123"))
-                        .document_number(faker.lorem().fixedString(2).concat(faker.number().digits(7)))
-                        .full_name(faker.name().fullName())
+                        .documentNumber(faker.lorem().fixedString(2).concat(faker.number().digits(7)))
+                        .fullName(faker.name().fullName())
                         .surname(faker.name().lastName())
                         .name(faker.name().firstName())
-                        .middle_name(faker.name().lastName())
-                        .birth_date(faker.date().birthday())
+                        .middleName(faker.name().lastName())
+                        .birthDate(faker.date().birthday())
                         .gender(getRandomGender())
-                        .registration_place_id(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
+                        .registrationPlace(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
                         .enabled(true)
                         .build()
                 );
@@ -188,16 +189,16 @@ public class PreloadDatabaseWithData {
                 patientList.add(Patient.builder()
                         .inn(returnUniqueINN(administratorRepo, doctorRepo, patientRepo))
                         .password(passwordEncoder.encode("123"))
-                        .document_number("ID".concat(faker.number().digits(7)))
-                        .full_name(faker.name().fullName())
+                        .documentNumber("ID".concat(faker.number().digits(7)))
+                        .fullName(faker.name().fullName())
                         .surname(faker.name().lastName())
                         .name(faker.name().firstName())
-                        .middle_name(faker.name().lastName())
-                        .birth_date(faker.date().birthday())
+                        .middleName(faker.name().lastName())
+                        .birthDate(faker.date().birthday())
                         .gender(getRandomGender())
-                        .role_id(roleRepo.findRoleById(Long.parseLong("3")))
-                        .registration_place_id(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
-                        .hospital_id(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                        .role(roleRepo.findRoleById(Long.parseLong("3")))
+                        .registrationPlace(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
+                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
                         .enabled(true)
                         .build()
                 );
@@ -210,7 +211,7 @@ public class PreloadDatabaseWithData {
                 journalList.add(Journal.builder()
                         .doctor(doctorRepo.findAll().get(rn.nextInt(doctorRepo.findAll().size())))
                         .registrar(doctorRepo.findAll().get(rn.nextInt(doctorRepo.findAll().size())))
-                        .registration_type(registrationTypeRepo.findAll().get(rn.nextInt(registrationTypeRepo.findAll().size())))
+                        .registrationType(registrationTypeRepo.findAll().get(rn.nextInt(registrationTypeRepo.findAll().size())))
                         .patient(patientRepo.findAll().get(rn.nextInt(patientRepo.findAll().size())))
                         .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
                         .dateTime(LocalDateTime.now())
