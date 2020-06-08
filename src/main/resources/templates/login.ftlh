@@ -10,7 +10,7 @@
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
 
-            <h3 class="mx-auto">Войти</h3>
+            <h3 class="text-center">Войти</h3>
             <div class="form-group">
                 <label>Введите ИНН:</label>
                 <input type="text" name="username" class="form-control" placeholder="ИНН" autofocus>
