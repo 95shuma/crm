@@ -20,10 +20,10 @@ public class DoctorRegisterForm {
     private String password = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String document_number = "";
+    private String documentNumber = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String full_name = "";
+    private String fullName = "";
 
     @NotBlank(message = "Обязательное поле")
     private String name = "";
@@ -32,24 +32,24 @@ public class DoctorRegisterForm {
     private String surname = "";
 
     @NotBlank(message = "Не обязательное поле")
-    private String middle_name = "";
+    private String middleName = "";
 
     @NotBlank(message = "Обязательное поле")
-    private Date birth_date = null;
+    private Date birthDate = null;
 
     @NotBlank(message = "Обязательное поле")
     private String gender = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String registration_place_id = "";
+    private String registrationPlaceId = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String position_id = "";
+    private String positionId = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String hospital_id = "";
+    private String hospitalId = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String role_id = "";
+    private String roleId = "";
 
 }

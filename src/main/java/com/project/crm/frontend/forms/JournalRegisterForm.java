@@ -19,7 +19,7 @@ public class JournalRegisterForm {
 
     private String hospital = "";
 
-    private String registration_type = "";
+    private String registrationType = "";
 
     @NotBlank(message = "Обязательное поле")
     private String reason = "";

@@ -20,7 +20,7 @@ public class AdminHospitalRegisterForm {
     private String password = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String document_number = "";
+    private String documentNumber = "";
 
     @NotBlank(message = "Обязательное поле")
     private String name = "";
@@ -29,14 +29,14 @@ public class AdminHospitalRegisterForm {
     private String surname = "";
 
     @NotBlank(message = "Не обязательное поле")
-    private String middle_name = "";
+    private String middleName = "";
 
     @NotBlank(message = "Обязательное поле")
-    private Date birth_date = null;
+    private Date birthDate = null;
 
     @NotBlank(message = "Обязательное поле")
     private String gender = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String role_id = "";
+    private String roleId = "";
 }
