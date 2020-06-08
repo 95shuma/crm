@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 public class RegistrationPlaceService {
 
-    @Autowired
     RegistrationPlaceRepo registrationPlaceRepo;
 
     public List<RegistrationPlace> getAll(){
@@ -22,8 +21,8 @@ public class RegistrationPlaceService {
     public void save(String name, String code_place, Integer groupCode){
         RegistrationPlace registrationPlace = RegistrationPlace.builder()
                 .name(name)
-                .code_place(code_place)
-                .group_code(groupCode)
+                .codePlace(code_place)
+                .groupCode(groupCode)
                 .build();
         registrationPlaceRepo.save(registrationPlace);
     }

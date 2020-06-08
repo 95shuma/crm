@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class RoleService {
-    @Autowired
+
     RoleRepo roleRepo;
 
     public List<Role> getAll(){

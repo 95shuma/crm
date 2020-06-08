@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class RegistrationTypeService {
-    @Autowired
+
     RegistrationTypeRepo registrationTypeRepo;
 
     public List<RegistrationType> getAll(){

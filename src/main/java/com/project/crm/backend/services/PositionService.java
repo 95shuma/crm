@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class PositionService {
-    @Autowired
+
     PositionRepo positionRepo;
 
     public List<Position> getAll(){

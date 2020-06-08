@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class HospitalService {
 
-    @Autowired
     HospitalRepo hospitalRepo;
 
     public List<Hospital> getAll(){

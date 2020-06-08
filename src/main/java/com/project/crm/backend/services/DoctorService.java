@@ -3,16 +3,11 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.model.Doctor;
 import com.project.crm.backend.model.catalog.HospitalsDoctor;
-import com.project.crm.backend.model.catalog.RegistrationPlace;
 import com.project.crm.backend.repository.DoctorRepo;
 import com.project.crm.frontend.forms.DoctorRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.Date;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -34,22 +29,22 @@ public class DoctorService {
         var doctor = Doctor.builder()
                 .inn(doctorRegisterForm.getInn())
                 .password(encoder.encode(doctorRegisterForm.getPassword()))
-                .document_number(doctorRegisterForm.getDocument_number())
-                .full_name(doctorRegisterForm.getFull_name())
+                .documentNumber(doctorRegisterForm.getDocumentNumber())
+                .fullName(doctorRegisterForm.getFullName())
                 .name(doctorRegisterForm.getName())
                 .surname(doctorRegisterForm.getSurname())
-                .middle_name(doctorRegisterForm.getMiddle_name())
-                .birth_date(doctorRegisterForm.getBirth_date())
+                .middleName(doctorRegisterForm.getMiddleName())
+                .birthDate(doctorRegisterForm.getBirthDate())
                 .gender(doctorRegisterForm.getGender())
-                .registration_place_id(registrationPlaceService.getByName(doctorRegisterForm.getRegistration_place_id()))
+                .registrationPlace(registrationPlaceService.getByName(doctorRegisterForm.getRegistrationPlaceId()))
                 .build();
         repo.save(doctor);
 
         var doctor_hospital = HospitalsDoctor.builder()
                 .doctor(doctor)
-                .role(roleService.getByName(doctorRegisterForm.getRole_id()))
-                .hospital(hospitalService.getByName(doctorRegisterForm.getHospital_id()))
-                .position(positionService.getByName(doctorRegisterForm.getPosition_id()))
+                .role(roleService.getByName(doctorRegisterForm.getRoleId()))
+                .hospital(hospitalService.getByName(doctorRegisterForm.getHospitalId()))
+                .position(positionService.getByName(doctorRegisterForm.getPositionId()))
                 .build();
 
         hospitalsDoctorService.save(doctor_hospital);
