@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JournalRepo extends JpaRepository<Journal, Long> {
-    List<Journal> findByDoctor_Id(Long id);
-    List<Journal> findByPatient_Id(Long id);
+    List<Journal> findByDoctorId(Long id);
+    List<Journal> findByPatientId(Long id);
 }
