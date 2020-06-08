@@ -12,6 +12,7 @@ import java.security.Principal;
 @RequestMapping
 @AllArgsConstructor
 public class LoginController {
+
     private final AdministratorService administratorService;
     private final HospitalsDoctorService hospitalsDoctorService;
 

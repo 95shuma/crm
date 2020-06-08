@@ -10,13 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping
 @AllArgsConstructor
 public class RegisterController {
 
@@ -57,15 +55,15 @@ public class RegisterController {
     }
 
     @GetMapping("/admin")
-    public String getAdmin(){ return "admin-page";}
+    public String getAdmin(){ return "adminPage";}
 
     @GetMapping("/admin/reg-admin-hospital")
-    public String regAdminHospital() {return "reg-admin-hospital";}
+    public String regAdminHospital() {return "regAdminHospital";}
 
     @GetMapping("/admin/reg-hospital")
     public String regHospital(Model model){
         model.addAttribute("places",registrationPlaceService.getAll());
-        return "reg-hospital";
+        return "regHospital";
     }
 
     @PostMapping("/doctorRegister")
@@ -114,10 +112,10 @@ public class RegisterController {
     }
 
     @PostMapping("/admin/reg-hospital")
-    public String addHospital(@RequestParam("name") String name, @RequestParam("place_id") Long place_id,
-                              @RequestParam("street") String street, @RequestParam("house_num") String house_num){
+    public String addHospital(@RequestParam String name, @RequestParam Long placeId,
+                              @RequestParam String street, @RequestParam String houseNum){
 
-        hospitalService.save(name, registrationPlaceService.getById(place_id), street+" "+house_num);
+        hospitalService.save(name, registrationPlaceService.getById(placeId), street+" "+houseNum);
 
         return "redirect:/admin";
     }

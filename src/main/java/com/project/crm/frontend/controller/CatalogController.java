@@ -9,13 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping
 @AllArgsConstructor
-public class DirectoryController {
+public class CatalogController {
 
     private final PositionService positionService;
     private final RegistrationTypeService registrationTypeService;
@@ -30,17 +28,17 @@ public class DirectoryController {
     @GetMapping("/registration_types")
     public String registrationTypePage(Model model){
         model.addAttribute("registration_types", registrationTypeService.getAll());
-        return "registration_types";
+        return "registrationTypes";
     }
     @GetMapping("/admin/create-role")
     public String rolePage(Model model){
         model.addAttribute("roles",roleService.getAll());
-        return "create-role";
+        return "createRole";
     }
     @GetMapping("/admin/create-reg-place")
     public String placePage(Model model){
         model.addAttribute("places",registrationPlaceService.getAll());
-        return "create-reg-place";
+        return "createRegPlace";
     }
 
     @PostMapping("/position")
@@ -59,9 +57,9 @@ public class DirectoryController {
         return "redirect:/admin/create-role";
     }
     @PostMapping("/admin/addPlace")
-    public String addPlace(@RequestParam("name") String name, @RequestParam("code_place") String code_place,
+    public String addPlace(@RequestParam("name") String name, @RequestParam String codePlace,
                            @RequestParam("groupCode") Integer groupCode){
-        registrationPlaceService.save(name, code_place, groupCode);
+        registrationPlaceService.save(name, codePlace, groupCode);
         return "redirect:/admin/create-reg-place";
     }
 }

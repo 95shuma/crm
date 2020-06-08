@@ -14,7 +14,6 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping
 @AllArgsConstructor
 public class PatientController {
 

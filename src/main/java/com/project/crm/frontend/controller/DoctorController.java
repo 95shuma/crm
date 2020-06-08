@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @Controller
-@RequestMapping
 @AllArgsConstructor
 public class DoctorController {
 
