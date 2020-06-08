@@ -7,7 +7,7 @@
             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
         </#if>
         <h4>Введите ваш ИНН</h4>
-        <input name="inn" value="">
+        <input name="inn">
         <h4>Выберите ЛПУ</h4>
         <select name="hospital">
             <#if hospitals??>
@@ -20,15 +20,15 @@
         <select name="doctor">
             <#if hospitalsDoctors??>
                 <#list hospitalsDoctors as hospitalsDoctors>
-                    <option name="doctor" value="${hospitalsDoctors.doctor.inn}">${hospitalsDoctors.doctor.full_name} - ${hospitalsDoctors.role.name} - ${hospitalsDoctors.position.name} - ${hospitalsDoctors.hospital.name}</option>
+                    <option name="doctor" value="${hospitalsDoctors.doctor.inn}">${hospitalsDoctors.doctor.fullName} - ${hospitalsDoctors.role.name} - ${hospitalsDoctors.position.name} - ${hospitalsDoctors.hospital.name}</option>
                 </#list>
             </#if>
         </select>
         <h4>Выберите тип регистрации</h4>
-        <select name="registration_type">
+        <select name="registrationType">
             <#if registrationTypes??>
                 <#list registrationTypes as registrationTypes>
-                    <option name="registration_type">${registrationTypes.name}</option>
+                    <option>${registrationTypes.name}</option>
                 </#list>
             </#if>
         </select>

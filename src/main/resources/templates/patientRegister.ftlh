@@ -11,17 +11,17 @@
         <h4>Введите пароль пациента</h4>
         <input type="text" name="password" value="${(reg.password)!''}">
         <h4>Введите номер паспорта пациента</h4>
-        <input type="text" name="document_number" value="${(reg.document_number)!''}">
+        <input type="text" name="documentNumber" value="${(reg.documentNumber)!''}">
         <h4>Введите ФИО пациента</h4>
-        <input type="text" name="full_name" value="${(reg.full_name)!''}">
+        <input type="text" name="fullName" value="${(reg.fullName)!''}">
         <h4>Введите имя пациента</h4>
         <input type="text" name="name" value="${(reg.name)!''}">
         <h4>Введите фамилия пациента</h4>
         <input type="text" name="surname" value="${(reg.surname)!''}">
         <h4>Введите отчество пациента</h4>
-        <input type="text" name="middle_name" value="${(reg.middle_name)!''}">
+        <input type="text" name="middleName" value="${(reg.middleName)!''}">
         <h4>Введите дата рождения пациента</h4>
-        <input type="date" name="birth_date" value="${(reg.birth_date)!''}">
+        <input type="date" name="birthDate" value="${(reg.birthDate)!''}">
         <div>
             <h4>Введите пол пациента</h4>
             <input type="radio" id="genderForMen" name="gender" value="${'Мужской'}">
@@ -30,18 +30,18 @@
             <label for="genderForWomen">Женский</label>
         </div>
         <h4>Введите место регистрации пациента</h4>
-        <select id="registration_place_id" name="registration_place_id">
+        <select id="registrationPlaceId" name="registrationPlaceId">
             <#if registrationPlaces??>
                 <#list registrationPlaces as rp>
-                    <option name="registration_place_id">${rp.name}</option>
+                    <option>${rp.name}</option>
                 </#list>
             </#if>
         </select>
         <h4>Введите место лечения пациента</h4>
-        <select id="hospital_id" name="hospital_id">
+        <select id="hospitalId" name="hospitalId">
             <#if hospitals??>
                 <#list hospitals as hospital>
-                    <option name="hospital_id">${hospital.name}</option>
+                    <option>${hospital.name}</option>
                 </#list>
             </#if>
         </select>

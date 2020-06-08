@@ -11,17 +11,17 @@
         <h4>Введите пароль врача</h4>
         <input type="text" name="password" value="${(reg.password)!''}">
         <h4>Введите номер паспорта врача</h4>
-        <input type="text" name="document_number" value="${(reg.document_number)!''}">
+        <input type="text" name="documentNumber" value="${(reg.documentNumber)!''}">
         <h4>Введите ФИО врача</h4>
-        <input type="text" name="full_name" value="${(reg.full_name)!''}">
+        <input type="text" name="full_name" value="${(reg.fullName)!''}">
         <h4>Введите имя врача</h4>
         <input type="text" name="name" value="${(reg.name)!''}">
         <h4>Введите фамилия врача</h4>
         <input type="text" name="surname" value="${(reg.surname)!''}">
         <h4>Введите отчество врача</h4>
-        <input type="text" name="middle_name" value="${(reg.middle_name)!''}">
+        <input type="text" name="middleName" value="${(reg.middleName)!''}">
         <h4>Введите дата рождения врача</h4>
-        <input type="date" name="birth_date" value="${(reg.birth_date)!''}">
+        <input type="date" name="birthDate" value="${(reg.birthDate)!''}">
         <div>
             <h4>Выберите пол врача</h4>
             <input type="radio" id="genderForMen" name="gender" value="${'Мужской'}">
@@ -30,36 +30,36 @@
             <label for="genderForWomen">Женский</label>
         </div>
         <h4>Выберите место регистрации врача</h4>
-        <select id="registration_place_id" name="registration_place_id">
+        <select id="registrationPlaceId" name="registrationPlaceId">
             <#if registrationPlaces??>
                 <#list registrationPlaces as registrationPlaces>
-                    <option name="registration_place_id">${registrationPlaces.name}</option>
+                    <option>${registrationPlaces.name}</option>
                 </#list>
             </#if>
         </select>
         <h4>Выберите должность врача</h4>
-        <select id="position_id" name="position_id">
+        <select id="positionId" name="positionId">
             <#if positions??>
                 <#list positions as position>
-                    <option name="position_id">${position.name}</option>
+                    <option>${position.name}</option>
                 </#list>
             </#if>
         </select>
         <h4>Выберите роль врача</h4>
-        <select id="role_id" name="role_id">
+        <select id="roleId" name="roleId">
             <#if roles??>
                 <#list roles as role>
                         <#if role.id == 2 || role.id == 4>
-                            <option name="role_id">${role.name}</option>
+                            <option>${role.name}</option>
                         </#if>
                 </#list>
             </#if>
         </select>
         <h4>Выберите ЛПУ врача</h4>
-        <select id="hospital_id" name="hospital_id">
+        <select id="hospitalId" name="hospitalId">
             <#if hospitals??>
                 <#list hospitals as hospital>
-                    <option name="hospital_id">${hospital.name}</option>
+                    <option>${hospital.name}</option>
                 </#list>
             </#if>
         </select>

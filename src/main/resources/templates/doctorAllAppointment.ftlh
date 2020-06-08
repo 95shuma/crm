@@ -28,13 +28,13 @@
                     ${journal.dateTime}
                 </th>
                 <th>
-                    ${journal.patient.full_name}
+                    ${journal.patient.fullName}
                 </th>
                 <th>
                     ${journal.patient.gender}
                 </th>
                 <th>
-                    ${journal.patient.birth_date}
+                    ${journal.patient.birthDate}
                 </th>
                 <th>
                     ${journal.reason}

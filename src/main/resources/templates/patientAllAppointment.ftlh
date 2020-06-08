@@ -28,13 +28,13 @@
                     ${journal.dateTime}
                 </th>
                 <th>
-                    ${journal.doctor.full_name}
+                    ${journal.doctor.fullName}
                 </th>
                 <th>
                     ${journal.hospital.name} - ${journal.hospital.address}
                 </th>
                 <th>
-                    ${journal.registration_type.name}
+                    ${journal.registrationType.name}
                 </th>
                 <th>
                     ${journal.reason}

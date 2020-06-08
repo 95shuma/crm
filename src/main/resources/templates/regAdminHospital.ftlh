@@ -10,15 +10,15 @@
                     </#if>
                     <p><input minlength="14" type="text" name="inn" placeholder="ИНН"></p>
                     <p><input minlength="8" type="password" name="password" placeholder="Пароль"></p>
-                    <p><input minlength="5" type="text" name="document_number" placeholder="Номер документа"></p>
+                    <p><input minlength="5" type="text" name="documentNumber" placeholder="Номер документа"></p>
                     <p><input minlength="1" type="text" name="name" placeholder="Имя"></p>
                     <p><input minlength="1" type="text" name="surname" placeholder="Фамилия"></p>
-                    <p><input type="text" name="middle_name" placeholder="Отчество"></p>
-                    <p><input type="date" name="birth_date" value="2020-06-06"></p>
+                    <p><input type="text" name="middleName" placeholder="Отчество"></p>
+                    <p><input type="date" name="birthDate" value="2020-06-06"></p>
                     <p><b>Ваш пол:</b></p>
                     <p><input type="radio" name="gender" value="${'Мужской'}"> Мужской</p>
                     <p><input type="radio" name="gender" value="${'Женский'}"> Женский</p>
-                    <input type="hidden" name="role_id" value="4">
+                    <input type="hidden" name="roleId" value="4">
                     <p><button type="submit">Добавить</button></p>
                 </form>
             </div>
