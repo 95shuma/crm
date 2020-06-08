@@ -36,11 +36,11 @@ public class Patient {
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 64)
-    private String document_number;
+    private String documentNumber;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 256)
-    private String full_name;
+    private String fullName;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 64)
@@ -52,11 +52,11 @@ public class Patient {
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 64)
-    private String middle_name;
+    private String middleName;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column
-    private Date birth_date;
+    private Date birthDate;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 64)
@@ -64,15 +64,15 @@ public class Patient {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role role_id;
+    private Role role;
 
     @ManyToOne
     @JoinColumn(name = "registration_place_id")
-    private RegistrationPlace registration_place_id;
+    private RegistrationPlace registrationPlace;
 
     @ManyToOne
     @JoinColumn(name = "hospital_id")
-    private Hospital hospital_id;
+    private Hospital hospital;
 
     @OneToMany(mappedBy = "patient")
     private Set<Journal> journals;

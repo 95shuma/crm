@@ -34,11 +34,11 @@ public class Administrator {
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 64)
-    private String document_number;
+    private String documentNumber;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 256)
-    private String full_name;
+    private String fullName;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 64)
@@ -50,11 +50,11 @@ public class Administrator {
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 64)
-    private String middle_name;
+    private String middleName;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column
-    private Date birth_date;
+    private Date birthDate;
 
     @NotBlank(message = "Это поле не должно быть пустым")
     @Column(length = 64)

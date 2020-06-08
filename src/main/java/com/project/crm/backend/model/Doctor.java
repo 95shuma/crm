@@ -32,11 +32,11 @@ public class Doctor {
 
     @NotBlank(message = "Обязательное поле")
     @Column(length = 64)
-    private String document_number;
+    private String documentNumber;
 
     @NotBlank(message = "Обязательное поле")
     @Column(length = 256)
-    private String full_name;
+    private String fullName;
 
     @NotBlank(message = "Обязательное поле")
     @Column(length = 64)
@@ -48,11 +48,11 @@ public class Doctor {
 
     @NotBlank(message = "Не обязательное поле")
     @Column(length = 64)
-    private String middle_name;
+    private String middleName;
 
     @NotBlank(message = "Обязательное поле")
     @Column
-    private Date birth_date;
+    private Date birthDate;
 
     @NotBlank(message = "Обязательное поле")
     @Column(length = 64)
@@ -61,7 +61,7 @@ public class Doctor {
     @NotBlank(message = "Обязательное поле")
     @ManyToOne
     @JoinColumn(name = "registration_place_id")
-    private RegistrationPlace registration_place_id;
+    private RegistrationPlace registrationPlace;
 
 
     @OneToMany(mappedBy = "doctor")

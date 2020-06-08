@@ -17,8 +17,8 @@ public class RegistrationPlace {
 
     private String name;
 
-    private String code_place;
+    private String codePlace;
 
-    private Integer group_code;
+    private Integer groupCode;
 
 }

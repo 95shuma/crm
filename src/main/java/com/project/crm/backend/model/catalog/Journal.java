@@ -33,7 +33,7 @@ public class Journal {
     private Doctor registrar;
 
     @ManyToOne @JoinColumn(name= "registration_type_id")
-    private RegistrationType registration_type;
+    private RegistrationType registrationType;
     @Column
     private LocalDateTime dateTime;
     @Column
