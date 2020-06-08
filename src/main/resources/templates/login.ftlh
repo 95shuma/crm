@@ -10,16 +10,16 @@
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
 
-            <h3>Login</h3>
+            <h3 class="mx-auto">Войти</h3>
             <div class="form-group">
                 <label>Введите ИНН:</label>
-                <input type="text" name="username" class="form-control mb-1" placeholder="INN" autofocus>
+                <input type="text" name="username" class="form-control" placeholder="ИНН" autofocus>
             </div>
             <div class="form-group">
                 <label>Введите пароль:</label>
-                <input type="password" name="password" class="form-control mb-1" placeholder="Password">
+                <input type="password" name="password" class="form-control" placeholder="Пароль">
             </div>
-            <button class="btn btn-outline-primary btn-block">Login</button>
+            <button class="btn btn-primary btn-block">Войти</button>
 
             <div>
                 <#if error!false >
