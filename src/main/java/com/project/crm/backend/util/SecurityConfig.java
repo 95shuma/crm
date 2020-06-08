@@ -52,10 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 + " from admins"
                 + " where inn = ?";
 
-        String fetchRolesQuery3 = "select a1.inn, a2.name"
-                + " from admins a1, roles a2"
-                + " where a1.role_id = a2.id"
-                + " and a1.inn = ?";
+        String fetchRolesQuery3 = "select a.inn, r.name"
+                + " from admins a, roles r"
+                + " where a.role_id = r.id"
+                + " and a.inn = ?";
 
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(fetchAdminsQuery)
@@ -63,14 +63,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource);
         // Войти как доктор
         String fetchDoctorsQuery = "select inn, password, enabled"
-                + " from doctor"
+                + " from doctors"
                 + " where inn = ?";
 
-        String fetchRolesQuery2 = "select a2.inn, a3.name"
-                + " from hospitals_doctor a1, doctor a2, roles a3"
-                + " where a1.doctor_id = a2.id"
-                + " and a1.role_id = a3.id"
-                + " and a2.inn = ?";
+        String fetchRolesQuery2 = "select d.inn, r.name"
+                + " from hospitals_doctors hd, doctors d, roles r"
+                + " where hd.doctor_id = d.id"
+                + " and hd.role_id = r.id"
+                + " and d.inn = ?";
 
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(fetchDoctorsQuery)
@@ -82,10 +82,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 + " from patients"
                 + " where inn = ?";
 
-        String fetchRolesQuery = "select a1.inn, a2.name"
-                + " from patients a1, roles a2"
-                + " where a1.role_id = a2.id"
-                + " and a1.inn = ?";
+        String fetchRolesQuery = "select p.inn, r.name"
+                + " from patients p, roles r"
+                + " where p.role_id = r.id"
+                + " and p.inn = ?";
 
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(fetchPatientsQuery)
