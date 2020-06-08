@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Entity
+@Table(name = "doctors")
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

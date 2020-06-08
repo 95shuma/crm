@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Table(name = "hospitals_doctor")
+@Table(name = "hospitals_doctors")
 public class HospitalsDoctor {
 
     @Id
