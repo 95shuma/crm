@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/register")
+                .logoutSuccessUrl("/login")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true);
 
