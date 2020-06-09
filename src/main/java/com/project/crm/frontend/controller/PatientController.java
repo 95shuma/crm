@@ -23,6 +23,7 @@ public class PatientController {
     private final RegistrationTypeService registrationTypeService;
     private final HospitalsDoctorService hospitalsDoctorService;
     private final UserService userService;
+    private final PatientService patientService;
 
     @GetMapping("/patient")
     public String patientUIPage(Model model, Principal principal){
@@ -60,6 +61,13 @@ public class PatientController {
 
         return "redirect:/patientAppointmentCheck";
 
+    }
+    @GetMapping("/patientAllAppointment")
+    public String patientAllAppointmentPage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("journal", journalService.getByPatient(patientService.getByInn(principal.getName()).getId()));
+        return "patientAllAppointment";
     }
     @GetMapping("/patientAppointmentCheck")
     public String patientAppointmentCheckPage(Model model, Principal principal){
