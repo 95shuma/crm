@@ -28,7 +28,7 @@
                         <p><label for="lpuHouseNum" class="col-form-label">Номер дома</label></p>
                         <input class="form-control" id="lpuHouseNum" minlength="1" maxlength="45" type="text" name="houseNum" placeholder="Номер дома">
                     </div>
-                    <button class="btn btn-primary" type="submit">Добавить</button>
+                    <button class="btn btn-primary w-100" type="submit">Добавить</button>
                 </form>
             </div>
         </div>

@@ -44,7 +44,7 @@
                             <label for="female" class="form-check-label">Женский</label></p>
                     </div>
                     <input type="hidden" name="roleId" value="4">
-                    <p><button type="submit" class="btn btn-primary">Добавить</button></p>
+                    <p><button type="submit" class="btn btn-primary w-100">Добавить</button></p>
                 </form>
             </div>
         </div>
