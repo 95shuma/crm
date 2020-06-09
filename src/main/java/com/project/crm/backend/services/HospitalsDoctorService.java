@@ -21,7 +21,7 @@ public class HospitalsDoctorService {
         boolean rtn = false;
         var hd = repo.getAllByDoctorInn(inn);
         for (HospitalsDoctor hospitalsDoctor: hd){
-            if (hospitalsDoctor.getRole().getId() == Long.parseLong(Constants.ADMIN_HCF_ROLE_ID)){
+            if (hospitalsDoctor.getRole().getId() == Long.parseLong(Constants.ADMIN_HCF)){
                 rtn = true;
             }
         }
@@ -32,7 +32,7 @@ public class HospitalsDoctorService {
         boolean rtn = false;
         var hd = repo.getAllByDoctorInn(inn);
         for (HospitalsDoctor hospitalsDoctor: hd){
-            if (hospitalsDoctor.getRole().getId() == Long.parseLong(Constants.DOCTOR_ROLE_ID)){
+            if (hospitalsDoctor.getRole().getId() == Long.parseLong(Constants.DOCTOR)){
                 rtn = true;
             }
         }
