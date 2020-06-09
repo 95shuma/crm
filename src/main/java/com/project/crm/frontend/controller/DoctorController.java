@@ -26,44 +26,11 @@ public class DoctorController {
 
         return "doctor";
     }
-    @GetMapping("/doctorAllAppointment/{inn}")
-    public String doctorAllAppointmentPage(Model model, @PathVariable String inn,
-                                           Principal principal){
-
-        userService.checkUserPresence(model, principal);
-
-        model.addAttribute("journal", journalService.getByDoctor(doctorService.getByInn(inn).getId()));
-        return "doctorAllAppointment";
-    }
-    @GetMapping("/patientAllAppointment/{inn}")
-    public String patientAllAppointmentPage(Model model, @PathVariable String inn,
-                                            Principal principal){
-
-        userService.checkUserPresence(model, principal);
-
-        model.addAttribute("journal", journalService.getByPatient(patientService.getByInn(inn).getId()));
-        return "patientAllAppointment";
-    }
     @GetMapping("/doctorAllAppointment")
     public String doctorAllAppointmentPage(Model model, Principal principal) {
 
         userService.checkUserPresence(model, principal);
-
+        model.addAttribute("journal", journalService.getByDoctor(doctorService.getByInn(principal.getName()).getId()));
         return "doctorAllAppointment";
-    }
-    @GetMapping("/patientAllAppointment")
-    public String patientAllAppointmentPage(Model model, Principal principal){
-
-        userService.checkUserPresence(model, principal);
-
-        return "patientAllAppointment";
-    }
-    @PostMapping("/doctorAllAppointment")
-    public String patientAllAppointment(@RequestParam("inn") String inn){
-        return "redirect:/doctorAllAppointment/" + inn;
-    }
-    @PostMapping("/patientAllAppointment")
-    public String doctorAllAppointment(@RequestParam("inn") String inn){
-        return "redirect:/patientAllAppointment/" + inn;
     }
 }
