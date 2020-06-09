@@ -1,57 +1,55 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <#include "partials/header.ftlh">
-            <table border="1px">
-                <tr>
-                    <th>
-                        id
-                    </th>
-                    <th>
-                        Способ регистрации пациентов
-                    </th>
-                </tr>
-                <#list registration_types as registration_types>
-                <tr>
-                    <th>
-                        ${registration_types.id}
-                    </th>
-                    <th>
-                        ${registration_types.name}
-                    </th>
-                </tr>
-                </#list>
-            </table>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Добавить новый способ регистрации пациентов
-        </button>
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Новый способ регистрации</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="commentForm" action="/registration_type" method="post">
-                            <#if _csrf??>
-                                <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
-                            </#if>
-                            <p><input placeholder="Введите новый способ" name="name"></p>
-                            <button type="submit">Добавить</button>
-                        </form>
-                    </div>
+    <table border="1px">
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                Способ регистрации пациентов
+            </th>
+        </tr>
+        <#list registration_types as registration_types>
+        <tr>
+            <th>
+                ${registration_types.id}
+            </th>
+            <th>
+                ${registration_types.name}
+            </th>
+        </tr>
+        </#list>
+    </table>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Добавить новый способ регистрации пациентов
+    </button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Новый способ регистрации</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="commentForm" action="/registration_type" method="post">
+                        <#if _csrf??>
+                            <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
+                        </#if>
+                        <p><input placeholder="Введите новый способ" name="name"></p>
+                        <button type="submit">Добавить</button>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <div>
-            <#if errors??>
-                <p>Входные данные с ошибками!</p>
-                <#list errors as fieldError>
-                    <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
-                </#list>
-            </#if>
-        </div>
+    </div>
+    <div>
+        <#if errors??>
+            <p>Входные данные с ошибками!</p>
+            <#list errors as fieldError>
+                <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
+            </#list>
+        </#if>
+    </div>
 <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

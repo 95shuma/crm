@@ -1,7 +1,6 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <#include "partials/header.ftlh">
     <#if journal??>
         <h4>Ваши записи</h4>
         <table border="1px">

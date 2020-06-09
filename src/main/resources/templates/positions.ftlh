@@ -1,7 +1,6 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <#include "partials/header.ftlh">
             <table border="1px">
                 <tr>
                     <th>

@@ -1,7 +1,6 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <#include "partials/header.ftlh">
     <form action="/patientAppointment" method="post">
         <#if _csrf??>
             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
