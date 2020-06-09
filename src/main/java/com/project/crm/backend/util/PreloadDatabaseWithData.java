@@ -113,7 +113,7 @@ public class PreloadDatabaseWithData {
             //-->======================== registration_types ========================
             //--<======================== roles ========================
             List <Role> roleList = new ArrayList<>();
-            String[] roles = {"cупер админ", "доктор", "админ ЛПУ", "млад мед персонал", "пациент"};
+            String[] roles = {Constants.ADMIN, Constants.ADMIN_HCF, Constants.DOCTOR, Constants.JMO, Constants.PATIENT};
             for (int i=0; i<roles.length; i++){
                 roleRepo.insertRoleWithId(Long.parseLong(Integer.toString(i+1)), roles[i]);
             }
@@ -149,8 +149,8 @@ public class PreloadDatabaseWithData {
             String[] adminName = {" ", faker.name().lastName(), faker.name().firstName(), faker.name().lastName()};
             administratorRepo.save(Administrator.builder()
                     .id(Long.parseLong("1"))
-                    .inn("admin")
-                    .password(passwordEncoder.encode("admin"))
+                    .inn("11111111111111")
+                    .password(passwordEncoder.encode("123"))
                     .documentNumber("ID".concat(faker.number().digits(7)))
                     .fullName(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
                     .surname(adminName[1])
@@ -166,43 +166,27 @@ public class PreloadDatabaseWithData {
             //--<======================== Doctor ========================
             List <Doctor> doctorList = new ArrayList<>();
             for (int i = 0; i < (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9)); i++){           //Каждому ЛПУ нужен один Админ ЛПУ, //Каждому ЛПУ нужно 5 медработников, //Каждому ЛПУ нужно 9 врачей
-                doctorList.add(Doctor.builder()
-                        .inn(returnUniqueINN(administratorRepo, doctorRepo, patientRepo))
-                        .password(passwordEncoder.encode("123"))
-                        .documentNumber(faker.lorem().fixedString(2).concat(faker.number().digits(7)))
-                        .fullName(faker.name().fullName())
-                        .surname(faker.name().lastName())
-                        .name(faker.name().firstName())
-                        .middleName(faker.name().lastName())
-                        .birthDate(faker.date().birthday())
-                        .gender(getRandomGender())
-                        .registrationPlace(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
-                        .enabled(true)
-                        .build()
-                );
+                if(i == 0)
+                    createDoctor(doctorList , registrationPlaceRepo, "22222222222222");
+                else if(i == 3)
+                    createDoctor(doctorList , registrationPlaceRepo, "33333333333333");
+                else if(i == 6)
+                    createDoctor(doctorList , registrationPlaceRepo, "44444444444444");
+                else
+                    createDoctor(doctorList , registrationPlaceRepo, returnUniqueINN(administratorRepo, doctorRepo, patientRepo));
             }
             doctorRepo.saveAll(doctorList);
             //-->======================== Doctor ========================
             //--<======================== Patient ========================
             List <Patient> patientList = new ArrayList<>();
             for (int i = 0; i < qty; i++){
-                patientList.add(Patient.builder()
-                        .inn(returnUniqueINN(administratorRepo, doctorRepo, patientRepo))
-                        .password(passwordEncoder.encode("123"))
-                        .documentNumber("ID".concat(faker.number().digits(7)))
-                        .fullName(faker.name().fullName())
-                        .surname(faker.name().lastName())
-                        .name(faker.name().firstName())
-                        .middleName(faker.name().lastName())
-                        .birthDate(faker.date().birthday())
-                        .gender(getRandomGender())
-                        .role(roleRepo.findRoleById(Long.parseLong("3")))
-                        .registrationPlace(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
-                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
-                        .enabled(true)
-                        .build()
-                );
+
+                if (i == 0)
+                    createPatient(patientList, registrationPlaceRepo, hospitalRepo, "55555555555555");
+                else
+                    createPatient(patientList, registrationPlaceRepo, hospitalRepo, returnUniqueINN(administratorRepo, doctorRepo, patientRepo));
             }
+
             patientRepo.saveAll(patientList);
             //-->======================== Patient ========================
             //--<======================== Journal ========================
@@ -228,14 +212,14 @@ public class PreloadDatabaseWithData {
                 //Каждому ЛПУ нужно 5+ медработников
                 //Каждому ЛПУ нужно 9+ врачей
             AtomicInteger j = new AtomicInteger(0);
-            hospitalRepo.findAll().stream().forEach(hospital -> {
+            hospitalRepo.findAll().forEach(hospital -> {
                 for (int i = 1; i <= (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9))/hospitalRepo.findAll().size(); i++){
                     if (i == 1){
                         hospitalsDoctorsList.add(HospitalsDoctor.builder()
                                 .doctor(doctorList.get(j.get()))
                                 .hospital(hospital)
                                 .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(3))))
+                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(2))))
                                 .build()
                         );
                     } else if (i > 1 && i <=6){
@@ -243,7 +227,7 @@ public class PreloadDatabaseWithData {
                                 .doctor(doctorList.get(j.get()))
                                 .hospital(hospital)
                                 .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(4))))
+                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(3))))
                                 .build()
                         );
                     } else {
@@ -251,7 +235,7 @@ public class PreloadDatabaseWithData {
                                 .doctor(doctorList.get(j.get()))
                                 .hospital(hospital)
                                 .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(2))))
+                                .role(roleRepo.findRoleById(Long.parseLong(Integer.toString(4))))
                                 .build()
                         );
                     }
@@ -263,5 +247,43 @@ public class PreloadDatabaseWithData {
             //-->======================== hospital_doctor ========================
 
         };
+    }
+    private void createDoctor(List<Doctor> doctorList, RegistrationPlaceRepo registrationPlaceRepo, String inn){
+
+        doctorList.add(Doctor.builder()
+                .inn(inn)
+                .password(passwordEncoder.encode("123"))
+                .documentNumber(faker.lorem().fixedString(2).concat(faker.number().digits(7)))
+                .fullName(faker.name().fullName())
+                .surname(faker.name().lastName())
+                .name(faker.name().firstName())
+                .middleName(faker.name().lastName())
+                .birthDate(faker.date().birthday())
+                .gender(getRandomGender())
+                .registrationPlace(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
+                .enabled(true)
+                .build()
+        );
+    }
+
+    private void createPatient(List<Patient> patientList, RegistrationPlaceRepo registrationPlaceRepo, HospitalRepo hospitalRepo, String inn){
+
+
+        patientList.add(Patient.builder()
+                .inn(inn)
+                .password(passwordEncoder.encode("123"))
+                .documentNumber("ID".concat(faker.number().digits(7)))
+                .fullName(faker.name().fullName())
+                .surname(faker.name().lastName())
+                .name(faker.name().firstName())
+                .middleName(faker.name().lastName())
+                .birthDate(faker.date().birthday())
+                .gender(getRandomGender())
+                .role(roleRepo.findRoleById(Long.parseLong("3")))
+                .registrationPlace(registrationPlaceRepo.findAll().get(rn.nextInt(registrationPlaceRepo.findAll().size())))
+                .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                .enabled(true)
+                .build()
+        );
     }
 }
