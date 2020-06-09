@@ -16,7 +16,7 @@
                         <p><label for="lpuPlaceId" class="col-form-label">Город / Село / ПГТ</label></p>
                         <select class="form-control" id="lpuPlaceId" name="placeId">
                             <#list places as place>
-                                <option>${place.name}</option>
+                                <option value="${place.id}">${place.name}</option>
                             </#list>
                         </select>
                     </div>
