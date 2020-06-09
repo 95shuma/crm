@@ -1,9 +1,10 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <a href="/patientRegister"><button>Зарегистрировать пациента</button></a>
-    <a href="/doctorRegister"><button>Зарегистрировать врача</button></a>
-    <a href="/positions"><button>Редактировать должности врачей</button></a>
-    <a href="/registration_types"><button>Редактировать</button></a>
+    <h2>Панель администратора ЛПУ</h2>
+    <p><a href="/patientRegister"><button type="button" class="btn btn-primary">Зарегистрировать пациента</button></a></p>
+    <p><a href="/doctorRegister"><button  type="button" class="btn btn-primary">Зарегистрировать врача</button></a></p>
+    <p><a href="/positions"><button type="button" class="btn btn-primary">Редактировать должности врачей</button></a></p>
+    <p><a href="/registration_types"><button type="button" class="btn btn-primary">Редактировать</button></a></p>
     <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

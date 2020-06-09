@@ -62,7 +62,7 @@
                 </#list>
             </#if>
         </select>
-        <button type="submit">Зарегистрироваться</button>
+        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
         <div>
             <#if errors??>
                 <p>Входные данные с ошибками!</p>
