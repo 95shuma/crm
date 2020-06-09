@@ -48,7 +48,7 @@
         <select id="roleId" name="roleId">
             <#if roles??>
                 <#list roles as role>
-                        <#if role.id == 2 || role.id == 4>
+                        <#if role.id == 3 || role.id == 4>
                             <option>${role.name}</option>
                         </#if>
                 </#list>
