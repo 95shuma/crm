@@ -1,6 +1,7 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
+    <h3>Регистрация нового места</h3>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -12,7 +13,7 @@
         <tbody>
         <#list places as place>
             <tr>
-                <th scope="row">${place.id}</th>
+                <th scope="row">${place?counter}</th>
                 <td>${place.name}</td>
                 <td>${place.codePlace}</td>
             </tr>

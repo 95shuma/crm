@@ -1,11 +1,11 @@
 <#import "partials/main.ftlh" as main>
 <@main.renderWith scripts=[] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
-    <h1>Привет, администратор системы</h1>
+    <h3>Привет, администратор системы</h3>
     <br>
-    <h2>Основные функции</h2>
+    <h4>Основные функции</h4>
     <br>
     <p><a class="btn btn-info" href="/admin/reg-hospital" role="button">Добавить ЛПУ</a></p>
     <p><a class="btn btn-info" href="/admin/reg-admin-hospital" role="button">Добавить администратора ЛПУ</a></p>
-    <p><a class="btn btn-info" href="/admin/create-role" role="button">Добавить или отредактировать роль</a></p>
+    <!--<p><a class="btn btn-info" href="/admin/create-role" role="button">Добавить или отредактировать роль</a></p>-->
     <p><a class="btn btn-info" href="/admin/create-reg-place" role="button">Добавить или отредактировать место</a></p>
 </@main.renderWith>

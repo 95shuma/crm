@@ -12,7 +12,7 @@
         <#assign s = 0>
         <#list roles as role>
             <tr>
-                <th scope="row">${role.id}</th>
+                <th scope="row">${role?counter}</th>
                 <td>${role.name}</td>
             </tr>
         </#list>
