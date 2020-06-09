@@ -1,26 +1,23 @@
 <#import "partials/main.ftlh" as main />
 
-<@main.renderWith>
-    <#include "partials/header.ftlh">
-    <table border="1px">
-        <tr>
-            <th>
-                id
-            </th>
-            <th>
-                Роль
-            </th>
-        </tr>
-        <#list roles as role>
+<@main.renderWith styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
+    <!--<#include "partials/header.ftlh">-->
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <th>
-                    ${role.id}
-                </th>
-                <th>
-                    ${role.name}
-                </th>
+                <th scope="col">#</th>
+                <th scope="col">Роль</th>
             </tr>
-        </#list>
+        </thead>
+        <tbody>
+            <#assign s = 0>
+            <#list roles as role>
+                <tr>
+                    <th scope="row">${role.id}</th>
+                    <td>${role.name}</td>
+                </tr>
+            </#list>
+        </tbody>
     </table>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         Добавить новую роль

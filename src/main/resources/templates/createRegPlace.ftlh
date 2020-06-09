@@ -43,7 +43,7 @@
                             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                         </#if>
                         <p><input placeholder="Введите новое место" name="name"></p>
-                        <p><input placeholder="Введите новый код" name="codePlace"></p>
+                        <p><input placeholder="Введите новый код" name="code_place"></p>
                         <p><b>Выберите группу:</b></p>
                         <p><input type="radio" name="groupCode" value="${'0'}"> Город/Село</p>
                         <p><input type="radio" name="groupCode" value="${'1'}"> Страна</p>

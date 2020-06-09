@@ -9,13 +9,13 @@
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
                     <p><input minlength="5" maxlength="45" type="text" name="name" placeholder="Название ЛПУ"></p>
-                    <p><select name="placeId">
+                    <p><select name="place_id">
                             <#list places as place>
-                                <option>${place.name}</option>
+                                <option value="${place.id}">${place.name}</option>
                             </#list>
                         </select></p>
                     <p><input minlength="1" maxlength="45" type="text" name="street" placeholder="Название улицы"></p>
-                    <p><input minlength="1" maxlength="45" type="text" name="houseNum" placeholder="Номер дома"></p>
+                    <p><input minlength="1" maxlength="45" type="text" name="house_num" placeholder="Номер дома"></p>
                     <button type="submit">Добавить</button>
                 </form>
             </div>
