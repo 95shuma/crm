@@ -16,6 +16,10 @@ public class AdministratorService {
     private final PasswordEncoder encoder;
     private final RoleService roleService;
 
+    public Administrator getByInn(String inn){
+        return repo.findByInn(inn).get();
+    }
+
     public boolean existByInn(String inn){
         return repo.existsByInn(inn);
     }
