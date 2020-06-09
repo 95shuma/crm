@@ -1,32 +1,24 @@
 <#import "partials/main.ftlh" as main />
 
-<@main.renderWith>
-    <#include "partials/header.ftlh">
-    <table border="1px">
+<@main.renderWith styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
+    <!--<#include "partials/header.ftlh">-->
+    <table class="table table-striped">
+        <thead>
         <tr>
-            <th>
-                id
-            </th>
-            <th>
-                Название
-            </th>
-            <th>
-                Код
-            </th>
+            <th scope="col">#</th>
+            <th scope="col">Название</th>
+            <th scope="col">Код</th>
         </tr>
+        </thead>
+        <tbody>
         <#list places as place>
             <tr>
-                <th>
-                    ${place.id}
-                </th>
-                <th>
-                    ${place.name}
-                </th>
-                <th>
-                    ${place.codePlace}
-                </th>
+                <th scope="row">${place.id}</th>
+                <td>${place.name}</td>
+                <td>${place.codePlace}</td>
             </tr>
         </#list>
+        </tbody>
     </table>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         Добавить новое место
@@ -43,7 +35,7 @@
                             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                         </#if>
                         <p><input placeholder="Введите новое место" name="name"></p>
-                        <p><input placeholder="Введите новый код" name="code_place"></p>
+                        <p><input placeholder="Введите новый код" name="codePlace"></p>
                         <p><b>Выберите группу:</b></p>
                         <p><input type="radio" name="groupCode" value="${'0'}"> Город/Село</p>
                         <p><input type="radio" name="groupCode" value="${'1'}"> Страна</p>
