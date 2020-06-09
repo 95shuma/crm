@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-center">
             <div class="mx-auto mt-3 w-50">
                 <form action="/patientAppointment" method="post" class="box-1">
-                    <h1>Записаться к врачу</h1>
+                    <h1 style="text-align: center">Записаться к врачу</h1>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
