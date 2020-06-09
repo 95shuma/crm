@@ -3,8 +3,6 @@
 <@main.renderWith styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
     <table class="table table-striped">
         <thead>
-<@main.renderWith>
-    <table border="1px">
         <tr>
             <th scope="col">#</th>
             <th scope="col">Название</th>
