@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.UUID;
 
 @Controller
@@ -20,16 +21,20 @@ public class PatientController {
     private final JournalService journalService;
     private final HospitalService hospitalService;
     private final RegistrationTypeService registrationTypeService;
-    private final DoctorService doctorService;
     private final HospitalsDoctorService hospitalsDoctorService;
-    private final PatientService patientService;
+    private final UserService userService;
 
     @GetMapping("/patient")
-    public String patientUIPage(Model model){
+    public String patientUIPage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
         return "patient";
     }
     @GetMapping("/patientAppointment")
-    public String patientAppointmentPage(Model model){
+    public String patientAppointmentPage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
 
         if (!model.containsAttribute("journal")) {
             model.addAttribute("journal", new JournalRegisterForm());
@@ -57,7 +62,10 @@ public class PatientController {
 
     }
     @GetMapping("/patientAppointmentCheck")
-    public String patientAppointmentCheckPage(Model model){
+    public String patientAppointmentCheckPage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
         model.addAttribute("random", UUID.randomUUID());
         return "patientAppointmentCheck";
     }

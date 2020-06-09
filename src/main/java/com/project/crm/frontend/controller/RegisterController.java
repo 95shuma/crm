@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @AllArgsConstructor
@@ -25,9 +26,12 @@ public class RegisterController {
     private final RoleService roleService;
     private final AdministratorService administratorService;
     private final PositionService positionService;
+    private final UserService userService;
 
     @GetMapping("/doctorRegister")
-    public String doctorRegisterPage(Model model){
+    public String doctorRegisterPage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
 
         if (!model.containsAttribute("reg")) {
             model.addAttribute("reg", new DoctorRegisterForm());
@@ -40,7 +44,9 @@ public class RegisterController {
     }
 
     @GetMapping("/patientRegister")
-    public String patientRegisterPage(Model model){
+    public String patientRegisterPage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
 
         if (!model.containsAttribute("reg")) {
             model.addAttribute("reg", new PatientRegisterForm());
@@ -50,18 +56,34 @@ public class RegisterController {
         return "patientRegister";
     }
     @GetMapping("/adminHCF")
-    public String adminHCFPage(Model model){
+    public String adminHCFPage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
         return "adminHCF";
     }
 
     @GetMapping("/admin")
-    public String getAdmin(){ return "adminPage";}
+    public String getAdmin(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
+        return "adminPage";
+    }
 
     @GetMapping("/admin/reg-admin-hospital")
-    public String regAdminHospital() {return "regAdminHospital";}
+    public String regAdminHospital(Model model, Principal principal) {
+
+        userService.checkUserPresence(model, principal);
+
+        return "regAdminHospital";
+    }
 
     @GetMapping("/admin/reg-hospital")
-    public String regHospital(Model model){
+    public String regHospital(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
         model.addAttribute("places",registrationPlaceService.getAll());
         return "regHospital";
     }

@@ -1,15 +1,14 @@
 package com.project.crm.frontend.controller;
 
-import com.project.crm.backend.services.PositionService;
-import com.project.crm.backend.services.RegistrationPlaceService;
-import com.project.crm.backend.services.RegistrationTypeService;
-import com.project.crm.backend.services.RoleService;
+import com.project.crm.backend.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 @Controller
 @AllArgsConstructor
@@ -19,24 +18,38 @@ public class CatalogController {
     private final RegistrationTypeService registrationTypeService;
     private final RoleService roleService;
     private final RegistrationPlaceService registrationPlaceService;
+    private final UserService userService;
+
 
     @GetMapping("/positions")
-    public String positionPage(Model model){
+    public String positionPage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
         model.addAttribute("positions", positionService.getAll());
         return "positions";
     }
     @GetMapping("/registration_types")
-    public String registrationTypePage(Model model){
+    public String registrationTypePage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
         model.addAttribute("registration_types", registrationTypeService.getAll());
         return "registrationTypes";
     }
     @GetMapping("/admin/create-role")
-    public String rolePage(Model model){
+    public String rolePage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
         model.addAttribute("roles",roleService.getAll());
         return "createRole";
     }
     @GetMapping("/admin/create-reg-place")
-    public String placePage(Model model){
+    public String placePage(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
         model.addAttribute("places",registrationPlaceService.getAll());
         return "createRegPlace";
     }

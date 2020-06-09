@@ -2,6 +2,7 @@ package com.project.crm.frontend.controller;
 
 import com.project.crm.backend.services.AdministratorService;
 import com.project.crm.backend.services.HospitalsDoctorService;
+import com.project.crm.backend.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +16,13 @@ public class LoginController {
 
     private final AdministratorService administratorService;
     private final HospitalsDoctorService hospitalsDoctorService;
+    private final UserService userService;
 
     @GetMapping("/login")
     public String loginPage(Model model, @RequestParam(required = false, defaultValue = "false") Boolean error, Principal principal) {
+
+        userService.checkUserPresence(model, principal);
+
         model.addAttribute("error", error);
         return "login";
     }
