@@ -18,6 +18,8 @@ public class RecordJournalService {
     private final HospitalService hospitalService;
     private final UserService userService;
 
+    public List<RecordJournal> getAll(){return recordJournalRepo.findAll();}
+
     public List<RecordJournal> getByDoctor(Long doctor){
         return recordJournalRepo.findByDoctorId(doctor);
     }

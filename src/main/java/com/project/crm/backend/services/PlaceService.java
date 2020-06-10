@@ -17,10 +17,10 @@ public class PlaceService {
         return placeRepo.findAll();
     }
 
-    public void createPlace(String name, String code_place, Integer groupCode){
+    public void createPlace(String name, String codePlace, Integer groupCode){
         Place registrationPlace = Place.builder()
                 .name(name)
-                .codePlace(code_place)
+                .codePlace(codePlace)
                 .groupCode(groupCode)
                 .build();
         placeRepo.save(registrationPlace);

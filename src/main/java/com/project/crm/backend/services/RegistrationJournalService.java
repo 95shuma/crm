@@ -21,26 +21,8 @@ public class RegistrationJournalService {
     private final PlaceRepo placeRepo;
     private final PositionRepo positionRepo;
 
-    public boolean existByInnForAdminHCF(String inn){
-        boolean rtn = false;
-        var registrationJournals = registrationJournalRepo.getAllByUserInn(inn);
-        for (var hospitalUser : registrationJournals){
-            if (hospitalUser.getRole().getName().equals(Constants.ADMIN_HCF)){
-                rtn = true;
-            }
-        }
-        return rtn;
-    }
-
-    public boolean existByInnForDoctor(String inn){
-        boolean rtn = false;
-        var registrationJournals = registrationJournalRepo.getAllByUserInn(inn);
-        for (var registrationJournal : registrationJournals){
-            if (registrationJournal.getRole().getName().equals(Constants.DOCTOR)){
-                rtn = true;
-            }
-        }
-        return rtn;
+    public boolean existsByUserInnAndRoleId(String inn, Long roleId){
+        return registrationJournalRepo.existsByUserInnAndRoleId(inn, roleId);
     }
 
     public List<RegistrationJournal> getAll(){
