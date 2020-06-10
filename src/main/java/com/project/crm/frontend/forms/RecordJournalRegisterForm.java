@@ -5,23 +5,23 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.sql.Date;
 
 @Getter
 @Setter
-public class JournalRegisterForm {
+public class RecordJournalRegisterForm {
 
     @NotBlank(message = "Обязательное поле")
     @Size(min = 14, message = "Требуется ввести 14 цифр")
     private String inn = "";
 
-    private String doctor = "";
+    private String doctorId = "";
 
-    private String hospital = "";
+    private String patientId = "";
 
-    private String registrationType = "";
+    private String registrarId = "";
+
+    private String hospitalId = "";
 
     @NotBlank(message = "Обязательное поле")
     private String reason = "";
-
 }

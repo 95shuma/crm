@@ -9,7 +9,7 @@ import java.sql.Date;
 
 @Getter
 @Setter
-public class DoctorRegisterForm {
+public class UserRegisterForm {
 
     @NotBlank(message = "Обязательное поле")
     @Size(min = 14, message = "Требуется ввести 14 цифр")
@@ -21,9 +21,6 @@ public class DoctorRegisterForm {
 
     @NotBlank(message = "Обязательное поле")
     private String documentNumber = "";
-
-    @NotBlank(message = "Обязательное поле")
-    private String fullName = "";
 
     @NotBlank(message = "Обязательное поле")
     private String name = "";
@@ -41,7 +38,7 @@ public class DoctorRegisterForm {
     private String gender = "";
 
     @NotBlank(message = "Обязательное поле")
-    private String registrationPlaceId = "";
+    private String placeId = "";
 
     @NotBlank(message = "Обязательное поле")
     private String positionId = "";
@@ -51,5 +48,4 @@ public class DoctorRegisterForm {
 
     @NotBlank(message = "Обязательное поле")
     private String roleId = "";
-
 }
