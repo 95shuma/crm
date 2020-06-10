@@ -3,42 +3,35 @@
 <@main.renderWith>
     <table border="1px">
         <tr>
-            <th>
-                id
-            </th>
-            <th>
-                Способ регистрации пациентов
-            </th>
+            <th>Способ регистрации пациентов</th>
         </tr>
         <#list registration_types as registration_types>
-        <tr>
-            <th>
-                ${registration_types.id}
-            </th>
-            <th>
-                ${registration_types.name}
-            </th>
-        </tr>
+            <tr>
+                <th>${registration_types.name}</th>
+            </tr>
         </#list>
     </table>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Добавить новый способ регистрации пациентов
+        Добавить
     </button>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Новый способ регистрации</h5>
                 </div>
-                <div class="modal-body">
-                    <form id="commentForm" action="/registration_type" method="post">
+                <form id="commentForm" action="/registration_type" method="post">
+                    <div class="modal-body">
                         <#if _csrf??>
-                            <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
+                            <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
                         </#if>
-                        <p><input placeholder="Введите новый способ" name="name"></p>
-                        <button type="submit">Добавить</button>
-                    </form>
-                </div>
+                        <input class="form-control" name="name">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
