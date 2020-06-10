@@ -3,8 +3,7 @@ package com.project.crm.backend.dto;
 import com.project.crm.backend.model.catalog.Place;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @ToString
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
