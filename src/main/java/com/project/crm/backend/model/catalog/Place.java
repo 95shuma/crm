@@ -9,8 +9,9 @@ import javax.persistence.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Entity
-@Table(name="registration_places")
-public class RegistrationPlace {
+@Table(name="places")
+public class Place {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,5 +21,4 @@ public class RegistrationPlace {
     private String codePlace;
 
     private Integer groupCode;
-
 }
