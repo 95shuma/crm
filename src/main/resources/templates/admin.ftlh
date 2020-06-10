@@ -6,6 +6,5 @@
     <br>
     <p><a class="btn btn-info" href="/admin/reg-hospital" role="button">Добавить ЛПУ</a></p>
     <p><a class="btn btn-info" href="/admin/reg-admin-hospital" role="button">Добавить администратора ЛПУ</a></p>
-    <!--<p><a class="btn btn-info" href="/admin/create-role" role="button">Добавить или отредактировать роль</a></p>-->
     <p><a class="btn btn-info" href="/admin/create-reg-place" role="button">Добавить или отредактировать место</a></p>
 </@main.renderWith>
