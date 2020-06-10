@@ -52,10 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 + " from users"
                 + " where inn = ?";
 
-        String fetchRolesQuery = "select u.inn, r.name"
-                + " from users u, roles r"
-                + " where u.role_id = r.id"
-                + " and u.inn = ?";
+        String fetchRolesQuery = "select u.inn, r.name" +
+                " from users u, registrations_journal rj,  roles r" +
+                " where u.id = rj.user_id and rj.role_id = r.id and u.inn = ?";
 
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(fetchAdminsQuery)
