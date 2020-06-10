@@ -27,11 +27,11 @@ public class UserDTO {
                 .id(user.getId())
                 .inn(user.getInn())
                 .documentNumber(user.getDocumentNumber())
-                .fullname(user.getFullName())
+                .fullName(user.getFullName())
                 .name(user.getName())
                 .surname(user.getSurname())
                 .middleName(user.getMiddleName())
-                .date(user.getBirthDate())
+                .birthDate(user.getBirthDate())
                 .gender(user.getGender())
                 .place(PlaceDTO.from(user.getPlace()))
                 .build();
