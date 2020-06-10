@@ -1,22 +1,21 @@
 package com.project.crm.backend.model;
 
-import com.project.crm.backend.model.catalog.*;
+import com.project.crm.backend.model.catalog.Place;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Set;
 
 @Data
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @Entity
-@Table(name = "doctors")
-public class Doctor {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@Table(name = "users")
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -60,13 +59,8 @@ public class Doctor {
     private String gender;
 
     @NotBlank(message = "Обязательное поле")
-    @ManyToOne
-    @JoinColumn(name = "registration_place_id")
-    private RegistrationPlace registrationPlace;
-
-
-    @OneToMany(mappedBy = "doctor")
-    private Set<Journal> journals;
+    @ManyToOne @JoinColumn(name = "place_id")
+    private Place place;
 
     @Column
     @Builder.Default
