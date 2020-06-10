@@ -140,6 +140,14 @@ public class PreloadDatabaseWithData {
             }
 
             userRepo.saveAll(patientList);
+
+            registrationJournal = RegistrationJournal.builder()
+                    .hospital(hospitalList.get(0))
+                    .user(userRepo.findByInn("55555555555555").get())
+                    .role(roleRepo.findById((long) 5).get())
+                    .build();
+
+            registrationJournalRepo.save(registrationJournal);
             //-->======================== Patient ========================
             //--<======================== Record Journal ========================
             List <RecordJournal> recordJournalList = new ArrayList<>();
@@ -205,7 +213,7 @@ public class PreloadDatabaseWithData {
 
         users.add(User.builder()
                 .inn(inn)
-                .password(passwordEncoder.encode("123"))
+                .password(passwordEncoder.encode(inn))
                 .documentNumber("ID".concat(faker.number().digits(7)))
                 .fullName(faker.name().fullName())
                 .surname(faker.name().lastName())
