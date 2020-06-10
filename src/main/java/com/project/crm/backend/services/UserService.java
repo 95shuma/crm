@@ -58,15 +58,15 @@ public class UserService {
             String inn = principal.getName();
 
             if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 1)) {
-                model.addAttribute("user", userRepo.findByInn(inn));
+                model.addAttribute("user", userRepo.findByInn(inn).get());
             } else if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 2)){
-                model.addAttribute("user", userRepo.findByInn(inn));
+                model.addAttribute("user", userRepo.findByInn(inn).get());
             } else if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 3)){
-                model.addAttribute("user", userRepo.findByInn(inn));
+                model.addAttribute("user", userRepo.findByInn(inn).get());
             } else if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 4)){
-                model.addAttribute("user", userRepo.findByInn(inn));
+                model.addAttribute("user", userRepo.findByInn(inn).get());
             } else if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 5)){
-                model.addAttribute("user", userRepo.findByInn(inn));
+                model.addAttribute("user", userRepo.findByInn(inn).get());
             }
         }
     }
