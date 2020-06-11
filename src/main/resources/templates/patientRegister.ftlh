@@ -9,21 +9,21 @@
             </#if>
             <div class="form-group">
                 <label for="innId">ИНН</label>
-                <input id="innId" type="text" name="inn" class="form-control" autofocus value="${(reg.inn)!''}">
+                <input id="innId" type="text" name="inn" class="form-control" autofocus>
                 <label for="passwordId">Пароль</label>
-                <input id="passwordId" type="text" name="password" class="form-control" value="${(reg.password)!''}">
+                <input id="passwordId" type="text" name="password" class="form-control">
                 <label for="documentNumberId">Номер паспорта</label>
-                <input id="documentNumberId" type="text" name="documentNumber" class="form-control" value="${(reg.documentNumber)!''}">
+                <input id="documentNumberId" type="text" name="documentNumber" class="form-control">
                 <label for="fullNameId">ФИО</label>
-                <input id="fullNameId" type="text" name="fullName" class="form-control" value="${(reg.fullName)!''}">
+                <input id="fullNameId" type="text" name="fullName" class="form-control">
                 <label for="nameId">Имя</label>
-                <input id="nameId" type="text" name="name" class="form-control" value="${(reg.name)!''}">
+                <input id="nameId" type="text" name="name" class="form-control">
                 <label for="surnameId">Фамилия</label>
-                <input id="surnameId" type="text" name="surname" class="form-control" value="${(reg.surname)!''}">
+                <input id="surnameId" type="text" name="surname" class="form-control">
                 <label for="middleNameId">Отчество</label>
-                <input id="middleNameId" type="text" name="middleName" class="form-control" value="${(reg.middleName)!''}">
+                <input id="middleNameId" type="text" name="middleName" class="form-control">
                 <label for="birthDateId">Дата рождения</label>
-                <input id="birthDateId" type="date" name="birthDate" class="form-control" value="${(reg.birthDate)!''}">
+                <input id="birthDateId" type="date" name="birthDate" class="form-control">
                 <label for="genderId" style="margin-bottom: 0">Пол</label>
                 <div id="genderId">
                     <div class="form-check">
