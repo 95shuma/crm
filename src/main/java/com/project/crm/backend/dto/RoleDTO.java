@@ -13,7 +13,7 @@ public class RoleDTO {
     private String name;
 
 
-    static RoleDTO from(Role role) {
+    public static RoleDTO from(Role role) {
         return builder()
                 .id(role.getId())
                 .name(role.getName())

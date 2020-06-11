@@ -14,7 +14,7 @@ public class HospitalDTO {
     private PlaceDTO place;
     private String address;
 
-    static HospitalDTO from(Hospital hospital) {
+    public static HospitalDTO from(Hospital hospital) {
         return builder()
                 .id(hospital.getId())
                 .name(hospital.getName())

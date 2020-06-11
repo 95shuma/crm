@@ -22,7 +22,7 @@ public class UserDTO {
     private PlaceDTO place;
 
 
-    static UserDTO from(User user) {
+    public static UserDTO from(User user) {
         return builder()
                 .id(user.getId())
                 .inn(user.getInn())

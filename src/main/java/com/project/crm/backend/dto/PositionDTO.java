@@ -14,7 +14,7 @@ public class PositionDTO {
     private String name;
 
 
-    static PositionDTO from(Position position) {
+    public static PositionDTO from(Position position) {
         return builder()
                 .id(position.getId())
                 .name(position.getName())

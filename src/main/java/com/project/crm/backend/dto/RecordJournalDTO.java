@@ -17,7 +17,7 @@ public class RecordJournalDTO {
     private LocalDateTime dateTime;
     private String reason;
 
-    static RecordJournalDTO from(RecordJournal recordJournal) {
+    public static RecordJournalDTO from(RecordJournal recordJournal) {
         return builder()
                 .id(recordJournal.getId())
                 .doctor(UserDTO.from(recordJournal.getDoctor()))

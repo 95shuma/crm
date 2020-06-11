@@ -14,7 +14,7 @@ public class PlaceDTO {
     private String codePlace;
     private Integer groupCode;
 
-    static PlaceDTO from(Place place) {
+    public static PlaceDTO from(Place place) {
         return builder()
                 .id(place.getId())
                 .name(place.getName())
