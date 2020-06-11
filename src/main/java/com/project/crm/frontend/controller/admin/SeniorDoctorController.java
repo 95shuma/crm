@@ -39,7 +39,7 @@ public class SeniorDoctorController {
         return "regAdminHospital";
     }
 
-    @PostMapping
+    @PostMapping("/senior-doctor")
     public String addAdminHospital(@Valid UserRegisterForm userRegisterForm,
                                    BindingResult validationResult,
                                    RedirectAttributes attributes){
