@@ -2,8 +2,8 @@
 
 <@main.renderWith>
     <div class="mx-auto mt-3 w-50">
-        <h2>Новый пациент</h2>
-        <form id="patient-register-form" action="/patientRegister" method="post" style="margin-bottom: 50px">
+        <h3 class="text-center">Новый пациент</h3>
+        <form id="patient-register-form" action="/senior-doctor/patients" method="post" style="margin-bottom: 50px">
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
@@ -14,12 +14,10 @@
                 <input id="passwordId" type="text" name="password" class="form-control">
                 <label for="documentNumberId">Номер паспорта</label>
                 <input id="documentNumberId" type="text" name="documentNumber" class="form-control">
-                <label for="fullNameId">ФИО</label>
-                <input id="fullNameId" type="text" name="fullName" class="form-control">
-                <label for="nameId">Имя</label>
-                <input id="nameId" type="text" name="name" class="form-control">
                 <label for="surnameId">Фамилия</label>
                 <input id="surnameId" type="text" name="surname" class="form-control">
+                <label for="nameId">Имя</label>
+                <input id="nameId" type="text" name="name" class="form-control">
                 <label for="middleNameId">Отчество</label>
                 <input id="middleNameId" type="text" name="middleName" class="form-control">
                 <label for="birthDateId">Дата рождения</label>
@@ -27,31 +25,32 @@
                 <label for="genderId" style="margin-bottom: 0">Пол</label>
                 <div id="genderId">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="genderForMen" value="${'Мужской'}">
+                        <input class="form-check-input" type="radio" name="gender" id="genderForMen" value="${'male'}">
                         <label class="form-check-label" for="genderForMen">Мужской</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="genderForWomen" value="${'Женский'}">
+                        <input class="form-check-input" type="radio" name="gender" id="genderForWomen" value="${'female'}">
                         <label class="form-check-label" for="genderForWomen">Женский</label>
                     </div>
                 </div>
                 <label for="registrationPlaceId">Место регистрации</label>
-                <select class="form-control" id="registrationPlaceId" name="registrationPlace">
+                <select class="form-control" id="registrationPlaceId" name="placeId">
                     <#if registrationPlaces??>
                         <#list registrationPlaces as rp>
-                            <option>${rp.name}</option>
+                            <option>${rp.id}</option>
                         </#list>
                     </#if>
                 </select>
-                <label for="hospitalId">ЛПУ пациента</label>
-                <select class="form-control" id="hospitalId" name="hospital">
+                <label for="registrationHospitalId">ЛПУ пациента</label>
+                <select class="form-control" id="registrationHospitalId" name="hospitalId">
                     <#if hospitals??>
                         <#list hospitals as hospital>
-                            <option>${hospital.name}</option>
+                            <option>${hospital.id}</option>
                         </#list>
                     </#if>
                 </select>
-                <button class="btn btn-primary" type="submit" style="margin-top: 20px">Зарегистрировать</button>
+                <input type="hidden" name="roleId"  class="form-control" value="5">
+                <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px">Добавить</button>
                 <div>
                     <#if errors??>
                         <p>Входные данные с ошибками!</p>
