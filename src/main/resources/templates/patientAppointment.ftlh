@@ -34,17 +34,16 @@
                     <div class="form-group">
                         <p><label class="col-form-label">На что жалуетесь</label></p>
                         <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"></textarea>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <p style="color: red">${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
+                            </#list>
+                        </#if>
                     </div>
                     <button type="submit" style="margin-top: 5px" class="btn btn-primary btn-block">Записаться</button>
                 </form>
             </div>
         </div>
     </section>
-        <#if errors??>
-            <p>Входные данные с ошибками!</p>
-            <#list errors as fieldError>
-                <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
-            </#list>
-        </#if>
 <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

@@ -21,6 +21,10 @@ public class RecordJournalController {
     @GetMapping
     public String getAllRecords(Model model, Principal principal) {
 
+        if(principal == null){
+            return "errorPage";
+        }
+
         userService.checkUserPresence(model, principal);
         model.addAttribute("journal", recordJournalService.getByDoctor(userService.getByInn(principal.getName()).getId()));
         return "doctorAllAppointment";

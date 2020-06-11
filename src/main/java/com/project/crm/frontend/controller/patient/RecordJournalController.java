@@ -31,6 +31,10 @@ public class RecordJournalController {
     @GetMapping("/record")
     public String getRecord(Model model, Principal principal){
 
+        if(principal == null){
+            return "errorPage";
+        }
+
         userService.checkUserPresence(model, principal);
 
         if (!model.containsAttribute("journal")) {
@@ -62,6 +66,10 @@ public class RecordJournalController {
     @GetMapping
     public String getAllRecords(Model model, Principal principal){
 
+        if(principal == null){
+            return "errorPage";
+        }
+
         userService.checkUserPresence(model, principal);
         model.addAttribute("journal", recordJournalService.getByPatient(userService.getByInn(principal.getName()).getId()));
         return "patientAllAppointment";
@@ -70,6 +78,10 @@ public class RecordJournalController {
     @GetMapping("/recorded")
     public String getRecorded(Model model, Principal principal){
 
+        if(principal == null){
+            return "errorPage";
+        }
+        
         userService.checkUserPresence(model, principal);
 
         model.addAttribute("random", UUID.randomUUID());

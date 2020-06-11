@@ -5,6 +5,7 @@ import com.project.crm.backend.model.User;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Data
@@ -36,5 +37,6 @@ public class RecordJournal {
 
     private LocalDateTime dateTime;
 
+    @NotBlank(message = "Это поле не может быть пустым")
     private String reason;
 }

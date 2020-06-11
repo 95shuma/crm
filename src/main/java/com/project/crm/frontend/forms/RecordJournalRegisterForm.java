@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -16,6 +15,6 @@ public class RecordJournalRegisterForm {
 
     private Long hospitalId = null;
 
-    @NotBlank(message = "Обязательное поле")
-    private String reason = "";
+    @NotBlank(message = "Это поле не может быть пустым")
+    private String reason;
 }
