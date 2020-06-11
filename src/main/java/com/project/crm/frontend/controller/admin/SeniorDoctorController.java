@@ -1,6 +1,7 @@
 package com.project.crm.frontend.controller.admin;
 
 import com.project.crm.backend.services.PlaceService;
+import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class SeniorDoctorController {
 
     private final UserService userService;
     private final PlaceService placeService;
+    private final PositionService positionService;
 
     @GetMapping("/senior-doctor")
     public String regAdminHospital(Model model, Principal principal) {
@@ -29,6 +31,7 @@ public class SeniorDoctorController {
         userService.checkUserPresence(model, principal);
 
         model.addAttribute("places",placeService.getAll());
+        model.addAttribute("positions", positionService.getAll());
 
         return "regAdminHospital";
     }
