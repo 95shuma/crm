@@ -1,5 +1,6 @@
 package com.project.crm.backend.services;
 
+import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.model.catalog.Position;
 import com.project.crm.backend.repository.PositionRepo;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,8 @@ public class PositionService {
         positionRepo.save(position);
     }
 
-    public Position getByName(String name){
-        return positionRepo.findByName(name).get();
+    public PositionDTO getByName(String name){
+        Position position = positionRepo.findByName(name).get();
+        return PositionDTO.from(position);
     }
 }

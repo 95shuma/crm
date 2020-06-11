@@ -1,5 +1,6 @@
 package com.project.crm.backend.services;
 
+import com.project.crm.backend.dto.RoleDTO;
 import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.RoleRepo;
 import lombok.AllArgsConstructor;
@@ -24,11 +25,13 @@ public class RoleService {
         roleRepo.save(role);
     }
 
-    public Role getByName(String name){
-        return roleRepo.findByName(name).get();
+    public RoleDTO getByName(String name){
+        Role role = roleRepo.findByName(name).get();
+        return RoleDTO.from(role);
     }
 
-    public Role getById(Long id){
-        return roleRepo.findById(id).get();
+    public RoleDTO getById(Long id){
+        Role role = roleRepo.findById(id).get();
+        return RoleDTO.from(role);
     }
 }

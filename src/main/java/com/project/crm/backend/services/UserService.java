@@ -1,5 +1,6 @@
 package com.project.crm.backend.services;
 
+import com.project.crm.backend.dto.UserDTO;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.RegistrationJournal;
 import com.project.crm.backend.model.catalog.Role;
@@ -26,8 +27,9 @@ public class UserService {
     private final RegistrationJournalService registrationJournalService;
     private final PasswordEncoder encoder;
 
-    public User getByInn(String inn){
-        return userRepo.findByInn(inn).get();
+    public UserDTO getByInn(String inn){
+        User user = userRepo.findByInn(inn).get();
+        return UserDTO.from(user);
     }
 
     public boolean existByInn(String inn){

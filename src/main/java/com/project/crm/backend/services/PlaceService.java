@@ -1,5 +1,6 @@
 package com.project.crm.backend.services;
 
+import com.project.crm.backend.dto.PlaceDTO;
 import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.PlaceRepo;
 import lombok.AllArgsConstructor;
@@ -26,11 +27,13 @@ public class PlaceService {
         placeRepo.save(registrationPlace);
     }
 
-    public Place getByName(String name){
-        return placeRepo.findByName(name).get();
+    public PlaceDTO getByName(String name){
+        Place place = placeRepo.findByName(name).get();
+        return PlaceDTO.from(place);
     }
 
-    public Place getById(Long id){
-        return placeRepo.findById(id).get();
+    public PlaceDTO getById(Long id){
+        Place place = placeRepo.findById(id).get();
+        return PlaceDTO.from(place);
     }
 }

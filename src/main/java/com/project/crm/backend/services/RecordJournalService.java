@@ -1,7 +1,9 @@
 package com.project.crm.backend.services;
 
 import com.project.crm.backend.model.catalog.RecordJournal;
+import com.project.crm.backend.repository.HospitalRepo;
 import com.project.crm.backend.repository.RecordJournalRepo;
+import com.project.crm.backend.repository.UserRepo;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,12 @@ import java.util.List;
 public class RecordJournalService {
 
     private final RecordJournalRepo recordJournalRepo;
+    private final UserRepo userRepo;
+    private final HospitalRepo hospitalRepo;
 
     private final HospitalService hospitalService;
     private final UserService userService;
+
 
     public List<RecordJournal> getAll(){return recordJournalRepo.findAll();}
 
@@ -32,10 +37,10 @@ public class RecordJournalService {
     public void createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
 
         var recordJournal = RecordJournal.builder()
-                .doctor(userService.getByInn(recordJournalRegisterForm.getDoctorId()))
-                .hospital(hospitalService.getById(recordJournalRegisterForm.getHospitalId()))
-                .patient(userService.getByInn(principal.getName()))
-                .registrar(userService.getByInn(recordJournalRegisterForm.getDoctorId()))
+                .doctor(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
+                .hospital(hospitalRepo.findById(hospitalService.getById(recordJournalRegisterForm.getHospitalId()).getId()).get())
+                .patient(userRepo.findById(userService.getByInn(principal.getName()).getId()).get())
+                .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
                 .reason(recordJournalRegisterForm.getReason())
                 .dateTime(LocalDateTime.now())
                 .build();
