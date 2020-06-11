@@ -3,7 +3,7 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <form class="box-1" id="reg-admin-hospital" action="/admin/reg-admin-hospital" method="post">
+                <form class="box-1" id="reg-admin-hospital" action="/admin/senior-doctors/senior-doctor" method="post">
                     <h3>Добавить администратора ЛПУ</h3>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
@@ -38,12 +38,24 @@
                     </div>
                     <div class="form-group">
                         <p><b>Ваш пол:</b></p>
-                        <input id="male" class="form-check-input" type="radio" name="gender" value="${'Мужской'}">
-                        <label for="male" class="form-check-label">Мужской</label>
-                        <p><input id="female" class="form-check-input" type="radio" name="gender" value="${'Женский'}">
+                        <div class="form-check">
+                            <input id="male" class="form-check-input" type="radio" name="gender" value="${'Мужской'}">
+                            <label for="male" class="form-check-label">Мужской</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="female" class="form-check-input" type="radio" name="gender" value="${'Женский'}">
                             <label for="female" class="form-check-label">Женский</label></p>
+                        </div>
                     </div>
-                    <input type="hidden" name="roleId" value="4">
+                    <div class="form-group">
+                        <p><label for="lpuPlaceId" class="col-form-label">Город / Село / ПГТ</label></p>
+                        <select class="form-control" id="lpuPlaceId" name="placeId">
+                            <#list places as place>
+                                <option value="${place.id}">${place.name}</option>
+                            </#list>
+                        </select>
+                    </div>
+                    <input type="hidden" name="roleId" value="2">
                     <p><button type="submit" class="btn btn-primary w-100">Добавить</button></p>
                 </form>
             </div>
