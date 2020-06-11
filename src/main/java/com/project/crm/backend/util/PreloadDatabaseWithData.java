@@ -140,22 +140,69 @@ public class PreloadDatabaseWithData {
             }
 
             userRepo.saveAll(patientList);
-
-            registrationJournal = RegistrationJournal.builder()
-                    .hospital(hospitalList.get(0))
-                    .user(userRepo.findByInn("55555555555555").get())
-                    .role(roleRepo.findById((long) 5).get())
-                    .build();
-
-            registrationJournalRepo.save(registrationJournal);
             //-->======================== Patient ========================
+            //--<======================== Registration Journal ========================
+            List <RegistrationJournal> registrationJournalList = new ArrayList<>();
+            //Задаем каждому доктору роль и ЛПУ
+                //Каждому ЛПУ нужен один Админ ЛПУ
+                //Каждому ЛПУ нужно 5+ медработников
+                //Каждому ЛПУ нужно 9+ врачей
+            AtomicInteger an = new AtomicInteger(0);
+            hospitalRepo.findAll().forEach(hospital -> {
+                for (int i = 1; i <= (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9))/hospitalRepo.findAll().size(); i++){
+                    if (i == 1){
+                        registrationJournalList.add(RegistrationJournal.builder()
+                                .user(doctorList.get(an.get()))
+                                .hospital(hospital)
+                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                                .role(roleRepo.findById((long) 2).get())
+                                .build()
+                        );
+                    } else if (i > 1 && i <=6){
+                        registrationJournalList.add(RegistrationJournal.builder()
+                                .user(doctorList.get(an.get()))
+                                .hospital(hospital)
+                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                                .role(roleRepo.findById((long) 3).get())
+                                .build()
+                        );
+                    } else {
+                        registrationJournalList.add(RegistrationJournal.builder()
+                                .user(doctorList.get(an.get()))
+                                .hospital(hospital)
+                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                                .role(roleRepo.findById((long) 4).get())
+                                .build()
+                        );
+                    }
+                    an.set(an.get()+1);
+                }
+
+            });
+            AtomicInteger an2 = new AtomicInteger(0);
+
+            hospitalRepo.findAll().forEach(hospital -> {
+                for (int i = 0; i < qty/hospitalRepo.findAll().size(); i++){
+
+                    registrationJournalList.add(RegistrationJournal.builder()
+                            .user(patientList.get(an2.get()))
+                            .hospital(hospital)
+                            .role(roleRepo.findById((long) 5).get())
+                            .build());
+
+                    an2.set(an2.get()+1);
+                }
+
+            });
+            registrationJournalRepo.saveAll(registrationJournalList);
+            //-->======================== Registration Journal ========================
             //--<======================== Record Journal ========================
             List <RecordJournal> recordJournalList = new ArrayList<>();
             for (int i = 0; i < qty; i++){
                 recordJournalList.add(RecordJournal.builder()
-                        .doctor(userRepo.findAll().get(rn.nextInt(userRepo.findAll().size())))
-                        .registrar(userRepo.findAll().get(rn.nextInt(userRepo.findAll().size())))
-                        .patient(userRepo.findAll().get(rn.nextInt(userRepo.findAll().size())))
+                        .doctor(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
+                        .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
+                        .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
                         .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
                         .dateTime(LocalDateTime.now())
                         .reason(faker.superhero().name())
@@ -164,46 +211,6 @@ public class PreloadDatabaseWithData {
             }
             recordJournalRepo.saveAll(recordJournalList);
             //-->======================== Record Journal ========================
-            //--<======================== Registration Journal ========================
-            List <RegistrationJournal> registrationJournalList = new ArrayList<>();
-            //Задаем каждому доктору роль и ЛПУ
-                //Каждому ЛПУ нужен один Админ ЛПУ
-                //Каждому ЛПУ нужно 5+ медработников
-                //Каждому ЛПУ нужно 9+ врачей
-            AtomicInteger j = new AtomicInteger(0);
-            hospitalRepo.findAll().forEach(hospital -> {
-                for (int i = 1; i <= (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9))/hospitalRepo.findAll().size(); i++){
-                    if (i == 1){
-                        registrationJournalList.add(RegistrationJournal.builder()
-                                .user(doctorList.get(j.get()))
-                                .hospital(hospital)
-                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findById(Long.parseLong(Integer.toString(2))).get())
-                                .build()
-                        );
-                    } else if (i > 1 && i <=6){
-                        registrationJournalList.add(RegistrationJournal.builder()
-                                .user(doctorList.get(j.get()))
-                                .hospital(hospital)
-                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findById(Long.parseLong(Integer.toString(3))).get())
-                                .build()
-                        );
-                    } else {
-                        registrationJournalList.add(RegistrationJournal.builder()
-                                .user(doctorList.get(j.get()))
-                                .hospital(hospital)
-                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findById(Long.parseLong(Integer.toString(4))).get())
-                                .build()
-                        );
-                    }
-                    j.set(j.get()+1);
-                }
-
-            });
-            registrationJournalRepo.saveAll(registrationJournalList);
-            //-->======================== Registration Journal ========================
 
         };
     }
