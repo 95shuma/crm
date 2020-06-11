@@ -4,7 +4,7 @@
     <br>
     <h4>Основные функции</h4>
     <br>
-    <p><a class="btn btn-info" href="/admin/reg-hospital" role="button">Добавить ЛПУ</a></p>
+    <p><a class="btn btn-info" href="/admin/hospitals/hospital" role="button">Добавить ЛПУ</a></p>
     <p><a class="btn btn-info" href="/admin/senior-doctors/senior-doctor" role="button">Добавить администратора ЛПУ</a></p>
     <p><a class="btn btn-info" href="/admin/create-reg-place" role="button">Добавить или отредактировать место</a></p>
 </@main.renderWith>
