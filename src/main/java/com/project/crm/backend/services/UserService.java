@@ -1,6 +1,7 @@
 package com.project.crm.backend.services;
 
 import com.project.crm.backend.model.User;
+import com.project.crm.backend.model.catalog.RegistrationJournal;
 import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.*;
 import com.project.crm.frontend.forms.UserRegisterForm;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -30,6 +32,10 @@ public class UserService {
 
     public boolean existByInn(String inn){
         return userRepo.existsByInn(inn);
+    }
+
+    public List<User> getAll(){
+        return userRepo.findAll();
     }
 
     public void createUser(UserRegisterForm userRegisterForm){

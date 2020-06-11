@@ -2,6 +2,7 @@ package com.project.crm.frontend.controller.patient;
 
 import com.project.crm.backend.services.HospitalService;
 import com.project.crm.backend.services.RecordJournalService;
+import com.project.crm.backend.services.RegistrationJournalService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class RecordJournalController {
 
     private final HospitalService hospitalService;
     private final RecordJournalService recordJournalService;
+    private final RegistrationJournalService registrationJournalService;
     private final UserService userService;
 
     @GetMapping("/record")
@@ -35,7 +37,8 @@ public class RecordJournalController {
             model.addAttribute("recordJournalRegisterForm", new RecordJournalRegisterForm());
         }
         model.addAttribute("hospitals", hospitalService.getAll());
-        model.addAttribute("registrationJournals", recordJournalService.getAll());
+        model.addAttribute("registrationJournals", registrationJournalService.getAll());
+        model.addAttribute("users", userService.getAll());
 
         return "patientAppointment";
     }
@@ -43,7 +46,7 @@ public class RecordJournalController {
     @PostMapping
     public String record(@Valid RecordJournalRegisterForm recordJournalRegisterForm,
                                      BindingResult validationResult,
-                                     RedirectAttributes attributes){
+                                     RedirectAttributes attributes, Principal principal){
         attributes.addFlashAttribute("recordJournalRegisterForm", recordJournalRegisterForm);
 
         if (validationResult.hasFieldErrors()) {
@@ -51,7 +54,7 @@ public class RecordJournalController {
             return "redirect:/patient/records/record";
         }
 
-        recordJournalService.createRecordJournal(recordJournalRegisterForm);
+        recordJournalService.createRecordJournal(recordJournalRegisterForm, principal);
 
         return "redirect:/patient/records/recorded";
 

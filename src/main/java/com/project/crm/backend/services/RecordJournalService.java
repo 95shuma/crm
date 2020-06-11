@@ -6,6 +6,7 @@ import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,12 +29,12 @@ public class RecordJournalService {
         return recordJournalRepo.findByPatientId(patient);
     }
 
-    public void createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm){
+    public void createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
 
         var recordJournal = RecordJournal.builder()
                 .doctor(userService.getByInn(recordJournalRegisterForm.getDoctorId()))
-                .hospital(hospitalService.getByName(recordJournalRegisterForm.getHospitalId()))
-                .patient(userService.getByInn(recordJournalRegisterForm.getPatientId()))
+                .hospital(hospitalService.getById(recordJournalRegisterForm.getHospitalId()))
+                .patient(userService.getByInn(principal.getName()))
                 .registrar(userService.getByInn(recordJournalRegisterForm.getDoctorId()))
                 .reason(recordJournalRegisterForm.getReason())
                 .dateTime(LocalDateTime.now())

@@ -7,7 +7,6 @@
                     <th scope="col">Время записи</th>
                     <th scope="col">Лечащий врач</th>
                     <th scope="col">Больница</th>
-                    <th scope="col">Тип регистрации</th>
                     <th scope="col">Жалоба</th>
                 </tr>
             </thead>
@@ -17,7 +16,6 @@
                     <td>${journal.dateTime}</td>
                     <td>${journal.doctor.fullName}</td>
                     <td>${journal.hospital.name} - ${journal.hospital.address}</td>
-                    <td>${journal.registrationType.name}</td>
                     <td>${journal.reason}</td>
                 </tr>
             </#list>

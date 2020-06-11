@@ -18,8 +18,8 @@ public class HospitalService {
         return hospitalRepo.findAll();
     }
 
-    public Hospital getByName(String name){
-        return hospitalRepo.findByName(name).get();
+    public Hospital getById(Long id){
+        return hospitalRepo.findById(id).get();
     }
 
     public void createHospital(String name, Place place, String address){
