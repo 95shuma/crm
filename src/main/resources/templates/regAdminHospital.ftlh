@@ -55,6 +55,14 @@
                             </#list>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <p><label for="lpuPositionId" class="col-form-label">Направление врача</label></p>
+                        <select class="form-control" id="lpuPositionId" name="positionId">
+                            <#list positions as position>
+                                <option value="${position.id}">${position.name}</option>
+                            </#list>
+                        </select>
+                    </div>
                     <input type="hidden" name="roleId" value="2">
                     <p><button type="submit" class="btn btn-primary w-100">Добавить</button></p>
                 </form>
