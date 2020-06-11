@@ -1,5 +1,6 @@
 package com.project.crm.frontend.controller.admin;
 
+import com.project.crm.backend.services.HospitalService;
 import com.project.crm.backend.services.PlaceService;
 import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.UserService;
@@ -24,6 +25,7 @@ public class SeniorDoctorController {
     private final UserService userService;
     private final PlaceService placeService;
     private final PositionService positionService;
+    private final HospitalService hospitalService;
 
     @GetMapping("/senior-doctor")
     public String regAdminHospital(Model model, Principal principal) {
@@ -32,6 +34,7 @@ public class SeniorDoctorController {
 
         model.addAttribute("places",placeService.getAll());
         model.addAttribute("positions", positionService.getAll());
+        model.addAttribute("hospitals",hospitalService.getAll());
 
         return "regAdminHospital";
     }
