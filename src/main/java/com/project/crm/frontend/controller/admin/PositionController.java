@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/admin/positions")
+@RequestMapping("/admin")
 @AllArgsConstructor
 public class PositionController {
 
     private final UserService userService;
     private final PositionService positionService;
 
-    @GetMapping
+    @GetMapping("/positions")
     public String getPositions(Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
@@ -29,7 +29,7 @@ public class PositionController {
         return "position";
     }
 
-    @PostMapping
+    @PostMapping("/positions/position")
     public String createPosition(@RequestParam("name") String name){
         positionService.createPosition(name);
         return "redirect:/admin/positions";
