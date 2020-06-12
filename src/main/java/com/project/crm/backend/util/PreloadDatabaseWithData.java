@@ -57,7 +57,7 @@ public class PreloadDatabaseWithData {
             //-->======================== Place ========================
             //--<======================== Roles ========================
             List <Role> roleList = new ArrayList<>();
-            String[] roles = {Constants.ADMIN, Constants.ADMIN_HCF, Constants.DOCTOR, Constants.JMO, Constants.PATIENT};
+            String[] roles = {Constants.ADMIN, Constants.SENIOR_DOCTOR, Constants.DOCTOR, Constants.JUNIOR_DOCTOR, Constants.PATIENT};
             for (int i=0; i<roles.length; i++){
                 roleRepo.insertRoleWithId(Long.parseLong(Integer.toString(i+1)), roles[i]);
             }
