@@ -1,15 +1,22 @@
 <#import "partials/main.ftlh" as main />
 
-<@main.renderWith>
-    <table border="1px">
-        <tr>
-            <th>Должность</th>
-        </tr>
-        <#list positions as positions>
+<@main.renderWith styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
+    <h3>Регистрация нового направления</h3>
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <th>${positions.name}</th>
+                <th scope="col">#</th>
+                <th scope="col">Направление</th>
             </tr>
-        </#list>
+        </thead>
+        <tbody>
+            <#list positions as position>
+                <tr>
+                    <th scope="row">${position?counter}</th>
+                    <td>${position.name}</td>
+                </tr>
+            </#list>
+        </tbody>
     </table>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         Добавить
@@ -20,7 +27,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Новая должность</h5>
                 </div>
-                <form id="commentForm" action="/position" method="post">
+                <form id="commentForm" action="/admin/positions/position" method="post">
                     <div class="modal-body">
                         <#if _csrf??>
                             <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
