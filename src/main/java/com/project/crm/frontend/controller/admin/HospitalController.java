@@ -32,7 +32,7 @@ public class HospitalController {
         return "hospital";
     }
 
-    @PostMapping
+    @PostMapping("/hospital")
     public String createHospital(@RequestParam String name, @RequestParam Long placeId,
                               @RequestParam String street, @RequestParam String houseNum){
 
