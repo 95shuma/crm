@@ -38,7 +38,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/default")
-                .authenticated();
+                .authenticated()
+                .antMatchers("/admin/**")
+                .hasRole("ADMIN")
+                .antMatchers("/senior-doctor/**")
+                .hasRole("SENIOR_DOCTOR")
+                .antMatchers("/doctor/**")
+                .hasRole("DOCTOR")
+                .antMatchers("/junior-doctor/**")
+                .hasRole("JUNIOR_DOCTOR")
+                .antMatchers("/patient/**")
+                .hasRole("PATIENT");
 
         http.authorizeRequests()
                 .anyRequest()
