@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/admin/places")
+@RequestMapping("/admin")
 @AllArgsConstructor
 public class PlaceController {
 
     private final UserService userService;
     private final PlaceService placeService;
 
-    @GetMapping
+    @GetMapping("/places")
     public String getPlaces(Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
@@ -30,7 +30,7 @@ public class PlaceController {
     }
 
 
-    @PostMapping
+    @PostMapping("/places/place")
     public String createPlace(@RequestParam("name") String name, @RequestParam String codePlace,
                            @RequestParam("groupCode") Integer groupCode){
         placeService.createPlace(name, codePlace, groupCode);
