@@ -25,7 +25,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Новая должность</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Новое направление</h5>
                 </div>
                 <form id="commentForm" action="/admin/positions/position" method="post">
                     <div class="modal-body">
