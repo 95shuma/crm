@@ -34,7 +34,7 @@ public class PatientController {
             model.addAttribute("reg", new UserRegisterForm());
         }
         model.addAttribute("hospitals", hospitalService.getAll());
-        model.addAttribute("registrationPlaces", placeService.getAll());
+        model.addAttribute("places", placeService.getAll());
         return "patientRegister";
     }
 

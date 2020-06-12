@@ -15,7 +15,7 @@
                 <label for="documentNumberId">Номер паспорта</label>
                 <input id="documentNumberId" type="text" name="documentNumber" class="form-control">
                 <label for="surnameId">Фамилия</label>
-                <input id="surnameId" class="form-control" name="surname" type="text">
+                <input id="surnameId" type="text" name="surname" class="form-control">
                 <label for="nameId">Имя</label>
                 <input id="nameId" type="text" name="name" class="form-control">
                 <label for="middleNameId">Отчество</label>
@@ -35,9 +35,9 @@
                 </div>
                 <label for="registrationPlaceId">Место регистрации</label>
                 <select class="form-control" id="registrationPlaceId" name="placeId">
-                    <#if registrationPlaces??>
-                        <#list registrationPlaces as registrationPlaces>
-                            <option>${registrationPlaces.id}</option>
+                    <#if places??>
+                        <#list places as places>
+                            <option value="${places.id}">${places.name}</option>
                         </#list>
                     </#if>
                 </select>
@@ -45,7 +45,7 @@
                 <select class="form-control" id="doctorPositionId" name="positionId">
                     <#if positions??>
                         <#list positions as position>
-                            <option>${position.id}</option>
+                            <option value="${position.id}">${position.name}</option>
                         </#list>
                     </#if>
                 </select>
@@ -53,8 +53,8 @@
                 <select class="form-control" id="doctorRoleId" name="roleId">
                     <#if roles??>
                         <#list roles as role>
-                            <#if role.id == 3 || role.id == 4>
-                                <option>${role.id}</option>
+                            <#if role.id == 2 || role.id == 3 || role.id == 4>
+                                <option value="${role.id}">${role.name}</option>
                             </#if>
                         </#list>
                     </#if>
@@ -63,7 +63,7 @@
                 <select class="form-control" id="registrationHospitalId" name="hospitalId">
                     <#if hospitals??>
                         <#list hospitals as hospital>
-                            <option>${hospital.id}</option>
+                            <option value="${hospital.id}">${hospital.name}</option>
                         </#list>
                     </#if>
                 </select>

@@ -33,7 +33,7 @@ public class DoctorController {
         if (!model.containsAttribute("reg")) {
             model.addAttribute("reg", new UserRegisterForm());
         }
-        model.addAttribute("registrationPlaces", placeService.getAll());
+        model.addAttribute("places", placeService.getAll());
         model.addAttribute("hospitals", hospitalService.getAll());
         model.addAttribute("roles", roleService.getAll());
         model.addAttribute("positions", positionService.getAll());

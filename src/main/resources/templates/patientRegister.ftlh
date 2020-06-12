@@ -35,9 +35,9 @@
                 </div>
                 <label for="registrationPlaceId">Место регистрации</label>
                 <select class="form-control" id="registrationPlaceId" name="placeId">
-                    <#if registrationPlaces??>
-                        <#list registrationPlaces as rp>
-                            <option>${rp.id}</option>
+                    <#if places??>
+                        <#list places as places>
+                            <option value="${places.id}">${places.name}</option>
                         </#list>
                     </#if>
                 </select>
@@ -45,7 +45,7 @@
                 <select class="form-control" id="registrationHospitalId" name="hospitalId">
                     <#if hospitals??>
                         <#list hospitals as hospital>
-                            <option>${hospital.id}</option>
+                            <option value= "${hospital.id}">${hospital.name}</option>
                         </#list>
                     </#if>
                 </select>
