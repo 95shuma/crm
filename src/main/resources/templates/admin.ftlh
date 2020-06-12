@@ -7,4 +7,5 @@
     <p><a class="btn btn-info" href="/admin/hospitals/hospital" role="button">Добавить ЛПУ</a></p>
     <p><a class="btn btn-info" href="/admin/senior-doctors/senior-doctor" role="button">Добавить администратора ЛПУ</a></p>
     <p><a class="btn btn-info" href="/admin/places" role="button">Добавить или отредактировать место</a></p>
+    <p><a class="btn btn-info" href="/admin/positions" role="button">Добавить или отредактировать направление</a></p>
 </@main.renderWith>
