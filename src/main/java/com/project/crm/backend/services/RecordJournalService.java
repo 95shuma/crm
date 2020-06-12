@@ -36,15 +36,27 @@ public class RecordJournalService {
 
     public void createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
 
-        var recordJournal = RecordJournal.builder()
-                .doctor(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
-                .hospital(hospitalRepo.findById(hospitalService.getById(recordJournalRegisterForm.getHospitalId()).getId()).get())
-                .patient(userRepo.findById(userService.getByInn(principal.getName()).getId()).get())
-                .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
-                .reason(recordJournalRegisterForm.getReason())
-                .dateTime(LocalDateTime.now())
-                .build();
+        RecordJournal recordJournal;
 
+            if(!recordJournalRegisterForm.getRegistrarId().isEmpty()){
+                recordJournal = RecordJournal.builder()
+                        .doctor(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
+                        .hospital(hospitalRepo.findById(hospitalService.getById(recordJournalRegisterForm.getHospitalId()).getId()).get())
+                        .patient(userRepo.findById(userService.getByInn(principal.getName()).getId()).get())
+                        .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getRegistrarId()).getId()).get())
+                        .reason(recordJournalRegisterForm.getReason())
+                        .dateTime(LocalDateTime.now())
+                        .build();
+            }
+            else{
+                recordJournal = RecordJournal.builder()
+                        .doctor(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
+                        .hospital(hospitalRepo.findById(hospitalService.getById(recordJournalRegisterForm.getHospitalId()).getId()).get())
+                        .patient(userRepo.findById(userService.getByInn(principal.getName()).getId()).get())
+                        .reason(recordJournalRegisterForm.getReason())
+                        .dateTime(LocalDateTime.now())
+                        .build();
+            }
         recordJournalRepo.save(recordJournal);
     }
 }
