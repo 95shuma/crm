@@ -30,7 +30,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Новое место</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="roleForm" action="/admin/addPlace" method="post">
+                    <form id="roleForm" action="/admin/places/place" method="post">
                         <#if _csrf??>
                             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                         </#if>
@@ -42,7 +42,7 @@
                         <p><input type="radio" name="groupCode" value="${'2'}"> Область</p>
                         <p><input type="radio" name="groupCode" value="${'3'}"> Район</p>
                         <p><input type="radio" name="groupCode" value="${'4'}"> Сельское управление </p>
-                        <button type="submit">Добавить</button>
+                        <button type="submit" class="w-100">Добавить</button>
                     </form>
                 </div>
             </div>
