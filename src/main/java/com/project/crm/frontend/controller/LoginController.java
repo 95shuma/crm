@@ -40,7 +40,7 @@ public class LoginController {
             } else if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 3)){
                 return "redirect:/doctor";
             } else if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 4)){
-//                return "redirect:/junior-doctor";
+                return "redirect:/junior-doctor";
             } else if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 5)){
                 return "redirect:/patient";
             }
