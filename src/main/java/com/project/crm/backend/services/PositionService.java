@@ -6,6 +6,7 @@ import com.project.crm.backend.repository.PositionRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,8 +15,15 @@ public class PositionService {
 
     private final PositionRepo positionRepo;
 
-    public List<Position> getAll(){
-        return positionRepo.findAll();
+    public List<PositionDTO> getAll(){
+        List<Position> positions = new ArrayList<Position>();
+        positions = positionRepo.findAll();
+
+        List<PositionDTO> positionsDTO = new ArrayList<PositionDTO>();
+        positions.stream().forEach(obj -> {
+            positionsDTO.add(PositionDTO.from(obj));
+        });
+        return positionsDTO;
     }
 
     public void createPosition(String name){
