@@ -30,7 +30,8 @@ public class PreloadDatabaseWithData {
     @Bean
     CommandLineRunner fillDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
                                    HospitalRepo hospitalRepo,  RegistrationJournalRepo registrationJournalRepo,
-                                   RecordJournalRepo recordJournalRepo, PositionRepo positionRepo){
+                                   RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
+                                   RemedyRepo remedyRepo, ExaminationRepo examinationRepo){
         return (args) -> {
             recordJournalRepo.deleteAll();
             registrationJournalRepo.deleteAll();
@@ -141,6 +142,36 @@ public class PreloadDatabaseWithData {
 
             userRepo.saveAll(patientList);
             //-->======================== Patient ========================
+            //--<======================== Disease ========================
+            List <Disease> diseaseList = new ArrayList<>();
+            for (int i = 0; i < 20; i++){
+                diseaseList.add(Disease.builder()
+                        .name(faker.gameOfThrones().character())
+                        .build()
+                );
+            }
+            diseaseRepo.saveAll(diseaseList);
+            //-->======================== Disease ========================
+            //--<======================== Remedy ========================
+            List <Remedy> remedyList = new ArrayList<>();
+            for (int i = 0; i < 20; i++){
+                remedyList.add(Remedy.builder()
+                        .name(faker.superhero().name())
+                        .build()
+                );
+            }
+            remedyRepo.saveAll(remedyList);
+            //-->======================== Remedy ========================
+            //--<======================== Examination ========================
+            List <Examination> examinationList = new ArrayList<>();
+            for (int i = 0; i < 20; i++){
+                examinationList.add(Examination.builder()
+                        .name(faker.esports().player())
+                        .build()
+                );
+            }
+            examinationRepo.saveAll(examinationList);
+            //-->======================== Examination ========================
             //--<======================== Registration Journal ========================
             List <RegistrationJournal> registrationJournalList = new ArrayList<>();
             //Задаем каждому доктору роль и ЛПУ
