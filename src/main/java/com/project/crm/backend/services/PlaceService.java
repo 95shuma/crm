@@ -6,6 +6,7 @@ import com.project.crm.backend.repository.PlaceRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,8 +15,15 @@ public class PlaceService {
 
     private final PlaceRepo placeRepo;
 
-    public List<Place> getAll(){
-        return placeRepo.findAll();
+    public List<PlaceDTO> getAll(){
+        List<Place> places = new ArrayList<Place>();
+        places = placeRepo.findAll();
+
+        List<PlaceDTO> placesDTO = new ArrayList<PlaceDTO>();
+        places.stream().forEach(obj -> {
+            placesDTO.add(PlaceDTO.from(obj));
+        });
+        return placesDTO;
     }
 
     public void createPlace(String name, String codePlace, Integer groupCode){
