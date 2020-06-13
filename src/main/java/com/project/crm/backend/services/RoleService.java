@@ -6,6 +6,7 @@ import com.project.crm.backend.repository.RoleRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,8 +15,15 @@ public class RoleService {
 
     RoleRepo roleRepo;
 
-    public List<Role> getAll(){
-        return roleRepo.findAll();
+    public List<RoleDTO> getAll(){
+        List<Role> roles = new ArrayList<Role>();
+        roles = roleRepo.findAll();
+
+        List<RoleDTO> rolesDTO = new ArrayList<RoleDTO>();
+        roles.stream().forEach(obj -> {
+            rolesDTO.add(RoleDTO.from(obj));
+        });
+        return rolesDTO;
     }
 
     public void createRole(String name){
