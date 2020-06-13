@@ -9,6 +9,7 @@ import com.project.crm.backend.repository.PlaceRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,8 +19,15 @@ public class HospitalService {
     private final PlaceRepo placeRepo;
     private final HospitalRepo hospitalRepo;
 
-    public List<Hospital> getAll(){
-        return hospitalRepo.findAll();
+    public List<HospitalDTO> getAll(){
+        List<Hospital> hospitals = new ArrayList<Hospital>();
+        hospitals = hospitalRepo.findAll();
+
+        List<HospitalDTO> hospitalsDTO = new ArrayList<HospitalDTO>();
+        hospitals.stream().forEach(obj -> {
+            hospitalsDTO.add(HospitalDTO.from(obj));
+        });
+        return hospitalsDTO;
     }
 
     public HospitalDTO getById(Long id){
