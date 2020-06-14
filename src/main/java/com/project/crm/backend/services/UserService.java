@@ -36,9 +36,11 @@ public class UserService {
         return userRepo.existsByInn(inn);
     }
 
-    public List<User> getAll(){
-        return userRepo.findAll();
-    }
+    public List<User> getAll(){return userRepo.findAll();}
+
+    public List<User> getAllPatients(){return userRepo.findAllPatients();}
+
+    public List<User> getAllDoctors(){return userRepo.findAllHospitalStaff();}
 
     public void createUser(UserRegisterForm userRegisterForm){
 
