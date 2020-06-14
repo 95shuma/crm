@@ -27,5 +27,7 @@ public class UserDocNumTest {
                 atomicBoolean.set(true);
             }
         });
+
+        Assertions.assertEquals(true, atomicBoolean.get());
     }
 }
