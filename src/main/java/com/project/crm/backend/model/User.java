@@ -31,7 +31,7 @@ public class User {
     private String password;
 
     @NotBlank(message = "Обязательное поле")
-    @Column(length = 64)
+    @Column(length = 64, unique = true)
     private String documentNumber;
 
     @NotBlank(message = "Обязательное поле")
