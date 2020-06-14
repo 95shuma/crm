@@ -1,6 +1,6 @@
 <#import "partials/main.ftlh" as main />
 
-<@main.renderWith styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
+<@main.renderWith scripts=["/js/validation.js"] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
     <h3>Регистрация нового направления</h3>
     <table class="table table-striped">
         <thead>
@@ -18,7 +18,7 @@
             </#list>
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModal">
         Добавить
     </button>
     <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -27,16 +27,21 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Новое направление</h5>
                 </div>
-                <form id="commentForm" action="/admin/positions/position" method="post">
+                <form id="commentForm" action="/admin/positions/position" method="post" class="needs-validation" novalidate>
                     <div class="modal-body">
                         <#if _csrf??>
                             <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
                         </#if>
-                        <input class="form-control" name="name">
+                        <div class="form-group">
+                            <p><label for="positionName" class="col-form-label">Название направления</label></p>
+                            <input id="positionName" placeholder="Название" class="form-control" name="name" required>
+                            <div class="invalid-feedback">
+                                Обязательное поле.
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        <button type="submit" class="btn btn-primary">Добавить</button>
+                        <button type="submit" class="btn btn-primary w-100">Добавить</button>
                     </div>
                 </form>
             </div>
