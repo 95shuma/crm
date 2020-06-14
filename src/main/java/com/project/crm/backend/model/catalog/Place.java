@@ -18,6 +18,7 @@ public class Place {
 
     private String name;
 
+    @Column(unique = true)
     private String codePlace;
 
     private Integer groupCode;
