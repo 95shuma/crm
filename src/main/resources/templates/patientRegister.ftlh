@@ -3,7 +3,7 @@
 <@main.renderWith>
     <div class="mx-auto mt-3 w-50">
         <h3 class="text-center">Новый пациент</h3>
-        <form action="/senior-doctor/patients" method="post" style="margin-bottom: 50px"  class="needs-validation" novalidate>
+        <form action="/senior-doctor/patients/patient" method="post" style="margin-bottom: 50px"  class="needs-validation" novalidate>
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
