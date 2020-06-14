@@ -22,6 +22,10 @@ public class UserDocNumTest {
 
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
-
+        userService.getAll().stream().forEach(userDTO -> {
+            if (userDTO.getDocumentNumber().equals(userForTest.getDocumentNumber())){
+                atomicBoolean.set(true);
+            }
+        });
     }
 }
