@@ -19,5 +19,9 @@ public class UserDocNumTest {
     void test_method_for_place_uniqueness2(){
         Random random = new Random();
         var userForTest = userService.getAll().get(random.nextInt(userService.getAll().size()));
+
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+
+
     }
 }
