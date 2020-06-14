@@ -42,7 +42,7 @@ public class DoctorController {
 
 
 
-    @PostMapping
+    @PostMapping("/doctor")
     public String doctorRegister(@Valid UserRegisterForm userRegisterForm,
                                  BindingResult validationResult,
                                  RedirectAttributes attributes){
