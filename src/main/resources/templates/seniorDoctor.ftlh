@@ -1,8 +1,10 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <h2>Панель администратора ЛПУ</h2>
-    <p><a href="/senior-doctor/patients/patient"><button type="button" class="btn btn-primary">Зарегистрировать пациента</button></a></p>
-    <p><a href="/senior-doctor/doctors/doctor"><button  type="button" class="btn btn-primary">Зарегистрировать доктора</button></a></p>
+    <div class="mx-auto mt-3 w-50">
+        <h3 class="text-center">Панель администратора ЛПУ</h3>
+        <a href="/senior-doctor/patients/patient" class="btn btn-primary btn-block">Зарегистрировать пациента</button></a>
+        <a href="/senior-doctor/doctors/doctor" class="btn btn-primary btn-block">Зарегистрировать доктора</button></a>
+    </div>
     <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
