@@ -1,16 +1,12 @@
 package com.project.crm.backend.util;
 
-import com.project.crm.backend.model.catalog.Role;
-import com.project.crm.backend.repository.RoleRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-
 public final class Constants {
 
-    public static final String ADMIN_ROLE_ID = "1" ;
-    public static final String ADMIN_HCF_ROLE_ID = "3";
-    public static final String JMO_ROLE_ID = "4";
-    public static final String DOCTOR_ROLE_ID = "2";
-    public static final String PATIENT_ROLE_ID = "5";
+    public static final String ADMIN = "ROLE_ADMIN" ;
+    public static final String SENIOR_DOCTOR = "ROLE_SENIOR_DOCTOR";
+    public static final String DOCTOR = "ROLE_DOCTOR";
+    public static final String JUNIOR_DOCTOR = "ROLE_JUNIOR_DOCTOR";
+    public static final String PATIENT = "ROLE_PATIENT";
 
 
 

@@ -1,8 +1,9 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <#include "partials/header.ftlh">
-    <a href="/patientAppointment"><button>Записаться к врачу</button></a>
-    <a href="/patientAllAppointment"><button>Просмотр записей</button></a>
+    <div class="mx-auto mt-3 w-50">
+        <a href="/patient/records/record" class="btn btn-primary btn-block">Записаться к врачу</a>
+        <a href="/patient/records" style="margin-top: 5px" class="btn btn-primary btn-block">Просмотр записей</a>
+    </div>
     <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

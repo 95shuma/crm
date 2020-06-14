@@ -1,33 +1,44 @@
 package com.project.crm.backend.services;
 
+import com.project.crm.backend.dto.HospitalDTO;
+import com.project.crm.backend.dto.PlaceDTO;
 import com.project.crm.backend.model.catalog.Hospital;
-import com.project.crm.backend.model.catalog.RegistrationPlace;
+import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.HospitalRepo;
+import com.project.crm.backend.repository.PlaceRepo;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class HospitalService {
 
-    @Autowired
-    HospitalRepo hospitalRepo;
+    private final PlaceRepo placeRepo;
+    private final HospitalRepo hospitalRepo;
 
-    public List<Hospital> getAll(){
-        return hospitalRepo.findAll();
+    public List<HospitalDTO> getAll(){
+        List<Hospital> hospitals = new ArrayList<Hospital>();
+        hospitals = hospitalRepo.findAll();
+
+        List<HospitalDTO> hospitalsDTO = new ArrayList<HospitalDTO>();
+        hospitals.stream().forEach(obj -> {
+            hospitalsDTO.add(HospitalDTO.from(obj));
+        });
+        return hospitalsDTO;
     }
 
-    public Hospital getByName(String name){
-        return hospitalRepo.findByName(name);
+    public HospitalDTO getById(Long id){
+        Hospital hospital = hospitalRepo.findById(id).get();
+        return HospitalDTO.from(hospital);
     }
 
-    public void save(String name, RegistrationPlace registrationPlace, String address){
-        Hospital hospital = Hospital.builder()
+    public void createHospital(String name, PlaceDTO placeDTO, String address){
+        var hospital = Hospital.builder()
                 .name(name)
-                .registrationPlace(registrationPlace)
+                .place(placeRepo.findById(placeDTO.getId()).get())
                 .address(address)
                 .build();
         hospitalRepo.save(hospital);

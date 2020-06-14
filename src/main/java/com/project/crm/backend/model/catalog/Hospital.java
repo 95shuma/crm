@@ -10,14 +10,15 @@ import javax.persistence.*;
 @Entity
 @Table(name="hospitals")
 public class Hospital {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @ManyToOne
-    private RegistrationPlace registrationPlace;
+    @ManyToOne @JoinColumn(name = "place_id")
+    private Place place;
 
     private String address;
 }

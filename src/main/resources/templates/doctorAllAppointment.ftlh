@@ -1,57 +1,29 @@
 <#import "partials/main.ftlh" as main />
 
-<@main.renderWith>
-    <#include "partials/header.ftlh">
-    <#if journal??>
+<@main.renderWith scripts=[] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
         <h4>Ваши записи</h4>
-        <table border="1px">
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <th>
-                    Время записи
-                </th>
-                <th>
-                    ФИО больного
-                </th>
-                <th>
-                    Пол
-                </th>
-                <th>
-                    Дата рождения
-                </th>
-                <th>
-                    Жалоба
-                </th>
+                <th scope="col">Время записи</th>
+                <th scope="col">ФИО больного</th>
+                <th scope="col">Пол</th>
+                <th scope="col">Дата рождения</th>
+                <th scope="col">Жалоба</th>
             </tr>
+            </thead>
+            <tbody>
             <#list journal as journal>
             <tr>
-                <th>
-                    ${journal.dateTime}
-                </th>
-                <th>
-                    ${journal.patient.full_name}
-                </th>
-                <th>
-                    ${journal.patient.gender}
-                </th>
-                <th>
-                    ${journal.patient.birth_date}
-                </th>
-                <th>
-                    ${journal.reason}
-                </th>
+                <td>${journal.dateTime}</td>
+                <td>${journal.patient.fullName}</td>
+                <td>${journal.patient.gender}</td>
+                <td>${journal.patient.birthDate}</td>
+                <td>${journal.reason}</td>
             </tr>
             </#list>
+            </tbody>
         </table>
-        <a href="/doctor"><button>Выйти в личный кабинет</button></a>
-    <#else>
-        <h4>Введите ваш ИНН</h4>
-        <form action="/doctorAllAppointment" method="post">
-            <#if _csrf??>
-                <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
-            </#if>
-            <input name="inn">
-            <button type="submit">Ввести</button>
-        </form>
-    </#if>
+        <a href="/doctor" class="btn btn-primary btn-block">Выйти в личный кабинет</a>
 <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

@@ -32,13 +32,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/register")
+                .logoutSuccessUrl("/login")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/profile")
-                .authenticated();
+                .antMatchers("/default")
+                .authenticated()
+                .antMatchers("/admin/**")
+                .hasRole("ADMIN")
+                .antMatchers("/senior-doctor/**")
+                .hasRole("SENIOR_DOCTOR")
+                .antMatchers("/doctor/**")
+                .hasRole("DOCTOR")
+                .antMatchers("/junior-doctor/**")
+                .hasRole("JUNIOR_DOCTOR")
+                .antMatchers("/patient/**")
+                .hasRole("PATIENT");
 
         http.authorizeRequests()
                 .anyRequest()
@@ -47,51 +57,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Войти как администратор ЛПУ
+
         String fetchAdminsQuery = "select inn, password, enabled"
-                + " from admins"
+                + " from users"
                 + " where inn = ?";
 
-        String fetchRolesQuery3 = "select a1.inn, a2.name"
-                + " from admins a1, roles a2"
-                + " where a1.role_id = a2.id"
-                + " and a1.inn = ?";
+        String fetchRolesQuery = "select u.inn, r.name" +
+                " from users u, registrations_journal rj,  roles r" +
+                " where u.id = rj.user_id and rj.role_id = r.id and u.inn = ?";
 
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(fetchAdminsQuery)
-                .authoritiesByUsernameQuery(fetchRolesQuery3)
-                .dataSource(dataSource);
-        // Войти как доктор
-        String fetchDoctorsQuery = "select inn, password, enabled"
-                + " from doctor"
-                + " where inn = ?";
-
-        String fetchRolesQuery2 = "select a2.inn, a3.name"
-                + " from hospitals_doctor a1, doctor a2, roles a3"
-                + " where a1.doctor_id = a2.id"
-                + " and a1.role_id = a3.id"
-                + " and a2.inn = ?";
-
-        auth.jdbcAuthentication()
-                .usersByUsernameQuery(fetchDoctorsQuery)
-                .authoritiesByUsernameQuery(fetchRolesQuery2)
-                .dataSource(dataSource);
-
-        // Войти как пациент
-        String fetchPatientsQuery = "select inn, password, enabled"
-                + " from patients"
-                + " where inn = ?";
-
-        String fetchRolesQuery = "select a1.inn, a2.name"
-                + " from patients a1, roles a2"
-                + " where a1.role_id = a2.id"
-                + " and a1.inn = ?";
-
-        auth.jdbcAuthentication()
-                .usersByUsernameQuery(fetchPatientsQuery)
                 .authoritiesByUsernameQuery(fetchRolesQuery)
                 .dataSource(dataSource);
-
-
     }
 }
