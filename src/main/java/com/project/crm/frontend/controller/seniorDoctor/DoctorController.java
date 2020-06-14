@@ -26,7 +26,7 @@ public class DoctorController {
     private final PlaceService placeService;
 
     @GetMapping("/doctor")
-    public String doctorRegisterPage(Model model, Principal principal){
+    public String getDoctor(Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
 
@@ -40,10 +40,15 @@ public class DoctorController {
         return "doctorRegister";
     }
 
-
+    @GetMapping
+    public String getDoctors(Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("doctors", userService.getAllDoctors());
+        return "doctors";
+    }
 
     @PostMapping("/doctor")
-    public String doctorRegister(@Valid UserRegisterForm userRegisterForm,
+    public String createDoctor(@Valid UserRegisterForm userRegisterForm,
                                  BindingResult validationResult,
                                  RedirectAttributes attributes){
         attributes.addFlashAttribute("reg", userRegisterForm);
