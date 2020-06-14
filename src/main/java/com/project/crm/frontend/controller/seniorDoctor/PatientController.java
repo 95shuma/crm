@@ -38,7 +38,15 @@ public class PatientController {
         return "patientRegister";
     }
 
-    @PostMapping
+
+    @GetMapping
+    public String getPatients(Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("patients", userService.getAllPatients());
+        return "patients";
+    }
+
+    @PostMapping("/patient")
     public String createPatient(@Valid UserRegisterForm userRegisterForm,
                                   BindingResult validationResult,
                                   RedirectAttributes attributes){
