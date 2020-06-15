@@ -1,4 +1,4 @@
-<#import "partials/main.ftlh" as main />
+<#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith>
     <h3>Список докторов</h3>

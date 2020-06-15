@@ -1,9 +1,9 @@
-<#import "partials/main.ftlh" as main />
+<#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith>
     <div class="mx-auto mt-3 w-50">
-        <h3 class="text-center">Новый пациент</h3>
-        <form action="/senior-doctor/patients/patient" method="post" style="margin-bottom: 50px"  class="needs-validation" novalidate>
+        <h3 class="text-center">Новый доктор</h3>
+        <form action="/senior-doctor/doctors/doctor" method="post" style="margin-bottom: 50px" class="needs-validation" novalidate>
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
@@ -46,12 +46,12 @@
                 <label for="genderId" style="margin-bottom: 0">Пол</label>
                 <div id="genderId">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="genderForMen" value="${'male'}" checked>
-                        <label class="form-check-label" for="genderForMen">Мужской</label>
+                        <input class="form-check-input" type="radio" name="gender" id="genderForMenId" value="${'male'}" checked>
+                        <label class="form-check-label" for="genderForMenId">Мужской</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="genderForWomen" value="${'female'}">
-                        <label class="form-check-label" for="genderForWomen">Женский</label>
+                        <input class="form-check-input" type="radio" name="gender" id="genderForWomenId" value="${'female'}">
+                        <label class="form-check-label" for="genderForWomenId">Женский</label>
                     </div>
                 </div>
                 <label for="registrationPlaceId">Место регистрации</label>
@@ -62,24 +62,41 @@
                         </#list>
                     </#if>
                 </select>
-                <label for="registrationHospitalId">ЛПУ пациента</label>
-                <select class="form-control" id="registrationHospitalId" name="hospitalId">
-                    <#if hospitals??>
-                        <#list hospitals as hospital>
-                            <option value= "${hospital.id}">${hospital.name}</option>
+                <label for="doctorPositionId">Должность</label>
+                <select class="form-control" id="doctorPositionId" name="positionId">
+                    <#if positions??>
+                        <#list positions as position>
+                            <option value="${position.id}">${position.name}</option>
                         </#list>
                     </#if>
                 </select>
-                <input type="hidden" name="roleId"  class="form-control" value="5">
-                <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px">Добавить</button>
-                <div>
-                    <#if errors??>
-                        <p>Входные данные с ошибками!</p>
-                        <#list errors as fieldError>
-                            <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
+                <label for="doctorRoleId">Роль</label>
+                <select class="form-control" id="doctorRoleId" name="roleId">
+                    <#if roles??>
+                        <#list roles as role>
+                            <#if role.id == 2 || role.id == 3 || role.id == 4>
+                                <option value="${role.id}">${role.name}</option>
+                            </#if>
                         </#list>
                     </#if>
-                </div>
+                </select>
+                <label for="registrationHospitalId">ЛПУ</label>
+                <select class="form-control" id="registrationHospitalId" name="hospitalId">
+                    <#if hospitals??>
+                        <#list hospitals as hospital>
+                            <option value="${hospital.id}">${hospital.name}</option>
+                        </#list>
+                    </#if>
+                </select>
+                <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px">Добавить</button>
+            </div>
+            <div>
+                <#if errors??>
+                    <p>Входные данные с ошибками!</p>
+                    <#list errors as fieldError>
+                        <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
+                    </#list>
+                </#if>
             </div>
         </form>
     </div>
@@ -100,5 +117,5 @@
             }, false);
         })();
     </script>
-<#--<#include "partials/pagination.ftlh">-->
+    <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
