@@ -21,7 +21,7 @@ public class SeniorDoctorController {
 
         userService.checkUserPresence(model, principal);
 
-        return "seniorDoctor";
+        return "seniorDoctor/seniorDoctor";
     }
 
 //    @GetMapping("/senior-doctor")

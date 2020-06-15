@@ -37,14 +37,14 @@ public class DoctorController {
         model.addAttribute("hospitals", hospitalService.getAll());
         model.addAttribute("roles", roleService.getAll());
         model.addAttribute("positions", positionService.getAll());
-        return "doctorRegister";
+        return "seniorDoctor/doctorController/doctorRegister";
     }
 
     @GetMapping
     public String getDoctors(Model model, Principal principal){
         userService.checkUserPresence(model, principal);
         model.addAttribute("doctors", userService.getAllDoctors());
-        return "doctors";
+        return "seniorDoctor/doctorController/doctors";
     }
 
     @PostMapping("/doctor")

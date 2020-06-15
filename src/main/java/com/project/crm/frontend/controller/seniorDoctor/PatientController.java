@@ -35,7 +35,7 @@ public class PatientController {
         }
         model.addAttribute("hospitals", hospitalService.getAll());
         model.addAttribute("places", placeService.getAll());
-        return "patientRegister";
+        return "seniorDoctor/patientController/patientRegister";
     }
 
 
@@ -43,7 +43,7 @@ public class PatientController {
     public String getPatients(Model model, Principal principal){
         userService.checkUserPresence(model, principal);
         model.addAttribute("patients", userService.getAllPatients());
-        return "patients";
+        return "seniorDoctor/patientController/patients";
     }
 
     @PostMapping("/patient")
