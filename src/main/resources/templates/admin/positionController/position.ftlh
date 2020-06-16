@@ -1,4 +1,4 @@
-<#import "partials/main.ftlh" as main />
+<#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith scripts=["/js/validation.js"] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
     <h3>Регистрация нового направления</h3>
@@ -18,7 +18,7 @@
             </#list>
         </tbody>
     </table>
-    <#include "partials/pagination.ftlh">
+    <#include "../../partials/pagination.ftlh">
     <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModal">
         Добавить
     </button>
