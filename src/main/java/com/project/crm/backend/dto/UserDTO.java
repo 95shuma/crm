@@ -3,7 +3,9 @@ package com.project.crm.backend.dto;
 import com.project.crm.backend.model.User;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder(access = AccessLevel.PRIVATE)
@@ -35,5 +37,13 @@ public class UserDTO {
                 .gender(user.getGender())
                 .place(PlaceDTO.from(user.getPlace()))
                 .build();
+    }
+
+    public static List<UserDTO> listFrom(List<User> objList){
+        List<UserDTO> listDto = new ArrayList<>();
+        objList.stream().forEach(obj -> {
+            listDto.add(UserDTO.from(obj));
+        });
+        return listDto;
     }
 }
