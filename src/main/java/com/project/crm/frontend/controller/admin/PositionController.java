@@ -33,7 +33,7 @@ public class PositionController {
         String uri = uriBuilder.getRequestURI();
         PropertiesService.constructPageable(positions, propertiesService.getDefaultPageSize(), model, uri);
 
-        return "position";
+        return "admin/positionController/position";
     }
 
     @PostMapping("/positions/position")
