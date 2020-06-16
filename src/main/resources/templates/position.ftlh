@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <#list positions as position>
+            <#list items as position>
                 <tr>
                     <th scope="row">${position?counter}</th>
                     <td>${position.name}</td>
@@ -18,6 +18,7 @@
             </#list>
         </tbody>
     </table>
+    <#include "partials/pagination.ftlh">
     <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModal">
         Добавить
     </button>
