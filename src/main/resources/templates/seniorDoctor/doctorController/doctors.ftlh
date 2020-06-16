@@ -15,18 +15,19 @@
         </tr>
         </thead>
         <tbody id="Table">
-        <#list doctors as doctors>
+        <#list items as doctor>
             <tr>
-                <th scope="row">${doctors?counter}</th>
-                <td>${doctors.inn}</td>
-                <td>${doctors.documentNumber}</td>
-                <td>${doctors.fullName}</td>
-                <td>${doctors.birthDate}</td>
-                <td>${doctors.gender}</td>
+                <th scope="row">${doctor?counter}</th>
+                <td>${doctor.inn}</td>
+                <td>${doctor.documentNumber}</td>
+                <td>${doctor.fullName}</td>
+                <td>${doctor.birthDate}</td>
+                <td>${doctor.gender}</td>
             </tr>
         </#list>
         </tbody>
     </table>
+    <#include "../../partials/pagination.ftlh">
     <div>
         <#if errors??>
             <p>Входные данные с ошибками!</p>
@@ -35,6 +36,7 @@
             </#list>
         </#if>
     </div>
+
 </@main.renderWith>
 <script>
     $(document).ready(function(){
