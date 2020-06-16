@@ -46,6 +46,10 @@ public class UserService {
         return userRepo.findAllHospitalStaff(pageable).map(UserDTO::from);
     }
 
+    public Page<UserDTO> getAllSeniorDoctors(Pageable pageable){
+        return userRepo.findAllSeniorDoctors(pageable).map(UserDTO::from);
+    }
+
     public void createUser(UserRegisterForm userRegisterForm){
 
         var user = User.builder()
