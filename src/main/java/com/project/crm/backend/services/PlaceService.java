@@ -4,6 +4,8 @@ import com.project.crm.backend.dto.PlaceDTO;
 import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.PlaceRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +26,9 @@ public class PlaceService {
             placesDTO.add(PlaceDTO.from(obj));
         });
         return placesDTO;
+    }
+    public Page<PlaceDTO> getAll(Pageable pageable){
+        return placeRepo.findAll(pageable).map(PlaceDTO::from);
     }
 
     public void createPlace(String name, String codePlace, Integer groupCode){
