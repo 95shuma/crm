@@ -20,7 +20,7 @@ public class AdminController {
     public String admin(Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
-        return "admin";
+        return "admin/admin";
     }
 
 }
