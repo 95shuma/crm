@@ -24,6 +24,7 @@
             </#list>
             </tbody>
         </table>
+    <#include "partials/pagination.ftlh">
         <a href="/doctor" class="btn btn-primary btn-block">Выйти в личный кабинет</a>
-<#--<#include "partials/pagination.ftlh">-->
+
 </@main.renderWith>
