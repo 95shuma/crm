@@ -43,7 +43,10 @@ public class DoctorController {
     @GetMapping
     public String getDoctors(Model model, Principal principal){
         userService.checkUserPresence(model, principal);
-        model.addAttribute("doctors", userService.getAllDoctors());
+        model.addAttribute("items", userService.getAllDoctors());
+        // Постраничный вывод
+
+
         return "seniorDoctor/doctorController/doctors";
     }
 
