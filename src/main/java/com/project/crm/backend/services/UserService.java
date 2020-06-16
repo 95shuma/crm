@@ -2,11 +2,11 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.dto.UserDTO;
 import com.project.crm.backend.model.User;
-import com.project.crm.backend.model.catalog.RegistrationJournal;
-import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.*;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -40,7 +40,9 @@ public class UserService {
 
     public List<User> getAllPatients(){return userRepo.findAllPatients();}
 
-    public List<User> getAllDoctors(){return userRepo.findAllHospitalStaff();}
+    public Page<UserDTO> getAllDoctors(Pageable pageable){
+        return userRepo.findAllHospitalStaffPageable(pageable).map(UserDTO::from);
+    }
 
     public void createUser(UserRegisterForm userRegisterForm){
 
