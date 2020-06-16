@@ -38,10 +38,12 @@ public class UserService {
 
     public List<User> getAll(){return userRepo.findAll();}
 
-    public List<User> getAllPatients(){return userRepo.findAllPatients();}
+    public Page<UserDTO> getAllPatients(Pageable pageable){
+        return userRepo.findAllPatients(pageable).map(UserDTO::from);
+    }
 
     public Page<UserDTO> getAllDoctors(Pageable pageable){
-        return userRepo.findAllHospitalStaffPageable(pageable).map(UserDTO::from);
+        return userRepo.findAllHospitalStaff(pageable).map(UserDTO::from);
     }
 
     public void createUser(UserRegisterForm userRegisterForm){
