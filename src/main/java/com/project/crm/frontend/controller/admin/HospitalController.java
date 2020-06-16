@@ -29,7 +29,7 @@ public class HospitalController {
 
         model.addAttribute("places",placeService.getAll());
 
-        return "hospital";
+        return "admin/hospitalController/hospital";
     }
 
     @PostMapping("/hospital")
