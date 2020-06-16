@@ -18,7 +18,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
     List<User> findAllPatients();
 
     @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id = 5", nativeQuery = true)
-    List<User> findAllPatients(Pageable pageable);
+    Page<User> findAllPatients(Pageable pageable);
 
     @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id != 5 and rj.role_id != 1", nativeQuery = true)
     List<User> findAllHospitalStaff();
