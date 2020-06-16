@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
-@Controller("pkg seniorDoctor Patient")
+@Controller("pkg admin Patient")
 @RequestMapping("/admin/patients")
 @AllArgsConstructor
 public class PatientController {
