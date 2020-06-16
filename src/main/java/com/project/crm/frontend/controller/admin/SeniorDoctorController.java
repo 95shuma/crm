@@ -36,7 +36,7 @@ public class SeniorDoctorController {
         model.addAttribute("positions", positionService.getAll());
         model.addAttribute("hospitals",hospitalService.getAll());
 
-        return "regAdminHospital";
+        return "admin/seniorDoctorController/regAdminHospital";
     }
 
     @PostMapping("/senior-doctor")
