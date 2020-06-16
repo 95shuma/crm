@@ -1,4 +1,4 @@
-<#import "partials/main.ftlh" as main>
+<#import "../../partials/main.ftlh" as main>
 <@main.renderWith scripts=["/js/validation.js"] styles=["css/registration.css","https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
