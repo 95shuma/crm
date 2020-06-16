@@ -33,7 +33,7 @@ public class PlaceController {
         String uri = uriBuilder.getRequestURI();
         PropertiesService.constructPageable(places, propertiesService.getDefaultPageSize(), model, uri);
 
-        return "place";
+        return "admin/placeController/place";
     }
 
 
