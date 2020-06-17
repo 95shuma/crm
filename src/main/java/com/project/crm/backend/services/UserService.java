@@ -82,6 +82,8 @@ public class UserService {
         userRegisterForm.setBirthDate(patientRegisterForm.getBirthDate());
         userRegisterForm.setGender(patientRegisterForm.getGender());
         userRegisterForm.setPlaceId(patientRegisterForm.getPlaceId());
+        userRegisterForm.setHospitalId(patientRegisterForm.getHospitalId());
+        userRegisterForm.setRoleId(patientRegisterForm.getRoleId());
 
         var user = User.builder()
                 .inn(userRegisterForm.getInn())
