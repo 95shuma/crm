@@ -5,6 +5,7 @@ import com.project.crm.backend.dto.PlaceDTO;
 import com.project.crm.backend.model.catalog.Hospital;
 import com.project.crm.backend.repository.HospitalRepo;
 import com.project.crm.backend.repository.PlaceRepo;
+import com.project.crm.frontend.forms.HospitalRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,11 +41,11 @@ public class HospitalService {
         return HospitalDTO.from(hospital);
     }
 
-    public void createHospital(String name, PlaceDTO placeDTO, String address){
+    public void createHospital(HospitalRegisterForm hospitalRegisterForm){
         var hospital = Hospital.builder()
-                .name(name)
-                .place(placeRepo.findById(placeDTO.getId()).get())
-                .address(address)
+                .name(hospitalRegisterForm.getName())
+                .place(placeRepo.findById(hospitalRegisterForm.getPlaceId()).get())
+                .address(hospitalRegisterForm.getStreet() + " " + hospitalRegisterForm.getHouseNum())
                 .build();
         hospitalRepo.save(hospital);
     }

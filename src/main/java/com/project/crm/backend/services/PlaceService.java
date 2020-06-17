@@ -31,11 +31,11 @@ public class PlaceService {
         return placeRepo.findAll(pageable).map(PlaceDTO::from);
     }
 
-    public void createPlace(String name, String codePlace, Integer groupCode){
+    public void createPlace(PlaceDTO placeDTO){
         Place registrationPlace = Place.builder()
-                .name(name)
-                .codePlace(codePlace)
-                .groupCode(groupCode)
+                .name(placeDTO.getName())
+                .codePlace(placeDTO.getCodePlace())
+                .groupCode(placeDTO.getGroupCode())
                 .build();
         placeRepo.save(registrationPlace);
     }

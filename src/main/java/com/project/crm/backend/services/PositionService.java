@@ -31,9 +31,9 @@ public class PositionService {
         return positionRepo.findAll(pageable).map(PositionDTO::from);
     }
 
-    public void createPosition(String name){
+    public void createPosition(PositionDTO positionDTO){
         var position = Position.builder()
-                .name(name)
+                .name(positionDTO.getName())
                 .build();
         positionRepo.save(position);
     }
