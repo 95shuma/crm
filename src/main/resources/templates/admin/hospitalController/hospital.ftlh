@@ -38,16 +38,16 @@
                         </div>
                     </div>
                     <button class="btn btn-primary w-100" type="submit">Добавить</button>
+                    <div style="color:red">
+                        <#if errors??>
+                            <p>Входные данные с ошибками!</p>
+                            <#list errors as fieldError >
+                                <p>${fieldError.field} - ${fieldError.defaultMessage!"--no message--"}</p>
+                            </#list>
+                        </#if>
+                    </div>
                 </form>
             </div>
-        </div>
-        <div style="color:red">
-            <#if errors??>
-                <p>Входные данные с ошибками!</p>
-                <#list errors as fieldError >
-                    <p>${fieldError.field} - ${fieldError.defaultMessage!"--no message--"}</p>
-                </#list>
-            </#if>
         </div>
     </section>
 </@main.renderWith>

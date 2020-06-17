@@ -94,16 +94,17 @@
                     </div>
                     <input type="hidden" name="roleId" value="2">
                     <p><button type="submit" class="btn btn-primary w-100">Добавить</button></p>
+                    <div  style="color:red">
+                        <#if errors??>
+                            <p>Ошибки:</p>
+                            <#list errors as fieldError >
+                                <p>${fieldError.field} - ${fieldError.defaultMessage!"--no message--"}</p>
+                            </#list>
+                        </#if>
+                    </div>
                 </form>
             </div>
         </div>
-        <div  style="color:red">
-            <#if errors??>
-                <p>Ошибки:</p>
-                <#list errors as fieldError >
-                    <p>${fieldError.field} - ${fieldError.defaultMessage!"--no message--"}</p>
-                </#list>
-            </#if>
-        </div>
+
     </section>
 </@main.renderWith>
