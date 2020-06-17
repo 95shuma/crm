@@ -17,15 +17,15 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id = 5", nativeQuery = true)
     List<User> findAllPatients();
 
-    @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id = 5", nativeQuery = true)
+    @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id = 5 order by u.full_name asc", nativeQuery = true)
     Page<User> findAllPatients(Pageable pageable);
 
     @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id != 5 and rj.role_id != 1", nativeQuery = true)
     List<User> findAllHospitalStaff();
 
-    @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id != 5 and rj.role_id != 1", nativeQuery = true)
+    @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id != 5 and rj.role_id != 1 order by u.full_name asc", nativeQuery = true)
     Page<User> findAllHospitalStaff(Pageable pageable);
 
-    @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id = 2", nativeQuery = true)
+    @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id = 2 order by u.full_name asc", nativeQuery = true)
     Page<User> findAllSeniorDoctors(Pageable pageable);
 }
