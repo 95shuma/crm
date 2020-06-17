@@ -34,9 +34,12 @@
                     <div class="form-group">
                         <p><label class="col-form-label">На что жалуетесь</label></p>
                         <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"  autofocus></textarea>
+
                         <#if errors??>
                             <#list errors as fieldError>
-                                <p style="color: red">${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
+                                <#if fieldError.field == 'reason'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
                             </#list>
                         </#if>
                     </div>
