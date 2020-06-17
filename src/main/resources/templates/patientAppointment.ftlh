@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label">На что жалуетесь</label></p>
-                        <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"></textarea>
+                        <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"  autofocus></textarea>
                         <#if errors??>
                             <#list errors as fieldError>
                                 <p style="color: red">${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
