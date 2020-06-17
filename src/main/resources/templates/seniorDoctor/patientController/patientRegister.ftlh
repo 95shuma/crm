@@ -10,18 +10,67 @@
             <div class="form-group">
                 <label for="innId">ИНН</label>
                 <input id="innId" type="text" name="inn" class="form-control" autofocus>
+                <#if errors??>
+                    <#list errors as fieldError>
+                        <#if fieldError.field == 'inn'>
+                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                        </#if>
+                    </#list>
+                </#if>
                 <label for="passwordId">Пароль</label>
                 <input id="passwordId" type="text" name="password" class="form-control">
+                <#if errors??>
+                    <#list errors as fieldError>
+                        <#if fieldError.field == 'password'>
+                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                        </#if>
+                    </#list>
+                </#if>
                 <label for="documentNumberId">Номер паспорта</label>
                 <input id="documentNumberId" type="text" name="documentNumber" class="form-control">
+                <#if errors??>
+                    <#list errors as fieldError>
+                        <#if fieldError.field == 'documentNumber'>
+                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                        </#if>
+                    </#list>
+                </#if>
                 <label for="surnameId">Фамилия</label>
                 <input id="surnameId" type="text" name="surname" class="form-control">
+                <#if errors??>
+                    <#list errors as fieldError>
+                        <#if fieldError.field == 'surname'>
+                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                        </#if>
+                    </#list>
+                </#if>
                 <label for="nameId">Имя</label>
                 <input id="nameId" type="text" name="name" class="form-control">
+                <#if errors??>
+                    <#list errors as fieldError>
+                        <#if fieldError.field == 'name'>
+                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                        </#if>
+                    </#list>
+                </#if>
                 <label for="middleNameId">Отчество</label>
                 <input id="middleNameId" type="text" name="middleName" class="form-control">
+                <#if errors??>
+                    <#list errors as fieldError>
+                        <#if fieldError.field == 'middleName'>
+                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                        </#if>
+                    </#list>
+                </#if>
                 <label for="birthDateId">Дата рождения</label>
                 <input id="birthDateId" type="date" name="birthDate" class="form-control">
+                <#if errors??>
+                    <#list errors as fieldError>
+                        <#if fieldError.field == 'birthDate'>
+                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                        </#if>
+                    </#list>
+                </#if>
                 <label for="genderId" style="margin-bottom: 0">Пол</label>
                 <div id="genderId">
                     <div class="form-check">
@@ -51,14 +100,6 @@
                 </select>
                 <input type="hidden" name="roleId"  class="form-control" value="5">
                 <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px">Добавить</button>
-                <div>
-                    <#if errors??>
-                        <p>Входные данные с ошибками!</p>
-                        <#list errors as fieldError>
-                            <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
-                        </#list>
-                    </#if>
-                </div>
             </div>
         </form>
     </div>
