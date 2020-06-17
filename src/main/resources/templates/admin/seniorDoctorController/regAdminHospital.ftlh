@@ -11,51 +11,79 @@
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminInn">ИНН</label></p>
                         <input class="form-control" id="adminInn" type="text" name="inn" placeholder="ИНН" autofocus>
-                        <div class="invalid-feedback">
-                            ИНН состиот из 14-цифр и начинается с 1 либо 2.
-                        </div>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'inn'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminPass">Пароль</label></p>
                         <input class="form-control" id="adminPass" type="password" name="password" placeholder="Пароль">
-                        <div class="invalid-feedback">
-                            Пароль должен содержать не менее 8 символов, состоящих как минимум из одного числа, одной заглавной и строчной латинской буквы.
-                        </div>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'password'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminDN">Номер документа</label></p>
                         <input class="form-control" id="adminDN" type="text" name="documentNumber" placeholder="Номер документа">
-                        <div class="invalid-feedback">
-                            Паспорт должен содержать не менее 9 символов, начинающий двумя заглавными латинскими буквами и 7 цифр.
-                        </div>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'documentNumber'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminName">Имя</label></p>
                         <input class="form-control" id="adminName" type="text" name="name" placeholder="Имя">
-                        <div class="invalid-feedback">
-                            Имя должен содержать не менее 3 латинских либо кириллических букв.
-                        </div>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'name'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminSurname">Фамилия</label></p>
                         <input class="form-control" id="adminSurname" type="text" name="surname" placeholder="Фамилия">
-                        <div class="invalid-feedback">
-                            Фамилия должен содержать не менее 3 латинских либо кириллических букв.
-                        </div>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'surname'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminMN">Отчество</label></p>
                         <input class="form-control" id="adminMN" type="text" name="middleName" placeholder="Отчество">
-                        <div class="invalid-feedback">
-                            Отчество должен содержать не менее 3 латинских либо кириллических букв.
-                        </div>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'middleName'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminBD">Дата рождения</label></p>
                         <input class="form-control" id="adminBD" type="date" name="birthDate">
-                        <div class="invalid-feedback">
-                            Надо заполнить дату рождения.
-                        </div>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'birthDate'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><b>Ваш пол:</b></p>
@@ -75,6 +103,13 @@
                                 <option value="${place.id?c}">${place.name}</option>
                             </#list>
                         </select>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'placeId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><label for="lpuPositionId" class="col-form-label">Направление врача</label></p>
@@ -83,6 +118,13 @@
                                 <option value="${position.id?c}">${position.name}</option>
                             </#list>
                         </select>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'positionId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="form-group">
                         <p><label for="lpuHospitalId" class="col-form-label">Больница</label></p>
@@ -91,17 +133,16 @@
                                 <option value="${hospital.id?c}">${hospital.name}</option>
                             </#list>
                         </select>
-                    </div>
-                    <input type="hidden" name="roleId" value="2">
-                    <p><button type="submit" class="btn btn-primary w-100">Добавить</button></p>
-                    <div  style="color:red">
                         <#if errors??>
-                            <p>Ошибки:</p>
-                            <#list errors as fieldError >
-                                <p>${fieldError.field} - ${fieldError.defaultMessage!"--no message--"}</p>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'hospitalId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
                             </#list>
                         </#if>
                     </div>
+                    <input type="hidden" name="roleId" value="2">
+                    <p><button type="submit" class="btn btn-primary w-100">Добавить</button></p>
                 </form>
             </div>
         </div>
