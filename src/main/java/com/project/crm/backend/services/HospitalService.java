@@ -3,10 +3,11 @@ package com.project.crm.backend.services;
 import com.project.crm.backend.dto.HospitalDTO;
 import com.project.crm.backend.dto.PlaceDTO;
 import com.project.crm.backend.model.catalog.Hospital;
-import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.HospitalRepo;
 import com.project.crm.backend.repository.PlaceRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +29,10 @@ public class HospitalService {
             hospitalsDTO.add(HospitalDTO.from(obj));
         });
         return hospitalsDTO;
+    }
+
+    public Page<HospitalDTO> getAllHospitals(Pageable pageable){
+        return hospitalRepo.findAll(pageable).map(HospitalDTO::from);
     }
 
     public HospitalDTO getById(Long id){
