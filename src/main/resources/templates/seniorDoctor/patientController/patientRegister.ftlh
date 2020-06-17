@@ -3,46 +3,25 @@
 <@main.renderWith>
     <div class="mx-auto mt-3 w-50">
         <h3 class="text-center">Новый пациент</h3>
-        <form action="/senior-doctor/patients/patient" method="post" style="margin-bottom: 50px"  class="needs-validation" novalidate>
+        <form action="/senior-doctor/patients/patient" method="post" style="margin-bottom: 50px">
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
             <div class="form-group">
                 <label for="innId">ИНН</label>
-                <input id="innId" type="text" name="inn" class="form-control" pattern="[1-2]{1}[0-9]{13}" autofocus required>
-                <div class="invalid-feedback">
-                    ИНН состиот из 14-цифр и начинается с 1 либо 2.
-                </div>
+                <input id="innId" type="text" name="inn" class="form-control" autofocus>
                 <label for="passwordId">Пароль</label>
-                <input id="passwordId" type="text" name="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
-                <div class="invalid-feedback">
-                    Пароль должен содержать не менее 8 символов, состоящих как минимум из одного числа, одной заглавной и строчной латинской буквы.
-                </div>
+                <input id="passwordId" type="text" name="password" class="form-control">
                 <label for="documentNumberId">Номер паспорта</label>
-                <input id="documentNumberId" type="text" name="documentNumber" class="form-control" pattern="[A-Z]{2}[0-9]{7}" required>
-                <div class="invalid-feedback">
-                    Паспорт должен содержать не менее 9 символов, начинающий двумя заглавными латинскими буквами и 7 цифр.
-                </div>
+                <input id="documentNumberId" type="text" name="documentNumber" class="form-control">
                 <label for="surnameId">Фамилия</label>
-                <input id="surnameId" type="text" name="surname" class="form-control" pattern="[A-Za-zА-Яа-яЁё]{3,}" required>
-                <div class="invalid-feedback">
-                    Фамилия должен содержать не менее 3 латинских либо кириллических букв.
-                </div>
+                <input id="surnameId" type="text" name="surname" class="form-control">
                 <label for="nameId">Имя</label>
-                <input id="nameId" type="text" name="name" class="form-control" pattern="[A-Za-zА-Яа-яЁё]{3,}" required>
-                <div class="invalid-feedback">
-                    Имя должен содержать не менее 3 латинских либо кириллических букв.
-                </div>
+                <input id="nameId" type="text" name="name" class="form-control">
                 <label for="middleNameId">Отчество</label>
-                <input id="middleNameId" type="text" name="middleName" class="form-control" pattern="[A-Za-zА-Яа-яЁё]{3,}" required>
-                <div class="invalid-feedback">
-                    Отчество должен содержать не менее 3 латинских либо кириллических букв.
-                </div>
+                <input id="middleNameId" type="text" name="middleName" class="form-control">
                 <label for="birthDateId">Дата рождения</label>
-                <input id="birthDateId" type="date" name="birthDate" class="form-control" required>
-                <div class="invalid-feedback">
-                    Надо заполнить дату раождения.
-                </div>
+                <input id="birthDateId" type="date" name="birthDate" class="form-control">
                 <label for="genderId" style="margin-bottom: 0">Пол</label>
                 <div id="genderId">
                     <div class="form-check">
@@ -83,22 +62,4 @@
             </div>
         </form>
     </div>
-    <script>
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                var forms = document.getElementsByClassName('needs-validation');
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-    </script>
-<#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

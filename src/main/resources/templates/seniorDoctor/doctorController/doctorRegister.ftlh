@@ -117,5 +117,4 @@
             }, false);
         })();
     </script>
-    <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
