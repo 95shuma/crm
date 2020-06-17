@@ -28,7 +28,7 @@
         </tbody>
     </table>
     <#include "../../partials/pagination.ftlh">
-    <a type="button" class="btn btn-primary w-100" href="/senior-doctor/patients">Добавить</a>
+    <a type="button" class="btn btn-primary w-100" href="/senior-doctor/patients/patient">Добавить пациента</a>
     <div>
         <#if errors??>
             <p>Входные данные с ошибками!</p>
