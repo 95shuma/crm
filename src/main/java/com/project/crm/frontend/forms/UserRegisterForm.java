@@ -2,16 +2,19 @@ package com.project.crm.frontend.forms;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
 public class UserRegisterForm {
 
-    @NotBlank(message = "Обязательное поле")
     @Size(min = 14, message = "Требуется ввести 14 цифр")
     private String inn = "";
 
@@ -28,11 +31,13 @@ public class UserRegisterForm {
     @NotBlank(message = "Обязательное поле")
     private String surname = "";
 
-    @NotBlank(message = "Не обязательное поле")
+    @NotBlank(message = "Обязательное поле")
     private String middleName = "";
 
-    @NotBlank(message = "Обязательное поле")
-    private Date birthDate = null;
+    @PastOrPresent(message = "Дата рождение должно быть прошлой")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Обязательное поле")
+    private Date birthDate;
 
     @NotBlank(message = "Обязательное поле")
     private String gender = "";
