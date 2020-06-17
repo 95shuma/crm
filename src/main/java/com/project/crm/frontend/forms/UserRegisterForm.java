@@ -15,7 +15,7 @@ import java.util.Date;
 @Setter
 public class UserRegisterForm {
 
-    @Size(min = 14, message = "Требуется ввести 14 цифр")
+    @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
     private String inn = "";
 
     @NotBlank(message = "Обязательное поле")
