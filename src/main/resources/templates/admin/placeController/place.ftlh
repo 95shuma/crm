@@ -31,18 +31,18 @@
                     <h5 class="modal-title" id="exampleModalLabel">Новое место</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="roleForm" action="/admin/places/place" method="post" class="needs-validation" novalidate>
+                    <form id="roleForm" action="/admin/places" method="post" class="needs-validation" novalidate>
                         <#if _csrf??>
                             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                         </#if>
                         <div class="form-group">
                             <p><label for="placeName" class="col-form-label">Название места</label></p>
-                            <input id="placeName" class="form-control" placeholder="Введите новое место" name="name" autofocus required>
+                            <input id="placeName" class="form-control" placeholder="Введите новое место" name="name" autofocus>
                             <div class="invalid-feedback">
                                 Обязательное поле.
                             </div>
                             <p><label for="placeCode" class="col-form-label">Код места</label></p>
-                            <input id="placeCode" class="form-control" placeholder="Введите новый код" name="codePlace" pattern="[0-9]{14}" required>
+                            <input id="placeCode" class="form-control" placeholder="Введите новый код" name="codePlace">
                             <div class="invalid-feedback">
                                 Код состоит из 14-цифр.
                             </div>
@@ -59,14 +59,14 @@
             </div>
         </div>
     </div>
-    <!--<div>
+    <div style="color:red">
         <#if errors??>
             <p>Входные данные с ошибками!</p>
             <#list errors as fieldError>
                 <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
             </#list>
         </#if>
-    </div>-->
+    </div>
 </@main.renderWith>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

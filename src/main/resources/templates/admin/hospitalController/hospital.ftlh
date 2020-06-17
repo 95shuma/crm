@@ -3,14 +3,14 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <form class="box-1 needs-validation" id="registration-hospital" action="/admin/hospitals/hospital" method="post" novalidate>
+                <form class="box-1 needs-validation" id="registration-hospital" action="/admin/hospitals" method="post" novalidate>
                     <h3>Добавить ЛПУ</h3>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
                     <div class="form-group">
                         <p><label for="lpuName" class="col-form-label">Название ЛПУ</label></p>
-                        <input class="form-control" id="lpuName" maxlength="45" type="text" name="name" placeholder="Название ЛПУ" autofocus required>
+                        <input class="form-control" id="lpuName" maxlength="45" type="text" name="name" placeholder="Название ЛПУ" autofocus>
                         <div class="invalid-feedback">
                             Обязательное поле.
                         </div>
@@ -19,20 +19,20 @@
                         <p><label for="lpuPlaceId" class="col-form-label">Город / Село / ПГТ</label></p>
                         <select class="form-control" id="lpuPlaceId" name="placeId">
                             <#list places as place>
-                                <option value="${place.id}">${place.name}</option>
+                                <option value="${place.id?c}">${place.name}</option>
                             </#list>
                         </select>
                     </div>
                     <div class="form-group">
                         <p><label for="lpuStreet" class="col-form-label">Название улицы</label></p>
-                        <input class="form-control" id="lpuStreet" maxlength="45" type="text" name="street" placeholder="Название улицы" required>
+                        <input class="form-control" id="lpuStreet" maxlength="45" type="text" name="street" placeholder="Название улицы">
                         <div class="invalid-feedback">
                             Обязательное поле.
                         </div>
                     </div>
                     <div class="form-group">
                         <p><label for="lpuHouseNum" class="col-form-label">Номер дома</label></p>
-                        <input class="form-control" id="lpuHouseNum" maxlength="45" type="text" name="houseNum" placeholder="Номер дома" required>
+                        <input class="form-control" id="lpuHouseNum" maxlength="45" type="text" name="houseNum" placeholder="Номер дома">
                         <div class="invalid-feedback">
                             Обязательное поле.
                         </div>
@@ -41,13 +41,13 @@
                 </form>
             </div>
         </div>
-        <!--<div>
+        <div style="color:red">
             <#if errors??>
-                <p>Ошибки:</p>
+                <p>Входные данные с ошибками!</p>
                 <#list errors as fieldError >
                     <p>${fieldError.field} - ${fieldError.defaultMessage!"--no message--"}</p>
                 </#list>
             </#if>
-        </div>-->
+        </div>
     </section>
 </@main.renderWith>

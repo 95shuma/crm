@@ -3,56 +3,56 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <form class="box-1 needs-validation" id="reg-admin-hospital" action="/admin/senior-doctors/senior-doctor" method="post" novalidate>
+                <form class="box-1 needs-validation" id="reg-admin-hospital" action="/admin/senior-doctors" method="post" novalidate>
                     <h3>Добавить администратора ЛПУ</h3>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminInn">ИНН</label></p>
-                        <input class="form-control" id="adminInn" minlength="14" type="text" name="inn" placeholder="ИНН" pattern="[1-2]{1}[0-9]{13}" autofocus required>
+                        <input class="form-control" id="adminInn" type="text" name="inn" placeholder="ИНН" autofocus>
                         <div class="invalid-feedback">
                             ИНН состиот из 14-цифр и начинается с 1 либо 2.
                         </div>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminPass">Пароль</label></p>
-                        <input class="form-control" id="adminPass" minlength="8" type="password" name="password" placeholder="Пароль" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                        <input class="form-control" id="adminPass" type="password" name="password" placeholder="Пароль">
                         <div class="invalid-feedback">
                             Пароль должен содержать не менее 8 символов, состоящих как минимум из одного числа, одной заглавной и строчной латинской буквы.
                         </div>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminDN">Номер документа</label></p>
-                        <input class="form-control" id="adminDN" minlength="5" type="text" name="documentNumber" placeholder="Номер документа" pattern="[A-Z]{2}[0-9]{7}" required>
+                        <input class="form-control" id="adminDN" type="text" name="documentNumber" placeholder="Номер документа">
                         <div class="invalid-feedback">
                             Паспорт должен содержать не менее 9 символов, начинающий двумя заглавными латинскими буквами и 7 цифр.
                         </div>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminName">Имя</label></p>
-                        <input class="form-control" id="adminName" minlength="1" type="text" name="name" placeholder="Имя" pattern="[A-Za-zА-Яа-яЁё]{3,}" required>
+                        <input class="form-control" id="adminName" type="text" name="name" placeholder="Имя">
                         <div class="invalid-feedback">
                             Имя должен содержать не менее 3 латинских либо кириллических букв.
                         </div>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminSurname">Фамилия</label></p>
-                        <input class="form-control" id="adminSurname" minlength="1" type="text" name="surname" placeholder="Фамилия" pattern="[A-Za-zА-Яа-яЁё]{3,}" required>
+                        <input class="form-control" id="adminSurname" type="text" name="surname" placeholder="Фамилия">
                         <div class="invalid-feedback">
                             Фамилия должен содержать не менее 3 латинских либо кириллических букв.
                         </div>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminMN">Отчество</label></p>
-                        <input class="form-control" id="adminMN" type="text" name="middleName" placeholder="Отчество" pattern="[A-Za-zА-Яа-яЁё]{3,}" required>
+                        <input class="form-control" id="adminMN" type="text" name="middleName" placeholder="Отчество">
                         <div class="invalid-feedback">
                             Отчество должен содержать не менее 3 латинских либо кириллических букв.
                         </div>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label" for="adminBD">Дата рождения</label></p>
-                        <input class="form-control" id="adminBD" type="date" name="birthDate" value="2020-06-06" required>
+                        <input class="form-control" id="adminBD" type="date" name="birthDate">
                         <div class="invalid-feedback">
                             Надо заполнить дату рождения.
                         </div>
@@ -72,7 +72,7 @@
                         <p><label for="lpuPlaceId" class="col-form-label">Город / Село / ПГТ</label></p>
                         <select class="form-control" id="lpuPlaceId" name="placeId">
                             <#list places as place>
-                                <option value="${place.id}">${place.name}</option>
+                                <option value="${place.id?c}">${place.name}</option>
                             </#list>
                         </select>
                     </div>
@@ -80,7 +80,7 @@
                         <p><label for="lpuPositionId" class="col-form-label">Направление врача</label></p>
                         <select class="form-control" id="lpuPositionId" name="positionId">
                             <#list positions as position>
-                                <option value="${position.id}">${position.name}</option>
+                                <option value="${position.id?c}">${position.name}</option>
                             </#list>
                         </select>
                     </div>
@@ -88,7 +88,7 @@
                         <p><label for="lpuHospitalId" class="col-form-label">Больница</label></p>
                         <select class="form-control" id="lpuHospitalId" name="hospitalId">
                             <#list hospitals as hospital>
-                                <option value="${hospital.id}">${hospital.name}</option>
+                                <option value="${hospital.id?c}">${hospital.name}</option>
                             </#list>
                         </select>
                     </div>
@@ -97,7 +97,7 @@
                 </form>
             </div>
         </div>
-        <div>
+        <div  style="color:red">
             <#if errors??>
                 <p>Ошибки:</p>
                 <#list errors as fieldError >

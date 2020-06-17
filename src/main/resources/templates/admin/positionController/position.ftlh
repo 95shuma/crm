@@ -28,14 +28,14 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Новое направление</h5>
                 </div>
-                <form id="commentForm" action="/admin/positions/position" method="post" class="needs-validation" novalidate>
+                <form id="commentForm" action="/admin/positions" method="post" class="needs-validation" novalidate>
                     <div class="modal-body">
                         <#if _csrf??>
                             <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
                         </#if>
                         <div class="form-group">
                             <p><label for="positionName" class="col-form-label">Название направления</label></p>
-                            <input id="positionName" placeholder="Название" class="form-control" name="name" required>
+                            <input id="positionName" placeholder="Название" class="form-control" name="name">
                             <div class="invalid-feedback">
                                 Обязательное поле.
                             </div>
@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-    <div>
+    <div style="color:red">
         <#if errors??>
             <p>Входные данные с ошибками!</p>
             <#list errors as fieldError>
