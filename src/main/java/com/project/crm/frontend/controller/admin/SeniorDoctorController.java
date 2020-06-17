@@ -46,10 +46,11 @@ public class SeniorDoctorController {
         return "admin/seniorDoctorController/seniorDoctors";
     }
 
-    @PostMapping("/senior-doctor")
+    @PostMapping
     public String addAdminHospital(@Valid UserRegisterForm userRegisterForm,
                                    BindingResult validationResult,
                                    RedirectAttributes attributes){
+
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
             return "redirect:/admin/senior-doctors/senior-doctor";
