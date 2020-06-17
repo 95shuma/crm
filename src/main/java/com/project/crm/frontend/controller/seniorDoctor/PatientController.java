@@ -4,6 +4,7 @@ import com.project.crm.backend.services.HospitalService;
 import com.project.crm.backend.services.PlaceService;
 import com.project.crm.backend.services.PropertiesService;
 import com.project.crm.backend.services.UserService;
+import com.project.crm.frontend.forms.PatientRegisterForm;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -46,15 +47,15 @@ public class PatientController {
         return "seniorDoctor/patientController/patients";
     }
     @PostMapping("/patient")
-    public String createPatient(@Valid UserRegisterForm userRegisterForm,
+    public String createPatient(@Valid PatientRegisterForm patientRegisterForm,
                                   BindingResult validationResult,
                                   RedirectAttributes attributes){
-        attributes.addFlashAttribute("reg", userRegisterForm);
+        attributes.addFlashAttribute("reg", patientRegisterForm);
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
             return "redirect:/senior-doctor/patients/patient";
         }
-        userService.createUser(userRegisterForm);
+        userService.createUserFormPatientForm(patientRegisterForm);
         return "redirect:/senior-doctor";
     }
 }
