@@ -13,7 +13,7 @@
             </tr>
             </thead>
             <tbody>
-            <#list journal as journal>
+            <#list items as journal>
             <tr>
                 <td>${journal.dateTime}</td>
                 <td>${journal.patient.fullName}</td>
