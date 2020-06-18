@@ -25,7 +25,7 @@
                             <#if registrationJournals??>
                                 <#list registrationJournals as registrationJournals>
                                     <#if registrationJournals.role.id == 3>
-                                        <option name="doctorId" value="${registrationJournals.user.inn}">${registrationJournals.user.fullName} - ${registrationJournals.position.name} - ${registrationJournals.role.name} - ${registrationJournals.hospital.name}</option>
+                                        <option name="doctorId" value="${registrationJournals.user.inn}">${registrationJournals.user.fullName} - ${registrationJournals.position.name} - ${registrationJournals.hospital.name}</option>
                                     </#if>
                                 </#list>
                             </#if>
