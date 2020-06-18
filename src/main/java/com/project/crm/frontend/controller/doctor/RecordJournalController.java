@@ -25,16 +25,18 @@ public class RecordJournalController {
     private final UserService userService;
     private final PropertiesService propertiesService;
 
-    @GetMapping
-    public String getAllRecords(Model model,Principal principal,Long id, Pageable pageable, HttpServletRequest uriBuilder) {
-        var record = recordJournalService.getPatientsByDoctor(id,pageable);
-        var uri = uriBuilder.getRequestURI();
-        constructPageable(record, propertiesService.getDefaultPageSize(), model, uri);
-        if(principal == null){
-            return "errorPage";
-        }
-        userService.checkUserPresence(model, principal);
-        model.addAttribute("journal", recordJournalService.getByDoctor(userService.getByInn(principal.getName()).getId()));
-        return  "doctorAllAppointment";
-    }
+
+   @GetMapping
+   public String getAllRecords(Model model,Principal principal, Pageable pageable, HttpServletRequest uriBuilder) {
+       userService.checkUserPresence(model, principal);
+
+       var record = recordJournalService.getPatientsByDoctor(userService.getByInn(principal.getName()).getId(),pageable);
+       var uri = uriBuilder.getRequestURI();
+       constructPageable(record, propertiesService.getDefaultPageSize(), model, uri);
+       if(principal == null){
+           return "errorPage";
+       }
+
+       return  "doctorAllAppointment";
+   }
 }
