@@ -21,7 +21,7 @@
                 <td>${doctor.inn}</td>
                 <td>${doctor.documentNumber}</td>
                 <td>${doctor.fullName}</td>
-                <td>${doctor.birthDate}</td>
+                <td>${doctor.birthDate?date}</td>
                 <td>${doctor.gender}</td>
             </tr>
         </#list>
