@@ -31,11 +31,11 @@ public class PositionService {
         return positionRepo.findAll(pageable).map(PositionDTO::from);
     }
 
-    public void createPosition(PositionDTO positionDTO){
+    public PositionDTO createPosition(PositionDTO positionDTO){
         var position = Position.builder()
                 .name(positionDTO.getName())
                 .build();
-        positionRepo.save(position);
+        return PositionDTO.from(positionRepo.save(position));
     }
 
     public PositionDTO getByName(String name){
