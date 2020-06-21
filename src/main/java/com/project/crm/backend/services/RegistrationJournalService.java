@@ -31,40 +31,40 @@ public class RegistrationJournalService {
 
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){
 
-        int roleId = Integer.parseInt(userRegisterForm.getRoleId());
+        Long roleId = userRegisterForm.getRoleId();
         RegistrationJournal registrationJournal = null;
 
         if(roleId == 1){
             registrationJournal = RegistrationJournal.builder()
                     .user(user)
-                    .role(roleRepo.findById((long) Integer.parseInt(userRegisterForm.getRoleId())).orElseThrow())
+                    .role(roleRepo.findById((long) userRegisterForm.getRoleId()).orElseThrow())
                     .build();
         }else if(roleId == 2){
             registrationJournal = RegistrationJournal.builder()
-                    .hospital(hospitalRepo.findById((long) Integer.parseInt(userRegisterForm.getHospitalId())).orElseThrow())
+                    .hospital(hospitalRepo.findById((long) userRegisterForm.getHospitalId()).orElseThrow())
                     .user(user)
-                    .role(roleRepo.findById((long) Integer.parseInt(userRegisterForm.getRoleId())).orElseThrow())
-                    .position(positionRepo.findById((long) Integer.parseInt(userRegisterForm.getPositionId())).orElseThrow())
+                    .role(roleRepo.findById((long) userRegisterForm.getRoleId()).orElseThrow())
+                    .position(positionRepo.findById((long) userRegisterForm.getPositionId()).orElseThrow())
                     .build();
         }else if(roleId == 3){
             registrationJournal = RegistrationJournal.builder()
-                    .hospital(hospitalRepo.findById((long) Integer.parseInt(userRegisterForm.getHospitalId())).orElseThrow())
+                    .hospital(hospitalRepo.findById((long) userRegisterForm.getHospitalId()).orElseThrow())
                     .user(user)
-                    .role(roleRepo.findById((long) Integer.parseInt(userRegisterForm.getRoleId())).orElseThrow())
-                    .position(positionRepo.findById((long) Integer.parseInt(userRegisterForm.getPositionId())).orElseThrow())
+                    .role(roleRepo.findById((long) userRegisterForm.getRoleId()).orElseThrow())
+                    .position(positionRepo.findById((long) userRegisterForm.getPositionId()).orElseThrow())
                     .build();
         }else if(roleId == 4){
             registrationJournal = RegistrationJournal.builder()
-                    .hospital(hospitalRepo.findById((long) Integer.parseInt(userRegisterForm.getHospitalId())).orElseThrow())
+                    .hospital(hospitalRepo.findById((long) userRegisterForm.getHospitalId()).orElseThrow())
                     .user(user)
-                    .role(roleRepo.findById((long) Integer.parseInt(userRegisterForm.getRoleId())).orElseThrow())
-                    .position(positionRepo.findById((long) Integer.parseInt(userRegisterForm.getPositionId())).orElseThrow())
+                    .role(roleRepo.findById((long) userRegisterForm.getRoleId()).orElseThrow())
+                    .position(positionRepo.findById((long) userRegisterForm.getPositionId()).orElseThrow())
                     .build();
         }else if(roleId == 5){
             registrationJournal = RegistrationJournal.builder()
-                    .hospital(hospitalRepo.findById((long) Integer.parseInt(userRegisterForm.getHospitalId())).orElseThrow())
+                    .hospital(hospitalRepo.findById((long) userRegisterForm.getHospitalId()).orElseThrow())
                     .user(user)
-                    .role(roleRepo.findById((long) Integer.parseInt(userRegisterForm.getRoleId())).orElseThrow())
+                    .role(roleRepo.findById((long) userRegisterForm.getRoleId()).orElseThrow())
                     .build();
         }
 
