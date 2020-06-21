@@ -37,7 +37,7 @@ public class RecordJournalService {
         return recordJournalRepo.findByPatientId(patient);
     }
 
-    public void createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
+    public RecordJournalDTO createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
 
         RecordJournal recordJournal;
 
@@ -60,7 +60,7 @@ public class RecordJournalService {
                         .dateTime(LocalDateTime.now())
                         .build();
             }
-        recordJournalRepo.save(recordJournal);
+        return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
     }
 
 
