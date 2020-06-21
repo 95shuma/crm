@@ -5,7 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Data
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecordJournalDTO {
@@ -18,14 +18,27 @@ public class RecordJournalDTO {
     private String reason;
 
     public static RecordJournalDTO from(RecordJournal recordJournal) {
-        return builder()
-                .id(recordJournal.getId())
-                .doctor(UserDTO.from(recordJournal.getDoctor()))
-                .patient(UserDTO.from(recordJournal.getPatient()))
-                .registrar(UserDTO.from(recordJournal.getRegistrar()))
-                .hospital(HospitalDTO.from(recordJournal.getHospital()))
-                .dateTime(recordJournal.getDateTime())
-                .reason(recordJournal.getReason())
-                .build();
+
+        if(recordJournal.getRegistrar() != null) {
+
+            return builder()
+                    .id(recordJournal.getId())
+                    .doctor(UserDTO.from(recordJournal.getDoctor()))
+                    .patient(UserDTO.from(recordJournal.getPatient()))
+                    .registrar(UserDTO.from(recordJournal.getRegistrar()))
+                    .hospital(HospitalDTO.from(recordJournal.getHospital()))
+                    .dateTime(recordJournal.getDateTime())
+                    .reason(recordJournal.getReason())
+                    .build();
+        } else {
+            return builder()
+                    .id(recordJournal.getId())
+                    .doctor(UserDTO.from(recordJournal.getDoctor()))
+                    .patient(UserDTO.from(recordJournal.getPatient()))
+                    .hospital(HospitalDTO.from(recordJournal.getHospital()))
+                    .dateTime(recordJournal.getDateTime())
+                    .reason(recordJournal.getReason())
+                    .build();
+        }
     }
 }
