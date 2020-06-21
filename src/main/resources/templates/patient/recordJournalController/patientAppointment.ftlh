@@ -1,4 +1,4 @@
-<#import "partials/main.ftlh" as main />
+<#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith>
     <section id="page-splash" class="page-splash">
@@ -25,7 +25,7 @@
                             <#if registrationJournals??>
                                 <#list registrationJournals as registrationJournals>
                                     <#if registrationJournals.role.id == 3>
-                                        <option name="doctorId" value="${registrationJournals.user.inn}">${registrationJournals.user.fullName} - ${registrationJournals.position.name} - ${registrationJournals.role.name} - ${registrationJournals.hospital.name}</option>
+                                        <option name="doctorId" value="${registrationJournals.user.inn}">${registrationJournals.user.fullName} - ${registrationJournals.position.name} - ${registrationJournals.hospital.name}</option>
                                     </#if>
                                 </#list>
                             </#if>
@@ -33,10 +33,13 @@
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label">На что жалуетесь</label></p>
-                        <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"></textarea>
+                        <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"  autofocus></textarea>
+
                         <#if errors??>
                             <#list errors as fieldError>
-                                <p style="color: red">${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
+                                <#if fieldError.field == 'reason'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
                             </#list>
                         </#if>
                     </div>

@@ -4,6 +4,8 @@ import com.project.crm.backend.dto.PlaceDTO;
 import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.PlaceRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,12 +27,15 @@ public class PlaceService {
         });
         return placesDTO;
     }
+    public Page<PlaceDTO> getAll(Pageable pageable){
+        return placeRepo.findAll(pageable).map(PlaceDTO::from);
+    }
 
-    public void createPlace(String name, String codePlace, Integer groupCode){
+    public void createPlace(PlaceDTO placeDTO){
         Place registrationPlace = Place.builder()
-                .name(name)
-                .codePlace(codePlace)
-                .groupCode(groupCode)
+                .name(placeDTO.getName())
+                .codePlace(placeDTO.getCodePlace())
+                .groupCode(placeDTO.getGroupCode())
                 .build();
         placeRepo.save(registrationPlace);
     }

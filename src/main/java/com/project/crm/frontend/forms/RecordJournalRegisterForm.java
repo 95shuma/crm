@@ -15,6 +15,6 @@ public class RecordJournalRegisterForm {
 
     private Long hospitalId = null;
 
-    @NotBlank(message = "Это поле не может быть пустым")
-    private String reason;
+    @NotBlank(message = "Укажите причину")
+    private String reason="";
 }

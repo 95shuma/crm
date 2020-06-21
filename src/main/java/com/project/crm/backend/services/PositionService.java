@@ -4,6 +4,8 @@ import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.model.catalog.Position;
 import com.project.crm.backend.repository.PositionRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,12 +27,15 @@ public class PositionService {
         });
         return positionsDTO;
     }
+    public Page<PositionDTO> getAll(Pageable pageable){
+        return positionRepo.findAll(pageable).map(PositionDTO::from);
+    }
 
-    public void createPosition(String name){
+    public PositionDTO createPosition(PositionDTO positionDTO){
         var position = Position.builder()
-                .name(name)
+                .name(positionDTO.getName())
                 .build();
-        positionRepo.save(position);
+        return PositionDTO.from(positionRepo.save(position));
     }
 
     public PositionDTO getByName(String name){

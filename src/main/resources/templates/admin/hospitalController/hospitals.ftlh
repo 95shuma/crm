@@ -1,40 +1,41 @@
-<#import "partials/main.ftlh" as main />
+<#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <h3>Список докторов</h3>
+    <h3>Список ЛПУ</h3>
     <input class="form-control" id="Input" type="text" placeholder="Поиск по всем полям...">
     <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">ИНН</th>
-            <th scope="col">Паспорт</th>
-            <th scope="col">ФИО</th>
-            <th scope="col">Дата-рождения</th>
-            <th scope="col">Пол</th>
+            <th scope="col">Название</th>
+            <th scope="col">Место</th>
+            <th scope="col">Адрес</th>
         </tr>
         </thead>
         <tbody id="Table">
-        <#list doctors as doctors>
+        <#list items as hospital>
             <tr>
-                <th scope="row">${doctors?counter}</th>
-                <td>${doctors.inn}</td>
-                <td>${doctors.documentNumber}</td>
-                <td>${doctors.fullName}</td>
-                <td>${doctors.birthDate}</td>
-                <td>${doctors.gender}</td>
+                <th scope="row">${hospital?counter}</th>
+                <td>${hospital.name}</td>
+                <td>${hospital.place.name}</td>
+                <td>${hospital.address}</td>
             </tr>
         </#list>
         </tbody>
     </table>
-    <div>
+    <#include "../../partials/pagination.ftlh">
+    <a type="button" class="btn btn-primary w-100" href="/admin/hospitals/hospital">
+        Добавить
+    </a>
+    <!--<div>
         <#if errors??>
             <p>Входные данные с ошибками!</p>
             <#list errors as fieldError>
                 <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
             </#list>
         </#if>
-    </div>
+    </div>-->
+
 </@main.renderWith>
 <script>
     $(document).ready(function(){

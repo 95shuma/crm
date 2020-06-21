@@ -44,7 +44,7 @@ public class RecordJournalController {
         model.addAttribute("registrationJournals", registrationJournalService.getAll());
         model.addAttribute("users", userService.getAll());
 
-        return "patientAppointment";
+        return "patient/recordJournalController/patientAppointment";
     }
 
     @PostMapping
@@ -72,7 +72,7 @@ public class RecordJournalController {
 
         userService.checkUserPresence(model, principal);
         model.addAttribute("journal", recordJournalService.getByPatient(userService.getByInn(principal.getName()).getId()));
-        return "patientAllAppointment";
+        return "patient/recordJournalController/patientAllAppointment";
     }
 
     @GetMapping("/recorded")
@@ -85,7 +85,7 @@ public class RecordJournalController {
         userService.checkUserPresence(model, principal);
 
         model.addAttribute("random", UUID.randomUUID());
-        return "patientAppointmentCheck";
+        return "patient/recordJournalController/patientAppointmentCheck";
     }
 
 }

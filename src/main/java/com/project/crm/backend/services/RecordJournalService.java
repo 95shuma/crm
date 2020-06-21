@@ -1,11 +1,14 @@
 package com.project.crm.backend.services;
 
+import com.project.crm.backend.dto.RecordJournalDTO;
 import com.project.crm.backend.model.catalog.RecordJournal;
 import com.project.crm.backend.repository.HospitalRepo;
 import com.project.crm.backend.repository.RecordJournalRepo;
 import com.project.crm.backend.repository.UserRepo;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -34,7 +37,7 @@ public class RecordJournalService {
         return recordJournalRepo.findByPatientId(patient);
     }
 
-    public void createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
+    public RecordJournalDTO createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
 
         RecordJournal recordJournal;
 
@@ -57,6 +60,12 @@ public class RecordJournalService {
                         .dateTime(LocalDateTime.now())
                         .build();
             }
-        recordJournalRepo.save(recordJournal);
+        return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
+    }
+
+
+    public Page<RecordJournalDTO> getPatientsByDoctor(Long id, Pageable pageable) {
+        return recordJournalRepo.findAllByDoctorId(id, pageable)
+                .map(RecordJournalDTO::from);
     }
 }

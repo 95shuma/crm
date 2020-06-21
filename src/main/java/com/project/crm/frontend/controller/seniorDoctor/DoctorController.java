@@ -3,6 +3,7 @@ package com.project.crm.frontend.controller.seniorDoctor;
 import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -24,6 +26,7 @@ public class DoctorController {
     private final RoleService roleService;
     private final PositionService positionService;
     private final PlaceService placeService;
+    private final PropertiesService propertiesService;
 
     @GetMapping("/doctor")
     public String getDoctor(Model model, Principal principal){
@@ -37,14 +40,15 @@ public class DoctorController {
         model.addAttribute("hospitals", hospitalService.getAll());
         model.addAttribute("roles", roleService.getAll());
         model.addAttribute("positions", positionService.getAll());
-        return "doctorRegister";
+        return "seniorDoctor/doctorController/doctorRegister";
     }
 
     @GetMapping
-    public String getDoctors(Model model, Principal principal){
+    public String getDoctors(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal){
         userService.checkUserPresence(model, principal);
-        model.addAttribute("doctors", userService.getAllDoctors());
-        return "doctors";
+        PropertiesService.constructPageable(userService.getAllDoctors(pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+
+        return "seniorDoctor/doctorController/doctors";
     }
 
     @PostMapping("/doctor")

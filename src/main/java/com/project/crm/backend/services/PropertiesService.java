@@ -6,6 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class PropertiesService {
@@ -32,6 +35,11 @@ public class PropertiesService {
         model.addAttribute("hasPrev", list.hasPrevious());
         model.addAttribute("items", list.getContent());
         model.addAttribute("defaultPageSize", pageSize);
+        model.addAttribute("totalPages", list.getTotalPages());
+        model.addAttribute("pageNumber", list.getNumber());
+        model.addAttribute("pageSize", list.getSize());
+        model.addAttribute("url", uri);
+
     }
 
     private static String constructPageUri(String uri, int page, int size) {

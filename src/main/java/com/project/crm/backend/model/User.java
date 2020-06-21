@@ -2,9 +2,12 @@ package com.project.crm.backend.model;
 
 import com.project.crm.backend.model.catalog.Place;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -20,7 +23,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Обязательное поле")
     @Size(min = 14, message = "Требуется ввести 14 цифр")
     @Column(length = 64)
     private String inn;
@@ -50,7 +52,9 @@ public class User {
     @Column(length = 64)
     private String middleName;
 
-    @NotBlank(message = "Обязательное поле")
+    @PastOrPresent(message = "Дата рождение должно быть прошлой")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Обязательное поле")
     @Column
     private Date birthDate;
 
@@ -58,7 +62,6 @@ public class User {
     @Column(length = 64)
     private String gender;
 
-    @NotBlank(message = "Обязательное поле")
     @ManyToOne @JoinColumn(name = "place_id")
     private Place place;
 
