@@ -1,4 +1,4 @@
-<#import "partials/main.ftlh" as main />
+<#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith>
         <h4 style="text-align: center">Запомните этот код и покажите его в регистратуру: <p>${random.randomUUID()}</p></h4>

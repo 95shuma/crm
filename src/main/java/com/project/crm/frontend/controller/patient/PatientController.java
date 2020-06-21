@@ -20,7 +20,7 @@ public class PatientController {
 
         userService.checkUserPresence(model, principal);
 
-        return "patient";
+        return "patient/patient";
     }
 
 
