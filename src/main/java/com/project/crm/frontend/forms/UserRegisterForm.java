@@ -42,15 +42,15 @@ public class UserRegisterForm {
     @NotBlank(message = "Обязательное поле")
     private String gender = "";
 
-    @NotBlank(message = "Обязательное поле")
-    private String placeId = "";
+    @NotNull(message = "Обязательное поле")
+    private Long placeId;
 
-    @NotBlank(message = "Обязательное поле")
-    private String positionId = "";
+    @NotNull(message = "Обязательное поле")
+    private Long positionId;
 
-    @NotBlank(message = "Обязательное поле")
-    private String hospitalId = "";
+    @NotNull(message = "Обязательное поле")
+    private Long hospitalId;
 
-    @NotBlank(message = "Обязательное поле")
-    private String roleId = "";
+    @NotNull(message = "Обязательное поле")
+    private Long roleId;
 }
