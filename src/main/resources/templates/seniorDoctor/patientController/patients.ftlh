@@ -21,7 +21,7 @@
                 <td>${patient.inn}</td>
                 <td>${patient.documentNumber}</td>
                 <td>${patient.fullName}</td>
-                <td>${patient.birthDate}</td>
+                <td>${patient.birthDate?date}</td>
                 <td>${patient.gender}</td>
             </tr>
         </#list>
