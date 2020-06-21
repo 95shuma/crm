@@ -19,6 +19,6 @@ public class DoctorController {
 
         userService.checkUserPresence(model, principal);
 
-        return "doctor";
+        return "doctor/doctor";
     }
 }
