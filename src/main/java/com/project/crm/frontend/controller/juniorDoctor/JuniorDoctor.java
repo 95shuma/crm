@@ -20,7 +20,7 @@ public class JuniorDoctor {
 
         userService.checkUserPresence(model, principal);
 
-        return "juniorDoctor";
+        return "juniorDoctor/juniorDoctor";
     }
 
 
