@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @ToString
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PositionDTO {
