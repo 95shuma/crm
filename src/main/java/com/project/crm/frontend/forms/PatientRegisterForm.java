@@ -15,7 +15,7 @@ import java.util.Date;
 public class PatientRegisterForm {
 
     @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
-    private String inn = "";
+    private Long inn = null;
 
     @NotBlank(message = "Обязательное поле")
     @Size(min = 8, message = "Пароль должен содержать минимум 8 символов")

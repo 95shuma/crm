@@ -9,9 +9,9 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class RecordJournalRegisterForm {
 
-    private String doctorId = "";
+    private Long doctorId = null;
 
-    private String registrarId = "";
+    private Long registrarId = null;
 
     private Long hospitalId = null;
 
