@@ -25,7 +25,7 @@ public class User {
 
     @Size(min = 14, message = "Требуется ввести 14 цифр")
     @Column(length = 64)
-    private String inn;
+    private Long inn;
 
     @NotBlank(message = "Обязательное поле")
     @Size(min = 8, message = "Пароль должен содержать минимум 8 символов")

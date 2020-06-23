@@ -23,7 +23,7 @@ public class Place {
 
     @Column(unique = true)
     @NotBlank(message = "Обязательное поле")
-    private String codePlace;
+    private Integer codePlace;
 
     @NotNull(message = "Обязательное поле")
     private Integer groupCode;
