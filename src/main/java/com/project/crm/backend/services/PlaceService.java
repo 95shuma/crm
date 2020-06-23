@@ -34,7 +34,7 @@ public class PlaceService {
     public void createPlace(PlaceDTO placeDTO){
         Place registrationPlace = Place.builder()
                 .name(placeDTO.getName())
-                .codePlace(placeDTO.getCodePlace())
+                .codePlace(Integer.parseInt(placeDTO.getCodePlace()))
                 .groupCode(placeDTO.getGroupCode())
                 .build();
         placeRepo.save(registrationPlace);

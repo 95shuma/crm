@@ -41,11 +41,11 @@ public class RecordJournalService {
 
         RecordJournal recordJournal;
 
-            if(!recordJournalRegisterForm.getRegistrarId().isEmpty()){
+            if(recordJournalRegisterForm.getRegistrarId() != 0){
                 recordJournal = RecordJournal.builder()
                         .doctor(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
                         .hospital(hospitalRepo.findById(hospitalService.getById(recordJournalRegisterForm.getHospitalId()).getId()).get())
-                        .patient(userRepo.findById(userService.getByInn(principal.getName()).getId()).get())
+                        .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
                         .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getRegistrarId()).getId()).get())
                         .reason(recordJournalRegisterForm.getReason())
                         .dateTime(LocalDateTime.now())
@@ -55,7 +55,7 @@ public class RecordJournalService {
                 recordJournal = RecordJournal.builder()
                         .doctor(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
                         .hospital(hospitalRepo.findById(hospitalService.getById(recordJournalRegisterForm.getHospitalId()).getId()).get())
-                        .patient(userRepo.findById(userService.getByInn(principal.getName()).getId()).get())
+                        .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
                         .reason(recordJournalRegisterForm.getReason())
                         .dateTime(LocalDateTime.now())
                         .build();

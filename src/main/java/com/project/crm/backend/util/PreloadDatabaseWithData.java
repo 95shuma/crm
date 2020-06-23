@@ -49,7 +49,7 @@ public class PreloadDatabaseWithData {
             for (int i = 0; i < qty; i++){
                 registrationPlaceList.add(Place.builder()
                         .name(faker.address().fullAddress())
-                        .codePlace(faker.number().digits(14))
+                        .codePlace(faker.number().numberBetween(10, 30))
                         .groupCode(0)
                         .build()
                 );
@@ -95,7 +95,7 @@ public class PreloadDatabaseWithData {
 
             var user = User.builder()
                     .id(Long.parseLong("1"))
-                    .inn("11111111111111")
+                    .inn(Long.parseLong("11111111111111"))
                     .password(passwordEncoder.encode("11111111111111"))
                     .documentNumber("ID".concat(faker.number().digits(7)))
                     .fullName(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
@@ -110,7 +110,7 @@ public class PreloadDatabaseWithData {
             userRepo.save(user);
 
             var registrationJournal = RegistrationJournal.builder()
-                    .user(userRepo.findByInn("11111111111111").get())
+                    .user(userRepo.findByInn(Long.parseLong("11111111111111")).get())
                     .role(roleRepo.findById((long) 1).get())
                     .build();
 
@@ -250,7 +250,7 @@ public class PreloadDatabaseWithData {
 
 
         users.add(User.builder()
-                .inn(inn)
+                .inn(Long.parseLong(inn))
                 .password(passwordEncoder.encode(inn))
                 .documentNumber("ID".concat(faker.number().digits(7)))
                 .fullName(faker.name().fullName())
@@ -285,7 +285,7 @@ public class PreloadDatabaseWithData {
         String newInn = faker.number().digits(14);
         AtomicBoolean makeNew = new AtomicBoolean(true);
         userRepo.findAll().forEach(obj -> {
-            innList.add(obj.getInn());
+            innList.add(obj.getInn().toString());
         });
 
         innList.forEach(inn -> {
