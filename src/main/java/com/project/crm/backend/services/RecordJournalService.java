@@ -41,23 +41,23 @@ public class RecordJournalService {
 
         RecordJournal recordJournal;
 
-            if(recordJournalRegisterForm.getRegistrarId() != 0){
+            if(recordJournalRegisterForm.getRegistrarId() != null){
                 recordJournal = RecordJournal.builder()
-                        .doctor(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
-                        .hospital(hospitalRepo.findById(hospitalService.getById(recordJournalRegisterForm.getHospitalId()).getId()).get())
+                        .doctor(userRepo.findByInn(recordJournalRegisterForm.getDoctorId()).get())
+                        .hospital(hospitalRepo.findById(recordJournalRegisterForm.getHospitalId()).get())
                         .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
                         .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getRegistrarId()).getId()).get())
                         .reason(recordJournalRegisterForm.getReason())
-                        .dateTime(LocalDateTime.now())
+                        .dateTime(recordJournalRegisterForm.getDateTime())
                         .build();
             }
             else{
                 recordJournal = RecordJournal.builder()
-                        .doctor(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getDoctorId()).getId()).get())
-                        .hospital(hospitalRepo.findById(hospitalService.getById(recordJournalRegisterForm.getHospitalId()).getId()).get())
+                        .doctor(userRepo.findByInn(recordJournalRegisterForm.getDoctorId()).get())
+                        .hospital(hospitalRepo.findById(recordJournalRegisterForm.getHospitalId()).get())
                         .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
                         .reason(recordJournalRegisterForm.getReason())
-                        .dateTime(LocalDateTime.now())
+                        .dateTime(recordJournalRegisterForm.getDateTime())
                         .build();
             }
         return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
