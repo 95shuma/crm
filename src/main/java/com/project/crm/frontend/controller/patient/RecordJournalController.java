@@ -71,7 +71,7 @@ public class RecordJournalController {
         }
 
         userService.checkUserPresence(model, principal);
-        model.addAttribute("journal", recordJournalService.getByPatient(userService.getByInn(principal.getName()).getId()));
+        model.addAttribute("journal", recordJournalService.getByPatient(userService.getByInn(Long.parseLong(principal.getName())).getId()));
         return "patient/recordJournalController/patientAllAppointment";
     }
 

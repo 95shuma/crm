@@ -31,7 +31,7 @@ public class LoginController {
 
         if(principal != null){
 
-            String inn = principal.getName();
+            Long inn = Long.parseLong(principal.getName());
 
             if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 1)) {
                 return "redirect:/admin";

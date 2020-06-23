@@ -29,7 +29,7 @@ public class RecordJournalController {
    public String getAllRecords(Model model,Principal principal, Pageable pageable, HttpServletRequest uriBuilder) {
        userService.checkUserPresence(model, principal);
 
-       var record = recordJournalService.getPatientsByDoctor(userService.getByInn(principal.getName()).getId(),pageable);
+       var record = recordJournalService.getPatientsByDoctor(userService.getByInn(Long.parseLong(principal.getName())).getId(),pageable);
        var uri = uriBuilder.getRequestURI();
        constructPageable(record, propertiesService.getDefaultPageSize(), model, uri);
        if(principal == null){
