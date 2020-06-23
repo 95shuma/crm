@@ -34,7 +34,7 @@ public class PositionController {
         String uri = uriBuilder.getRequestURI();
         PropertiesService.constructPageable(positions, propertiesService.getDefaultPageSize(), model, uri);
 
-        return "admin/positionController/position";
+        return "admin/positionController/positions";
     }
 
     @PostMapping
