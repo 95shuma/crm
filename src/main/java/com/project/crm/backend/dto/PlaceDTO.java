@@ -25,7 +25,7 @@ public class PlaceDTO {
         return builder()
                 .id(place.getId())
                 .name(place.getName())
-                .codePlace(place.getCodePlace())
+                .codePlace(place.getCodePlace().toString())
                 .groupCode(place.getGroupCode())
                 .build();
     }
