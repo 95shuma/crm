@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -16,7 +13,8 @@ import java.util.Date;
 public class UserRegisterForm {
 
     @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
-    private Long inn = null;
+    @NotBlank(message = "Это поле не может быть пустым")
+    private String inn = "";
 
     @NotBlank(message = "Обязательное поле")
     @Size(min = 8, message = "Пароль должен содержать минимум 8 символов")
