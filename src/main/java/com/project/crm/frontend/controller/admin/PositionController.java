@@ -43,7 +43,7 @@ public class PositionController {
 
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/admin/positions";
+            return "redirect:/admin/positions/position";
         }
 
         positionService.createPosition(positionDTO);

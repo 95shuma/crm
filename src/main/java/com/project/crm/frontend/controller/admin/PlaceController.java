@@ -46,7 +46,7 @@ public class PlaceController {
 
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/admin/places";
+            return "redirect:/admin/places/place";
         }
 
         placeService.createPlace(placeDTO);
