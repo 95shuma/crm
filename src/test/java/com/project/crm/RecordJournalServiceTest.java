@@ -41,7 +41,7 @@ public class RecordJournalServiceTest {
 
         // Allocate
         recordJournalRegisterForm.setReason("живот");
-        recordJournalRegisterForm.setDoctorId("33333333333333");
+        recordJournalRegisterForm.setDoctorId(Long.parseLong("33333333333333"));
         recordJournalRegisterForm.setHospitalId(hospitalService.getAll().get(0).getId());
 
         Principal principal = () -> "55555555555555";
@@ -55,8 +55,8 @@ public class RecordJournalServiceTest {
 
         // Allocate
         recordJournalRegisterForm.setReason("");
-        recordJournalRegisterForm.setDoctorId("33333333333333");
-        recordJournalRegisterForm.setRegistrarId("33333333333333");
+        recordJournalRegisterForm.setDoctorId(Long.parseLong("33333333333333"));
+        recordJournalRegisterForm.setRegistrarId(Long.parseLong("33333333333333"));
         recordJournalRegisterForm.setHospitalId(hospitalService.getAll().get(0).getId());
 
         Principal principal = () -> "55555555555555";
