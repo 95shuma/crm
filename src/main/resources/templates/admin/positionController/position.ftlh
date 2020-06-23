@@ -2,7 +2,7 @@
 
 <@main.renderWith scripts=["/js/validation.js"] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
     <h3>Регистрация нового напраления</h3>
-            <form id="commentForm" action="/admin/positions/position" method="post" class="needs-validation" novalidate>
+            <form id="commentForm" action="/admin/positions" method="post" class="needs-validation" novalidate>
                 <div class="modal-body">
                     <#if _csrf??>
                     <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">

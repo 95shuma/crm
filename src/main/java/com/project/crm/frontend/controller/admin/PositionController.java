@@ -37,6 +37,16 @@ public class PositionController {
         return "admin/positionController/positions";
     }
 
+    @GetMapping("/position")
+    public String getPosition(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
+        model.addAttribute("positions", positionService.getAll());
+
+        return "admin/positionController/position";
+    }
+
     @PostMapping
     public String createPosition(@Valid PositionDTO positionDTO, BindingResult validationResult,
                                  RedirectAttributes attributes){

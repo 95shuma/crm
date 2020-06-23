@@ -39,6 +39,16 @@ public class PlaceController {
         return "admin/placeController/places";
     }
 
+    @GetMapping("/place")
+    public String getPlace(Model model, Principal principal){
+
+        userService.checkUserPresence(model, principal);
+
+        model.addAttribute("places", placeService.getAll());
+
+        return "admin/placeController/place";
+    }
+
 
     @PostMapping
     public String createPlace(@Valid PlaceDTO placeDTO, BindingResult validationResult,

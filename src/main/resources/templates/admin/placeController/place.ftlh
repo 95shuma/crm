@@ -2,7 +2,7 @@
 
 <@main.renderWith scripts=["/js/validation.js"] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
     <h3>Регистрация нового места</h3>
-                    <form id="roleForm" action="/admin/places/place" method="post" class="needs-validation" novalidate>
+                    <form id="roleForm" action="/admin/places" method="post" class="needs-validation" novalidate>
                         <#if _csrf??>
                             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                         </#if>
