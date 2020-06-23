@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User, Long> {
 
-    Optional<User> findByInn(String inn);
+    Optional<User> findByInn(Long inn);
     Optional<User> findByName(String name);
-    boolean existsByInn(String inn);
+    boolean existsByInn(Long inn);
     @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id = 5", nativeQuery = true)
     List<User> findAllPatients();
 

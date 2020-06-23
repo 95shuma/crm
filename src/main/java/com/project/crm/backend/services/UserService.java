@@ -28,12 +28,12 @@ public class UserService {
     private final RegistrationJournalService registrationJournalService;
     private final PasswordEncoder encoder;
 
-    public UserDTO getByInn(String inn){
+    public UserDTO getByInn(Long inn){
         User user = userRepo.findByInn(inn).get();
         return UserDTO.from(user);
     }
 
-    public boolean existByInn(String inn){
+    public boolean existByInn(Long inn){
         return userRepo.existsByInn(inn);
     }
 
@@ -54,7 +54,7 @@ public class UserService {
     public void createUser(UserRegisterForm userRegisterForm){
 
         var user = User.builder()
-                .inn(userRegisterForm.getInn())
+                .inn(Long.parseLong(userRegisterForm.getInn().trim()))
                 .password(encoder.encode(userRegisterForm.getPassword()))
                 .documentNumber(userRegisterForm.getDocumentNumber())
                 .fullName(userRegisterForm.getSurname()+" "+userRegisterForm.getName()+" "+userRegisterForm.getMiddleName())
@@ -86,7 +86,7 @@ public class UserService {
         userRegisterForm.setRoleId(patientRegisterForm.getRoleId());
 
         var user = User.builder()
-                .inn(userRegisterForm.getInn())
+                .inn(Long.parseLong(userRegisterForm.getInn()))
                 .password(encoder.encode(userRegisterForm.getPassword()))
                 .documentNumber(userRegisterForm.getDocumentNumber())
                 .fullName(userRegisterForm.getSurname()+" "+userRegisterForm.getName()+" "+userRegisterForm.getMiddleName())
@@ -106,7 +106,7 @@ public class UserService {
 
         if(principal != null){
 
-            String inn = principal.getName();
+            Long inn = (long) Long.parseLong(principal.getName());
 
             if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 1)) {
                 model.addAttribute("user", userRepo.findByInn(inn).get());

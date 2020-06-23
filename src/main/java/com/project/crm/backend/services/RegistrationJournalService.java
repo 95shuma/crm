@@ -24,7 +24,7 @@ public class RegistrationJournalService {
     private final PlaceRepo placeRepo;
     private final PositionRepo positionRepo;
 
-    public boolean existsByUserInnAndRoleId(String inn, Long roleId){
+    public boolean existsByUserInnAndRoleId(Long inn, Long roleId){
         return registrationJournalRepo.existsByUserInnAndRoleId(inn, roleId);
     }
 

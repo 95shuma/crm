@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RegistrationJournalRepo extends JpaRepository<RegistrationJournal, Long> {
     
-    List<RegistrationJournal> getAllByUserInn(String inn);
-    boolean existsByUserInnAndRoleId(String inn, Long id);
+    List<RegistrationJournal> getAllByUserInn(Long inn);
+    boolean existsByUserInnAndRoleId(Long inn, Long id);
 }
