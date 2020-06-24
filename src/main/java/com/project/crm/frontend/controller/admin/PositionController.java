@@ -4,6 +4,7 @@ import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.PropertiesService;
 import com.project.crm.backend.services.UserService;
+import com.project.crm.frontend.forms.PositionRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,7 @@ public class PositionController {
     }
 
     @PostMapping
-    public String createPosition(@Valid PositionDTO positionDTO, BindingResult validationResult,
+    public String createPosition(@Valid PositionRegisterForm positionRegisterForm, BindingResult validationResult,
                                  RedirectAttributes attributes){
 
         if (validationResult.hasFieldErrors()) {
@@ -56,7 +57,7 @@ public class PositionController {
             return "redirect:/admin/positions/position";
         }
 
-        positionService.createPosition(positionDTO);
+        positionService.createPosition(positionRegisterForm);
         return "redirect:/admin/positions";
     }
 }

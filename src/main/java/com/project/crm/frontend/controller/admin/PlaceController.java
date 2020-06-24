@@ -4,6 +4,7 @@ import com.project.crm.backend.dto.PlaceDTO;
 import com.project.crm.backend.services.PlaceService;
 import com.project.crm.backend.services.PropertiesService;
 import com.project.crm.backend.services.UserService;
+import com.project.crm.frontend.forms.PlaceRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -51,7 +52,7 @@ public class PlaceController {
 
 
     @PostMapping
-    public String createPlace(@Valid PlaceDTO placeDTO, BindingResult validationResult,
+    public String createPlace(@Valid PlaceRegisterForm placeRegisterForm, BindingResult validationResult,
                               RedirectAttributes attributes){
 
         if (validationResult.hasFieldErrors()) {
@@ -59,7 +60,7 @@ public class PlaceController {
             return "redirect:/admin/places/place";
         }
 
-        placeService.createPlace(placeDTO);
+        placeService.createPlace(placeRegisterForm);
         return "redirect:/admin/places";
     }
 }
