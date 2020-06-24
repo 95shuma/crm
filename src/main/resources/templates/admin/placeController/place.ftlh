@@ -1,8 +1,11 @@
 <#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith scripts=["/js/validation.js"] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
-    <h3>Регистрация нового места</h3>
-                    <form id="roleForm" action="/admin/places" method="post" class="needs-validation" novalidate>
+    <section id="page-splash" class="page-splash">
+        <div class="d-flex justify-content-center">
+            <div class="mx-3">
+                <h3>Регистрация нового места</h3>
+                        <form id="roleForm" action="/admin/places" method="post" class="needs-validation" novalidate>
                         <#if _csrf??>
                             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                         </#if>
@@ -26,12 +29,15 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Добавить</button>
                     </form>
-    <div style="color:red">
-        <#if errors??>
-            <p>Входные данные с ошибками!</p>
-            <#list errors as fieldError>
-                <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
-            </#list>
-        </#if>
-    </div>
+                    <div style="color:red">
+                        <#if errors??>
+                            <p>Входные данные с ошибками!</p>
+                            <#list errors as fieldError>
+                                <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
+                            </#list>
+                        </#if>
+                    </div>
+            </div>
+        </div>
+    </section>
 </@main.renderWith>
