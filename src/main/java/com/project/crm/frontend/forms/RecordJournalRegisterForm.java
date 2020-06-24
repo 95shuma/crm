@@ -12,16 +12,15 @@ import java.util.Date;
 @Setter
 public class RecordJournalRegisterForm {
 
-    @NotNull(message = "NotNull - doctor")
     private Long doctorId = null;
 
     private Long registrarId = null;
 
     @Future(message = "Нельзя записаться в прошлое")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime dateTime;
+    @NotNull(message = "Выберите подходящее время и дату записи")
+    private LocalDateTime dateTime = null;
 
-    @NotNull(message = "NotNull - hospital")
     private Long hospitalId = null;
 
     @NotBlank(message = "Укажите причину")
