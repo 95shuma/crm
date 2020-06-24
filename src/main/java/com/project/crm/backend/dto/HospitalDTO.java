@@ -13,13 +13,8 @@ import javax.validation.constraints.NotBlank;
 public class HospitalDTO {
 
     private Long id;
-
-    @NotBlank(message = "Обязательное поле")
     private String name;
-    
     private PlaceDTO place;
-
-    @NotBlank(message = "Обязательное поле")
     private String address;
 
     public static HospitalDTO from(Hospital hospital) {

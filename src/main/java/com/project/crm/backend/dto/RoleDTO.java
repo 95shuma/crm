@@ -12,7 +12,6 @@ public class RoleDTO {
     private Long id;
     private String name;
 
-
     public static RoleDTO from(Role role) {
         return builder()
                 .id(role.getId())

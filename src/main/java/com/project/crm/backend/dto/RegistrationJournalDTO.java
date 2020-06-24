@@ -16,7 +16,6 @@ public class RegistrationJournalDTO {
     private PositionDTO position;
     private RoleDTO role;
 
-
     public static RegistrationJournalDTO from(RegistrationJournal registrationJournal) {
         return builder()
                 .id(registrationJournal.getId())
