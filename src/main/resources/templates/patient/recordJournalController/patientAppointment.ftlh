@@ -53,13 +53,6 @@
                             </#list>
                         </#if>
                     </div>
-                    <div>
-                        <#if errors??>
-                            <#list errors as fieldError>
-                                <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
-                            </#list>
-                        </#if>
-                    </div>
                     <button type="submit" style="margin-top: 5px" class="btn btn-primary btn-block">Записаться</button>
                 </form>
             </div>
