@@ -18,5 +18,41 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class PositionFormValidatorTest {
 
+    @Autowired
+    private Validator validator;
 
+    private PositionRegisterForm positionRegisterForm;
+
+    @Before
+    public void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
+    @Before
+    public void setUpPositionRegisterForm(){
+        positionRegisterForm = new PositionRegisterForm();
+    }
+
+    @AfterEach
+    public void tearDown(){
+        positionRegisterForm = null;
+    }
+
+    @Test
+    public void invalidPositionNameShouldFailValidation() {
+
+        positionRegisterForm.setName("");
+        Set<ConstraintViolation<PositionRegisterForm>> violations = validator.validate(positionRegisterForm);
+        violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
+        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void validPositionNameShouldPassValidation() {
+
+        positionRegisterForm.setName("something");
+        Set<ConstraintViolation<PositionRegisterForm>> violations = validator.validate(positionRegisterForm);
+        assertTrue(violations.isEmpty());
+    }
 }
