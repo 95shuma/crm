@@ -12,7 +12,7 @@ import java.util.Date;
 public class PatientRegisterForm {
 
     @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
-    @NotBlank(message = "Это поле не может быть пустым")
+    @NotBlank(message = "Обязательное поле")
     private String inn = "";
 
     @NotBlank(message = "Обязательное поле")
