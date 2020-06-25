@@ -1,5 +1,6 @@
 package com.project.crm.backend.model.catalog.remediesCatalog;
 
+import com.project.crm.backend.model.catalog.Place;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,4 +19,11 @@ public class Dosage {
 
     @NotBlank(message = "Обязательное поле")
     private String name;
+
+    @OneToOne @JoinColumn(name = "measure_id")
+    private Measure measure;
+
+    @NotBlank(message = "Обязательное поле")
+    private String quantity;
+
 }
