@@ -20,7 +20,6 @@ public class PatientRegisterForm {
     private String password = "";
 
     @NotBlank(message = "Обязательное поле")
-
     private String documentNumber = "";
 
     @NotBlank(message = "Обязательное поле")
