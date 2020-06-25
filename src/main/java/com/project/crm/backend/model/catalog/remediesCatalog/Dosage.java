@@ -22,6 +22,6 @@ public class Dosage {
     private Measure measure;
 
     @NotBlank(message = "Обязательное поле")
-    private String quantity;
+    private int quantity;
 
 }

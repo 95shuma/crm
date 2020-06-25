@@ -14,7 +14,7 @@ public class DosageDTO {
     private Long id;
     private String name;
     private MeasureDTO measure;
-    private String quantity;
+    private int quantity;
 
 
     public static DosageDTO from(Dosage dosage) {
