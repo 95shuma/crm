@@ -27,15 +27,33 @@ public class RecordJournalController {
 
    @GetMapping
    public String getAllRecords(Model model,Principal principal, Pageable pageable, HttpServletRequest uriBuilder) {
-       userService.checkUserPresence(model, principal);
 
-       var record = recordJournalService.getPatientsByDoctor(userService.getByInn(Long.parseLong(principal.getName())).getId(),pageable);
-       var uri = uriBuilder.getRequestURI();
-       constructPageable(record, propertiesService.getDefaultPageSize(), model, uri);
        if(principal == null){
            return "errorPage";
        }
 
-       return  "doctor/doctorAppointmetController/doctorAllAppointment";
+       userService.checkUserPresence(model, principal);
+
+       var records = recordJournalService.getPatientsByDoctor(userService.getByInn(Long.parseLong(principal.getName())).getId(),pageable);
+       var uri = uriBuilder.getRequestURI();
+       constructPageable(records, propertiesService.getDefaultPageSize(), model, uri);
+
+       return "/doctor/appointments/appointments";
    }
+
+    @GetMapping("/today")
+    public String getAllRecordsOfToday(Model model,Principal principal, Pageable pageable, HttpServletRequest uriBuilder) {
+
+        if(principal == null){
+            return "errorPage";
+        }
+        userService.checkUserPresence(model, principal);
+
+        var records = recordJournalService.getPatientsByDoctorAndToday
+                (userService.getByInn(Long.parseLong(principal.getName())).getId(),pageable);
+        var uri = uriBuilder.getRequestURI();
+        constructPageable(records, propertiesService.getDefaultPageSize(), model, uri);
+
+        return "/doctor/appointments/todayAppointments";
+    }
 }
