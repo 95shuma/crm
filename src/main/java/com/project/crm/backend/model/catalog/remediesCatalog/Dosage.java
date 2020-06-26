@@ -18,7 +18,7 @@ public class Dosage {
     @NotBlank(message = "Обязательное поле")
     private String name;
 
-    @OneToOne @JoinColumn(name = "measure_id")
+    @ManyToOne @JoinColumn(name = "measure_id")
     private Measure measure;
 
     @NotBlank(message = "Обязательное поле")
