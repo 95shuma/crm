@@ -31,7 +31,8 @@ public class PreloadDatabaseWithData {
     CommandLineRunner fillDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
                                    HospitalRepo hospitalRepo,  RegistrationJournalRepo registrationJournalRepo,
                                    RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
-                                   RemedyRepo remedyRepo, ExaminationRepo examinationRepo){
+                                   RemedyRepo remedyRepo, ExaminationRepo examinationRepo, DosageRepo dosageRepo, InternationalNameRepo internationalNameRepo,
+                                   MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo){
         return (args) -> {
             recordJournalRepo.deleteAll();
             registrationJournalRepo.deleteAll();
@@ -40,7 +41,13 @@ public class PreloadDatabaseWithData {
             placeRepo.deleteAll();
             roleRepo.deleteAll();
             positionRepo.deleteAll();
-
+            dosageRepo.deleteAll();
+            internationalNameRepo.deleteAll();
+            measureRepo.deleteAll();
+            pharmacologicalGroupRepo.deleteAll();
+            remediesFormRepo.deleteAll();
+            remedyTypeRepo.deleteAll();
+            
             int qty = rn.nextInt(30)+10;
 
             //--------------------------------------------------- Справочники ---------------------------------------------------
@@ -153,14 +160,14 @@ public class PreloadDatabaseWithData {
             diseaseRepo.saveAll(diseaseList);
             //-->======================== Disease ========================
             //--<======================== Remedy ========================
-            List <Remedy> remedyList = new ArrayList<>();
+        /*    List <Remedy> remedyList = new ArrayList<>();
             for (int i = 0; i < 20; i++){
                 remedyList.add(Remedy.builder()
                         .name(faker.superhero().name())
                         .build()
                 );
             }
-            remedyRepo.saveAll(remedyList);
+            remedyRepo.saveAll(remedyList);*/
             //-->======================== Remedy ========================
             //--<======================== Examination ========================
             List <Examination> examinationList = new ArrayList<>();
