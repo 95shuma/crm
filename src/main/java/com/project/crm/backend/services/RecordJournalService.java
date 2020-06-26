@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,12 +23,24 @@ public class RecordJournalService {
     private final RecordJournalRepo recordJournalRepo;
     private final UserRepo userRepo;
     private final HospitalRepo hospitalRepo;
-
-    private final HospitalService hospitalService;
     private final UserService userService;
 
 
     public List<RecordJournal> getAll(){return recordJournalRepo.findAll();}
+
+    public Page<RecordJournalDTO> getPatientsByDoctor(Long id, Pageable pageable) {
+
+        return recordJournalRepo.findAllByDoctorIdOrderByDateTime(id, pageable).map(RecordJournalDTO::from);
+    }
+
+    public Page<RecordJournalDTO> getPatientsByDoctorAndToday(Long id, Pageable pageable) {
+
+        LocalDateTime startDate = LocalDate.now().atTime(6,0,0);
+        LocalDateTime endDate = LocalDate.now().atTime(23,59,0);
+
+        return recordJournalRepo.findAllByDoctorIdAndDateTimeBetween(id, startDate, endDate, pageable)
+                .map(RecordJournalDTO::from);
+    }
 
     public List<RecordJournal> getByDoctor(Long doctor){
         return recordJournalRepo.findByDoctorId(doctor);
@@ -61,11 +74,5 @@ public class RecordJournalService {
                         .build();
             }
         return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
-    }
-
-
-    public Page<RecordJournalDTO> getPatientsByDoctor(Long id, Pageable pageable) {
-        return recordJournalRepo.findAllByDoctorId(id, pageable)
-                .map(RecordJournalDTO::from);
     }
 }
