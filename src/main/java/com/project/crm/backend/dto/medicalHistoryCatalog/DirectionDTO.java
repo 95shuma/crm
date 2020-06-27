@@ -1,0 +1,36 @@
+package com.project.crm.backend.dto.medicalHistoryCatalog;
+
+import com.project.crm.backend.dto.MedicalHistoryDTO;
+import com.project.crm.backend.dto.PositionDTO;
+import com.project.crm.backend.model.catalog.MedicalHistory;
+import com.project.crm.backend.model.catalog.Position;
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.DiagnoseResult;
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Direction;
+import lombok.*;
+
+import javax.persistence.*;
+
+@Data
+@ToString
+@Builder(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class DirectionDTO {
+
+    private Long id;
+    private LabExaminationDTO labExaminationDTO;
+    private InstrumExaminationDTO instrumExaminationDTO;
+    private PositionDTO positionDTO;
+    private MedicalHistoryDTO medicalHistoryDTO;
+
+    public static DirectionDTO from(Direction direction) {
+        return builder()
+                .id(direction.getId())
+                .labExaminationDTO(LabExaminationDTO.from(direction.getLabExamination()))
+                .instrumExaminationDTO(InstrumExaminationDTO.from(direction.getInstrumExamination()))
+                .positionDTO(PositionDTO.from(direction.getPosition()))
+                .medicalHistoryDTO(MedicalHistoryDTO.from(direction.getMedicalHistory()))
+                .build();
+    }
+
+}
