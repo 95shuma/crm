@@ -3,6 +3,7 @@ package com.project.crm.backend.util;
 import com.github.javafaker.Faker;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
+import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -41,16 +42,73 @@ public class PreloadDatabaseWithData {
             placeRepo.deleteAll();
             roleRepo.deleteAll();
             positionRepo.deleteAll();
+            remedyRepo.deleteAll();
             dosageRepo.deleteAll();
             internationalNameRepo.deleteAll();
             measureRepo.deleteAll();
             pharmacologicalGroupRepo.deleteAll();
             remediesFormRepo.deleteAll();
             remedyTypeRepo.deleteAll();
-            
+
             int qty = rn.nextInt(30)+10;
 
             //--------------------------------------------------- Справочники ---------------------------------------------------
+            //--<======================== RemedyType ========================
+            List <RemedyType> typeList = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                typeList.add(RemedyType.builder()
+                        .name(faker.name().title())
+                        .build()
+                );
+            }
+            remedyTypeRepo.saveAll(typeList);
+            //-->======================== RemedyType ========================
+
+            //--<======================== RemediesForm ========================
+            List <RemediesForm> formList = new ArrayList<>();
+            for (int i = 0; i < 6; i++){
+                formList.add(RemediesForm.builder()
+                        .name(faker.name().nameWithMiddle())
+                        .build()
+                );
+            }
+            remediesFormRepo.saveAll(formList);
+            //-->======================== RemediesForm ========================
+
+            //--<======================== PharmacologicalGroup ========================
+            List <PharmacologicalGroup> groupList = new ArrayList<>();
+            for (int i = 0; i < 20; i++){
+                groupList.add(PharmacologicalGroup.builder()
+                        .name(faker.pokemon().name())
+                        .build()
+                );
+            }
+            pharmacologicalGroupRepo.saveAll(groupList);
+            //-->======================== PharmacologicalGroup ========================
+
+            //--<======================== Measure ========================
+            List <Measure> measureList = new ArrayList<>();
+            for (int i = 0; i < 10; i++){
+                measureList.add(Measure.builder()
+                        .name(faker.name().prefix())
+                        .build()
+                );
+            }
+            measureRepo.saveAll(measureList);
+            //-->======================== Measure ========================
+
+            //--<======================== InternationalName ========================
+            List <InternationalName> intNameList = new ArrayList<>();
+            for (int i = 0; i < 20; i++){
+                intNameList.add(InternationalName.builder()
+                        .name(faker.ancient().god())
+                        .build()
+                );
+            }
+            internationalNameRepo.saveAll(intNameList);
+            //-->======================== InternationalName ========================
+
+
             //--<======================== Place ========================
             List <Place> registrationPlaceList = new ArrayList<>();
             for (int i = 0; i < qty; i++){
@@ -159,16 +217,7 @@ public class PreloadDatabaseWithData {
             }
             diseaseRepo.saveAll(diseaseList);
             //-->======================== Disease ========================
-            //--<======================== Remedy ========================
-        /*    List <Remedy> remedyList = new ArrayList<>();
-            for (int i = 0; i < 20; i++){
-                remedyList.add(Remedy.builder()
-                        .name(faker.superhero().name())
-                        .build()
-                );
-            }
-            remedyRepo.saveAll(remedyList);*/
-            //-->======================== Remedy ========================
+
             //--<======================== Examination ========================
             List <Examination> examinationList = new ArrayList<>();
             for (int i = 0; i < 20; i++){
