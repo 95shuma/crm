@@ -1,10 +1,13 @@
 package com.project.crm.backend.util;
 
 import com.github.javafaker.Faker;
+import com.project.crm.backend.dto.MedicalHistoryDTO;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.*;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
+import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -30,11 +30,17 @@ public class PreloadDatabaseWithData {
 
     @Bean
     CommandLineRunner fillDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
-                                   HospitalRepo hospitalRepo,  RegistrationJournalRepo registrationJournalRepo,
+                                   HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo,
                                    RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
                                    RemedyRepo remedyRepo, ExaminationRepo examinationRepo, DosageRepo dosageRepo, InternationalNameRepo internationalNameRepo,
-                                   MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo){
+                                   MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo,
+                                   MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
+                                   ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
+                                   ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo){
         return (args) -> {
+
+            examinationRepo.deleteAll();
+            diseaseRepo.deleteAll();
             recordJournalRepo.deleteAll();
             registrationJournalRepo.deleteAll();
             userRepo.deleteAll();
@@ -49,9 +55,18 @@ public class PreloadDatabaseWithData {
             pharmacologicalGroupRepo.deleteAll();
             remediesFormRepo.deleteAll();
             remedyTypeRepo.deleteAll();
+            medicalHistoryRepo.deleteAll();
+            diagnoseRepo.deleteAll();
+            diagnoseResultRepo.deleteAll();
+            directionRepo.deleteAll();
+            examinationResultRepo.deleteAll();
+            instrumExaminationRepo.deleteAll();
+            labExaminationRepo.deleteAll();
+            procedureRepo.deleteAll();
+            sickListRepo.deleteAll();
+            treatmentRepo.deleteAll();
 
             int qty = rn.nextInt(30)+10;
-
             //--------------------------------------------------- Справочники ---------------------------------------------------
             //--<======================== RemedyType ========================
             List <RemedyType> typeList = new ArrayList<>();
@@ -63,7 +78,6 @@ public class PreloadDatabaseWithData {
             }
             remedyTypeRepo.saveAll(typeList);
             //-->======================== RemedyType ========================
-
             //--<======================== RemediesForm ========================
             List <RemediesForm> formList = new ArrayList<>();
             for (int i = 0; i < 6; i++){
@@ -324,6 +338,175 @@ public class PreloadDatabaseWithData {
             }
             recordJournalRepo.saveAll(recordJournalList);
             //-->======================== Record Journal ========================
+            //--------------------------------------------------- Для ИБ ---------------------------------------------------//
+            //--<======================== Diagnose ========================
+            List <Diagnose> diagnoses = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                diagnoses.add(Diagnose.builder()
+                        .isdCode(faker.superhero().name())
+                        .name(faker.book().title())
+                        .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                        .build());
+
+            }
+            diagnoseRepo.saveAll(diagnoses);
+            //-->======================== Diagnose ========================
+            //--<======================== DiagnoseResult ========================
+            List <DiagnoseResult> diagnoseResults = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                if (i % 2 == 0){
+                    diagnoseResults.add(DiagnoseResult.builder()
+                            .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
+                            .state(true)
+                            .build());
+                }
+                else {
+                    diagnoseResults.add(DiagnoseResult.builder()
+                            .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
+                            .state(false)
+                            .build());
+                }
+
+            }
+            diagnoseResultRepo.saveAll(diagnoseResults);
+            //-->======================== DiagnoseResult ========================
+            //--<======================== LabExamination ========================
+            List <LabExamination> labExaminations = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                labExaminations.add(LabExamination.builder()
+                        .name(faker.superhero().name())
+                        .rate(faker.book().title())
+                        .build());
+
+            }
+            labExaminationRepo.saveAll(labExaminations);
+            //-->======================== LabExamination ========================
+            //--<======================== InstrumExamination ========================
+            List <InstrumExamination> instrumExaminations = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                instrumExaminations.add(InstrumExamination.builder()
+                        .name(faker.superhero().name())
+                        .rate(faker.superhero().power())
+                        .description(faker.superhero().descriptor())
+                        .build());
+
+            }
+            instrumExaminationRepo.saveAll(instrumExaminations);
+            //-->======================== InstrumExamination ========================
+            //--<======================== ExaminationResult ========================
+            List <ExaminationResult> examinationResults = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                examinationResults.add(ExaminationResult.builder()
+                        .labExamination(labExaminationRepo.findAll().get(rn.nextInt(labExaminationRepo.findAll().size())))
+                        .instrumExamination(instrumExaminationRepo.findAll().get(rn.nextInt(instrumExaminationRepo.findAll().size())))
+                        .labExaminationResult(faker.harryPotter().character())
+                        .instrumExaminationResult(faker.harryPotter().location())
+                        .generalState(faker.university().name())
+                        .build());
+
+            }
+            examinationResultRepo.saveAll(examinationResults);
+            //-->======================== ExaminationResult ========================
+            //--<======================== SickList ========================
+            List <SickList> sickLists = new ArrayList<>();
+            Date date = new Date();
+            for (int i = 0; i < qty; i++){
+                sickLists.add(SickList.builder()
+                        .number((long)faker.number().numberBetween(10, 30))
+                        .startDate(date)
+                        .endDate(date)
+                        .build());
+
+            }
+            sickListRepo.saveAll(sickLists);
+            //-->======================== SickList ========================
+            //--<======================== Direction ========================
+            List <Direction> directions = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                directions.add(Direction.builder()
+                        .labExamination(labExaminationRepo.findAll().get(rn.nextInt(labExaminationRepo.findAll().size())))
+                        .instrumExamination(instrumExaminationRepo.findAll().get(rn.nextInt(instrumExaminationRepo.findAll().size())))
+                        .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                        .build());
+
+            }
+            directionRepo.saveAll(directions);
+            //-->======================== Direction ========================
+            //--<======================== Procedure ========================
+            List <Procedure> procedures = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                procedures.add(Procedure.builder()
+                        .name(faker.pokemon().name())
+                        .description(faker.pokemon().location())
+                        .build());
+
+            }
+            procedureRepo.saveAll(procedures);
+            //-->======================== Procedure ========================
+            //--<======================== Treatment ========================
+            List <Treatment> treatments = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                if (i % 2 == 0){
+                    treatments.add(Treatment.builder()
+                            .remedy(remedyRepo.findAll().get(rn.nextInt(remedyRepo.findAll().size())))
+                            .remediesNote(faker.book().title())
+                            .procedure(procedureRepo.findAll().get(rn.nextInt(procedureRepo.findAll().size())))
+                            .procedureNote(faker.book().title())
+                            .remediesNote(faker.book().author())
+                            .type(true)
+                            .build());
+                }
+                else {
+                    treatments.add(Treatment.builder()
+                            .remedy(remedyRepo.findAll().get(rn.nextInt(remedyRepo.findAll().size())))
+                            .remediesNote(faker.book().title())
+                            .procedure(procedureRepo.findAll().get(rn.nextInt(procedureRepo.findAll().size())))
+                            .procedureNote(faker.book().title())
+                            .remediesNote(faker.book().author())
+                            .type(false)
+                            .build());
+                }
+
+            }
+            treatmentRepo.saveAll(treatments);
+            //-->======================== Treatment ========================
+            //--<======================== MedicalHistory ========================
+            List <MedicalHistory> medicalHistories = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                if(i % 2 == 0){
+                    medicalHistories.add(MedicalHistory.builder()
+                            .recordJournal(recordJournalRepo.findAll().get(rn.nextInt(recordJournalRepo.findAll().size())))
+                            .date(date)
+                            .typeOfVisit(true)
+                            .complaint(faker.music().instrument())
+                            .direction(directionRepo.findAll().get(rn.nextInt(directionRepo.findAll().size())))
+                            .examinationResult(examinationResultRepo.findAll().get(rn.nextInt(examinationResultRepo.findAll().size())))
+                            .diagnoseResult(diagnoseResultRepo.findAll().get(rn.nextInt(diagnoseResultRepo.findAll().size())))
+                            .recommendation(faker.lorem().characters())
+                            .treatment(treatmentRepo.findAll().get(rn.nextInt(treatmentRepo.findAll().size())))
+                            .sickList(sickListRepo.findAll().get(rn.nextInt(sickListRepo.findAll().size())))
+                            .build());
+                }
+                else {
+                        medicalHistories.add(MedicalHistory.builder()
+                                .recordJournal(recordJournalRepo.findAll().get(rn.nextInt(recordJournalRepo.findAll().size())))
+                                .date(date)
+                                .typeOfVisit(false)
+                                .complaint(faker.music().instrument())
+                                .direction(directionRepo.findAll().get(rn.nextInt(directionRepo.findAll().size())))
+                                .examinationResult(examinationResultRepo.findAll().get(rn.nextInt(examinationResultRepo.findAll().size())))
+                                .diagnoseResult(diagnoseResultRepo.findAll().get(rn.nextInt(diagnoseResultRepo.findAll().size())))
+                                .recommendation(faker.lorem().characters())
+                                .treatment(treatmentRepo.findAll().get(rn.nextInt(treatmentRepo.findAll().size())))
+                                .sickList(sickListRepo.findAll().get(rn.nextInt(sickListRepo.findAll().size())))
+                                .build());
+                }
+
+            }
+            medicalHistoryRepo.saveAll(medicalHistories);
+            //-->======================== MedicalHistory ========================
+
+            //--------------------------------------------------- Для ИБ ---------------------------------------------------//
 
         };
     }
