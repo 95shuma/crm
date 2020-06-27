@@ -65,8 +65,7 @@ public class RecordJournalController {
             return "errorPage";
         }
         userService.checkUserPresence(model, principal);
-
-
+        model.addAttribute("journal", recordJournalService.getById(recordId));
 
         return "/doctor/appointments/appointment";
     }
