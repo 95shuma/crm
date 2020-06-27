@@ -31,6 +31,4 @@ public class ExaminationResult {
 
     private String generalState;
 
-    @ManyToOne @JoinColumn(name = "medical_history_id")
-    private MedicalHistory medicalHistory;
 }

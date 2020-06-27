@@ -18,7 +18,6 @@ public class TreatmentDTO {
     private ProcedureDTO procedureDTO;
     private String procedureNote;
     private boolean type;
-    private MedicalHistoryDTO medicalHistoryDTO;
 
     public static TreatmentDTO from(Treatment treatment) {
         return builder()
@@ -28,7 +27,6 @@ public class TreatmentDTO {
                 .procedureDTO(ProcedureDTO.from(treatment.getProcedure()))
                 .procedureNote(treatment.getProcedureNote())
                 .type(treatment.isType())
-                .medicalHistoryDTO(MedicalHistoryDTO.from(treatment.getMedicalHistory()))
                 .build();
     }
 }

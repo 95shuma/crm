@@ -17,7 +17,6 @@ public class SickListDTO {
     private Long number;
     private Date startDate;
     private Date endDate;
-    private MedicalHistoryDTO medicalHistoryDTO;
 
     public static SickListDTO from(SickList sickList) {
         return builder()
@@ -25,7 +24,6 @@ public class SickListDTO {
                 .number(sickList.getNumber())
                 .startDate(sickList.getStartDate())
                 .endDate(sickList.getEndDate())
-                .medicalHistoryDTO(MedicalHistoryDTO.from(sickList.getMedicalHistory()))
                 .build();
     }
 

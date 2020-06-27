@@ -17,7 +17,6 @@ public class ExaminationResultDTO {
     private InstrumExaminationDTO instrumExaminationDTO;
     private String instrumExaminationResult;
     private String generalState;
-    private MedicalHistoryDTO medicalHistoryDTO;
 
     public static ExaminationResultDTO from(ExaminationResult examinationResult) {
         return builder()
@@ -27,7 +26,6 @@ public class ExaminationResultDTO {
                 .instrumExaminationDTO(InstrumExaminationDTO.from(examinationResult.getInstrumExamination()))
                 .instrumExaminationResult(examinationResult.getInstrumExaminationResult())
                 .generalState(examinationResult.getGeneralState())
-                .medicalHistoryDTO(MedicalHistoryDTO.from(examinationResult.getMedicalHistory()))
                 .build();
     }
 

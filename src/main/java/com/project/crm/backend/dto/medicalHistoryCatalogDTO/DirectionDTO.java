@@ -16,7 +16,6 @@ public class DirectionDTO {
     private LabExaminationDTO labExaminationDTO;
     private InstrumExaminationDTO instrumExaminationDTO;
     private PositionDTO positionDTO;
-    private MedicalHistoryDTO medicalHistoryDTO;
 
     public static DirectionDTO from(Direction direction) {
         return builder()
@@ -24,7 +23,6 @@ public class DirectionDTO {
                 .labExaminationDTO(LabExaminationDTO.from(direction.getLabExamination()))
                 .instrumExaminationDTO(InstrumExaminationDTO.from(direction.getInstrumExamination()))
                 .positionDTO(PositionDTO.from(direction.getPosition()))
-                .medicalHistoryDTO(MedicalHistoryDTO.from(direction.getMedicalHistory()))
                 .build();
     }
 

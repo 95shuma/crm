@@ -29,6 +29,4 @@ public class Treatment {
 
     private boolean type;
 
-    @ManyToOne @JoinColumn(name = "medical_history_id")
-    private MedicalHistory medicalHistory;
 }

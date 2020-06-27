@@ -26,6 +26,4 @@ public class SickList {
 
     private Date endDate;
 
-    @ManyToOne @JoinColumn(name = "medical_history_id")
-    private MedicalHistory medicalHistory;
 }
