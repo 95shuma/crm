@@ -16,7 +16,7 @@
             <#list items as journal>
             <tr>
                 <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
-                <td>${journal.patient.fullName}</td>
+                <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</td>
                 <td>${journal.patient.gender}</td>
                 <td>${journal.patient.birthDate?date}</td>
                 <td>${journal.reason}</td>
