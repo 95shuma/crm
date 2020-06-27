@@ -28,6 +28,8 @@ public class RecordJournalService {
 
     public List<RecordJournal> getAll(){return recordJournalRepo.findAll();}
 
+    public RecordJournalDTO getById(String recordJournalId){return RecordJournalDTO.from(recordJournalRepo.findById(Long.parseLong(recordJournalId)).get());}
+
     public Page<RecordJournalDTO> getPatientsByDoctor(Long id, Pageable pageable) {
 
         return recordJournalRepo.findAllByDoctorIdOrderByDateTime(id, pageable).map(RecordJournalDTO::from);
