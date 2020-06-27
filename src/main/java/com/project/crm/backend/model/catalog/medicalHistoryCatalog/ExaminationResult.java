@@ -22,7 +22,7 @@ public class ExaminationResult {
     @ManyToOne @JoinColumn(name = "lab_examination_id")
     private LabExamination labExamination;
 
-    private String labExaminatioResult;
+    private String labExaminationResult;
 
     @ManyToOne @JoinColumn(name = "instrum_examination_id")
     private InstrumExamination instrumExamination;
