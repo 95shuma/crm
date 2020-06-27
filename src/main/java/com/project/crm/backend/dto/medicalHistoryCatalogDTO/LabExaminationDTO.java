@@ -1,12 +1,7 @@
-package com.project.crm.backend.dto.medicalHistoryCatalog;
+package com.project.crm.backend.dto.medicalHistoryCatalogDTO;
 
-import com.project.crm.backend.dto.MedicalHistoryDTO;
-import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Direction;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.LabExamination;
 import lombok.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Data
 @ToString

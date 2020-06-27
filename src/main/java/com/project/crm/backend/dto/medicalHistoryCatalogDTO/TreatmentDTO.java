@@ -1,14 +1,9 @@
-package com.project.crm.backend.dto.medicalHistoryCatalog;
+package com.project.crm.backend.dto.medicalHistoryCatalogDTO;
 
 import com.project.crm.backend.dto.MedicalHistoryDTO;
 import com.project.crm.backend.dto.remediesDto.RemedyDTO;
-import com.project.crm.backend.model.catalog.MedicalHistory;
-import com.project.crm.backend.model.catalog.Remedy;
-import com.project.crm.backend.model.catalog.medicalHistoryCatalog.SickList;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Treatment;
 import lombok.*;
-
-import javax.persistence.*;
 
 @Data
 @ToString

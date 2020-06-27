@@ -1,14 +1,10 @@
 package com.project.crm.backend.dto;
 
 
-import com.project.crm.backend.dto.medicalHistoryCatalog.*;
+import com.project.crm.backend.dto.medicalHistoryCatalogDTO.*;
 import com.project.crm.backend.model.catalog.MedicalHistory;
-import com.project.crm.backend.model.catalog.Place;
-import com.project.crm.backend.model.catalog.RecordJournal;
-import com.project.crm.backend.model.catalog.medicalHistoryCatalog.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
