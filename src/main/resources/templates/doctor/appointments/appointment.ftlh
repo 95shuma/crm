@@ -6,30 +6,34 @@
         <div class="justify-content-center">
             <div class="mx-3">
                 <h4>Подробная информация о записи:</h4>
-                <div class="justify-content-center">
-                    <div class="w-50">
-                        <p>Время записи: </p>
-                        <p>Полное имя пациента: </p>
-                        <p>Пол: </p>
-                        <p>Дата рождения: </p>
-                        <p>Причина записи: </p>
-                    </div>
-                    <div class="w-50">
-                        <p>${journal.dateTime.format('HH:mm')}</p>
-                        <p>${journal.patient.fullName}</p>
-                        <p>${journal.patient.gender}</p>
-                        <p>${journal.patient.birthDate?date}</p>
-                        <p>${journal.reason}</p>
-                    </div>
-                    <a href="https://github.com/95shuma/crm/issues/78" class="btn btn-primary btn-block">Принять пациента</a>
-                </div>
+                <table class="table table-striped">
+                    <tbody id="Table">
+                        <tr>
+                            <td>Время записи: </td>
+                            <td>${journal.dateTime.format('HH:mm')}</td>
+                        </tr>
+                        <tr>
+                            <td>Полное имя пациента: </td>
+                            <td>${journal.patient.fullName}</td>
+                        </tr>
+                        <tr>
+                            <td>Пол: </td>
+                            <td>${journal.patient.gender}</td>
+                        </tr>
+                        <tr>
+                            <td>Дата рождения: </td>
+                            <td>${journal.patient.birthDate?date}</td>
+                        </tr>
+                        <tr>
+                            <td>Причина записи: </td>
+                            <td>${journal.reason}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
-
-
-
-
+    <a href="https://github.com/95shuma/crm/issues/78" class="btn btn-primary btn-block mx-auto mt-3 w-50">Принять пациента</a>
     <a href="/doctor" class="btn btn-primary btn-block mx-auto mt-3 w-50">Выйти в личный кабинет</a>
 
 </@main.renderWith>
