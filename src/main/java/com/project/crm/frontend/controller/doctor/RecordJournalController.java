@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,5 +56,18 @@ public class RecordJournalController {
         constructPageable(records, propertiesService.getDefaultPageSize(), model, uri);
 
         return "/doctor/appointments/todayAppointments";
+    }
+
+    @GetMapping("/{record_id}")
+    public String getRecordInfoPage(Model model,Principal principal, @PathVariable("record_id") String recordId) {
+
+        if(principal == null){
+            return "errorPage";
+        }
+        userService.checkUserPresence(model, principal);
+
+
+
+        return "/doctor/appointments/appointment";
     }
 }
