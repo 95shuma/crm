@@ -2,7 +2,9 @@ package com.project.crm.backend.model.catalog.remediesCatalog;
 
 import lombok.*;
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -21,7 +23,7 @@ public class Dosage {
     @ManyToOne @JoinColumn(name = "measure_id")
     private Measure measure;
 
-    @NotBlank(message = "Обязательное поле")
-    private int quantity;
+    @NotNull(message = "Обязательное поле")
+    private Integer quantity;
 
 }
