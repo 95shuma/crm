@@ -15,6 +15,7 @@ public class RecordJournalDTO {
     private UserDTO registrar;
     private HospitalDTO hospital;
     private LocalDateTime dateTime;
+    private LocalDateTime dateTimeNow;
     private String reason;
 
     public static RecordJournalDTO from(RecordJournal recordJournal) {
@@ -28,6 +29,7 @@ public class RecordJournalDTO {
                     .registrar(UserDTO.from(recordJournal.getRegistrar()))
                     .hospital(HospitalDTO.from(recordJournal.getHospital()))
                     .dateTime(recordJournal.getDateTime())
+                    .dateTimeNow(recordJournal.getDateTimeNow())
                     .reason(recordJournal.getReason())
                     .build();
         } else {
@@ -37,6 +39,7 @@ public class RecordJournalDTO {
                     .patient(UserDTO.from(recordJournal.getPatient()))
                     .hospital(HospitalDTO.from(recordJournal.getHospital()))
                     .dateTime(recordJournal.getDateTime())
+                    .dateTimeNow(recordJournal.getDateTimeNow())
                     .reason(recordJournal.getReason())
                     .build();
         }
