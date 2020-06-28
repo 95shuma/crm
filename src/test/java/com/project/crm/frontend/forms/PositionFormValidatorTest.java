@@ -1,4 +1,4 @@
-package com.project.crm;
+package com.project.crm.frontend.forms;
 
 import com.project.crm.frontend.forms.PositionRegisterForm;
 import org.junit.Before;
