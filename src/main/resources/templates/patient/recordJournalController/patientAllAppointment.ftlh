@@ -5,6 +5,7 @@
             <thead>
                 <tr>
                     <th scope="col">Время записи</th>
+                    <th scope="col">Время ко скольки</th>
                     <th scope="col">Лечащий врач</th>
                     <th scope="col">Больница</th>
                     <th scope="col">Жалоба</th>
@@ -13,6 +14,7 @@
             <tbody>
             <#list journal as journal>
                 <tr>
+                    <td>${journal.dateTimeNow}</td>
                     <td>${journal.dateTime}</td>
                     <td>${journal.doctor.fullName}</td>
                     <td>${journal.hospital.name} - ${journal.hospital.address}</td>
