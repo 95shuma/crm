@@ -59,7 +59,7 @@ public class UserRegisterFormValidatorTest {
     }
 
     @Test
-    public void validation_nullInnLess14_ExpectFailValidation() {
+    public void validation_nullInnLess14_ExpectInnFailValidation() {
         userRegisterForm.setInn(null);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -81,7 +81,7 @@ public class UserRegisterFormValidatorTest {
     }
 
     @Test
-    public void validation_wrongSizeInnMore14_ExpectFailValidation() {
+    public void validation_wrongSizeInnMore14_ExpectInnFailValidation() {
         userRegisterForm.setInn(innMore14);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -103,7 +103,7 @@ public class UserRegisterFormValidatorTest {
     }
 
     @Test
-    public void validation_wrongSizeInnLess14_ExpectFailValidation() {
+    public void validation_wrongSizeInnLess14_ExpectInnFailValidation() {
         userRegisterForm.setInn(innLess14);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
