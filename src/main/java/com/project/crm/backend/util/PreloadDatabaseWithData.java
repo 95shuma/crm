@@ -332,6 +332,7 @@ public class PreloadDatabaseWithData {
                         .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
                         .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
                         .dateTime(LocalDateTime.now())
+                        .dateTimeNow(LocalDateTime.now())
                         .reason(faker.superhero().name())
                         .build()
                 );
@@ -531,9 +532,9 @@ public class PreloadDatabaseWithData {
     }
     private String  getRandomGender(){
         if (rn.nextInt(2) == 0)
-            return "male";
+            return "Мужской";
         else
-            return "female";
+            return "Женский";
     }
     private String  getAnyDoctorRole(){
         int r = rn.nextInt(3)+1;
