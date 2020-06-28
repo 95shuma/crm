@@ -78,7 +78,6 @@ public class UserRegisterFormValidatorTest {
         Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
         assertTrue(violations.isEmpty());
     }
-
     @Test
     public void validation_nullInn_ExpectInnFailValidation() {
         userRegisterForm.setInn(null);
@@ -248,7 +247,7 @@ public class UserRegisterFormValidatorTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void validation_NullBirthDate_ExpectBirthDateFailValidation() {
+    public void validation_nullBirthDate_ExpectBirthDateFailValidation() {
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -269,7 +268,7 @@ public class UserRegisterFormValidatorTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void validation_FutureBirthDate_ExpectBirthDateFailValidation() {
+    public void validation_futureBirthDate_ExpectBirthDateFailValidation() {
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -290,7 +289,7 @@ public class UserRegisterFormValidatorTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void validation_NullGender_ExpectGenderFailValidation() {
+    public void validation_nullGender_ExpectGenderFailValidation() {
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -311,7 +310,7 @@ public class UserRegisterFormValidatorTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void validation_NullPlaceId_ExpectPlaceIdFailValidation() {
+    public void validation_nullPlaceId_ExpectPlaceIdFailValidation() {
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -332,7 +331,7 @@ public class UserRegisterFormValidatorTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void validation_NullPositionId_ExpectPositionIdFailValidation() {
+    public void validation_nullPositionId_ExpectPositionIdFailValidation() {
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -353,7 +352,7 @@ public class UserRegisterFormValidatorTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void validation_NullHospitalId_ExpectHospitalIdFailValidation() {
+    public void validation_nullHospitalId_ExpectHospitalIdFailValidation() {
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -374,7 +373,7 @@ public class UserRegisterFormValidatorTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void validation_NullRoleId_ExpectRoleIdFailValidation() {
+    public void validation_nullRoleId_ExpectRoleIdFailValidation() {
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
