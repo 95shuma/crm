@@ -19,10 +19,11 @@ public class UserRegisterFormValidatorTest {
     private Calendar calendar;
     java.util.Date today;
 
+    private String correctInn;
     private String innMore14;
     private String innLess14;
-    private String correctInn;
     private String correctPassword;
+    private String passwordLess8;
     private String correctDocumentNumber;
     private String correctName;
     private String correctSurname;
@@ -40,10 +41,11 @@ public class UserRegisterFormValidatorTest {
     }
     @Before
     public void setUpParameters(){
+        correctInn = "12345678912345";
         innMore14 = "111111111111111111111111";
         innLess14 = "1111";
-        correctInn = "12345678912345";
-        correctPassword = "12345678912345";
+        correctPassword = "12345678";
+        passwordLess8 = "1111";
         correctDocumentNumber = "ID1234567";
         correctName = "Тест";
         correctSurname = "Тестов";
@@ -137,6 +139,27 @@ public class UserRegisterFormValidatorTest {
 
         Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
         violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
+        violations.forEach(violation -> assertEquals("password", violation.getPropertyPath().toString()));
+        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
+    }
+    @Test
+    public void validation_wrongSizePasswordLessThenCorrect_ExpectPasswordFailValidation() {
+        userRegisterForm.setInn(correctInn);
+        userRegisterForm.setPassword(passwordLess8);
+        userRegisterForm.setDocumentNumber(correctDocumentNumber);
+        userRegisterForm.setName(correctName);
+        userRegisterForm.setSurname(correctSurname);
+        userRegisterForm.setMiddleName(correctMiddleName);
+        userRegisterForm.setBirthDate(today);
+        userRegisterForm.setGender(correctGender);
+        userRegisterForm.setPlaceId((long) 1);
+        userRegisterForm.setHospitalId((long) 1);
+        userRegisterForm.setRoleId((long) 1);
+        userRegisterForm.setPositionId((long) 1);
+
+        Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
+        violations.forEach(violation -> assertEquals("Пароль должен содержать минимум 8 символов", violation.getMessage()));
         violations.forEach(violation -> assertEquals("password", violation.getPropertyPath().toString()));
         assertEquals(1, violations.size());
         assertFalse(violations.isEmpty());
