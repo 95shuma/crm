@@ -57,9 +57,8 @@ public class UserRegisterFormValidatorTest {
     public void tearDown(){
         userRegisterForm = null;
     }
-
     @Test
-    public void validation_nullInnLess14_ExpectInnFailValidation() {
+    public void validation_nullInn_ExpectInnFailValidation() {
         userRegisterForm.setInn(null);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -79,7 +78,6 @@ public class UserRegisterFormValidatorTest {
         assertEquals(1, violations.size());
         assertFalse(violations.isEmpty());
     }
-
     @Test
     public void validation_wrongSizeInnMore14_ExpectInnFailValidation() {
         userRegisterForm.setInn(innMore14);
@@ -101,7 +99,6 @@ public class UserRegisterFormValidatorTest {
         assertEquals(1, violations.size());
         assertFalse(violations.isEmpty());
     }
-
     @Test
     public void validation_wrongSizeInnLess14_ExpectInnFailValidation() {
         userRegisterForm.setInn(innLess14);
@@ -120,6 +117,27 @@ public class UserRegisterFormValidatorTest {
         Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
         violations.forEach(violation -> assertEquals("Требуется ввести 14 цифр", violation.getMessage()));
         violations.forEach(violation -> assertEquals("inn", violation.getPropertyPath().toString()));
+        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
+    }
+    @Test
+    public void validation_nullPassword_ExpectPasswordFailValidation() {
+        userRegisterForm.setInn(correctInn);
+        userRegisterForm.setPassword(null);
+        userRegisterForm.setDocumentNumber(correctDocumentNumber);
+        userRegisterForm.setName(correctName);
+        userRegisterForm.setSurname(correctSurname);
+        userRegisterForm.setMiddleName(correctMiddleName);
+        userRegisterForm.setBirthDate(today);
+        userRegisterForm.setGender(correctGender);
+        userRegisterForm.setPlaceId((long) 1);
+        userRegisterForm.setHospitalId((long) 1);
+        userRegisterForm.setRoleId((long) 1);
+        userRegisterForm.setPositionId((long) 1);
+
+        Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
+        violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
+        violations.forEach(violation -> assertEquals("password", violation.getPropertyPath().toString()));
         assertEquals(1, violations.size());
         assertFalse(violations.isEmpty());
     }
