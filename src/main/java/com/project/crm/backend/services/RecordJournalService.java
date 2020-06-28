@@ -64,6 +64,7 @@ public class RecordJournalService {
                         .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getRegistrarId()).getId()).get())
                         .reason(recordJournalRegisterForm.getReason())
                         .dateTime(recordJournalRegisterForm.getDateTime())
+                        .dateTimeNow(LocalDateTime.now())
                         .build();
             }
             else{
@@ -73,6 +74,7 @@ public class RecordJournalService {
                         .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
                         .reason(recordJournalRegisterForm.getReason())
                         .dateTime(recordJournalRegisterForm.getDateTime())
+                        .dateTimeNow(LocalDateTime.now())
                         .build();
             }
         return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
