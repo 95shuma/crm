@@ -207,7 +207,7 @@ public class UserRegisterFormValidatorTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void validation_SurnameName_ExpectSurnameFailValidation() {
+    public void validation_nullSurname_ExpectSurnameFailValidation() {
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -224,6 +224,27 @@ public class UserRegisterFormValidatorTest {
         Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
         violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
         violations.forEach(violation -> assertEquals("surname", violation.getPropertyPath().toString()));
+        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
+    }
+    @Test
+    public void validation_NullBirthDate_ExpectBirthDateFailValidation() {
+        userRegisterForm.setInn(correctInn);
+        userRegisterForm.setPassword(correctPassword);
+        userRegisterForm.setDocumentNumber(correctDocumentNumber);
+        userRegisterForm.setName(correctName);
+        userRegisterForm.setSurname(correctSurname);
+        userRegisterForm.setMiddleName(correctMiddleName);
+        userRegisterForm.setBirthDate(null);
+        userRegisterForm.setGender(correctGender);
+        userRegisterForm.setPlaceId((long) 1);
+        userRegisterForm.setHospitalId((long) 1);
+        userRegisterForm.setRoleId((long) 1);
+        userRegisterForm.setPositionId((long) 1);
+
+        Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
+        violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
+        violations.forEach(violation -> assertEquals("birthDate", violation.getPropertyPath().toString()));
         assertEquals(1, violations.size());
         assertFalse(violations.isEmpty());
     }
