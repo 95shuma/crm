@@ -6,6 +6,7 @@
             <thead>
             <tr>
                 <th scope="col">Время записи</th>
+                <th scope="col">Время ко скольки</th>
                 <th scope="col">ФИО больного</th>
                 <th scope="col">Пол</th>
                 <th scope="col">Дата рождения</th>
@@ -15,6 +16,7 @@
             <tbody>
             <#list items as journal>
             <tr>
+                <td>${journal.dateTimeNow.format('MMM-dd HH:mm')}</td>
                 <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
                 <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</td>
                 <td>${journal.patient.gender}</td>
