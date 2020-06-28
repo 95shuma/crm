@@ -6,6 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.validation.*;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import static org.junit.Assert.*;
 
@@ -244,6 +246,27 @@ public class UserRegisterFormValidatorTest {
 
         Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
         violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
+        violations.forEach(violation -> assertEquals("birthDate", violation.getPropertyPath().toString()));
+        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
+    }
+    @Test
+    public void validation_FutureBirthDate_ExpectBirthDateFailValidation() {
+        userRegisterForm.setInn(correctInn);
+        userRegisterForm.setPassword(correctPassword);
+        userRegisterForm.setDocumentNumber(correctDocumentNumber);
+        userRegisterForm.setName(correctName);
+        userRegisterForm.setSurname(correctSurname);
+        userRegisterForm.setMiddleName(correctMiddleName);
+        userRegisterForm.setBirthDate(Date.from(Instant.now().plus(10, ChronoUnit.DAYS)));
+        userRegisterForm.setGender(correctGender);
+        userRegisterForm.setPlaceId((long) 1);
+        userRegisterForm.setHospitalId((long) 1);
+        userRegisterForm.setRoleId((long) 1);
+        userRegisterForm.setPositionId((long) 1);
+
+        Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
+        violations.forEach(violation -> assertEquals("Дата рождения не может быть в будущем времени", violation.getMessage()));
         violations.forEach(violation -> assertEquals("birthDate", violation.getPropertyPath().toString()));
         assertEquals(1, violations.size());
         assertFalse(violations.isEmpty());
