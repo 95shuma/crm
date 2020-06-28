@@ -271,4 +271,25 @@ public class UserRegisterFormValidatorTest {
         assertEquals(1, violations.size());
         assertFalse(violations.isEmpty());
     }
+    @Test
+    public void validation_NullGender_ExpectGenderFailValidation() {
+        userRegisterForm.setInn(correctInn);
+        userRegisterForm.setPassword(correctPassword);
+        userRegisterForm.setDocumentNumber(correctDocumentNumber);
+        userRegisterForm.setName(correctName);
+        userRegisterForm.setSurname(correctSurname);
+        userRegisterForm.setMiddleName(correctMiddleName);
+        userRegisterForm.setBirthDate(today);
+        userRegisterForm.setGender(null);
+        userRegisterForm.setPlaceId((long) 1);
+        userRegisterForm.setHospitalId((long) 1);
+        userRegisterForm.setRoleId((long) 1);
+        userRegisterForm.setPositionId((long) 1);
+
+        Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
+        violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
+        violations.forEach(violation -> assertEquals("gender", violation.getPropertyPath().toString()));
+        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
+    }
 }
