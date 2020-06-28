@@ -32,7 +32,7 @@ public class UserRegisterForm {
     @NotBlank(message = "Обязательное поле")
     private String middleName = "";
 
-    @PastOrPresent(message = "Дата рождение должно быть прошлой")
+    @PastOrPresent(message = "Дата рождения не может быть в будущем времени")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Обязательное поле")
     private Date birthDate;
