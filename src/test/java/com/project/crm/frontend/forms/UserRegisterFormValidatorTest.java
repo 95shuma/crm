@@ -16,6 +16,8 @@ public class UserRegisterFormValidatorTest {
     private Validator validator;
 
     private UserRegisterForm userRegisterForm;
+    private Calendar calendar;
+    java.util.Date today;
 
     private String innMore14;
     private String innLess14;
@@ -47,6 +49,9 @@ public class UserRegisterFormValidatorTest {
         correctSurname = "Тестов";
         correctMiddleName = "Тестович";
         correctGender = "мужской";
+        calendar = Calendar.getInstance();
+        today = calendar.getTime();
+
     }
     @AfterEach
     public void tearDown(){
@@ -55,9 +60,6 @@ public class UserRegisterFormValidatorTest {
 
     @Test
     public void validation_wrongSizeInnMore14_ExpectFailValidation() {
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date today = calendar.getTime();
-
         userRegisterForm.setInn(innMore14);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -80,9 +82,6 @@ public class UserRegisterFormValidatorTest {
 
     @Test
     public void validation_wrongSizeInnLess14_ExpectFailValidation() {
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date today = calendar.getTime();
-
         userRegisterForm.setInn(innLess14);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
