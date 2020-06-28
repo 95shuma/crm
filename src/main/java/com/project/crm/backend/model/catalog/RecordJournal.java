@@ -37,6 +37,8 @@ public class RecordJournal {
 
     private LocalDateTime dateTime;
 
+    private LocalDateTime dateTimeNow;
+
     @NotBlank(message = "Это поле не может быть пустым")
     private String reason;
 }
