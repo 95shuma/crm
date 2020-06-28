@@ -355,5 +355,25 @@ public class UserRegisterFormValidatorTest {
         assertEquals(1, violations.size());
         assertFalse(violations.isEmpty());
     }
+    @Test
+    public void validation_NullRoleId_ExpectRoleIdFailValidation() {
+        userRegisterForm.setInn(correctInn);
+        userRegisterForm.setPassword(correctPassword);
+        userRegisterForm.setDocumentNumber(correctDocumentNumber);
+        userRegisterForm.setName(correctName);
+        userRegisterForm.setSurname(correctSurname);
+        userRegisterForm.setMiddleName(correctMiddleName);
+        userRegisterForm.setBirthDate(today);
+        userRegisterForm.setGender(correctGender);
+        userRegisterForm.setPlaceId((long) 1);
+        userRegisterForm.setPositionId((long) 1);
+        userRegisterForm.setHospitalId((long) 1);
+        userRegisterForm.setRoleId(null);
 
+        Set<ConstraintViolation<UserRegisterForm>> violations = validator.validate(userRegisterForm);
+        violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
+        violations.forEach(violation -> assertEquals("roleId", violation.getPropertyPath().toString()));
+        assertEquals(1, violations.size());
+        assertFalse(violations.isEmpty());
+    }
 }
