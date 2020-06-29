@@ -41,30 +41,30 @@ public class PreloadDatabaseWithData {
 
             examinationRepo.deleteAll();
             diseaseRepo.deleteAll();
-            recordJournalRepo.deleteAll();
             registrationJournalRepo.deleteAll();
+            roleRepo.deleteAll();
+            medicalHistoryRepo.deleteAll();
+            recordJournalRepo.deleteAll();
             userRepo.deleteAll();
             hospitalRepo.deleteAll();
             placeRepo.deleteAll();
-            roleRepo.deleteAll();
-            positionRepo.deleteAll();
-            remedyRepo.deleteAll();
-            dosageRepo.deleteAll();
-            internationalNameRepo.deleteAll();
-            measureRepo.deleteAll();
-            pharmacologicalGroupRepo.deleteAll();
-            remediesFormRepo.deleteAll();
-            remedyTypeRepo.deleteAll();
-            medicalHistoryRepo.deleteAll();
-            diagnoseRepo.deleteAll();
             diagnoseResultRepo.deleteAll();
+            diagnoseRepo.deleteAll();
             directionRepo.deleteAll();
             examinationResultRepo.deleteAll();
             instrumExaminationRepo.deleteAll();
             labExaminationRepo.deleteAll();
-            procedureRepo.deleteAll();
+            positionRepo.deleteAll();
             sickListRepo.deleteAll();
             treatmentRepo.deleteAll();
+            procedureRepo.deleteAll();
+            remedyRepo.deleteAll();
+            dosageRepo.deleteAll();
+            measureRepo.deleteAll();
+            remediesFormRepo.deleteAll();
+            remedyTypeRepo.deleteAll();
+            internationalNameRepo.deleteAll();
+            pharmacologicalGroupRepo.deleteAll();
 
             int qty = rn.nextInt(30)+10;
             //--------------------------------------------------- Справочники ---------------------------------------------------
