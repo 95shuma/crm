@@ -3,6 +3,7 @@ package com.project.crm.backend.services;
 import com.project.crm.backend.dto.PlaceDTO;
 import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.PlaceRepo;
+import com.project.crm.frontend.forms.PlaceRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,11 +32,11 @@ public class PlaceService {
         return placeRepo.findAll(pageable).map(PlaceDTO::from);
     }
 
-    public void createPlace(PlaceDTO placeDTO){
+    public void createPlace(PlaceRegisterForm placeRegisterForm){
         Place registrationPlace = Place.builder()
-                .name(placeDTO.getName())
-                .codePlace(placeDTO.getCodePlace())
-                .groupCode(placeDTO.getGroupCode())
+                .name(placeRegisterForm.getName())
+                .codePlace(Integer.parseInt(placeRegisterForm.getCodePlace()))
+                .groupCode(placeRegisterForm.getGroupCode())
                 .build();
         placeRepo.save(registrationPlace);
     }

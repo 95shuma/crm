@@ -22,8 +22,8 @@ public class Place {
     private String name;
 
     @Column(unique = true)
-    @NotBlank(message = "Обязательное поле")
-    private String codePlace;
+    @NotNull(message = "Обязательное поле")
+    private Integer codePlace;
 
     @NotNull(message = "Обязательное поле")
     private Integer groupCode;

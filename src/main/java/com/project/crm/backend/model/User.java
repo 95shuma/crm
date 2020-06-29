@@ -5,10 +5,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Data
@@ -23,9 +20,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 14, message = "Требуется ввести 14 цифр")
     @Column(length = 64)
-    private String inn;
+    private Long inn;
 
     @NotBlank(message = "Обязательное поле")
     @Size(min = 8, message = "Пароль должен содержать минимум 8 символов")

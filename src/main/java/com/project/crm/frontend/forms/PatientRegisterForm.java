@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Getter
@@ -15,6 +12,7 @@ import java.util.Date;
 public class PatientRegisterForm {
 
     @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
+    @NotBlank(message = "Обязательное поле")
     private String inn = "";
 
     @NotBlank(message = "Обязательное поле")
@@ -22,7 +20,6 @@ public class PatientRegisterForm {
     private String password = "";
 
     @NotBlank(message = "Обязательное поле")
-
     private String documentNumber = "";
 
     @NotBlank(message = "Обязательное поле")

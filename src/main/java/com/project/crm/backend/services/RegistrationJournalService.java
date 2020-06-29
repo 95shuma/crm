@@ -2,10 +2,7 @@ package com.project.crm.backend.services;
 
 
 import com.project.crm.backend.model.User;
-import com.project.crm.backend.model.catalog.Hospital;
-import com.project.crm.backend.model.catalog.Position;
-import com.project.crm.backend.model.catalog.RegistrationJournal;
-import com.project.crm.backend.model.catalog.Role;
+import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.util.Constants;
 import com.project.crm.frontend.forms.UserRegisterForm;
@@ -24,12 +21,20 @@ public class RegistrationJournalService {
     private final PlaceRepo placeRepo;
     private final PositionRepo positionRepo;
 
-    public boolean existsByUserInnAndRoleId(String inn, Long roleId){
+    public boolean existsByUserInnAndRoleId(Long inn, Long roleId){
         return registrationJournalRepo.existsByUserInnAndRoleId(inn, roleId);
     }
 
     public List<RegistrationJournal> getAll(){
         return registrationJournalRepo.findAll();
+    }
+
+    public Long getRegJournalId(Long inn){
+        return registrationJournalRepo.findByUserInn(inn).getId();
+    }
+
+    public List<RegistrationJournal> getDoctorsByHospitalId (Long hospitalId){
+        return registrationJournalRepo.findByHospitalId(hospitalId);
     }
 
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){

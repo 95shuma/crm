@@ -14,18 +14,15 @@ import javax.validation.constraints.NotNull;
 public class PlaceDTO {
 
     private Long id;
-    @NotBlank(message = "Обязательное поле")
     private String name;
-    @NotBlank(message = "Обязательное поле")
     private String codePlace;
-    @NotNull(message = "Обязательное поле")
     private Integer groupCode;
 
     public static PlaceDTO from(Place place) {
         return builder()
                 .id(place.getId())
                 .name(place.getName())
-                .codePlace(place.getCodePlace())
+                .codePlace(place.getCodePlace().toString())
                 .groupCode(place.getGroupCode())
                 .build();
     }

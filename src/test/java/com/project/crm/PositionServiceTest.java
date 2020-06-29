@@ -25,7 +25,7 @@ class PositionServiceTest {
                 .build();
 
         assertThrows(ConstraintViolationException.class, () -> {
-            positionService.createPosition(positionDTO);
+            positionService.createPositionForDTO(positionDTO);
         });
     }
     @Test
@@ -35,7 +35,7 @@ class PositionServiceTest {
                 .build();
 
         assertEquals("name",
-            positionService.createPosition(positionDTO).getName());
+            positionService.createPositionForDTO(positionDTO).getName());
     }
 
 }

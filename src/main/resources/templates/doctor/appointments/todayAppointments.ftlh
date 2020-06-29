@@ -15,10 +15,10 @@
             <tbody>
             <#list items as journal>
             <tr>
-                <td>${journal.dateTime}</td>
-                <td>${journal.patient.fullName}</td>
+                <td>${journal.dateTime.format('HH:mm')}</td>
+                <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</a></td>
                 <td>${journal.patient.gender}</td>
-                <td>${journal.patient.birthDate}</td>
+                <td>${journal.patient.birthDate?date}</td>
                 <td>${journal.reason}</td>
             </tr>
             </#list>

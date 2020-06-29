@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -16,6 +13,7 @@ import java.util.Date;
 public class UserRegisterForm {
 
     @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
+    @NotBlank(message = "Это поле не может быть пустым")
     private String inn = "";
 
     @NotBlank(message = "Обязательное поле")
@@ -34,7 +32,7 @@ public class UserRegisterForm {
     @NotBlank(message = "Обязательное поле")
     private String middleName = "";
 
-    @PastOrPresent(message = "Дата рождение должно быть прошлой")
+    @PastOrPresent(message = "Дата рождения не может быть в будущем времени")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Обязательное поле")
     private Date birthDate;

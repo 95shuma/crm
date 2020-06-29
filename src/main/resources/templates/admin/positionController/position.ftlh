@@ -1,63 +1,35 @@
 <#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith scripts=["/js/validation.js"] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
-    <h3>Регистрация нового направления</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Направление</th>
-            </tr>
-        </thead>
-        <tbody>
-            <#list items as position>
-                <tr>
-                    <th scope="row">${position?counter}</th>
-                    <td>${position.name}</td>
-                </tr>
-            </#list>
-        </tbody>
-    </table>
-    <#include "../../partials/pagination.ftlh">
-    <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModal">
-        Добавить
-    </button>
-    <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Новое направление</h5>
-                </div>
+    <section id="page-splash" class="page-splash">
+        <div class="d-flex justify-content-center">
+            <div class="mx-3">
+                <h3>Регистрация нового напраления</h3>
                 <form id="commentForm" action="/admin/positions" method="post" class="needs-validation" novalidate>
-                    <div class="modal-body">
                         <#if _csrf??>
-                            <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
-                        </#if>
-                        <div class="form-group">
-                            <p><label for="positionName" class="col-form-label">Название направления</label></p>
-                            <input id="positionName" placeholder="Название" class="form-control" name="name">
-                            <div class="invalid-feedback">
-                                Обязательное поле.
-                            </div>
+                        <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
+                    </#if>
+                    <div class="form-group">
+                        <p><label for="positionName" class="col-form-label">Название направления</label></p>
+                        <input id="positionName" placeholder="Название" class="form-control" name="name">
+                        <div class="invalid-feedback">
+                            Обязательное поле.
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary w-100">Добавить</button>
                     </div>
                 </form>
+                <div style="color:red">
+                    <#if errors??>
+                        <p>Входные данные с ошибками!</p>
+                            <#list errors as fieldError>
+                                <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
+                            </#list>
+                    </#if>
+                </div>
             </div>
         </div>
-    </div>
-    <div style="color:red">
-        <#if errors??>
-            <p>Входные данные с ошибками!</p>
-            <#list errors as fieldError>
-                <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
-            </#list>
-        </#if>
-    </div>
+    </section>
 <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
