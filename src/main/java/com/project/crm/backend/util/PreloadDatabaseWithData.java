@@ -43,11 +43,6 @@ public class PreloadDatabaseWithData {
             diseaseRepo.deleteAll();
             registrationJournalRepo.deleteAll();
             roleRepo.deleteAll();
-            medicalHistoryRepo.deleteAll();
-            recordJournalRepo.deleteAll();
-            userRepo.deleteAll();
-            hospitalRepo.deleteAll();
-            placeRepo.deleteAll();
             diagnoseResultRepo.deleteAll();
             diagnoseRepo.deleteAll();
             directionRepo.deleteAll();
@@ -57,6 +52,11 @@ public class PreloadDatabaseWithData {
             positionRepo.deleteAll();
             sickListRepo.deleteAll();
             treatmentRepo.deleteAll();
+            medicalHistoryRepo.deleteAll();
+            recordJournalRepo.deleteAll();
+            userRepo.deleteAll();
+            hospitalRepo.deleteAll();
+            placeRepo.deleteAll();
             procedureRepo.deleteAll();
             remedyRepo.deleteAll();
             dosageRepo.deleteAll();
@@ -340,6 +340,32 @@ public class PreloadDatabaseWithData {
             recordJournalRepo.saveAll(recordJournalList);
             //-->======================== Record Journal ========================
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
+            //--<======================== MedicalHistory ========================
+            List <MedicalHistory> medicalHistories = new ArrayList<>();
+            Date date = new Date();
+            for (int i = 0; i < qty; i++){
+                if(i % 2 == 0){
+                    medicalHistories.add(MedicalHistory.builder()
+                            .recordJournal(recordJournalRepo.findAll().get(rn.nextInt(recordJournalRepo.findAll().size())))
+                            .date(date)
+                            .typeOfVisit(true)
+                            .complaint(faker.music().instrument())
+                            .recommendation(faker.lorem().characters())
+                            .build());
+                }
+                else {
+                    medicalHistories.add(MedicalHistory.builder()
+                            .recordJournal(recordJournalRepo.findAll().get(rn.nextInt(recordJournalRepo.findAll().size())))
+                            .date(date)
+                            .typeOfVisit(false)
+                            .complaint(faker.music().instrument())
+                            .recommendation(faker.lorem().characters())
+                            .build());
+                }
+
+            }
+            medicalHistoryRepo.saveAll(medicalHistories);
+            //-->======================== MedicalHistory ========================
             //--<======================== Diagnose ========================
             List <Diagnose> diagnoses = new ArrayList<>();
             for (int i = 0; i < qty; i++){
@@ -359,12 +385,14 @@ public class PreloadDatabaseWithData {
                     diagnoseResults.add(DiagnoseResult.builder()
                             .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
                             .state(true)
+                            .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                             .build());
                 }
                 else {
                     diagnoseResults.add(DiagnoseResult.builder()
                             .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
                             .state(false)
+                            .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                             .build());
                 }
 
@@ -403,6 +431,7 @@ public class PreloadDatabaseWithData {
                         .labExaminationResult(faker.harryPotter().character())
                         .instrumExaminationResult(faker.harryPotter().location())
                         .generalState(faker.university().name())
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                         .build());
 
             }
@@ -410,12 +439,12 @@ public class PreloadDatabaseWithData {
             //-->======================== ExaminationResult ========================
             //--<======================== SickList ========================
             List <SickList> sickLists = new ArrayList<>();
-            Date date = new Date();
             for (int i = 0; i < qty; i++){
                 sickLists.add(SickList.builder()
                         .number((long)faker.number().numberBetween(10, 30))
                         .startDate(date)
                         .endDate(date)
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                         .build());
 
             }
@@ -428,6 +457,7 @@ public class PreloadDatabaseWithData {
                         .labExamination(labExaminationRepo.findAll().get(rn.nextInt(labExaminationRepo.findAll().size())))
                         .instrumExamination(instrumExaminationRepo.findAll().get(rn.nextInt(instrumExaminationRepo.findAll().size())))
                         .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                         .build());
 
             }
@@ -455,6 +485,7 @@ public class PreloadDatabaseWithData {
                             .procedureNote(faker.book().title())
                             .remediesNote(faker.book().author())
                             .type(true)
+                            .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                             .build());
                 }
                 else {
@@ -465,47 +496,13 @@ public class PreloadDatabaseWithData {
                             .procedureNote(faker.book().title())
                             .remediesNote(faker.book().author())
                             .type(false)
+                            .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                             .build());
                 }
 
             }
             treatmentRepo.saveAll(treatments);
             //-->======================== Treatment ========================
-            //--<======================== MedicalHistory ========================
-            List <MedicalHistory> medicalHistories = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                if(i % 2 == 0){
-                    medicalHistories.add(MedicalHistory.builder()
-                            .recordJournal(recordJournalRepo.findAll().get(rn.nextInt(recordJournalRepo.findAll().size())))
-                            .date(date)
-                            .typeOfVisit(true)
-                            .complaint(faker.music().instrument())
-                            .direction(directionRepo.findAll().get(rn.nextInt(directionRepo.findAll().size())))
-                            .examinationResult(examinationResultRepo.findAll().get(rn.nextInt(examinationResultRepo.findAll().size())))
-                            .diagnoseResult(diagnoseResultRepo.findAll().get(rn.nextInt(diagnoseResultRepo.findAll().size())))
-                            .recommendation(faker.lorem().characters())
-                            .treatment(treatmentRepo.findAll().get(rn.nextInt(treatmentRepo.findAll().size())))
-                            .sickList(sickListRepo.findAll().get(rn.nextInt(sickListRepo.findAll().size())))
-                            .build());
-                }
-                else {
-                        medicalHistories.add(MedicalHistory.builder()
-                                .recordJournal(recordJournalRepo.findAll().get(rn.nextInt(recordJournalRepo.findAll().size())))
-                                .date(date)
-                                .typeOfVisit(false)
-                                .complaint(faker.music().instrument())
-                                .direction(directionRepo.findAll().get(rn.nextInt(directionRepo.findAll().size())))
-                                .examinationResult(examinationResultRepo.findAll().get(rn.nextInt(examinationResultRepo.findAll().size())))
-                                .diagnoseResult(diagnoseResultRepo.findAll().get(rn.nextInt(diagnoseResultRepo.findAll().size())))
-                                .recommendation(faker.lorem().characters())
-                                .treatment(treatmentRepo.findAll().get(rn.nextInt(treatmentRepo.findAll().size())))
-                                .sickList(sickListRepo.findAll().get(rn.nextInt(sickListRepo.findAll().size())))
-                                .build());
-                }
-
-            }
-            medicalHistoryRepo.saveAll(medicalHistories);
-            //-->======================== MedicalHistory ========================
 
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
 

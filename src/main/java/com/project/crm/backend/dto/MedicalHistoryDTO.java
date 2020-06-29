@@ -19,12 +19,7 @@ public class MedicalHistoryDTO {
     private Date date;
     private boolean typeOfVisit;
     private String complaint;
-    private DirectionDTO directionDTO;
-    private ExaminationResultDTO examinationResultDTO;
-    private DiagnoseResultDTO diagnoseResultDTO;
     private String recommendation;
-    private TreatmentDTO treatmentDTO;
-    private SickListDTO sickListDTO;
 
     public static MedicalHistoryDTO from(MedicalHistory medicalHistory) {
         return builder()
@@ -33,12 +28,7 @@ public class MedicalHistoryDTO {
                 .date(medicalHistory.getDate())
                 .typeOfVisit(medicalHistory.isTypeOfVisit())
                 .complaint(medicalHistory.getComplaint())
-                .directionDTO(DirectionDTO.from(medicalHistory.getDirection()))
-                .examinationResultDTO(ExaminationResultDTO.from(medicalHistory.getExaminationResult()))
-                .diagnoseResultDTO(DiagnoseResultDTO.from(medicalHistory.getDiagnoseResult()))
                 .recommendation(medicalHistory.getRecommendation())
-                .treatmentDTO(TreatmentDTO.from(medicalHistory.getTreatment()))
-                .sickListDTO(SickListDTO.from(medicalHistory.getSickList()))
                 .build();
     }
 }

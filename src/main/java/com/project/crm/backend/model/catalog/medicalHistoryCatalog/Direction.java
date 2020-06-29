@@ -27,4 +27,7 @@ public class Direction {
     @ManyToOne @JoinColumn(name = "position_id")
     private Position position;
 
+    @ManyToOne @JoinColumn(name= "medical_history_id")
+    private MedicalHistory medicalHistory;
+
 }

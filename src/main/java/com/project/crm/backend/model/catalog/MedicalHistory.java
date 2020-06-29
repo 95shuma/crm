@@ -28,21 +28,6 @@ public class MedicalHistory {
 
     private String complaint;
 
-    @ManyToOne @JoinColumn(name= "direction_id")
-    private Direction direction;
-
-    @ManyToOne @JoinColumn(name= "examination_result_id")
-    private ExaminationResult examinationResult;
-
-    @ManyToOne @JoinColumn(name= "diagnose_result_id")
-    private DiagnoseResult diagnoseResult;
-
     private String recommendation;
-
-    @ManyToOne @JoinColumn(name= "treatment_id")
-    private Treatment treatment;
-
-    @ManyToOne @JoinColumn(name= "sick_list_id")
-    private SickList sickList;
 
 }
