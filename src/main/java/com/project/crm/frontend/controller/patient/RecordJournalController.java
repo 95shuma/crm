@@ -39,9 +39,6 @@ public class RecordJournalController {
         if (!model.containsAttribute("journal")) {
             model.addAttribute("recordJournalRegisterForm", new RecordJournalRegisterForm());
         }
-        model.addAttribute("hospitals", hospitalService.getAll());
-        model.addAttribute("registrationJournals", registrationJournalService.getAll());
-        model.addAttribute("users", userService.getAll());
 
         return "patient/recordJournalController/patientAppointment";
     }
