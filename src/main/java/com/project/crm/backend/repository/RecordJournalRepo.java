@@ -16,4 +16,5 @@ public interface RecordJournalRepo extends JpaRepository<RecordJournal, Long> {
     Page<RecordJournal> findAllByDoctorIdOrderByDateTime(Long id, Pageable pageable);
 
     Page<RecordJournal> findAllByDoctorIdAndDateTimeBetween(Long id, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
+    List<RecordJournal> findAllByDoctorIdAndDateTimeBetween(Long id, LocalDateTime startDate, LocalDateTime endDate);
 }
