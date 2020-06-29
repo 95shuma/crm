@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface RegistrationJournalRepo extends JpaRepository<RegistrationJournal, Long> {
-    
-    List<RegistrationJournal> getAllByUserInn(Long inn);
+
+    RegistrationJournal findByUserInn(Long inn);
     boolean existsByUserInnAndRoleId(Long inn, Long id);
 }
