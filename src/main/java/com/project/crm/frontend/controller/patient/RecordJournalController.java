@@ -1,9 +1,6 @@
 package com.project.crm.frontend.controller.patient;
 
-import com.project.crm.backend.services.HospitalService;
-import com.project.crm.backend.services.RecordJournalService;
-import com.project.crm.backend.services.RegistrationJournalService;
-import com.project.crm.backend.services.UserService;
+import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Controller("pkg patient RecordJournalController")
@@ -27,6 +25,7 @@ public class RecordJournalController {
     private final RecordJournalService recordJournalService;
     private final RegistrationJournalService registrationJournalService;
     private final UserService userService;
+    private final WorkScheduleService workScheduleService;
 
     @GetMapping("/record")
     public String getRecord(Model model, Principal principal){
@@ -45,6 +44,35 @@ public class RecordJournalController {
         model.addAttribute("users", userService.getAll());
 
         return "patient/recordJournalController/patientAppointment";
+    }
+
+    @GetMapping("/hospital")
+    public String getHospital(Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("hospitals", hospitalService.getAll());
+        return "patient/recordJournalController/patientAppointmentHospital";
+    }
+
+    @PostMapping("/hospital")
+    public String recordHospital(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
+        attributes.addFlashAttribute("hospitalId", recordJournalRegisterForm.getHospitalId());
+        return "redirect:/patient/records/doctor";
+    }
+
+    @GetMapping("/doctor")
+    public String getDoctor(Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("doctors", registrationJournalService.getDoctorsByHospitalId(Long.parseLong(model.getAttribute("hospitalId").toString())));
+        return "patient/recordJournalController/patientAppointmentDoctor";
+    }
+
+    @PostMapping("/doctor")
+    public String recordDoctor(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
+        attributes.addFlashAttribute("hospitalId", recordJournalRegisterForm.getHospitalId());
+        attributes.addFlashAttribute("doctorId", recordJournalRegisterForm.getDoctorId());
+        attributes.addFlashAttribute("dateTime",workScheduleService.getWorkSchedule(LocalDate.now(),recordJournalRegisterForm.getDoctorId()));
+
+        return "redirect:/patient/records/record";
     }
 
     @PostMapping
