@@ -32,6 +32,10 @@ public class RegistrationJournalService {
         return registrationJournalRepo.findAll();
     }
 
+    public Long getRegJournalId(Long inn){
+        return registrationJournalRepo.findByUserInn(inn).getId();
+    }
+
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){
 
         Long roleId = userRegisterForm.getRoleId();
