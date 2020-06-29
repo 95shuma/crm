@@ -33,7 +33,7 @@
             </div>
         </div>
     </section>
-    <a href="https://github.com/95shuma/crm/issues/78" class="btn btn-primary btn-block mx-auto mt-3 w-50">Принять пациента</a>
+    <a href="/doctor/records/${journal.id}/accept" class="btn btn-primary btn-block mx-auto mt-3 w-50">Принять пациента</a>
     <a href="/doctor" class="btn btn-primary btn-block mx-auto mt-3 w-50">Выйти в личный кабинет</a>
 
 </@main.renderWith>
