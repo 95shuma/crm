@@ -1,4 +1,4 @@
-CREATE TABLE med_crm.work_schedule (
+CREATE TABLE work_schedule (
   id BIGINT NOT NULL AUTO_INCREMENT,
   date DATE NOT NULL,
   reg_journal_id BIGINT NOT NULL,
@@ -10,6 +10,6 @@ CREATE TABLE med_crm.work_schedule (
   INDEX FK_idx (reg_journal_id ASC) VISIBLE,
   CONSTRAINT FK_reg_journal_id
     FOREIGN KEY (reg_journal_id)
-    REFERENCES med_crm.registrations_journal (id)
+    REFERENCES registrations_journal (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
