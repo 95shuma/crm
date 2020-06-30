@@ -23,7 +23,7 @@
                         </#if>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Выберте подходящее время</label></p>
+                        <p><label class="col-form-label">Выберите подходящее время</label></p>
                         <select class="form-control" name="dateTime">
                             <#if dateTime??>
                                 <#list dateTime as dateTime>
