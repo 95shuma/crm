@@ -4,6 +4,7 @@ import com.project.crm.backend.dto.medicalHistoryCatalogDTO.SickListDTO;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.SickList;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.SickListRepo;
+import com.project.crm.frontend.forms.SickListRegisterForm;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -16,19 +17,24 @@ import java.util.List;
 public class SickListService {
 
     private final SickListRepo sickListRepo;
-
-
+    private final MedicalHistoryRepo medicalHistoryRepo;
 
     public SickListDTO getById(Long id){
         SickList sickList = sickListRepo.findById(id).get();
         return SickListDTO.from(sickList);
     }
 
-
     public List<SickList> getAll(){return sickListRepo.findAll();}
 
-
-
+    public void createSickList(SickListRegisterForm sickListRegisterForm){
+        var user = SickList.builder()
+                .number(sickListRegisterForm.getNumber())
+                .startDate(sickListRegisterForm.getStartDate())
+                .endDate(sickListRegisterForm.getEndDate())
+                .medicalHistory(medicalHistoryRepo.findById(sickListRegisterForm.getMedicalHistoryId()).get())
+                .build();
+        sickListRepo.save(user);
+    }
 
 
 }
