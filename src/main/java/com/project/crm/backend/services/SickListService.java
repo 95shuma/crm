@@ -1,9 +1,7 @@
 package com.project.crm.backend.services;
 
-import com.project.crm.backend.dto.HospitalDTO;
-import com.project.crm.backend.dto.RoleDTO;
+
 import com.project.crm.backend.dto.medicalHistoryCatalogDTO.SickListDTO;
-import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.SickList;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.SickListRepo;
