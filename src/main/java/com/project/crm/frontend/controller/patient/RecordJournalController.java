@@ -85,7 +85,7 @@ public class RecordJournalController {
 
         recordJournalService.createRecordJournal(recordJournalRegisterForm, principal);
 
-        return "redirect:/patient/records/recorded";
+        return "redirect:/patient/records";
 
     }
     @GetMapping
