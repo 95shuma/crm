@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-            <#list journal as journal>
+            <#list items as journal>
                 <tr>
                     <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
                     <td>${journal.doctor.fullName}</td>
@@ -21,6 +21,8 @@
             </#list>
             </tbody>
         </table>
+        <#if items?has_content>
+            <#include "../../partials/pagination.ftlh">
+        </#if>
         <a href="/patient" class="btn btn-primary btn-block">Выйти в личный кабинет</a>
-<#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
