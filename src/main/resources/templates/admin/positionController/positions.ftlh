@@ -20,7 +20,7 @@
     </table>
     <#include "../../partials/pagination.ftlh">
     <a type="button" class="btn btn-primary w-100" href="/admin/positions/position">
-        Добавить новое новправление
+        Добавить новое направление
     </a>
 <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

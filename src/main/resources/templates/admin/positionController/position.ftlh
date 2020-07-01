@@ -12,22 +12,18 @@
                     <div class="form-group">
                         <p><label for="positionName" class="col-form-label">Название направления</label></p>
                         <input id="positionName" placeholder="Название" class="form-control" name="name">
-                        <div class="invalid-feedback">
-                            Обязательное поле.
-                        </div>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'name'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary w-100">Добавить</button>
                     </div>
                 </form>
-                <div style="color:red">
-                    <#if errors??>
-                        <p>Входные данные с ошибками!</p>
-                            <#list errors as fieldError>
-                                <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
-                            </#list>
-                    </#if>
-                </div>
             </div>
         </div>
     </section>
