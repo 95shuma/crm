@@ -13,6 +13,7 @@ import java.util.Date;
 public class UserRegisterForm {
 
     @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
+    @Pattern(regexp="^\\d+$", message = "ИНН состоит только из цифр : ${validatedValue}")
     @NotBlank(message = "Это поле не может быть пустым")
     private String inn = "";
 
@@ -24,16 +25,19 @@ public class UserRegisterForm {
     private String documentNumber = "";
 
     @NotBlank(message = "Обязательное поле")
+    @Pattern(regexp = "^[^\\d\\s]+$", message = "Имя должно содержать только буквы : ${validatedValue}")
     private String name = "";
 
     @NotBlank(message = "Обязательное поле")
+    @Pattern(regexp = "^[^\\d]+$", message = "Фамилия должна содержать только буквы : ${validatedValue}")
     private String surname = "";
 
     @NotBlank(message = "Обязательное поле")
+    @Pattern(regexp = "^[^\\d\\s]+$", message = "Отчество должно содержать только буквы : ${validatedValue}")
     private String middleName = "";
 
-    @PastOrPresent(message = "Дата рождения не может быть в будущем времени")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past(message = "Дата рождения не может быть в будущем времени")
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
     @NotNull(message = "Обязательное поле")
     private Date birthDate;
 

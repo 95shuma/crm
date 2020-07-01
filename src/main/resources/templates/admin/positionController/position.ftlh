@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-center">
             <div class="mx-3">
                 <h3>Регистрация нового напраления</h3>
-                <form id="commentForm" action="/admin/positions" method="post" class="needs-validation" novalidate>
+                <form id="commentForm" action="/admin/positions" method="post">
                         <#if _csrf??>
                         <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
                     </#if>
