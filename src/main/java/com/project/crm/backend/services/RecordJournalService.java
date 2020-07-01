@@ -48,8 +48,8 @@ public class RecordJournalService {
         return recordJournalRepo.findByDoctorId(doctor);
     }
 
-    public List<RecordJournal> getByPatient(Long patient){
-        return recordJournalRepo.findByPatientId(patient);
+    public Page<RecordJournal> getByPatient(Long inn, Pageable pageable){
+        return recordJournalRepo.findByPatientInn(inn, pageable);
     }
 
     public RecordJournalDTO createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
