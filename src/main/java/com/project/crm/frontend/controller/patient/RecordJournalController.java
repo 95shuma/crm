@@ -3,6 +3,7 @@ package com.project.crm.frontend.controller.patient;
 import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import static com.project.crm.backend.services.PropertiesService.constructPageable;
 
 @Controller("pkg patient RecordJournalController")
 @RequestMapping("/patient/records")
@@ -26,6 +30,7 @@ public class RecordJournalController {
     private final RegistrationJournalService registrationJournalService;
     private final UserService userService;
     private final WorkScheduleService workScheduleService;
+    private final PropertiesService propertiesService;
 
     @GetMapping("/record")
     public String getRecord(Model model, Principal principal){
@@ -89,14 +94,14 @@ public class RecordJournalController {
 
     }
     @GetMapping
-    public String getAllRecords(Model model, Principal principal){
+    public String getAllRecords(Model model, Principal principal, Pageable pageable, HttpServletRequest uriBuilder){
 
         if(principal == null){
             return "errorPage";
         }
 
         userService.checkUserPresence(model, principal);
-        model.addAttribute("journal", recordJournalService.getByPatient(userService.getByInn(Long.parseLong(principal.getName())).getId()));
+        constructPageable(recordJournalService.getByPatient(Long.parseLong(principal.getName()),pageable),propertiesService.getDefaultPageSize(),model,uriBuilder.getRequestURI());
         return "patient/recordJournalController/patientAllAppointment";
     }
 
