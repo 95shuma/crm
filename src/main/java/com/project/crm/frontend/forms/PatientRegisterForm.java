@@ -12,7 +12,7 @@ import java.util.Date;
 public class PatientRegisterForm {
 
     @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
-    @Pattern(regexp="^\\d+$", message = "ИНН состоит только из цифр : ${validatedValue}")
+    @Pattern(regexp="^([{1}1|2])\\d+$", message = "ИНН состоит только из цифр, начинается с 1 или 2 : ${validatedValue}")
     @NotBlank(message = "Обязательное поле")
     private String inn = "";
 
@@ -20,7 +20,9 @@ public class PatientRegisterForm {
     @Size(min = 8, message = "Пароль должен содержать минимум 8 символов")
     private String password = "";
 
-    @NotBlank(message = "Обязательное поле")
+    @NotNull(message = "Обязательное поле")
+    @Size(min = 7, max = 7, message = "Требуется ввести 7 значений без пробела")
+    @Pattern(regexp="^([{2}ID|AN]).{5}\\d+$", message = "№ докумета начинается с AN или ID и состоит из 5 цифр : ${validatedValue}")
     private String documentNumber = "";
 
     @NotBlank(message = "Обязательное поле")
