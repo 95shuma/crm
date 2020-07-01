@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class PlaceRegisterForm {
 
     @NotBlank(message = "Обязательное поле")
-    @Pattern(regexp = "^[^\\d\\s]+$", message = "Название должно содержать только буквы : ${validatedValue}")
+    @Pattern(regexp = "^[^\\d]+$", message = "Название должно содержать только буквы : ${validatedValue}")
     private String name = "";
 
     @NotBlank(message = "Обязательное поле")
