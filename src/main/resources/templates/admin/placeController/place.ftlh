@@ -12,14 +12,22 @@
                         <div class="form-group">
                             <p><label for="placeName" class="col-form-label">Название места</label></p>
                             <input id="placeName" class="form-control" placeholder="Введите новое место" name="name" autofocus>
-                            <div class="invalid-feedback">
-                                Обязательное поле.
-                            </div>
+                            <#if errors??>
+                                <#list errors as fieldError>
+                                    <#if fieldError.field == 'name'>
+                                        <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                    </#if>
+                                </#list>
+                            </#if>
                             <p><label for="placeCode" class="col-form-label">Код места</label></p>
                             <input id="placeCode" class="form-control" placeholder="Введите новый код" name="codePlace">
-                            <div class="invalid-feedback">
-                                Код состоит из 14-цифр.
-                            </div>
+                            <#if errors??>
+                                <#list errors as fieldError>
+                                    <#if fieldError.field == 'codePlace'>
+                                        <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                    </#if>
+                                </#list>
+                            </#if>
                             <p><b>Выберите группу:</b></p>
                             <p><input type="radio" name="groupCode" value="${'0'}" checked> Город/Село</p>
                             <p><input type="radio" name="groupCode" value="${'1'}"> Страна</p>
@@ -29,14 +37,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Добавить</button>
                     </form>
-                    <div style="color:red">
-                        <#if errors??>
-                            <p>Входные данные с ошибками!</p>
-                            <#list errors as fieldError>
-                                <p>${fieldError.field} - ${fieldError.defaultMessage!'-- no message --'}</p>
-                            </#list>
-                        </#if>
-                    </div>
+
             </div>
         </div>
     </section>
