@@ -26,6 +26,8 @@
             </#list>
         </tbody>
     </table>
-    <#include "../../partials/pagination.ftlh">
+    <#if items?has_content>
+        <#include "../../partials/pagination.ftlh">
+    </#if>
     <a type="button" class="btn btn-primary w-100" href="/doctor/schedules/schedule">Добавить новый график</a>
 </@main.renderWith>

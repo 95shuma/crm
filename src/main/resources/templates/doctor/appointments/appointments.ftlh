@@ -6,7 +6,7 @@
             <thead>
             <tr>
                 <th scope="col">Время записи</th>
-                <th scope="col">Время ко скольки</th>
+                <th scope="col">Время приёма</th>
                 <th scope="col">ФИО больного</th>
                 <th scope="col">Пол</th>
                 <th scope="col">Дата рождения</th>
@@ -26,7 +26,9 @@
             </#list>
             </tbody>
         </table>
-    <#include "../../partials/pagination.ftlh">
+        <#if items?has_content>
+            <#include "../../partials/pagination.ftlh">
+        </#if>
         <a href="/doctor" class="btn btn-primary btn-block mx-auto mt-3 w-50">Выйти в личный кабинет</a>
 
 </@main.renderWith>
