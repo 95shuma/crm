@@ -4,7 +4,8 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <h3>Регистрация нового напраления</h3>
+                <h3>Регистрация нового направ
+                    ления</h3>
                 <form id="commentForm" action="/admin/positions" method="post">
                         <#if _csrf??>
                         <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">

@@ -13,7 +13,6 @@ public class HospitalRegisterForm {
     private String name; // может иметь номер ЛПУ
 
     @NotBlank(message = "Обязательное поле")
-    @Pattern(regexp = "^[^\\d]+$", message = "Название должно содержать только буквы : ${validatedValue}")
     private String street;
 
     @NotNull(message = "Обязательное поле")
