@@ -20,7 +20,7 @@
                             </#list>
                         </#if>
                         <p><label for="placeCode" class="col-form-label">Код места</label></p>
-                        <input id="placeCode" class="form-control" placeholder="Введите новый код" name="codePlace">
+                        <input class="form-control" id="placeCode" type="text" name="codePlace" placeholder="Введите новый код" autofocus>
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'codePlace'>

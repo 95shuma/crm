@@ -15,14 +15,14 @@ public class PlaceDTO {
 
     private Long id;
     private String name;
-    private String codePlace;
-    private Integer groupCode;
+    private Long codePlace;
+    private Long groupCode;
 
     public static PlaceDTO from(Place place) {
         return builder()
                 .id(place.getId())
                 .name(place.getName())
-                .codePlace(place.getCodePlace().toString())
+                .codePlace(place.getCodePlace())
                 .groupCode(place.getGroupCode())
                 .build();
     }

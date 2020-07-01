@@ -140,8 +140,8 @@ public class PreloadDatabaseWithData {
             for (int i = 0; i < qty; i++){
                 registrationPlaceList.add(Place.builder()
                         .name(faker.address().fullAddress())
-                        .codePlace(faker.number().numberBetween(10, 30))
-                        .groupCode(0)
+                        .codePlace(Long.valueOf(faker.number().numberBetween(10, 30)))
+                        .groupCode(Long.valueOf(0))
                         .build()
                 );
             }

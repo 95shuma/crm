@@ -15,12 +15,13 @@ public class PlaceRegisterForm {
     @Pattern(regexp = "^[^\\d]+$", message = "Название должно содержать только буквы : ${validatedValue}")
     private String name = "";
 
-    @NotBlank(message = "Обязательное поле")
-    @Pattern(regexp="^\\d+$", message = "Код места должен содержать только цифры : ${validatedValue}")
-    @Size(min = 10, max = 10, message = "Требуется ввести код из 10 цифр")//нужно поменять на 14
+
+    @Size(min = 14, max = 14, message = "Требуется ввести код из 14 цифр")
+    @Pattern(regexp="^\\d+$", message = "Код состоит только из цифр : ${validatedValue}")
+    @NotBlank(message = "Это поле не может быть пустым")
     private String codePlace = "";
 
     @NotNull(message = "Обязательное поле")
-    private Integer groupCode = null;
+    private Long groupCode = null;
 
 }
