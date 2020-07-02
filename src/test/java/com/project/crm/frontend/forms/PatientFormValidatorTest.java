@@ -64,7 +64,7 @@ public class PatientFormValidatorTest {
 
         patientRegisterForm.setInn("12345678910123");
         patientRegisterForm.setPassword("something");
-        patientRegisterForm.setDocumentNumber("AN12345");
+        patientRegisterForm.setDocumentNumber("AN1234567");
         patientRegisterForm.setName("something");
         patientRegisterForm.setSurname("something");
         patientRegisterForm.setMiddleName("something");
