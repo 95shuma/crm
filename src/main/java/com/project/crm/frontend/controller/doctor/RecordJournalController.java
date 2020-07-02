@@ -88,7 +88,6 @@ public class RecordJournalController {
 
         userService.checkUserPresence(model, principal);
         model.addAttribute("journal", recordJournalService.getById(record_id));
-        //model.addAttribute("medicalHistory", medicalHistoryService.getByRecordJournalId(record_id));
 
         return "/doctor/appointments/appointmentAccept";
     }
@@ -105,7 +104,7 @@ public class RecordJournalController {
             return "redirect:/doctor/records/" + record_id + "/accept";
         }
 
-        medicalHistoryService.createMedicalHistory(medicalHistoryRegisterForm, record_id);
+        medicalHistoryService.setMedicalHistory(medicalHistoryRegisterForm, record_id);
 
         return "redirect:/doctor/records";
     }
