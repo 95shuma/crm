@@ -1,6 +1,7 @@
 package com.project.crm.frontend.forms;
 
 import com.project.crm.frontend.forms.PositionRegisterForm;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -11,7 +12,10 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -43,8 +47,10 @@ public class PositionFormValidatorTest {
 
         positionRegisterForm.setName("");
         Set<ConstraintViolation<PositionRegisterForm>> violations = validator.validate(positionRegisterForm);
-        violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
-        assertEquals(1, violations.size());
+        List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+
+        assertEquals(2, violations.size());
+        assertTrue(errorMessages.containsAll(Arrays.asList("Обязательное поле")));
         assertFalse(violations.isEmpty());
     }
 
@@ -55,4 +61,17 @@ public class PositionFormValidatorTest {
         Set<ConstraintViolation<PositionRegisterForm>> violations = validator.validate(positionRegisterForm);
         assertTrue(violations.isEmpty());
     }
+
+    @Test
+    public void invalidPositionNameShouldContainOnlyLetters() {
+
+        positionRegisterForm.setName("something2222");
+        Set<ConstraintViolation<PositionRegisterForm>> violations = validator.validate(positionRegisterForm);
+        List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+
+        assertEquals(1, violations.size());
+        assertFalse(errorMessages.containsAll(Arrays.asList("Название должно содержать только буквы : ${validatedValue}")));
+
+    }
+
 }
