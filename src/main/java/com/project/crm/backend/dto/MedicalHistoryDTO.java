@@ -15,7 +15,6 @@ import java.util.Date;
 public class MedicalHistoryDTO {
 
     private Long id;
-    private RecordJournalDTO recordJournalDTO;
     private Date date;
     private boolean typeOfVisit;
     private String complaint;
@@ -24,7 +23,6 @@ public class MedicalHistoryDTO {
     public static MedicalHistoryDTO from(MedicalHistory medicalHistory) {
         return builder()
                 .id(medicalHistory.getId())
-                .recordJournalDTO(RecordJournalDTO.from(medicalHistory.getRecordJournal()))
                 .date(medicalHistory.getDate())
                 .typeOfVisit(medicalHistory.isTypeOfVisit())
                 .complaint(medicalHistory.getComplaint())

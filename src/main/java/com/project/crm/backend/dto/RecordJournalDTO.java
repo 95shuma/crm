@@ -13,6 +13,7 @@ public class RecordJournalDTO {
     private UserDTO doctor;
     private UserDTO patient;
     private UserDTO registrar;
+    private MedicalHistoryDTO medicalHistory;
     private HospitalDTO hospital;
     private LocalDateTime dateTime;
     private LocalDateTime dateTimeNow;
@@ -27,6 +28,7 @@ public class RecordJournalDTO {
                     .doctor(UserDTO.from(recordJournal.getDoctor()))
                     .patient(UserDTO.from(recordJournal.getPatient()))
                     .registrar(UserDTO.from(recordJournal.getRegistrar()))
+                    .medicalHistory(MedicalHistoryDTO.from(recordJournal.getMedicalHistory()))
                     .hospital(HospitalDTO.from(recordJournal.getHospital()))
                     .dateTime(recordJournal.getDateTime())
                     .dateTimeNow(recordJournal.getDateTimeNow())
@@ -37,6 +39,7 @@ public class RecordJournalDTO {
                     .id(recordJournal.getId())
                     .doctor(UserDTO.from(recordJournal.getDoctor()))
                     .patient(UserDTO.from(recordJournal.getPatient()))
+                    .medicalHistory(MedicalHistoryDTO.from(recordJournal.getMedicalHistory()))
                     .hospital(HospitalDTO.from(recordJournal.getHospital()))
                     .dateTime(recordJournal.getDateTime())
                     .dateTimeNow(recordJournal.getDateTimeNow())

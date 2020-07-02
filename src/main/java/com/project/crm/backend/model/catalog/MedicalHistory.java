@@ -19,9 +19,6 @@ public class MedicalHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne @JoinColumn(name= "record_journal_id")
-    private RecordJournal recordJournal;
-
     private Date date;
 
     private boolean typeOfVisit;
