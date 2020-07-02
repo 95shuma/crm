@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -30,39 +31,14 @@ public class MedicalHistoryService {
     private final MedicalHistoryRepo medicalHistoryRepo;
     private final RecordJournalRepo recordJournalRepo;
 
-    /*public MedicalHistoryDTO getByRecordJournalId(String recordJournalId){
-        if (medicalHistoryRepo.findByRecordJournal(recordJournalRepo.findById(Long.parseLong(recordJournalId)).get()).isPresent()){
-            return MedicalHistoryDTO.from(medicalHistoryRepo.findByRecordJournal(recordJournalRepo.findById(Long.parseLong(recordJournalId)).get()).get());
-        }
-        else {
-            throw thr;
-        }
-    }*/
+    public void setMedicalHistory(MedicalHistoryRegisterForm medicalHistoryRegisterForm, String record_id){
 
-    public void createMedicalHistory(MedicalHistoryRegisterForm medicalHistoryRegisterForm, String record_id){
-        Date date = new Date();
-        MedicalHistory medicalHistory;
-        if (Boolean.parseBoolean(medicalHistoryRegisterForm.getTypeOfVisit().trim())){
-                medicalHistory = MedicalHistory.builder()
-                        .recordJournal(recordJournalRepo.findById(Long.parseLong(record_id)).get())
-                        .date(date)
-                        .typeOfVisit(true)
-                        .complaint(medicalHistoryRegisterForm.getComplaint())
-                        .recommendation(medicalHistoryRegisterForm.getRecommendation())
-                        .build();
-        }
-        else {
-                medicalHistory = MedicalHistory.builder()
-                        .recordJournal(recordJournalRepo.findById(Long.parseLong(record_id)).get())
-                        .date(date)
-                        .typeOfVisit(false)
-                        .complaint(medicalHistoryRegisterForm.getComplaint())
-                        .recommendation(medicalHistoryRegisterForm.getRecommendation())
-                        .build();
-        }
-
+        MedicalHistory medicalHistory = recordJournalRepo.findById(Long.parseLong(record_id)).get().getMedicalHistory();
+        medicalHistory.setRecommendation(medicalHistoryRegisterForm.getRecommendation());
+        medicalHistory.setComplaint(medicalHistoryRegisterForm.getComplaint());
 
         medicalHistoryRepo.save(medicalHistory);
     }
+
 
 }
