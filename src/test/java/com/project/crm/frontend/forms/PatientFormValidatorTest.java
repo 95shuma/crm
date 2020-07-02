@@ -54,7 +54,7 @@ public class PatientFormValidatorTest {
         Set<ConstraintViolation<PatientRegisterForm>> violations = validator.validate(patientRegisterForm);
         List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
 
-        assertEquals(12, violations.size());
+        assertEquals(17, violations.size());
         assertTrue(errorMessages.containsAll(Arrays.asList("Обязательное поле", "Требуется ввести 14 цифр", "Пароль должен содержать минимум 8 символов")));
         assertFalse(violations.isEmpty());
     }
@@ -64,7 +64,7 @@ public class PatientFormValidatorTest {
 
         patientRegisterForm.setInn("12345678910123");
         patientRegisterForm.setPassword("something");
-        patientRegisterForm.setDocumentNumber("something");
+        patientRegisterForm.setDocumentNumber("AN12345");
         patientRegisterForm.setName("something");
         patientRegisterForm.setSurname("something");
         patientRegisterForm.setMiddleName("something");
@@ -89,7 +89,7 @@ public class PatientFormValidatorTest {
 
         patientRegisterForm.setInn("12345678910123");
         patientRegisterForm.setPassword("something");
-        patientRegisterForm.setDocumentNumber("something");
+        patientRegisterForm.setDocumentNumber("AN12345");
         patientRegisterForm.setName("something");
         patientRegisterForm.setSurname("something");
         patientRegisterForm.setMiddleName("something");
@@ -101,5 +101,7 @@ public class PatientFormValidatorTest {
         Set<ConstraintViolation<PatientRegisterForm>> violations = validator.validate(patientRegisterForm);
         assertTrue(violations.isEmpty());
     }
+
+
 }
 
