@@ -10,17 +10,32 @@
                 <th scope="col">Пол</th>
                 <th scope="col">Дата рождения</th>
                 <th scope="col">Жалоба</th>
+                <th scope="col">Статус</th>
             </tr>
             </thead>
             <tbody>
             <#list items as journal>
-            <tr>
-                <td>${journal.dateTime.format('HH:mm')}</td>
-                <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</a></td>
-                <td>${journal.patient.gender}</td>
-                <td>${journal.patient.birthDate?date}</td>
-                <td>${journal.reason}</td>
-            </tr>
+                <#if journal.medicalHistory.recommendation == "">
+                    <tr>
+                        <td>${journal.dateTimeNow.format('MMM-dd HH:mm')}</td>
+                        <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
+                        <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</td>
+                        <td>${journal.patient.gender}</td>
+                        <td>${journal.patient.birthDate?date}</td>
+                        <td>${journal.medicalHistory.complaint}</td>
+                        <td><a href="/doctor/records/${journal.id}">Не просмотрен</a></td>
+                    </tr>
+                <#else>
+                    <tr>
+                        <td>${journal.dateTimeNow.format('MMM-dd HH:mm')}</td>
+                        <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
+                        <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</td>
+                        <td>${journal.patient.gender}</td>
+                        <td>${journal.patient.birthDate?date}</td>
+                        <td>${journal.medicalHistory.complaint}</td>
+                        <td>Просмотрен</td>
+                    </tr>
+                </#if>
             </#list>
             </tbody>
         </table>
