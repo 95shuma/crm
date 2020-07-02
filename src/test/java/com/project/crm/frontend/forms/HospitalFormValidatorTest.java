@@ -1,24 +1,16 @@
-package com.project.crm;
+package com.project.crm.frontend.forms;
 
-import com.project.crm.frontend.forms.HospitalRegisterForm;
-import com.project.crm.frontend.forms.PositionRegisterForm;
-import com.project.crm.frontend.forms.RecordJournalRegisterForm;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import static org.junit.Assert.*;
 
 @SpringBootTest
@@ -49,7 +41,7 @@ public class HospitalFormValidatorTest {
 
         hospitalRegisterForm.setName("");
         hospitalRegisterForm.setStreet("");
-        hospitalRegisterForm.setHouseNum("");
+        hospitalRegisterForm.setHouseNum(null);
         hospitalRegisterForm.setPlaceId(null);
         Set<ConstraintViolation<HospitalRegisterForm>> violations = validator.validate(hospitalRegisterForm);
         violations.forEach(violation -> assertEquals("Обязательное поле", violation.getMessage()));
@@ -61,7 +53,7 @@ public class HospitalFormValidatorTest {
     public void validHospitalShouldPassValidation() {
 
         hospitalRegisterForm.setName("something");
-        hospitalRegisterForm.setHouseNum("something");
+        hospitalRegisterForm.setHouseNum("11");
         hospitalRegisterForm.setStreet("something");
         hospitalRegisterForm.setPlaceId((long) 1);
         Set<ConstraintViolation<HospitalRegisterForm>> violations = validator.validate(hospitalRegisterForm);
