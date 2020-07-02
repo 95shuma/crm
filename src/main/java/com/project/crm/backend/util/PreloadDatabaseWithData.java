@@ -52,8 +52,8 @@ public class PreloadDatabaseWithData {
             positionRepo.deleteAll();
             sickListRepo.deleteAll();
             treatmentRepo.deleteAll();
-            medicalHistoryRepo.deleteAll();
             recordJournalRepo.deleteAll();
+            medicalHistoryRepo.deleteAll();
             userRepo.deleteAll();
             hospitalRepo.deleteAll();
             placeRepo.deleteAll();
@@ -323,30 +323,12 @@ public class PreloadDatabaseWithData {
             });
             registrationJournalRepo.saveAll(registrationJournalList);
             //-->======================== Registration Journal ========================
-            //--<======================== Record Journal ========================
-            List <RecordJournal> recordJournalList = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                recordJournalList.add(RecordJournal.builder()
-                        .doctor(userRepo.findAllDoctors().get(rn.nextInt(userRepo.findAllDoctors().size())))
-                        .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
-                        .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
-                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
-                        .dateTime(LocalDateTime.now())
-                        .dateTimeNow(LocalDateTime.now())
-                        .reason(faker.superhero().name())
-                        .build()
-                );
-            }
-            recordJournalRepo.saveAll(recordJournalList);
-            //-->======================== Record Journal ========================
-            //--------------------------------------------------- Для ИБ ---------------------------------------------------//
             //--<======================== MedicalHistory ========================
             List <MedicalHistory> medicalHistories = new ArrayList<>();
             Date date = new Date();
             for (int i = 0; i < qty; i++){
                 if(i % 2 == 0){
                     medicalHistories.add(MedicalHistory.builder()
-                            .recordJournal(recordJournalRepo.findAll().get(rn.nextInt(recordJournalRepo.findAll().size())))
                             .date(date)
                             .typeOfVisit(true)
                             .complaint(faker.music().instrument())
@@ -355,7 +337,6 @@ public class PreloadDatabaseWithData {
                 }
                 else {
                     medicalHistories.add(MedicalHistory.builder()
-                            .recordJournal(recordJournalRepo.findAll().get(rn.nextInt(recordJournalRepo.findAll().size())))
                             .date(date)
                             .typeOfVisit(false)
                             .complaint(faker.music().instrument())
@@ -366,6 +347,24 @@ public class PreloadDatabaseWithData {
             }
             medicalHistoryRepo.saveAll(medicalHistories);
             //-->======================== MedicalHistory ========================
+            //--<======================== Record Journal ========================
+            List <RecordJournal> recordJournalList = new ArrayList<>();
+            for (int i = 0; i < qty; i++){
+                recordJournalList.add(RecordJournal.builder()
+                        .doctor(userRepo.findAllDoctors().get(rn.nextInt(userRepo.findAllDoctors().size())))
+                        .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
+                        .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                        .dateTime(LocalDateTime.now())
+                        .dateTimeNow(LocalDateTime.now())
+                        .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
+                        .build()
+                );
+            }
+            recordJournalRepo.saveAll(recordJournalList);
+            //-->======================== Record Journal ========================
+            //--------------------------------------------------- Для ИБ ---------------------------------------------------//
             //--<======================== Diagnose ========================
             List <Diagnose> diagnoses = new ArrayList<>();
             for (int i = 0; i < qty; i++){
