@@ -1,4 +1,4 @@
-package com.project.crm;
+package com.project.crm.backend.services;
 
 import com.project.crm.backend.services.HospitalService;
 import com.project.crm.backend.services.RecordJournalService;

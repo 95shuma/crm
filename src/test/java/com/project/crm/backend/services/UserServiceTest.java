@@ -1,4 +1,4 @@
-package com.project.crm;
+package com.project.crm.backend.services;
 
 import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.PlaceRepo;
