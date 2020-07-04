@@ -2,6 +2,7 @@ package com.project.crm;
 
 import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.PlaceRepo;
+import com.project.crm.backend.repository.UserRepo;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import org.junit.Before;
@@ -26,6 +27,8 @@ public class UserServiceTest {
     PasswordEncoder encoder;
     @Mock
     PlaceRepo placeRepo;
+    @Mock
+    UserRepo userRepo;
 
 
     private UserRegisterForm userRegisterForm;
