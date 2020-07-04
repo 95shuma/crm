@@ -1,4 +1,4 @@
-package com.project.crm.frontend.forms.remediesForm;
+package com.project.crm.frontend.forms;
 
 
 import lombok.Getter;

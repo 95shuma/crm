@@ -2,7 +2,7 @@ package com.project.crm.frontend.controller.admin;
 
 import com.project.crm.backend.services.*;
 import com.project.crm.backend.services.remediesService.*;
-import com.project.crm.frontend.forms.remediesForm.RemedyRegisterForm;
+import com.project.crm.frontend.forms.RemedyRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
