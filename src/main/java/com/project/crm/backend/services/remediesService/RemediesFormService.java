@@ -4,6 +4,7 @@ package com.project.crm.backend.services.remediesService;
 import com.project.crm.backend.dto.remediesDto.RemediesFormDTO;
 import com.project.crm.backend.model.catalog.remediesCatalog.RemediesForm;
 import com.project.crm.backend.repository.RemediesFormRepo;
+import com.project.crm.frontend.forms.remediesForm.RemediesFormRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +21,9 @@ public class RemediesFormService {
         return remediesFormRepo.findAll(pageable).map(RemediesFormDTO::from);
     }
 
-    public RemediesFormDTO createRemediesForm(RemediesFormDTO formDTO){
+    public RemediesFormDTO createRemediesForm(RemediesFormRegisterForm remediesFormRegisterForm){
         var form = RemediesForm.builder()
-                .name(formDTO.getName())
+                .name(remediesFormRegisterForm.getName())
                 .build();
         return RemediesFormDTO.from(remediesFormRepo.save(form));
     }

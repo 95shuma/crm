@@ -16,11 +16,11 @@
         <#list items as remedy>
             <tr>
                 <th scope="row">${remedy?counter}</th>
-                <td>${remedy.pharmacologicalGroup}</td>
-                <td>${remedy.internationalName}</td>
+                <td>${remedy.pharmacologicalGroup.name}</td>
+                <td>${remedy.internationalName.name}</td>
                 <td>${remedy.name}</td>
-                <td>${remedy.dosage}</td>
-                <td>${remedy.remediesForm}</td>
+                <td>${remedy.dosage.name}</td>
+                <td>${remedy.remediesForm.name}</td>
             </tr>
         </#list>
         </tbody>
