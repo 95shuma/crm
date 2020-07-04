@@ -4,6 +4,7 @@ package com.project.crm.backend.services.remediesService;
 import com.project.crm.backend.dto.remediesDto.MeasureDTO;
 import com.project.crm.backend.model.catalog.remediesCatalog.Measure;
 import com.project.crm.backend.repository.MeasureRepo;
+import com.project.crm.frontend.forms.remediesForm.MeasureRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +21,9 @@ public class MeasureService {
         return measureRepo.findAll(pageable).map(MeasureDTO::from);
     }
 
-    public MeasureDTO createMeasure(MeasureDTO measureDTO){
+    public MeasureDTO createMeasure(MeasureRegisterForm measureRegisterForm){
         var measure = Measure.builder()
-                .name(measureDTO.getName())
+                .name(measureRegisterForm.getName())
                 .build();
         return MeasureDTO.from(measureRepo.save(measure));
     }

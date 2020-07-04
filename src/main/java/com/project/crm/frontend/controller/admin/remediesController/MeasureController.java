@@ -1,9 +1,10 @@
 package com.project.crm.frontend.controller.admin.remediesController;
 
-import com.project.crm.backend.services.remediesService.InternationalNameService;
+
 import com.project.crm.backend.services.PropertiesService;
 import com.project.crm.backend.services.UserService;
-import com.project.crm.frontend.forms.remediesForm.InternationalNameRegisterForm;
+import com.project.crm.backend.services.remediesService.MeasureService;
+import com.project.crm.frontend.forms.remediesForm.MeasureRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -17,45 +18,45 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/admin/internationalNames")
+@RequestMapping("/admin/measures")
 @AllArgsConstructor
-public class InternationalNameController {
+public class MeasureController {
 
     private final UserService userService;
-    private final InternationalNameService internationalNameService;
+    private final MeasureService measureService;
     private final PropertiesService propertiesService;
 
     @GetMapping
-    public String getIntNames(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal){
+    public String getMeasures(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal){
 
         userService.checkUserPresence(model, principal);
 
-        var names = internationalNameService.getAll(pageable);
+        var names = measureService.getAll(pageable);
         String uri = uriBuilder.getRequestURI();
         PropertiesService.constructPageable(names, propertiesService.getDefaultPageSize(), model, uri);
 
-        return "admin/remedyController/internationalNames";
+        return "admin/remedyController/measures";
     }
 
-    @GetMapping("/internationalName")
-    public String getIntName(Model model, Principal principal){
+    @GetMapping("/measure")
+    public String getMeasure(Model model, Principal principal, Pageable pageable){
 
         userService.checkUserPresence(model, principal);
 
-        model.addAttribute("internationalNames", internationalNameService.getAll());
+        model.addAttribute("measures", measureService.getAll(pageable));
 
-        return "admin/remedyController/internationalName";
+        return "admin/remedyController/measure";
     }
 
     @PostMapping
-    public String createInternationalName(@Valid InternationalNameRegisterForm internationalNameRegisterForm, BindingResult validationResult,
-                                 RedirectAttributes attributes){
+    public String createMeasure(@Valid MeasureRegisterForm measureRegisterForm, BindingResult validationResult,
+                                RedirectAttributes attributes){
 
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/admin/internationalNames/internationalName";
+            return "redirect:/admin/measures/measure";
         }
-        internationalNameService.createInternationalName(internationalNameRegisterForm);
-        return "redirect:/admin/internationalNames";
+        measureService.createMeasure(measureRegisterForm);
+        return "redirect:/admin/measures";
     }
 }
