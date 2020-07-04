@@ -18,7 +18,7 @@ public class DosageRegisterForm {
     @NotNull(message = "Обязательное поле")
     private Long measureId;
 
-    @NotBlank(message = "Обязательное поле")
+    @NotNull(message = "Обязательное поле")
     private Integer quantity;
 
 }

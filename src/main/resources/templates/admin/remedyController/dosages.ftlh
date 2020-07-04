@@ -16,6 +16,7 @@
                 <th scope="row">${dosage?counter}</th>
                 <td>${dosage.name}</td>
                 <td>${dosage.measure.name}</td>
+                <td>${dosage.quantity}</td>
 
             </tr>
         </#list>

@@ -22,6 +22,7 @@ public class DosageDTO {
                 .id(dosage.getId())
                 .name(dosage.getName())
                 .measure(MeasureDTO.from(dosage.getMeasure()))
+                .quantity(dosage.getQuantity())
                 .build();
     }
 }
