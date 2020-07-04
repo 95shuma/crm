@@ -1,6 +1,7 @@
 package com.project.crm.backend.services;
 
 
+import com.project.crm.backend.dto.remediesDto.MeasureDTO;
 import com.project.crm.backend.dto.remediesDto.RemedyDTO;
 import com.project.crm.backend.model.catalog.Remedy;
 import com.project.crm.backend.repository.*;
@@ -12,11 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class RemedyService {
-
 
     private final RemedyRepo remedyRepo;
     private final RemedyTypeRepo remedyTypeRepo;
@@ -26,16 +27,8 @@ public class RemedyService {
     private final RemediesFormRepo remediesFormRepo;
 
 
-
     public List<RemedyDTO> getAll(){
-        List<Remedy> remedies = new ArrayList<Remedy>();
-        remedies = remedyRepo.findAll();
-
-        List<RemedyDTO> remediesDTO = new ArrayList<RemedyDTO>();
-        remedies.stream().forEach(obj -> {
-            remediesDTO.add(RemedyDTO.from(obj));
-        });
-        return remediesDTO;
+        return remedyRepo.findAll().stream().map(RemedyDTO::from).collect(Collectors.toList());
     }
 
     public Page<RemedyDTO> getAll(Pageable pageable){
