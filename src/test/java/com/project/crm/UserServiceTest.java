@@ -3,6 +3,7 @@ package com.project.crm;
 import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.PlaceRepo;
 import com.project.crm.backend.repository.UserRepo;
+import com.project.crm.backend.services.RegistrationJournalService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import org.junit.Before;
@@ -12,10 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.Calendar;
 import java.util.Optional;
-
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,6 +28,8 @@ public class UserServiceTest {
     PlaceRepo placeRepo;
     @Mock
     UserRepo userRepo;
+    @Mock
+    private RegistrationJournalService registrationJournalService;
 
 
     private UserRegisterForm userRegisterForm;
