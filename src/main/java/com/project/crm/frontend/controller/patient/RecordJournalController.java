@@ -48,6 +48,19 @@ public class RecordJournalController {
         return "patient/recordJournalController/patientAppointment";
     }
 
+    @GetMapping("/medicalHistory")
+    public String getMedicalHistory(Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("journal", recordJournalService.getAllByPatient(principal));
+        return "patient/recordJournalController/patientAppointmentMedicalHistory";
+    }
+
+    @PostMapping("/medicalHistory")
+    public String recordMedicalHistory(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
+        attributes.addFlashAttribute("medicalHistoryId", recordJournalRegisterForm.getMedicalHistoryId());
+        return "redirect:/patient/records/hospital";
+    }
+
     @GetMapping("/hospital")
     public String getHospital(Model model, Principal principal){
         userService.checkUserPresence(model, principal);
@@ -58,6 +71,7 @@ public class RecordJournalController {
     @PostMapping("/hospital")
     public String recordHospital(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
         attributes.addFlashAttribute("hospitalId", recordJournalRegisterForm.getHospitalId());
+        attributes.addFlashAttribute("medicalHistoryId", recordJournalRegisterForm.getMedicalHistoryId());
         return "redirect:/patient/records/doctor";
     }
 
@@ -70,6 +84,7 @@ public class RecordJournalController {
 
     @PostMapping("/doctor")
     public String recordDoctor(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
+        attributes.addFlashAttribute("medicalHistoryId", recordJournalRegisterForm.getMedicalHistoryId());
         attributes.addFlashAttribute("hospitalId", recordJournalRegisterForm.getHospitalId());
         attributes.addFlashAttribute("doctorId", recordJournalRegisterForm.getDoctorId());
         attributes.addFlashAttribute("dateTime",workScheduleService.getWorkSchedule(LocalDate.now(),recordJournalRegisterForm.getDoctorId()));
