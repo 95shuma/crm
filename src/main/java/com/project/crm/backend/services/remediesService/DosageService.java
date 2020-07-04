@@ -2,6 +2,7 @@ package com.project.crm.backend.services.remediesService;
 
 
 import com.project.crm.backend.dto.remediesDto.DosageDTO;
+import com.project.crm.backend.dto.remediesDto.PharmacologicalGroupDTO;
 import com.project.crm.backend.model.catalog.remediesCatalog.Dosage;
 import com.project.crm.backend.repository.DosageRepo;
 import com.project.crm.backend.repository.MeasureRepo;
@@ -10,6 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,6 +27,9 @@ public class DosageService {
 
     public Page<DosageDTO> getAllDosages(Pageable pageable){
         return dosageRepo.findAll(pageable).map(DosageDTO::from);
+    }
+    public List<DosageDTO> getAll(){
+        return dosageRepo.findAll().stream().map(DosageDTO::from).collect(Collectors.toList());
     }
 
     public DosageDTO getById(Long id){

@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -20,7 +23,9 @@ public class RemediesFormService {
     public Page<RemediesFormDTO> getAll(Pageable pageable){
         return remediesFormRepo.findAll(pageable).map(RemediesFormDTO::from);
     }
-
+    public List<RemediesFormDTO> getAll(){
+        return remediesFormRepo.findAll().stream().map(RemediesFormDTO::from).collect(Collectors.toList());
+    }
     public RemediesFormDTO createRemediesForm(RemediesFormRegisterForm remediesFormRegisterForm){
         var form = RemediesForm.builder()
                 .name(remediesFormRegisterForm.getName())

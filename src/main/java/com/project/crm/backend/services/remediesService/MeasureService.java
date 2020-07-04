@@ -1,6 +1,7 @@
 package com.project.crm.backend.services.remediesService;
 
 
+import com.project.crm.backend.dto.remediesDto.InternationalNameDTO;
 import com.project.crm.backend.dto.remediesDto.MeasureDTO;
 import com.project.crm.backend.model.catalog.remediesCatalog.Measure;
 import com.project.crm.backend.repository.MeasureRepo;
@@ -9,6 +10,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -19,6 +23,10 @@ public class MeasureService {
 
     public Page<MeasureDTO> getAll(Pageable pageable){
         return measureRepo.findAll(pageable).map(MeasureDTO::from);
+    }
+
+    public List<MeasureDTO> getAll(){
+        return measureRepo.findAll().stream().map(MeasureDTO::from).collect(Collectors.toList());
     }
 
     public MeasureDTO createMeasure(MeasureRegisterForm measureRegisterForm){

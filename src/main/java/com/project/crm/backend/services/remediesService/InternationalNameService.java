@@ -2,6 +2,7 @@ package com.project.crm.backend.services.remediesService;
 
 
 import com.project.crm.backend.dto.remediesDto.InternationalNameDTO;
+import com.project.crm.backend.dto.remediesDto.PharmacologicalGroupDTO;
 import com.project.crm.backend.model.catalog.remediesCatalog.InternationalName;
 import com.project.crm.backend.repository.InternationalNameRepo;
 import com.project.crm.frontend.forms.remediesForm.InternationalNameRegisterForm;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,14 +28,7 @@ public class InternationalNameService {
     }
 
     public List<InternationalNameDTO> getAll(){
-        List<InternationalName> names = new ArrayList<InternationalName>();
-        names = internationalNameRepo.findAll();
-
-        List<InternationalNameDTO> internationalNameDTO = new ArrayList<InternationalNameDTO>();
-        names.stream().forEach(obj -> {
-            internationalNameDTO.add(InternationalNameDTO.from(obj));
-        });
-        return internationalNameDTO;
+        return internationalNameRepo.findAll().stream().map(InternationalNameDTO::from).collect(Collectors.toList());
     }
 
     public InternationalNameDTO createInternationalName(@Valid InternationalNameRegisterForm internationalNameDTO){

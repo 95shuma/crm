@@ -33,13 +33,13 @@ public class RemedyController {
     private final RemedyService remedyService;
 
     @GetMapping("/remedy")
-    public String regRemedy(Model model, Principal principal, Pageable pageable) {
+    public String regRemedy(Model model, Principal principal) {
         userService.checkUserPresence(model, principal);
-        model.addAttribute("remedyTypes",remedyTypeService.getAll(pageable));
-        model.addAttribute("groups", pharmacologicalGroupService.getAll(pageable));
-        model.addAttribute("internationalNames",internationalNameService.getAll(pageable));
-        model.addAttribute("dosages", dosageService.getAllDosages(pageable));
-        model.addAttribute("forms",remediesFormService.getAll(pageable));
+        model.addAttribute("remedyTypes",remedyTypeService.getAll());
+        model.addAttribute("groups", pharmacologicalGroupService.getAll());
+        model.addAttribute("internationalNames",internationalNameService.getAll());
+        model.addAttribute("dosages", dosageService.getAll());
+        model.addAttribute("forms",remediesFormService.getAll());
         return "admin/remedyController/remedy";
     }
 
