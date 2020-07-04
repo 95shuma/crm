@@ -34,7 +34,7 @@ public class DosageService {
         var dosage = Dosage.builder()
                 .name(dosageRegisterForm.getName())
                 .measure(measureRepo.findById(dosageRegisterForm.getMeasureId()).get())
-                .quantity(dosageRegisterForm.getQuantity())
+                .quantity(Integer.valueOf(dosageRegisterForm.getQuantity()))
                 .build();
         dosageRepo.save(dosage);
     }
