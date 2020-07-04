@@ -5,7 +5,7 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Дозировка лекарств</th>
+            <th scope="col">Единицы измерения лекарств</th>
         </tr>
         </thead>
         <tbody>
