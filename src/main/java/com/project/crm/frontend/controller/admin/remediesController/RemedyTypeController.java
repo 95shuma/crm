@@ -41,11 +41,11 @@ public class RemedyTypeController {
     }
 
     @GetMapping("/remedyType")
-    public String getRemForm(Model model, Principal principal, Pageable pageable){
+    public String getRemForm(Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
 
-        model.addAttribute("remedyTypes", remedyTypeService.getAll(pageable));
+        model.addAttribute("remedyTypes", remedyTypeService.getAll());
 
         return "admin/remedyController/remedyType";
     }

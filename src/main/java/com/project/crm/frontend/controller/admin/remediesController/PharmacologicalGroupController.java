@@ -39,11 +39,11 @@ public class PharmacologicalGroupController {
     }
 
     @GetMapping("/group")
-    public String getRemForm(Model model, Principal principal, Pageable pageable){
+    public String getRemForm(Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
 
-        model.addAttribute("groups", pharmacologicalGroupService.getAll(pageable));
+        model.addAttribute("groups", pharmacologicalGroupService.getAll());
 
         return "admin/remedyController/group";
     }

@@ -39,11 +39,11 @@ public class MeasureController {
     }
 
     @GetMapping("/measure")
-    public String getMeasure(Model model, Principal principal, Pageable pageable){
+    public String getMeasure(Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
 
-        model.addAttribute("measures", measureService.getAll(pageable));
+        model.addAttribute("measures", measureService.getAll());
 
         return "admin/remedyController/measure";
     }

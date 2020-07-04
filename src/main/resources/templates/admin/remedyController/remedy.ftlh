@@ -37,7 +37,7 @@
                     </div>
                     <div class="form-group">
                         <p><label for="pharmacologicalGroupId" class="col-form-label">Фармакологическая группа</label></p>
-                        <select class="form-control" id="lpuPositionId" name="positionId">
+                        <select class="form-control" id="pharmacologicalGroupId" name="pharmacologicalGroupId">
                             <#list groups as group>
                                 <option value="${group.id?c}">${group.name}</option>
                             </#list>
@@ -66,7 +66,7 @@
                         </#if>
                     </div>
                     <div class="form-group">
-                        <p><label for="remediesFormId" class="col-form-label">Доза</label></p>
+                        <p><label for="remediesFormId" class="col-form-label">Форма</label></p>
                         <select class="form-control" id="remediesFormId" name="remediesFormId">
                             <#list forms as form>
                                 <option value="${form.id?c}">${form.name}</option>
@@ -81,7 +81,7 @@
                         </#if>
                     </div>
                     <div class="form-group">
-                        <p><label for="remedyTypeId" class="col-form-label">Доза</label></p>
+                        <p><label for="remedyTypeId" class="col-form-label">Тип</label></p>
                         <select class="form-control" id="remedyTypeId" name="remedyTypeId">
                             <#list remedyTypes as remedyType>
                                 <option value="${remedyType.id?c}">${remedyType.name}</option>

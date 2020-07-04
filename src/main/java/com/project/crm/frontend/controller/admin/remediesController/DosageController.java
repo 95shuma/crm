@@ -33,11 +33,11 @@ public class DosageController {
     private final PropertiesService propertiesService;
 
     @GetMapping("/dosage")
-    public String getDosage(Model model, Principal principal, Pageable pageable){
+    public String getDosage(Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
 
-        model.addAttribute("measures",measureService.getAll(pageable));
+        model.addAttribute("measures",measureService.getAll());
 
         return "admin/remedyController/dosage";
     }
