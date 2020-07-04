@@ -31,7 +31,6 @@ public class UserServiceTest {
     @Mock
     private RegistrationJournalService registrationJournalService;
 
-
     private UserRegisterForm userRegisterForm;
     private Calendar calendar;
     private java.util.Date today;
@@ -68,7 +67,6 @@ public class UserServiceTest {
                 .groupCode((long)1)
                 .build())
         );
-
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
@@ -83,6 +81,5 @@ public class UserServiceTest {
         userRegisterForm.setPositionId((long) 1);
 
         userService.createUser(userRegisterForm);
-
     }
 }
