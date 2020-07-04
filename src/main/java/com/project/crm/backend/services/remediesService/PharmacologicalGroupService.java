@@ -1,4 +1,4 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.remediesService;
 
 
 

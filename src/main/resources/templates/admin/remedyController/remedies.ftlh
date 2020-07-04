@@ -5,11 +5,11 @@
         <thead>
         <tr>
             <th scope="col">№</th>
-            <th scope="col">группа</th>
-            <th scope="col">Международное название</th>
+            <th scope="col"><a href="/admin/groups">группа</th>
+            <th scope="col"><a href="/admin/internationalNames">Международное название </th>
             <th scope="col">Торговое название</th>
-            <th scope="col">Доза</th>
-            <th scope="col">форма</th>
+            <th scope="col"><a href="/admin/dosages">Доза</th>
+            <th scope="col"><a href="/admin/forms">форма</th>
         </tr>
         </thead>
         <tbody>

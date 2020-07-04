@@ -1,9 +1,9 @@
 package com.project.crm.frontend.controller.admin.remediesController;
 
-import com.project.crm.backend.services.InternationalNameService;
+import com.project.crm.backend.services.remediesService.InternationalNameService;
 import com.project.crm.backend.services.PropertiesService;
 import com.project.crm.backend.services.UserService;
-import com.project.crm.frontend.forms.InternationalNameRegisterForm;
+import com.project.crm.frontend.forms.remediesForm.InternationalNameRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;

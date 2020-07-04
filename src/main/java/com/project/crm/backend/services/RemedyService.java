@@ -4,7 +4,7 @@ package com.project.crm.backend.services;
 import com.project.crm.backend.dto.remediesDto.RemedyDTO;
 import com.project.crm.backend.model.catalog.Remedy;
 import com.project.crm.backend.repository.*;
-import com.project.crm.frontend.forms.RemedyRegisterForm;
+import com.project.crm.frontend.forms.remediesForm.RemedyRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

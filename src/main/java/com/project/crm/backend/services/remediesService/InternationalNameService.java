@@ -1,12 +1,10 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.remediesService;
 
 
-import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.dto.remediesDto.InternationalNameDTO;
-import com.project.crm.backend.model.catalog.Position;
 import com.project.crm.backend.model.catalog.remediesCatalog.InternationalName;
 import com.project.crm.backend.repository.InternationalNameRepo;
-import com.project.crm.frontend.forms.InternationalNameRegisterForm;
+import com.project.crm.frontend.forms.remediesForm.InternationalNameRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
