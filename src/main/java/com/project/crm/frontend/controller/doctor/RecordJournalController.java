@@ -87,7 +87,7 @@ public class RecordJournalController {
         }
 
         userService.checkUserPresence(model, principal);
-        model.addAttribute("journal", recordJournalService.getById(record_id));
+        model.addAttribute("patient", recordJournalService.getById(record_id));
 
         return "/doctor/appointments/appointmentAccept";
     }
