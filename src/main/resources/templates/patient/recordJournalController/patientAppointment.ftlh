@@ -9,8 +9,9 @@
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
-                    <input type="hidden" name="hospitalId" class="form-control" value=${hospitalId?c}>
-                    <input type="hidden" name="doctorId" class="form-control" value=${doctorId?c}>
+                    <input type="hidden" name="hospitalId" class="form-control" value="${hospitalId?c}">
+                    <input type="hidden" name="doctorId" class="form-control" value="${doctorId?c}">
+                    <input type="hidden" name="medicalHistoryId" class="form-control" value="${medicalHistoryId?c}">
                     <div class="form-group">
                         <p><label class="col-form-label">На что жалуетесь</label></p>
                         <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"  autofocus></textarea>
