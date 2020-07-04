@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Calendar;
 
@@ -14,6 +16,9 @@ import java.util.Calendar;
 public class UserServiceTest {
     @InjectMocks
     private UserService userService;
+
+    @Mock
+    PasswordEncoder encoder;
 
     private UserRegisterForm userRegisterForm;
     private Calendar calendar;
