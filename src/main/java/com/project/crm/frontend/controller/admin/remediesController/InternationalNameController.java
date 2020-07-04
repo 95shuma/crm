@@ -1,12 +1,9 @@
-package com.project.crm.frontend.controller.admin.remedy;
+package com.project.crm.frontend.controller.admin.remediesController;
 
-import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.services.InternationalNameService;
-import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.PropertiesService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.InternationalNameRegisterForm;
-import com.project.crm.frontend.forms.PositionRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
