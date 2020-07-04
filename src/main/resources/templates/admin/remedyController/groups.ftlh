@@ -5,7 +5,7 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Фармацевтическая группа</th>
+            <th scope="col">Фармакологическая группа</th>
         </tr>
         </thead>
         <tbody>

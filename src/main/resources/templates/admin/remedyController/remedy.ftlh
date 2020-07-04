@@ -21,8 +21,8 @@
                     </div>
 
                     <div class="form-group">
-                        <p><label for="lpuPlaceId" class="col-form-label">Международное название</label></p>
-                        <select class="form-control" id="lpuPlaceId" name="placeId">
+                        <p><label for="internationalNameId" class="col-form-label">Международное название</label></p>
+                        <select class="form-control" id="internationalNameId" name="internationalNameId">
                             <#list internationalNames as internationalName>
                                 <option value="${internationalName.id?c}">${internationalName.name}</option>
                             </#list>
@@ -30,6 +30,66 @@
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'internationalNameId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </div>
+                    <div class="form-group">
+                        <p><label for="pharmacologicalGroupId" class="col-form-label">Фармакологическая группа</label></p>
+                        <select class="form-control" id="lpuPositionId" name="positionId">
+                            <#list groups as group>
+                                <option value="${group.id?c}">${group.name}</option>
+                            </#list>
+                        </select>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'pharmacologicalGroupId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </div>
+                    <div class="form-group">
+                        <p><label for="dosageId" class="col-form-label">Доза</label></p>
+                        <select class="form-control" id="dosageId" name="dosageId">
+                            <#list dosages as dosage>
+                                <option value="${dosage.id?c}">${dosage.name}</option>
+                            </#list>
+                        </select>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'dosageId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </div>
+                    <div class="form-group">
+                        <p><label for="remediesFormId" class="col-form-label">Доза</label></p>
+                        <select class="form-control" id="remediesFormId" name="remediesFormId">
+                            <#list forms as form>
+                                <option value="${form.id?c}">${form.name}</option>
+                            </#list>
+                        </select>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'remediesFormId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </div>
+                    <div class="form-group">
+                        <p><label for="remedyTypeId" class="col-form-label">Доза</label></p>
+                        <select class="form-control" id="remedyTypeId" name="remedyTypeId">
+                            <#list remedyTypes as remedyType>
+                                <option value="${remedyType.id?c}">${remedyType.name}</option>
+                            </#list>
+                        </select>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'remedyTypeId'>
                                     <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
                                 </#if>
                             </#list>

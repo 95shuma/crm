@@ -1,11 +1,12 @@
 <#import "../../partials/main.ftlh" as main />
 
-<@main.renderWith scripts=[] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
-    <table class="table table-striped">
+<@main.renderWith>
+    <h3>Список лекарственных средств</h3>
+       <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">№</th>
-            <th scope="col"><a href="/admin/groups">группа</th>
+            <th scope="col"><a href="/admin/groups">фарм группа</th>
             <th scope="col"><a href="/admin/internationalNames">Международное название </th>
             <th scope="col">Торговое название</th>
             <th scope="col"><a href="/admin/dosages">Доза</th>

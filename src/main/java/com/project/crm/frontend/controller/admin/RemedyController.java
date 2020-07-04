@@ -36,10 +36,10 @@ public class RemedyController {
     public String regRemedy(Model model, Principal principal, Pageable pageable) {
         userService.checkUserPresence(model, principal);
         model.addAttribute("remedyTypes",remedyTypeService.getAll(pageable));
-        model.addAttribute("pharmGroups", pharmacologicalGroupService.getAll(pageable));
+        model.addAttribute("groups", pharmacologicalGroupService.getAll(pageable));
         model.addAttribute("internationalNames",internationalNameService.getAll(pageable));
         model.addAttribute("dosages", dosageService.getAllDosages(pageable));
-        model.addAttribute("remediesForm",remediesFormService.getAll(pageable));
+        model.addAttribute("forms",remediesFormService.getAll(pageable));
         return "admin/remedyController/remedy";
     }
 

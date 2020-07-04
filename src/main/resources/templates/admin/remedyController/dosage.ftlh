@@ -37,7 +37,7 @@
                     </div>
                     <div class="form-group">
                         <p><label for="quantity" class="col-form-label">Количество в 1 упаковке</label></p>
-                        <input class="form-control" id="quantity" maxlength="45" type="text" name="quantity" placeholder="количество">
+                        <input class="form-control" id="quantity" maxlength="45"  name="quantity" placeholder="количество">
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'quantity'>
