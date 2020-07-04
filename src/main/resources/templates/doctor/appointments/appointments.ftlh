@@ -40,9 +40,7 @@
             </#list>
             </tbody>
         </table>
-        <#if items?has_content>
-            <#include "../../partials/pagination.ftlh">
-        </#if>
+        <#include "../../partials/pagination.ftlh">
         <a href="/doctor" class="btn btn-primary btn-block mx-auto mt-3 w-50">Выйти в личный кабинет</a>
 
 </@main.renderWith>

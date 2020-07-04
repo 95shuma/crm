@@ -21,8 +21,6 @@
             </#list>
             </tbody>
         </table>
-        <#if items?has_content>
-            <#include "../../partials/pagination.ftlh">
-        </#if>
+        <#include "../../partials/pagination.ftlh">
         <a href="/patient" class="btn btn-primary btn-block">Выйти в личный кабинет</a>
 </@main.renderWith>

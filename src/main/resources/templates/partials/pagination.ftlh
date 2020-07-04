@@ -13,6 +13,7 @@
 <#else>
     <#assign body = 1..totalPages>
 </#if>
+<#if items?has_content>
 <div class="mt-3">
     <ul class="pagination">
         <li class="page-item disabled">
@@ -82,3 +83,4 @@
         </#list>
     </ul>
 </div>
+</#if>
