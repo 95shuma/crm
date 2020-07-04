@@ -1,5 +1,6 @@
 package com.project.crm;
 
+import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.repository.PlaceRepo;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.UserRegisterForm;
@@ -12,6 +13,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Calendar;
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -22,6 +26,7 @@ public class UserServiceTest {
     PasswordEncoder encoder;
     @Mock
     PlaceRepo placeRepo;
+
 
     private UserRegisterForm userRegisterForm;
     private Calendar calendar;
@@ -51,6 +56,15 @@ public class UserServiceTest {
     }
     @Test
     public void createUser_saveCorrectUser_expectSave(){
+        //Place
+        when(placeRepo.findById((long) 1)).thenReturn(Optional.of(Place.builder()
+                .id((long) 1)
+                .name(testString)
+                .codePlace((long) 11111111)
+                .groupCode((long)1)
+                .build())
+        );
+
         userRegisterForm.setInn(correctInn);
         userRegisterForm.setPassword(correctPassword);
         userRegisterForm.setDocumentNumber(correctDocumentNumber);
