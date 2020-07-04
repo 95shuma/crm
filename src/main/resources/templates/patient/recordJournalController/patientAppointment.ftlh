@@ -45,5 +45,4 @@
             </div>
         </div>
     </section>
-<#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

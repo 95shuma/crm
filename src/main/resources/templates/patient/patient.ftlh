@@ -6,5 +6,4 @@
         <a href="/patient/records/medicalHistory" class="btn btn-primary btn-block">Записаться к врачу</a>
         <a href="/patient/records" style="margin-top: 5px" class="btn btn-primary btn-block">Просмотр записей</a>
     </div>
-    <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
