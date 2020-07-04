@@ -1,5 +1,6 @@
 package com.project.crm;
 
+import com.project.crm.backend.repository.PlaceRepo;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import org.junit.Before;
@@ -19,6 +20,8 @@ public class UserServiceTest {
 
     @Mock
     PasswordEncoder encoder;
+    @Mock
+    PlaceRepo placeRepo;
 
     private UserRegisterForm userRegisterForm;
     private Calendar calendar;
