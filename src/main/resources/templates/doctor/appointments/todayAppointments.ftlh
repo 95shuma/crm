@@ -18,16 +18,16 @@
                 <#if journal.medicalHistory.recommendation == "">
                     <tr>
                         <td>${journal.dateTime.format('HH:mm')}</td>
-                        <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</td>
+                        <td><a href="/doctor/records/${journal.id?c}">${journal.patient.fullName}</td>
                         <td>${journal.patient.gender}</td>
                         <td>${journal.patient.birthDate?date}</td>
                         <td>${journal.medicalHistory.complaint}</td>
-                        <td><a href="/doctor/records/${journal.id}">Не просмотрен</a></td>
+                        <td><a href="/doctor/records/${journal.id?c}">Не просмотрен</a></td>
                     </tr>
                 <#else>
                     <tr>
                         <td>${journal.dateTime.format('HH:mm')}</td>
-                        <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</td>
+                        <td><a href="/doctor/records/${journal.id?c}">${journal.patient.fullName}</td>
                         <td>${journal.patient.gender}</td>
                         <td>${journal.patient.birthDate?date}</td>
                         <td>${journal.medicalHistory.complaint}</td>
