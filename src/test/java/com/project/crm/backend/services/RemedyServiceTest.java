@@ -7,6 +7,7 @@ import com.project.crm.backend.repository.*;
 import com.project.crm.frontend.forms.RemedyRegisterForm;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,7 +19,8 @@ import static org.mockito.Mockito.when;
 public class RemedyServiceTest {
     @InjectMocks
     private RemedyService remedyService;
-
+    @Mock
+    RemedyRepo remedyRepo;
     @Mock
     RemedyTypeRepo remedyTypeRepo;
     @Mock
@@ -75,17 +77,18 @@ public class RemedyServiceTest {
                 .name(testForm)
                 .build())
         );
-     /*   when(DosageRepo.findById((long) 1)).thenReturn(Optional.of(Dosage.builder()
+        when(dosageRepo.findById((long) 1)).thenReturn(Optional.of(Dosage.builder()
                 .id((long) 1)
                 .name(testDosage)
                 .build())
-        );*/
+        );
         remedyRegisterForm.setRemedyTypeId((long)1);
         remedyRegisterForm.setPharmacologicalGroupId((long) 1);
         remedyRegisterForm.setInternationalNameId((long) 1);
         remedyRegisterForm.setName(correctName);
         remedyRegisterForm.setDosageId((long) 1);
         remedyRegisterForm.setRemediesFormId((long) 1);
-        remedyService.createRemedy(remedyRegisterForm);
+
+        Assertions.assertDoesNotThrow(() -> remedyService.createRemedy(remedyRegisterForm));
     }
 }
