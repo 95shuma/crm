@@ -8,6 +8,7 @@ import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -80,6 +81,6 @@ public class UserServiceTest {
         userRegisterForm.setRoleId((long) 1);
         userRegisterForm.setPositionId((long) 1);
 
-        userService.createUser(userRegisterForm);
+        Assertions.assertDoesNotThrow(() -> userService.createUser((userRegisterForm)));
     }
 }
