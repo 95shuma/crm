@@ -103,7 +103,12 @@
                     <#if roles??>
                         <#list roles as role>
                             <#if role.id == 2 || role.id == 3 || role.id == 4>
-                                <option value="${role.id}">${role.name}</option>
+                                <option value="${role.id}">
+                                    <#if role.id == 2>Администратор ЛПУ
+                                    <#elseif role.id == 3>Доктор
+                                    <#else>Младший мед. работник
+                                    </#if>
+                                </option>
                             </#if>
                         </#list>
                     </#if>
