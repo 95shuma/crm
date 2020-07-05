@@ -11,6 +11,8 @@ import java.util.Date;
 public class SickListRegisterForm {
 
     @NotNull(message = "Обязательное поле")
+    @Size(min = 7, max = 7, message = "Требуется ввести 7 цифр")
+    @Pattern(regexp="^\\d+$", message = "№ состоит только из цифр : ${validatedValue}")
     private Long number;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
