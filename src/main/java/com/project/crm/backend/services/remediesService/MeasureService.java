@@ -29,11 +29,11 @@ public class MeasureService {
         return measureRepo.findAll().stream().map(MeasureDTO::from).collect(Collectors.toList());
     }
 
-    public MeasureDTO createMeasure(MeasureRegisterForm measureRegisterForm){
+    public void  createMeasure(MeasureRegisterForm measureRegisterForm){
         var measure = Measure.builder()
                 .name(measureRegisterForm.getName())
                 .build();
-        return MeasureDTO.from(measureRepo.save(measure));
+        measureRepo.save(measure);
     }
 
     public MeasureDTO getByName(String name){
