@@ -2,6 +2,7 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.dto.UserDTO;
 import com.project.crm.backend.model.User;
+import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.*;
 import com.project.crm.frontend.forms.PatientRegisterForm;
 import com.project.crm.frontend.forms.UserRegisterForm;
@@ -101,23 +102,14 @@ public class UserService {
 
         registrationJournalService.createRegistrationJournal(user, userRegisterForm);
     }
-
     public void checkUserPresence(Model model, Principal principal){
-
         if(principal != null){
-
-            Long inn = (long) Long.parseLong(principal.getName());
-
-            if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 1)) {
-                model.addAttribute("user", userRepo.findByInn(inn).get());
-            } else if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 2)){
-                model.addAttribute("user", userRepo.findByInn(inn).get());
-            } else if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 3)){
-                model.addAttribute("user", userRepo.findByInn(inn).get());
-            } else if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 4)){
-                model.addAttribute("user", userRepo.findByInn(inn).get());
-            } else if (registrationJournalRepo.existsByUserInnAndRoleId(inn, (long) 5)){
-                model.addAttribute("user", userRepo.findByInn(inn).get());
+            Long inn = Long.parseLong(principal.getName());
+            for (Role role: roleRepo.findAll()){
+                if (registrationJournalRepo.existsByUserInnAndRoleId(inn, role.getId())){
+                    model.addAttribute("user", userRepo.findByInn(inn).get());
+                    break;
+                }
             }
         }
     }
