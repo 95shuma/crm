@@ -42,33 +42,33 @@ public class RegistrationJournalService {
         Long roleId = userRegisterForm.getRoleId();
         RegistrationJournal registrationJournal = null;
 
-        if(roleId == 1){
+        if(roleId.equals(roleRepo.findByName(Constants.ADMIN).get().getId())){
             registrationJournal = RegistrationJournal.builder()
                     .user(user)
                     .role(roleRepo.findById(userRegisterForm.getRoleId()).orElseGet(Role::new))
                     .build();
-        }else if(roleId == 2){
-            registrationJournal = RegistrationJournal.builder()
-                    .hospital(hospitalRepo.findById(userRegisterForm.getHospitalId()).orElseGet(Hospital::new))
-                    .user(user)
-                    .role(roleRepo.findById(userRegisterForm.getRoleId()).orElseGet(Role::new))
-                    .position(positionRepo.findById(userRegisterForm.getPositionId()).orElseGet(Position::new))
-                    .build();
-        }else if(roleId == 3){
+        }else if(roleId.equals(roleRepo.findByName(Constants.SENIOR_DOCTOR).get().getId())){
             registrationJournal = RegistrationJournal.builder()
                     .hospital(hospitalRepo.findById(userRegisterForm.getHospitalId()).orElseGet(Hospital::new))
                     .user(user)
                     .role(roleRepo.findById(userRegisterForm.getRoleId()).orElseGet(Role::new))
                     .position(positionRepo.findById(userRegisterForm.getPositionId()).orElseGet(Position::new))
                     .build();
-        }else if(roleId == 4){
+        }else if(roleId.equals(roleRepo.findByName(Constants.DOCTOR).get().getId())){
             registrationJournal = RegistrationJournal.builder()
                     .hospital(hospitalRepo.findById(userRegisterForm.getHospitalId()).orElseGet(Hospital::new))
                     .user(user)
                     .role(roleRepo.findById(userRegisterForm.getRoleId()).orElseGet(Role::new))
                     .position(positionRepo.findById(userRegisterForm.getPositionId()).orElseGet(Position::new))
                     .build();
-        }else if(roleId == 5){
+        }else if(roleId.equals(roleRepo.findByName(Constants.JUNIOR_DOCTOR).get().getId())){
+            registrationJournal = RegistrationJournal.builder()
+                    .hospital(hospitalRepo.findById(userRegisterForm.getHospitalId()).orElseGet(Hospital::new))
+                    .user(user)
+                    .role(roleRepo.findById(userRegisterForm.getRoleId()).orElseGet(Role::new))
+                    .position(positionRepo.findById(userRegisterForm.getPositionId()).orElseGet(Position::new))
+                    .build();
+        }else if(roleId.equals(roleRepo.findByName(Constants.PATIENT).get().getId())){
             registrationJournal = RegistrationJournal.builder()
                     .hospital(hospitalRepo.findById(userRegisterForm.getHospitalId()).orElseGet(Hospital::new))
                     .user(user)
