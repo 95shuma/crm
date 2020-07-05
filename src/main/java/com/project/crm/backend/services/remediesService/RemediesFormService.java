@@ -26,11 +26,11 @@ public class RemediesFormService {
     public List<RemediesFormDTO> getAll(){
         return remediesFormRepo.findAll().stream().map(RemediesFormDTO::from).collect(Collectors.toList());
     }
-    public RemediesFormDTO createRemediesForm(RemediesFormRegisterForm remediesFormRegisterForm){
+    public void createRemediesForm(RemediesFormRegisterForm remediesFormRegisterForm){
         var form = RemediesForm.builder()
                 .name(remediesFormRegisterForm.getName())
                 .build();
-        return RemediesFormDTO.from(remediesFormRepo.save(form));
+        remediesFormRepo.save(form);
     }
 
     public RemediesFormDTO getByName(String name){
