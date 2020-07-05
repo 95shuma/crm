@@ -100,7 +100,7 @@ public class UserServiceTest {
         Assertions.assertDoesNotThrow(() -> userService.createUser((userRegisterForm)));
     }
     @Test
-    public void checkUserPresence_getModel_expectModelAttributeSameAsEnteredData(){
+    public void checkUserPresence_checkMethod_expectModelAttributeSameAsEnteredData(){
         List<Role> roleList = new ArrayList<>();
         for (int i = 1; i<=5; i++){
             roleList.add(Role.builder()
