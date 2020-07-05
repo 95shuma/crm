@@ -29,11 +29,11 @@ public class PharmacologicalGroupService {
         return pharmacologicalGroupRepo.findAll().stream().map(PharmacologicalGroupDTO::from).collect(Collectors.toList());
     }
 
-    public PharmacologicalGroupDTO createPharmGroup(PharmacologicalGroupRegisterForm pharmacologicalGroupRegisterForm){
+    public void createPharmGroup(PharmacologicalGroupRegisterForm pharmacologicalGroupRegisterForm){
         var pharmGroup = PharmacologicalGroup.builder()
                 .name(pharmacologicalGroupRegisterForm.getName())
                 .build();
-        return PharmacologicalGroupDTO.from(pharmacologicalGroupRepo.save(pharmGroup));
+       pharmacologicalGroupRepo.save(pharmGroup);
     }
 
     public PharmacologicalGroupDTO getByName(String name){
