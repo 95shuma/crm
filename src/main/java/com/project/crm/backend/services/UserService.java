@@ -64,7 +64,7 @@ public class UserService {
                 .middleName(userRegisterForm.getMiddleName())
                 .birthDate(userRegisterForm.getBirthDate())
                 .gender(userRegisterForm.getGender())
-                .place(placeRepo.findById((long) userRegisterForm.getPlaceId()).get())
+                .place(placeRepo.findById(userRegisterForm.getPlaceId()).get())
                 .build();
         userRepo.save(user);
 
@@ -96,7 +96,7 @@ public class UserService {
                 .middleName(userRegisterForm.getMiddleName())
                 .birthDate(userRegisterForm.getBirthDate())
                 .gender(userRegisterForm.getGender())
-                .place(placeRepo.findById((long) userRegisterForm.getPlaceId()).get())
+                .place(placeRepo.findById(userRegisterForm.getPlaceId()).get())
                 .build();
         userRepo.save(user);
 
