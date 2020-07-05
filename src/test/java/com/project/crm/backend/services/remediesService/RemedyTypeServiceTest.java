@@ -1,7 +1,9 @@
 package com.project.crm.backend.services.remediesService;
 
 import com.project.crm.backend.repository.RemediesFormRepo;
+import com.project.crm.backend.repository.RemedyTypeRepo;
 import com.project.crm.frontend.forms.remediesForm.RemediesFormRegisterForm;
+import com.project.crm.frontend.forms.remediesForm.RemedyTypeRegisterForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -10,27 +12,26 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-
 @RunWith(MockitoJUnitRunner.class)
-public  class RemediesFormServiceTest {
+public  class RemedyTypeServiceTest {
 
     @InjectMocks
-    private RemediesFormService remediesFormService;
+    private RemedyTypeService remedyTypeService;
     @Mock
-    RemediesFormRepo remediesFormRepo;
+    RemedyTypeRepo remedyTypeRepo;
 
-    private RemediesFormRegisterForm remediesFormRegisterForm;
+    private RemedyTypeRegisterForm remedyTypeRegisterForm;
     private String test;
 
     @Before
     public void setUp(){
-        remediesFormRegisterForm = new RemediesFormRegisterForm();
+        remedyTypeRegisterForm = new RemedyTypeRegisterForm();
         test="tablets";
     }
     @Test
-    public void createInt_saveCorrectForm_expectSave(){
-        remediesFormRegisterForm.setName(test);
-        Assertions.assertDoesNotThrow(() -> remediesFormService.createRemediesForm(remediesFormRegisterForm));
+    public void createType_expectSave(){
+        remedyTypeRegisterForm.setName(test);
+        Assertions.assertDoesNotThrow(() -> remedyTypeService.createRemedyType(remedyTypeRegisterForm));
     }
 
 }
