@@ -1,6 +1,7 @@
 package com.project.crm.frontend.controller.seniorDoctor;
 
 import com.project.crm.backend.services.*;
+import com.project.crm.backend.util.Constants;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,10 @@ public class DoctorController {
         model.addAttribute("hospitals", hospitalService.getAll());
         model.addAttribute("roles", roleService.getAll());
         model.addAttribute("positions", positionService.getAll());
+        //Constants
+        model.addAttribute(Constants.SENIOR_DOCTOR, Constants.SENIOR_DOCTOR);
+        model.addAttribute(Constants.DOCTOR, Constants.DOCTOR);
+        model.addAttribute(Constants.JUNIOR_DOCTOR, Constants.JUNIOR_DOCTOR);
         return "seniorDoctor/doctorController/doctorRegister";
     }
 
