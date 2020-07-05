@@ -12,9 +12,6 @@ public class DosageRegisterForm {
     @NotBlank(message = "Обязательное поле")
     private String name;
 
-    @NotBlank(message = "Обязательное поле")
-    private String street;
-
     @NotNull(message = "Обязательное поле")
     private Long measureId;
 
