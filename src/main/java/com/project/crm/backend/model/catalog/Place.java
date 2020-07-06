@@ -23,8 +23,8 @@ public class Place {
 
     @Column(unique = true)
     @NotNull(message = "Обязательное поле")
-    private Integer codePlace;
+    private Long codePlace;
 
     @NotNull(message = "Обязательное поле")
-    private Integer groupCode;
+    private Long groupCode;
 }

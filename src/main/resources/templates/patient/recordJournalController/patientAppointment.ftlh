@@ -9,28 +9,9 @@
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
-                    <div class="form-group">
-                        <p><label class="col-form-label">Выберите ЛПУ</label></p>
-                        <select name="hospitalId" class="form-control">
-                            <#if hospitals??>
-                                <#list hospitals as hospitals>
-                                    <option name="hospitalId" value="${hospitals.id?c}">${hospitals.name}</option>
-                                </#list>
-                            </#if>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <p><label class="col-form-label">Выберите врача</label></p>
-                        <select name="doctorId" class="form-control">
-                            <#if registrationJournals??>
-                                <#list registrationJournals as registrationJournals>
-                                    <#if registrationJournals.role.id == 3>
-                                        <option name="doctorId" value="${registrationJournals.user.inn?c}">${registrationJournals.user.fullName} - ${registrationJournals.position.name} - ${registrationJournals.hospital.name}</option>
-                                    </#if>
-                                </#list>
-                            </#if>
-                        </select>
-                    </div>
+                    <input type="hidden" name="hospitalId" class="form-control" value="${hospitalId?c}">
+                    <input type="hidden" name="doctorId" class="form-control" value="${doctorId?c}">
+                    <input type="hidden" name="medicalHistoryId" class="form-control" value="${medicalHistoryId?c}">
                     <div class="form-group">
                         <p><label class="col-form-label">На что жалуетесь</label></p>
                         <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"  autofocus></textarea>
@@ -43,8 +24,14 @@
                         </#if>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Выберте подходящее время</label></p>
-                        <input class="form-control" id="dateTime" type="datetime-local" name="dateTime">
+                        <p><label class="col-form-label">Выберите подходящее время</label></p>
+                        <select class="form-control" name="dateTime">
+                            <#if dateTime??>
+                                <#list dateTime as dateTime>
+                                    <option>${dateTime}</option>
+                                </#list>
+                            </#if>
+                        </select>
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'dateTime'>
@@ -58,5 +45,4 @@
             </div>
         </div>
     </section>
-<#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

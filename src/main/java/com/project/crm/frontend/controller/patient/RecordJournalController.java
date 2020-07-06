@@ -3,6 +3,7 @@ package com.project.crm.frontend.controller.patient;
 import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import static com.project.crm.backend.services.PropertiesService.constructPageable;
 
 @Controller("pkg patient RecordJournalController")
 @RequestMapping("/patient/records")
@@ -26,6 +30,7 @@ public class RecordJournalController {
     private final RegistrationJournalService registrationJournalService;
     private final UserService userService;
     private final WorkScheduleService workScheduleService;
+    private final PropertiesService propertiesService;
 
     @GetMapping("/record")
     public String getRecord(Model model, Principal principal){
@@ -39,11 +44,21 @@ public class RecordJournalController {
         if (!model.containsAttribute("journal")) {
             model.addAttribute("recordJournalRegisterForm", new RecordJournalRegisterForm());
         }
-        model.addAttribute("hospitals", hospitalService.getAll());
-        model.addAttribute("registrationJournals", registrationJournalService.getAll());
-        model.addAttribute("users", userService.getAll());
 
         return "patient/recordJournalController/patientAppointment";
+    }
+
+    @GetMapping("/medicalHistory")
+    public String getMedicalHistory(Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("journal", recordJournalService.getAllByPatient(principal));
+        return "patient/recordJournalController/patientAppointmentMedicalHistory";
+    }
+
+    @PostMapping("/medicalHistory")
+    public String recordMedicalHistory(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
+        attributes.addFlashAttribute("medicalHistoryId", recordJournalRegisterForm.getMedicalHistoryId());
+        return "redirect:/patient/records/hospital";
     }
 
     @GetMapping("/hospital")
@@ -56,6 +71,7 @@ public class RecordJournalController {
     @PostMapping("/hospital")
     public String recordHospital(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
         attributes.addFlashAttribute("hospitalId", recordJournalRegisterForm.getHospitalId());
+        attributes.addFlashAttribute("medicalHistoryId", recordJournalRegisterForm.getMedicalHistoryId());
         return "redirect:/patient/records/doctor";
     }
 
@@ -68,6 +84,7 @@ public class RecordJournalController {
 
     @PostMapping("/doctor")
     public String recordDoctor(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
+        attributes.addFlashAttribute("medicalHistoryId", recordJournalRegisterForm.getMedicalHistoryId());
         attributes.addFlashAttribute("hospitalId", recordJournalRegisterForm.getHospitalId());
         attributes.addFlashAttribute("doctorId", recordJournalRegisterForm.getDoctorId());
         attributes.addFlashAttribute("dateTime",workScheduleService.getWorkSchedule(LocalDate.now(),recordJournalRegisterForm.getDoctorId()));
@@ -88,18 +105,18 @@ public class RecordJournalController {
 
         recordJournalService.createRecordJournal(recordJournalRegisterForm, principal);
 
-        return "redirect:/patient/records/recorded";
+        return "redirect:/patient/records";
 
     }
     @GetMapping
-    public String getAllRecords(Model model, Principal principal){
+    public String getAllRecords(Model model, Principal principal, Pageable pageable, HttpServletRequest uriBuilder){
 
         if(principal == null){
             return "errorPage";
         }
 
         userService.checkUserPresence(model, principal);
-        model.addAttribute("journal", recordJournalService.getByPatient(userService.getByInn(Long.parseLong(principal.getName())).getId()));
+        constructPageable(recordJournalService.getByPatient(Long.parseLong(principal.getName()),pageable),propertiesService.getDefaultPageSize(),model,uriBuilder.getRequestURI());
         return "patient/recordJournalController/patientAllAppointment";
     }
 

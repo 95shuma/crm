@@ -1,13 +1,17 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.remediesService;
 
 
 import com.project.crm.backend.dto.remediesDto.RemediesFormDTO;
 import com.project.crm.backend.model.catalog.remediesCatalog.RemediesForm;
 import com.project.crm.backend.repository.RemediesFormRepo;
+import com.project.crm.frontend.forms.remediesForm.RemediesFormRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -19,12 +23,14 @@ public class RemediesFormService {
     public Page<RemediesFormDTO> getAll(Pageable pageable){
         return remediesFormRepo.findAll(pageable).map(RemediesFormDTO::from);
     }
-
-    public RemediesFormDTO createRemediesForm(RemediesFormDTO formDTO){
+    public List<RemediesFormDTO> getAll(){
+        return remediesFormRepo.findAll().stream().map(RemediesFormDTO::from).collect(Collectors.toList());
+    }
+    public void createRemediesForm(RemediesFormRegisterForm remediesFormRegisterForm){
         var form = RemediesForm.builder()
-                .name(formDTO.getName())
+                .name(remediesFormRegisterForm.getName())
                 .build();
-        return RemediesFormDTO.from(remediesFormRepo.save(form));
+        remediesFormRepo.save(form);
     }
 
     public RemediesFormDTO getByName(String name){

@@ -1,13 +1,17 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.remediesService;
+
 
 
 import com.project.crm.backend.dto.remediesDto.RemedyTypeDTO;
 import com.project.crm.backend.model.catalog.remediesCatalog.RemedyType;
 import com.project.crm.backend.repository.RemedyTypeRepo;
+import com.project.crm.frontend.forms.remediesForm.RemedyTypeRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -20,11 +24,16 @@ public class RemedyTypeService {
         return remedyTypeRepo.findAll(pageable).map(RemedyTypeDTO::from);
     }
 
-    public RemedyTypeDTO createRemedyType(RemedyTypeDTO typeDTO){
+    public List<RemedyTypeDTO> getAll(){
+        return remedyTypeRepo.findAll().stream().map(RemedyTypeDTO::from).collect(Collectors.toList());
+    }
+
+
+    public void createRemedyType(RemedyTypeRegisterForm remedyTypeRegisterForm){
         var type = RemedyType.builder()
-                .name(typeDTO.getName())
+                .name(remedyTypeRegisterForm.getName())
                 .build();
-        return RemedyTypeDTO.from(remedyTypeRepo.save(type));
+       remedyTypeRepo.save(type);
     }
 
     public RemedyTypeDTO getByName(String name){

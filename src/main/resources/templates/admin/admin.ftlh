@@ -9,6 +9,7 @@
         <p><a class="btn btn-primary btn-block w-100" href="/admin/senior-doctors" role="button">Показать список администраторов ЛПУ</a></p>
         <p><a class="btn btn-primary btn-block w-100" href="/admin/places" role="button">Показать список мест</a></p>
         <p><a class="btn btn-primary btn-block w-100" href="/admin/positions" role="button">Показать список направлений</a></p>
+        <p><a class="btn btn-primary btn-block w-100" href="/admin/remedies" role="button">Показать список лекарств</a></p>
         <p><a type="button" class="btn btn-primary w-100" href="/admin/senior-doctors/senior-doctor">Зарегистрировать администратора ЛПУ</a></p>
         <p><a type="button" class="btn btn-primary w-100" href="/admin/hospitals/hospital">Зарегистрировать ЛПУ</a></p>
         <p><a type="button" class="btn btn-primary w-100" href="/admin/places/place">Зарегистрировать новые места</a></p>

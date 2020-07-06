@@ -11,7 +11,8 @@ import java.util.List;
 public interface RecordJournalRepo extends JpaRepository<RecordJournal, Long> {
 
     List<RecordJournal> findByDoctorId(Long id);
-    List<RecordJournal> findByPatientId(Long id);
+    List<RecordJournal> findByPatientInn(Long id);
+    Page<RecordJournal> findByPatientInn(Long inn, Pageable pageable);
 
     Page<RecordJournal> findAllByDoctorIdOrderByDateTime(Long id, Pageable pageable);
 

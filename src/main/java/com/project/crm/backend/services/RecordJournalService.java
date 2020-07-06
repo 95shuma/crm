@@ -1,10 +1,13 @@
 package com.project.crm.backend.services;
 
 import com.project.crm.backend.dto.RecordJournalDTO;
+import com.project.crm.backend.model.catalog.MedicalHistory;
 import com.project.crm.backend.model.catalog.RecordJournal;
 import com.project.crm.backend.repository.HospitalRepo;
+import com.project.crm.backend.repository.MedicalHistoryRepo;
 import com.project.crm.backend.repository.RecordJournalRepo;
 import com.project.crm.backend.repository.UserRepo;
+import com.project.crm.frontend.forms.MedicalHistoryRegisterForm;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,9 +26,14 @@ public class RecordJournalService {
 
     private final RecordJournalRepo recordJournalRepo;
     private final UserRepo userRepo;
+    private final MedicalHistoryRepo medicalHistoryRepo;
     private final HospitalRepo hospitalRepo;
     private final UserService userService;
 
+
+    public List<RecordJournal> getAllByPatient(Principal principal){
+        return recordJournalRepo.findByPatientInn(Long.parseLong(principal.getName()));
+    }
 
     public List<RecordJournal> getAll(){return recordJournalRepo.findAll();}
 
@@ -48,35 +57,79 @@ public class RecordJournalService {
         return recordJournalRepo.findByDoctorId(doctor);
     }
 
-    public List<RecordJournal> getByPatient(Long patient){
-        return recordJournalRepo.findByPatientId(patient);
+    public Page<RecordJournal> getByPatient(Long inn, Pageable pageable){
+        return recordJournalRepo.findByPatientInn(inn, pageable);
     }
 
     public RecordJournalDTO createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
 
-        RecordJournal recordJournal;
+            RecordJournal recordJournal;
 
-            if(recordJournalRegisterForm.getRegistrarId() != null){
-                recordJournal = RecordJournal.builder()
-                        .doctor(userRepo.findByInn(recordJournalRegisterForm.getDoctorId()).get())
-                        .hospital(hospitalRepo.findById(recordJournalRegisterForm.getHospitalId()).get())
-                        .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
-                        .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getRegistrarId()).getId()).get())
-                        .reason(recordJournalRegisterForm.getReason())
-                        .dateTime(recordJournalRegisterForm.getDateTime())
-                        .dateTimeNow(LocalDateTime.now())
+            if(recordJournalRegisterForm.getMedicalHistoryId() == 0){
+                Date date = new Date();
+                MedicalHistory medicalHistory = MedicalHistory.builder()
+                        .date(date)
+                        .typeOfVisit(true)
+                        .complaint(recordJournalRegisterForm.getReason())
+                        .recommendation("")
                         .build();
+
+                medicalHistoryRepo.save(medicalHistory);
+                if(recordJournalRegisterForm.getRegistrarId() != null){
+
+                    recordJournal = RecordJournal.builder()
+                            .doctor(userRepo.findByInn(recordJournalRegisterForm.getDoctorId()).get())
+                            .hospital(hospitalRepo.findById(recordJournalRegisterForm.getHospitalId()).get())
+                            .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
+                            .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getRegistrarId()).getId()).get())
+                            .medicalHistory(medicalHistory)
+                            .reason(recordJournalRegisterForm.getReason())
+                            .dateTime(recordJournalRegisterForm.getDateTime())
+                            .dateTimeNow(LocalDateTime.now())
+                            .build();
+                    return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
+                }
+                else{
+                    recordJournal = RecordJournal.builder()
+                            .doctor(userRepo.findByInn(recordJournalRegisterForm.getDoctorId()).get())
+                            .hospital(hospitalRepo.findById(recordJournalRegisterForm.getHospitalId()).get())
+                            .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
+                            .medicalHistory(medicalHistory)
+                            .reason(recordJournalRegisterForm.getReason())
+                            .dateTime(recordJournalRegisterForm.getDateTime())
+                            .dateTimeNow(LocalDateTime.now())
+                            .build();
+                    return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
+                }
             }
             else{
-                recordJournal = RecordJournal.builder()
-                        .doctor(userRepo.findByInn(recordJournalRegisterForm.getDoctorId()).get())
-                        .hospital(hospitalRepo.findById(recordJournalRegisterForm.getHospitalId()).get())
-                        .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
-                        .reason(recordJournalRegisterForm.getReason())
-                        .dateTime(recordJournalRegisterForm.getDateTime())
-                        .dateTimeNow(LocalDateTime.now())
-                        .build();
+                if(recordJournalRegisterForm.getRegistrarId() != null){
+
+                    recordJournal = RecordJournal.builder()
+                            .doctor(userRepo.findByInn(recordJournalRegisterForm.getDoctorId()).get())
+                            .hospital(hospitalRepo.findById(recordJournalRegisterForm.getHospitalId()).get())
+                            .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
+                            .registrar(userRepo.findById(userService.getByInn(recordJournalRegisterForm.getRegistrarId()).getId()).get())
+                            .medicalHistory(medicalHistoryRepo.findById(recordJournalRegisterForm.getMedicalHistoryId()).get())
+                            .reason(recordJournalRegisterForm.getReason())
+                            .dateTime(recordJournalRegisterForm.getDateTime())
+                            .dateTimeNow(LocalDateTime.now())
+                            .build();
+                    return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
+                }
+                else{
+                    recordJournal = RecordJournal.builder()
+                            .doctor(userRepo.findByInn(recordJournalRegisterForm.getDoctorId()).get())
+                            .hospital(hospitalRepo.findById(recordJournalRegisterForm.getHospitalId()).get())
+                            .patient(userRepo.findById(userService.getByInn(Long.parseLong(principal.getName())).getId()).get())
+                            .medicalHistory(medicalHistoryRepo.findById(recordJournalRegisterForm.getMedicalHistoryId()).get())
+                            .reason(recordJournalRegisterForm.getReason())
+                            .dateTime(recordJournalRegisterForm.getDateTime())
+                            .dateTimeNow(LocalDateTime.now())
+                            .build();
+                    return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
+                }
             }
-        return RecordJournalDTO.from(recordJournalRepo.save(recordJournal));
+
     }
 }

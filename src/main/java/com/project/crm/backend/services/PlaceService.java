@@ -35,7 +35,7 @@ public class PlaceService {
     public void createPlace(PlaceRegisterForm placeRegisterForm){
         Place registrationPlace = Place.builder()
                 .name(placeRegisterForm.getName())
-                .codePlace(Integer.parseInt(placeRegisterForm.getCodePlace()))
+                .codePlace(Long.valueOf(placeRegisterForm.getCodePlace().trim()))
                 .groupCode(placeRegisterForm.getGroupCode())
                 .build();
         placeRepo.save(registrationPlace);

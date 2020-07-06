@@ -23,6 +23,8 @@ public class RecordJournalRegisterForm {
 
     private Long hospitalId = null;
 
+    private Long medicalHistoryId = null;
+
     @NotBlank(message = "Укажите причину")
     private String reason="";
 }

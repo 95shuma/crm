@@ -29,6 +29,9 @@ public class RecordJournal {
     @ManyToOne @JoinColumn(name= "registrar_id")
     private User registrar;
 
+    @ManyToOne @JoinColumn(name= "medical_history_id")
+    private MedicalHistory medicalHistory;
+
     @ManyToOne @JoinColumn(name= "hospital_id")
     private Hospital hospital;
 

@@ -102,8 +102,13 @@
                 <select class="form-control" id="doctorRoleId" name="roleId">
                     <#if roles??>
                         <#list roles as role>
-                            <#if role.id == 2 || role.id == 3 || role.id == 4>
-                                <option value="${role.id}">${role.name}</option>
+                            <#if role.name == ROLE_SENIOR_DOCTOR || role.name == ROLE_DOCTOR || role.name == ROLE_JUNIOR_DOCTOR>
+                                <option value="${role.id}">
+                                    <#if role.name == ROLE_SENIOR_DOCTOR>Администратор ЛПУ
+                                    <#elseif role.name == ROLE_DOCTOR>Доктор
+                                    <#elseif role.name == ROLE_JUNIOR_DOCTOR>Младший мед. работник
+                                    </#if>
+                                </option>
                             </#if>
                         </#list>
                     </#if>

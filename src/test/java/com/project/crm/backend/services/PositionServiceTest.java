@@ -1,4 +1,4 @@
-package com.project.crm;
+package com.project.crm.backend.services;
 
 import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.services.PositionService;

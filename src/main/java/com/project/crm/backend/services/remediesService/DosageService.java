@@ -1,17 +1,19 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.remediesService;
 
 
 import com.project.crm.backend.dto.remediesDto.DosageDTO;
-import com.project.crm.backend.model.catalog.Hospital;
+import com.project.crm.backend.dto.remediesDto.PharmacologicalGroupDTO;
 import com.project.crm.backend.model.catalog.remediesCatalog.Dosage;
 import com.project.crm.backend.repository.DosageRepo;
 import com.project.crm.backend.repository.MeasureRepo;
-import com.project.crm.frontend.forms.DosageRegisterForm;
-import com.project.crm.frontend.forms.HospitalRegisterForm;
+import com.project.crm.frontend.forms.remediesForm.DosageRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,6 +28,9 @@ public class DosageService {
     public Page<DosageDTO> getAllDosages(Pageable pageable){
         return dosageRepo.findAll(pageable).map(DosageDTO::from);
     }
+    public List<DosageDTO> getAll(){
+        return dosageRepo.findAll().stream().map(DosageDTO::from).collect(Collectors.toList());
+    }
 
     public DosageDTO getById(Long id){
         Dosage dosage = dosageRepo.findById(id).get();
@@ -36,7 +41,7 @@ public class DosageService {
         var dosage = Dosage.builder()
                 .name(dosageRegisterForm.getName())
                 .measure(measureRepo.findById(dosageRegisterForm.getMeasureId()).get())
-                .quantity(dosageRegisterForm.getQuantity())
+                .quantity(Integer.valueOf(dosageRegisterForm.getQuantity()))
                 .build();
         dosageRepo.save(dosage);
     }

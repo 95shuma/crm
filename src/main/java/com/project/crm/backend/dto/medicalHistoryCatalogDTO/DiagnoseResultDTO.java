@@ -14,12 +14,14 @@ public class DiagnoseResultDTO {
     private Long id;
     private DiagnoseDTO diagnoseDTO;
     private boolean state;
+    private MedicalHistoryDTO medicalHistoryDTO;
 
     public static DiagnoseResultDTO from(DiagnoseResult diagnoseResult) {
         return builder()
                 .id(diagnoseResult.getId())
                 .diagnoseDTO(DiagnoseDTO.from(diagnoseResult.getDiagnose()))
                 .state(diagnoseResult.isState())
+                .medicalHistoryDTO(MedicalHistoryDTO.from(diagnoseResult.getMedicalHistory()))
                 .build();
     }
 }

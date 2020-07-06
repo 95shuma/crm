@@ -21,7 +21,7 @@
 
             <div>
                 <#if error!false >
-                    <p style="color:red">Вы ввели неверный ИНН или пароль</p>
+                <div class="alert alert-warning mt-1" style="color: red" role="alert"> Вы ввели неверный ИНН или пароль</div>
                 </#if>
             </div>
         </form>

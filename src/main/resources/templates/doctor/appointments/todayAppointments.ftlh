@@ -10,21 +10,34 @@
                 <th scope="col">Пол</th>
                 <th scope="col">Дата рождения</th>
                 <th scope="col">Жалоба</th>
+                <th scope="col">Статус</th>
             </tr>
             </thead>
             <tbody>
             <#list items as journal>
-            <tr>
-                <td>${journal.dateTime.format('HH:mm')}</td>
-                <td><a href="/doctor/records/${journal.id}">${journal.patient.fullName}</a></td>
-                <td>${journal.patient.gender}</td>
-                <td>${journal.patient.birthDate?date}</td>
-                <td>${journal.reason}</td>
-            </tr>
+                <#if journal.medicalHistory.recommendation == "">
+                    <tr>
+                        <td>${journal.dateTime.format('HH:mm')}</td>
+                        <td><a href="/doctor/records/${journal.id?c}">${journal.patient.fullName}</td>
+                        <td>${journal.patient.gender}</td>
+                        <td>${journal.patient.birthDate?date}</td>
+                        <td>${journal.medicalHistory.complaint}</td>
+                        <td><a href="/doctor/records/${journal.id?c}">Не просмотрен</a></td>
+                    </tr>
+                <#else>
+                    <tr>
+                        <td>${journal.dateTime.format('HH:mm')}</td>
+                        <td><a href="/doctor/records/${journal.id?c}">${journal.patient.fullName}</td>
+                        <td>${journal.patient.gender}</td>
+                        <td>${journal.patient.birthDate?date}</td>
+                        <td>${journal.medicalHistory.complaint}</td>
+                        <td>Просмотрен</td>
+                    </tr>
+                </#if>
             </#list>
             </tbody>
         </table>
-    <#include "../../partials/pagination.ftlh">
+        <#include "../../partials/pagination.ftlh">
         <a href="/doctor" class="btn btn-primary btn-block mx-auto mt-3 w-50">Выйти в личный кабинет</a>
 
 </@main.renderWith>

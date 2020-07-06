@@ -5,5 +5,4 @@
     <div class="mx-auto mt-3 w-50">
         <a href="/patient" style="margin-top: 5px" class="btn btn-primary btn-block">Выйти в личный кабинет</a>
     </div>
-<#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

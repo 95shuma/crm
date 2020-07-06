@@ -23,4 +23,6 @@ public class DiagnoseResult {
 
     private boolean state;
 
+    @ManyToOne @JoinColumn(name= "medical_history_id")
+    private MedicalHistory medicalHistory;
 }

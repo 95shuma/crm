@@ -3,7 +3,7 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <form class="box-1 needs-validation" id="reg-admin-hospital" action="/admin/senior-doctors" method="post" novalidate>
+                <form class="box-1" id="reg-admin-hospital" action="/admin/senior-doctors" method="post">
                     <h3>Добавить администратора ЛПУ</h3>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>

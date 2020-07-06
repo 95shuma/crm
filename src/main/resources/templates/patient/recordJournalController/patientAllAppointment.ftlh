@@ -4,17 +4,15 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Время записи</th>
-                    <th scope="col">Время ко скольки</th>
+                    <th scope="col">Время приёма</th>
                     <th scope="col">Лечащий врач</th>
                     <th scope="col">Больница</th>
                     <th scope="col">Жалоба</th>
                 </tr>
             </thead>
             <tbody>
-            <#list journal as journal>
+            <#list items as journal>
                 <tr>
-                    <td>${journal.dateTimeNow.format('MMM-dd HH:mm')}</td>
                     <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
                     <td>${journal.doctor.fullName}</td>
                     <td>${journal.hospital.name} - ${journal.hospital.address}</td>
@@ -23,6 +21,6 @@
             </#list>
             </tbody>
         </table>
+        <#include "../../partials/pagination.ftlh">
         <a href="/patient" class="btn btn-primary btn-block">Выйти в личный кабинет</a>
-<#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

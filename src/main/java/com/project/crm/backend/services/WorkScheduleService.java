@@ -47,14 +47,14 @@ public class WorkScheduleService {
     public List<LocalDateTime> getWorkSchedule(LocalDate date, Long inn){
         //------------------Поиск графика по ИНН доктора и дате--------------------------------------
         WorkSchedule workSchedule=workScheduleRepo.findByDateAndRegistrationJournalUserInn(date, inn);
-        //------------------Построение время приема до обеда-----------------------------------------
+        //------------------Построение времени приема до обеда---------------------------------------
         LocalDateTime localDateTime=workSchedule.getDayStart();
         long mod=Math.abs(Duration.between(workSchedule.getDayStart(),workSchedule.getLunchStart()).toMinutes())%20;
         List<LocalDateTime> workTimes = new ArrayList<LocalDateTime>();
         for (localDateTime=localDateTime.plusMinutes(mod);localDateTime.compareTo(workSchedule.getLunchStart())<0;localDateTime=localDateTime.plusMinutes(20)){
             workTimes.add(localDateTime);
         }
-        //------------------Построение время приема после обеда--------------------------------------
+        //------------------Построение времени приема после обеда------------------------------------
         localDateTime=workSchedule.getLunchEnd();
         mod=Math.abs(Duration.between(workSchedule.getLunchEnd(),workSchedule.getDayEnd()).toMinutes())%20;
         for (localDateTime=localDateTime.plusMinutes(mod);localDateTime.compareTo(workSchedule.getDayEnd())<0;localDateTime=localDateTime.plusMinutes(20)){
