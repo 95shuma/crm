@@ -10,7 +10,7 @@
                     </#if>
                     <div class="form-group">
                         <p><label for="lpuPlaceId" class="col-form-label">Лекарство</label></p>
-                        <select class="form-control" id="lpuPlaceId" name="placeId">
+                        <select class="form-control" id="lpuPlaceId" name="remedyId">
                             <#list remedies as remedy>
                                 <option value="${remedy.id}">${remedy.name}</option>
                             </#list>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <p><label for="puPlaceId" class="col-form-label">Процедура</label></p>
-                        <select class="form-control" id="puPlaceId" name="placeId">
+                        <select class="form-control" id="puPlaceId" name="procedureId">
                             <#list procedures as procedure>
                                 <option value="${procedure.id}">${procedure.name}</option>
                             </#list>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <p><label for="puPlaceId" class="col-form-label">Мед история</label></p>
-                        <select class="form-control" id="puPlaceId" name="placeId">
+                        <select class="form-control" id="puPlaceId" name="medicalHistoryId">
                             <#list medicalHistories as medicalHistory>
                                 <option value="${medicalHistory.id}">${medicalHistory.complaint}</option>
                             </#list>
