@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 public interface TreatmentRepo extends JpaRepository<Treatment, Long> {
-    @Query(value = "select * from treatments as t order by t.id asc", nativeQuery = true)
+
+    //@Query(value = "select * from treatments as t order by t.id asc", nativeQuery = true)
     Page<Treatment> findAll(Pageable pageable);
+
 }
