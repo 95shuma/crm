@@ -1,10 +1,9 @@
 package com.project.crm.frontend.controller.doctor;
 
 import com.project.crm.backend.model.catalog.MedicalHistory;
-import com.project.crm.backend.services.MedicalHistoryService;
-import com.project.crm.backend.services.PropertiesService;
-import com.project.crm.backend.services.RecordJournalService;
-import com.project.crm.backend.services.UserService;
+import com.project.crm.backend.services.*;
+import com.project.crm.backend.services.remediesService.InstrumExaminationService;
+import com.project.crm.backend.services.remediesService.LabExaminationService;
 import com.project.crm.frontend.forms.MedicalHistoryRegisterForm;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
@@ -32,6 +31,9 @@ public class RecordJournalController {
     private final RecordJournalService recordJournalService;
     private final UserService userService;
     private final PropertiesService propertiesService;
+    private final LabExaminationService labExaminationService;
+    private final InstrumExaminationService instrumExaminationService;
+    private final PositionService positionService;
     private final MedicalHistoryService medicalHistoryService;
 
 
@@ -90,6 +92,22 @@ public class RecordJournalController {
         model.addAttribute("patient", recordJournalService.getById(record_id));
 
         return "/doctor/appointments/appointmentAccept";
+    }
+
+    @GetMapping("/{record_id}/direction")
+    public String getRecordJournalDirection(Model model,Principal principal, @PathVariable("record_id") String record_id) {
+
+        if(principal == null){
+            return "errorPage";
+        }
+
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("labExamination",labExaminationService.getAll());
+        model.addAttribute("instrumExamination",instrumExaminationService.getAll());
+        model.addAttribute("position",positionService.getAll());
+        model.addAttribute("recordJournal", recordJournalService.getById(record_id));
+
+        return "/doctor/directionController/directionRegisterWithRecordJournal";
     }
 
     @PostMapping("/{record_id}/accept")
