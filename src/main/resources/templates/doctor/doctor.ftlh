@@ -8,6 +8,8 @@
         <a href="/doctor/schedules" class="btn btn-primary btn-block">Просмотр рабочего графика</a>
         <a href="/doctor/sickLists" class="btn btn-primary btn-block">Просмотр больничных листов</a>
         <a href="/doctor/treatments" class="btn btn-primary btn-block">Просмотр всех назначений</a>
+        <a href="/doctor/directions" class="btn btn-primary btn-block">Просмотр всех направлений</a>
         <a href="/doctor/treatments/treatment" class="btn btn-primary btn-block">Добавить назначение</a>
+        <a href="/doctor/directions/direction" class="btn btn-primary btn-block">Добавить направление</a>
     </div>
 </@main.renderWith>
