@@ -362,6 +362,19 @@ public class PreloadDatabaseWithData {
                         .build()
                 );
             }
+            for (int i = 0; i < 5; i++){
+                recordJournalList.add(RecordJournal.builder()
+                        .doctor(userRepo.findByInn(33333333333333L).get())
+                        .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
+                        .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                        .dateTime(LocalDateTime.now())
+                        .dateTimeNow(LocalDateTime.now())
+                        .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
+                        .build()
+                );
+            }
             recordJournalRepo.saveAll(recordJournalList);
             //-->======================== Record Journal ========================
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
