@@ -1,11 +1,11 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.medicalHistoryService;
 
 
 import com.project.crm.backend.dto.medicalHistoryCatalogDTO.SickListDTO;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.SickList;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.SickListRepo;
-import com.project.crm.frontend.forms.SickListRegisterForm;
+import com.project.crm.frontend.forms.medicalHistoryForms.SickListRegisterForm;
 import lombok.AllArgsConstructor;
 
 import org.springframework.data.domain.Page;

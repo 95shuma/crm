@@ -1,12 +1,11 @@
 package com.project.crm.frontend.controller.doctor;
 
-import com.project.crm.backend.model.catalog.Position;
-import com.project.crm.backend.repository.medicalHistoryCatalogRepo.DirectionRepo;
 import com.project.crm.backend.services.*;
-import com.project.crm.backend.services.remediesService.InstrumExaminationService;
-import com.project.crm.backend.services.remediesService.LabExaminationService;
-import com.project.crm.frontend.forms.DirectionRegisterForm;
-import com.project.crm.frontend.forms.TreatmentRegisterForm;
+import com.project.crm.backend.services.medicalHistoryService.DirectionService;
+import com.project.crm.backend.services.medicalHistoryService.InstrumExaminationService;
+import com.project.crm.backend.services.medicalHistoryService.LabExaminationService;
+import com.project.crm.backend.services.medicalHistoryService.MedicalHistoryService;
+import com.project.crm.frontend.forms.medicalHistoryForms.DirectionRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;

@@ -4,7 +4,8 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
-import com.project.crm.frontend.forms.RemedyRegisterForm;
+import com.project.crm.backend.services.remediesService.RemedyService;
+import com.project.crm.frontend.forms.remediesForm.RemedyRegisterForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

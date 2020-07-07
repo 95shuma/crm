@@ -1,4 +1,4 @@
-package com.project.crm.backend.services.remediesService;
+package com.project.crm.backend.services.medicalHistoryService;
 
 import com.project.crm.backend.dto.medicalHistoryCatalogDTO.LabExaminationDTO;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.LabExamination;

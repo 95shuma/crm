@@ -1,12 +1,11 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.medicalHistoryService;
 
 
 import com.project.crm.backend.dto.MedicalHistoryDTO;
-import com.project.crm.backend.dto.remediesDto.MeasureDTO;
 import com.project.crm.backend.model.catalog.MedicalHistory;
 import com.project.crm.backend.repository.MedicalHistoryRepo;
 import com.project.crm.backend.repository.RecordJournalRepo;
-import com.project.crm.frontend.forms.MedicalHistoryRegisterForm;
+import com.project.crm.frontend.forms.medicalHistoryForms.MedicalHistoryRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

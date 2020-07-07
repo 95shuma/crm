@@ -7,7 +7,6 @@ import com.project.crm.backend.repository.HospitalRepo;
 import com.project.crm.backend.repository.MedicalHistoryRepo;
 import com.project.crm.backend.repository.RecordJournalRepo;
 import com.project.crm.backend.repository.UserRepo;
-import com.project.crm.frontend.forms.MedicalHistoryRegisterForm;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -7,12 +7,10 @@ import com.project.crm.backend.model.catalog.medicalHistoryCatalog.LabExaminatio
 import com.project.crm.backend.repository.MedicalHistoryRepo;
 import com.project.crm.backend.repository.PositionRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.DirectionRepo;
-import com.project.crm.backend.repository.medicalHistoryCatalogRepo.ExaminationResultRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.InstrumExaminationRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.LabExaminationRepo;
-import com.project.crm.backend.services.remediesService.ExaminationResultService;
-import com.project.crm.frontend.forms.DirectionRegisterForm;
-import com.project.crm.frontend.forms.remediesForm.ExaminationResultForm;
+import com.project.crm.backend.services.medicalHistoryService.DirectionService;
+import com.project.crm.frontend.forms.medicalHistoryForms.DirectionRegisterForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
