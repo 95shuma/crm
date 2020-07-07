@@ -1,15 +1,15 @@
 <#import "../../partials/main.ftlh" as main />
 
-<@main.renderWith styles=["css/registration.css","https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
-    <h3>Список Обнаружено</h3>
+<@main.renderWith>
+    <h3>Результаты исследований</h3>
     <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Лаб. Экзаминация</th>
-            <th scope="col">Результат Лаб. Экзам.</th>
-            <th scope="col">Инструменьная Экзаминация</th>
-            <th scope="col">Результат Инструм. Экзам.</th>
+            <th scope="col">Лаб. исследования</th>
+            <th scope="col">Результат Лаб. исследования</th>
+            <th scope="col">Инструм. исследования</th>
+            <th scope="col">Результат Инструм. исследования</th>
             <th scope="col">Общее Состояние</th>
         </tr>
         </thead>

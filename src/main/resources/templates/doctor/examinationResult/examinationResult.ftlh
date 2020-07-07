@@ -4,12 +4,12 @@
         <div class="d-flex justify-content-center">
             <div class="mx-3">
                 <form class="box-1" action="/doctor/medical-history/${medicalHistoryId?c}/examination-results" method="post">
-                    <h3>Добавить обнаружено</h3>
+                    <h3>Добавить результаты исследований</h3>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
                     <div class="form-group">
-                        <p><label for="instrumExaminationId" class="col-form-label">Инструменьная Экзаминация</label></p>
+                        <label for="instrumExaminationId" class="col-form-label">Инструментальное исследование</label>
                         <select class="form-control" id="instrumExaminationId" name="instrumExaminationId">
                             <#list instrumExaminations as instrumExamination>
                                 <option value="${instrumExamination.id?c}">${instrumExamination.name}</option>
@@ -24,8 +24,8 @@
                         </#if>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label" for="instrumExaminationResult">Результат Инструменьной Экзаминации</label></p>
-                        <input class="form-control" id="labExaminatioinstrumExaminationResultnResult" type="text" name="instrumExaminationResult" placeholder="Результат Экзаминации">
+                        <label class="col-form-label" for="instrumExaminationResult">Результат исследований</label>
+                        <input class="form-control" id="instrumExaminationResult" type="text" name="instrumExaminationResult" placeholder="Результат исследований">
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'instrumExaminationResult'>
@@ -35,7 +35,7 @@
                         </#if>
                     </div>
                     <div class="form-group">
-                        <p><label for="labExaminationId" class="col-form-label">Лабораторная Экзаминация</label></p>
+                        <label for="labExaminationId" class="col-form-label">Лабораторные исследования</label>
                         <select class="form-control" id="labExaminationId" name="labExaminationId">
                             <#list labExaminations as labExamination>
                                 <option value="${labExamination.id?c}">${labExamination.name}</option>
@@ -50,8 +50,8 @@
                         </#if>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label" for="labExaminationResult">Результат Лабораторной Экзаминации</label></p>
-                        <input class="form-control" id="labExaminationResult" type="text" name="labExaminationResult" placeholder="Результат Экзаминации">
+                        <label class="col-form-label" for="labExaminationResult">Результат исследований</label>
+                        <input class="form-control" id="labExaminationResult" type="text" name="labExaminationResult" placeholder="Результат исследований">
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'labExaminationResult'>
@@ -61,8 +61,8 @@
                         </#if>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label" for="generalState">Общее Состояние</label></p>
-                        <input class="form-control" id="generalState" type="text" name="generalState" placeholder="Общее Состояние">
+                        <label class="col-form-label" for="generalState">Общее состояние</label>
+                        <input class="form-control" id="generalState" type="text" name="generalState" placeholder="Общее состояние">
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'generalState'>
@@ -72,7 +72,7 @@
                         </#if>
                     </div>
                     <input type="hidden" name="medicalHistoryId" value="${medicalHistoryId}">
-                    <p><button type="submit" class="btn btn-primary w-100">Добавить</button></p>
+                    <button type="submit" class="btn btn-primary w-100">Добавить</button>
                 </form>
             </div>
         </div>
