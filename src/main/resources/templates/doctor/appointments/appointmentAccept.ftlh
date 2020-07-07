@@ -57,10 +57,10 @@
                         <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/examination-results" class="btn btn-primary btn-block">Обнаружено (осмотр и результаты исследований)</a>
                     </div>
                     <div class="form-group">
-                        <a href="/doctor/records/${patient.id?c}/diagnosisResult" class="btn btn-primary btn-block">Постановка диагноз</a>
+                        <a href="/doctor/records/${patient.id?c}/diagnosisResult" class="btn btn-primary btn-block">Постановка диагноза</a>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label"><strong>Ваши рекомендации к лечению</strong></label></p>
+                        <p><label class="col-form-label"><strong>Рекомендации к лечению</strong></label></p>
                         <textarea name="recommendation" class="form-control" minlength="5" maxlength="500" placeholder="Рекомендации" autofocus>${patient.medicalHistory.recommendation}</textarea>
                     </div>
                     <div class="form-group">
