@@ -1,4 +1,4 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.medicalHistoryService;
 
 import com.project.crm.backend.model.catalog.MedicalHistory;
 import com.project.crm.backend.model.catalog.Position;
