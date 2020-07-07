@@ -29,13 +29,13 @@ public class SickListService {
 
     public List<SickList> getAll(){return sickListRepo.findAll();}
 
-    public Page<SickListDTO> getAllSickLists(Pageable pageable){
-        return sickListRepo.findAll(pageable).map(SickListDTO::from);
+    public Page<SickListDTO> getAllSickLists(Pageable pageable, Long medicalHistoryId){
+        return sickListRepo.findAllByMedicalHistoryId(pageable,medicalHistoryId).map(SickListDTO::from);
     }
 
     public void createSickList(SickListRegisterForm sickListRegisterForm){
         var user = SickList.builder()
-                .number(sickListRegisterForm.getNumber())
+                .number(Long.valueOf(sickListRegisterForm.getNumber()))
                 .startDate(sickListRegisterForm.getStartDate())
                 .endDate(sickListRegisterForm.getEndDate())
                 .medicalHistory(medicalHistoryRepo.findById(sickListRegisterForm.getMedicalHistoryId()).get())
