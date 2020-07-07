@@ -47,36 +47,32 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Жалоба пациента (вы можете ее дополнить)</label></p>
+                        <p><label class="col-form-label">Жалобы пациента (дополнить)</label></p>
                         <textarea name="complaint" class="form-control" minlength="5" maxlength="500" placeholder="Полная жалоба" autofocus>${patient.medicalHistory.complaint}</textarea>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Создайте направление</label></p>
-                        <a href="/doctor/records/${patient.id?c}/direction" class="btn btn-primary btn-block">Создать напраление</a>
+                        <a href="/doctor/records/${patient.id?c}/direction" class="btn btn-primary btn-block">Создать направление</a>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Что у него обнаружено?</label></p>
-                        <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/examination-results" class="btn btn-primary btn-block">Обнаружено</a>
+                        <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/examination-results" class="btn btn-primary btn-block">Обнаружено (осмотр и результаты исследований)</a>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Постоновите диагноз</label></p>
-                        <a href="/doctor/records/${patient.id?c}/diagnosisResult" class="btn btn-primary btn-block">Постоновка диагноз</a>
+                        <a href="/doctor/records/${patient.id?c}/diagnosisResult" class="btn btn-primary btn-block">Постановка диагноз</a>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Ваши рекомендации к лечению</label></p>
+                        <p><label class="col-form-label"><strong>Ваши рекомендации к лечению</strong></label></p>
                         <textarea name="recommendation" class="form-control" minlength="5" maxlength="500" placeholder="Рекомендации" autofocus>${patient.medicalHistory.recommendation}</textarea>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Назначьте лечение</label></p>
                         <a href="/doctor/records/${patient.id?c}/treatment" class="btn btn-primary btn-block">Назначить лечение</a>
                     </div>
                     <div class="form-group">
-                        <p><label class="col-form-label">Откройте больничный лист</label></p>
-                        <a href="/doctor/records/${patient.id?c}/sickList" class="btn btn-primary btn-block">Открыть больничный лист</a>
+                        <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/sickList" class="btn btn-primary btn-block">Открыть больничный лист</a>
                     </div>
-                    <button type="submit" style="margin-top: 5px" class="btn btn-primary btn-block">Записаться</button>
+                    <button type="submit" style="margin-top: 5px" class="btn btn-primary btn-block">Записать</button>
                 </form>
             </div>
+
         </div>
     </section>
 </@main.renderWith>
