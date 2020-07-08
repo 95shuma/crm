@@ -8,7 +8,7 @@
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
-                    <input name="medicalHistoryId" type="hidden" value="${recordJournal.medicalHistory.id}">
+                    <input name="medicalHistoryId" type="hidden" value="${medicalHistory_id}">
                     <div class="form-group">
                         <p><label for="lpuPlaceId" class="col-form-label">Лабораторные исследования</label></p>
                         <select class="form-control" id="lpuPlaceId" name="labExaminationId">

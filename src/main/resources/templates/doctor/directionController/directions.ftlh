@@ -26,7 +26,7 @@
         </tbody>
     </table>
     <#include "../../partials/pagination.ftlh">
-    <a type="button" class="btn btn-primary w-100" href="/doctor/directions/direction">
+    <a type="button" class="btn btn-primary w-100" href="/doctor/directions/${medicalHistory_id?c}/direction">
         Добавить
     </a>
     <!--<div>
