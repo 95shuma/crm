@@ -51,7 +51,7 @@
                         <textarea name="complaint" class="form-control" minlength="5" maxlength="500" placeholder="Полная жалоба" autofocus>${patient.medicalHistory.complaint}</textarea>
                     </div>
                     <div class="form-group">
-                        <a href="/doctor/records/${patient.id?c}/direction" class="btn btn-primary btn-block">Создать направление</a>
+                        <a href="/doctor/directions/${patient.medicalHistory.id?c}/direction" class="btn btn-primary btn-block">Создать направление</a>
                     </div>
                     <div class="form-group">
                         <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/examination-results" class="btn btn-primary btn-block">Обнаружено (осмотр и результаты исследований)</a>
