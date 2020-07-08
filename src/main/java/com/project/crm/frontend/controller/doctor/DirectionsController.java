@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,6 +26,7 @@ import java.security.Principal;
 @AllArgsConstructor
 public class DirectionsController {
 
+    private final RecordJournalService recordJournalService;
     private final UserService userService;
     private final DirectionService directionService;
     private final LabExaminationService labExaminationService;
@@ -33,8 +35,8 @@ public class DirectionsController {
     private final MedicalHistoryService medicalHistoryService;
     private final PropertiesService propertiesService;
 
-    @GetMapping("/direction")
-    public String getDirection(Model model, Principal principal){
+    @GetMapping("/{medicalHistory_id}/direction")
+    public String getRecordJournalDirection(Model model,Principal principal, @PathVariable("medicalHistory_id") Long medicalHistory_id) {
 
         if(principal == null){
             return "errorPage";
@@ -44,21 +46,24 @@ public class DirectionsController {
         model.addAttribute("labExamination",labExaminationService.getAll());
         model.addAttribute("instrumExamination",instrumExaminationService.getAll());
         model.addAttribute("position",positionService.getAll());
-        model.addAttribute("medicalHistories",medicalHistoryService.getAll());
-        return "doctor/directionController/directionRegister";
+        model.addAttribute("medicalHistory_id", medicalHistory_id);
 
+        return "/doctor/directionController/directionRegisterWithRecordJournal";
     }
 
-    @GetMapping
-    public String getDirections(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal){
+    @GetMapping("/{medicalHistory}/directions")
+    public String getRecordJournalDirections(Model model,Principal principal,HttpServletRequest uriBuilder, @PathVariable("medicalHistory") Long medicalHistory, Pageable pageable) {
 
-        if(principal == null){
+        if (principal == null) {
             return "errorPage";
         }
 
         userService.checkUserPresence(model, principal);
-        PropertiesService.constructPageable(directionService.getAll(pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
-        return "doctor/directionController/directions";
+        var directions = directionService.getAll(pageable, (medicalHistory));
+        var uri = uriBuilder.getRequestURI();
+        PropertiesService.constructPageable(directions, propertiesService.getDefaultPageSize(), model, uri);
+        model.addAttribute("medicalHistory_id", medicalHistory);
+        return "/doctor/directionController/directions";
     }
 
     @PostMapping
@@ -66,12 +71,12 @@ public class DirectionsController {
                                   RedirectAttributes attributes){
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/doctor/directions/direction";
+            return "redirect:/doctor/direction/"+directionRegisterForm.getMedicalHistoryId()+"/direction";
         }
 
         directionService.createDirection(directionRegisterForm);
 
-        return "redirect:/doctor";
+        return "redirect:/doctor/directions/"+directionRegisterForm.getMedicalHistoryId()+"/directions";
     }
 
 }
