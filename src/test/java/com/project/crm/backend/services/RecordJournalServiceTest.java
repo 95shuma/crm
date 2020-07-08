@@ -2,6 +2,7 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.services.HospitalService;
 import com.project.crm.backend.services.RecordJournalService;
+import com.project.crm.backend.services.medicalHistoryService.MedicalHistoryService;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
