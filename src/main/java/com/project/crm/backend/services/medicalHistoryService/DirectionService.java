@@ -1,6 +1,7 @@
 package com.project.crm.backend.services.medicalHistoryService;
 
 import com.project.crm.backend.dto.medicalHistoryCatalogDTO.DirectionDTO;
+import com.project.crm.backend.dto.medicalHistoryCatalogDTO.ExaminationResultDTO;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Direction;
 import com.project.crm.backend.repository.MedicalHistoryRepo;
 import com.project.crm.backend.repository.PositionRepo;
@@ -26,6 +27,10 @@ public class DirectionService {
 
     public List<DirectionDTO> getAll(){
         return directionRepo.findAll().stream().map(DirectionDTO::from).collect(Collectors.toList());
+    }
+
+    public Page<DirectionDTO> getAll(Pageable pageable, Long medicalHistoryId){
+        return directionRepo.findAllByMedicalHistoryId(medicalHistoryId, pageable).map(DirectionDTO::from);
     }
 
     public Page<DirectionDTO> getAll(Pageable pageable){
