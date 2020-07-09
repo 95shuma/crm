@@ -57,7 +57,7 @@
                         <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/examination-results" class="btn btn-primary btn-block">Обнаружено (осмотр и результаты исследований)</a>
                     </div>
                     <div class="form-group">
-                        <a href="/doctor/records/${patient.id?c}/diagnosisResult" class="btn btn-primary btn-block">Постановка диагноза</a>
+                        <a href="/doctor/diagnoseResult/${patient.medicalHistory.id?c}/diagnoseResult" class="btn btn-primary btn-block">Постановка диагноза</a>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label"><strong>Рекомендации к лечению</strong></label></p>
