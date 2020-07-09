@@ -42,9 +42,9 @@ public class DoctorController {
         model.addAttribute("roles", roleService.getAll());
         model.addAttribute("positions", positionService.getAll());
         //Constants
-        model.addAttribute(Constants.SENIOR_DOCTOR, Constants.SENIOR_DOCTOR);
-        model.addAttribute(Constants.DOCTOR, Constants.DOCTOR);
-        model.addAttribute(Constants.JUNIOR_DOCTOR, Constants.JUNIOR_DOCTOR);
+        model.addAttribute(Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_SENIOR_DOCTOR);
+        model.addAttribute(Constants.ROLE_DOCTOR, Constants.ROLE_DOCTOR);
+        model.addAttribute(Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR);
         return "seniorDoctor/doctorController/doctorRegister";
     }
 

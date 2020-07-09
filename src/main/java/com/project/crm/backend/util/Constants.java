@@ -5,11 +5,11 @@ import java.util.List;
 
 public final class Constants {
 
-    public static final String ADMIN = "ROLE_ADMIN" ;
-    public static final String SENIOR_DOCTOR = "ROLE_SENIOR_DOCTOR";
-    public static final String DOCTOR = "ROLE_DOCTOR";
-    public static final String JUNIOR_DOCTOR = "ROLE_JUNIOR_DOCTOR";
-    public static final String PATIENT = "ROLE_PATIENT";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN" ;
+    public static final String ROLE_SENIOR_DOCTOR = "ROLE_SENIOR_DOCTOR";
+    public static final String ROLE_DOCTOR = "ROLE_DOCTOR";
+    public static final String ROLE_JUNIOR_DOCTOR = "ROLE_JUNIOR_DOCTOR";
+    public static final String ROLE_PATIENT = "ROLE_PATIENT";
 
     public static final String REDIRECT_ADMIN = "redirect:/admin";
     public static final String REDIRECT_SENIOR_DOCTOR = "redirect:/senior-doctor";
