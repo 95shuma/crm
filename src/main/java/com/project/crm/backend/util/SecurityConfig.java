@@ -51,6 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("PATIENT");
 
         http.authorizeRequests()
+                .antMatchers("/login")
+                .anonymous()
                 .anyRequest()
                 .permitAll();
     }
