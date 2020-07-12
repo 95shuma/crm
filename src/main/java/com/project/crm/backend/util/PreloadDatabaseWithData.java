@@ -36,7 +36,7 @@ public class PreloadDatabaseWithData {
                                    MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo,
                                    MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
                                    ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
-                                   ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo){
+                                   ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo){
         return (args) -> {
 
             examinationRepo.deleteAll();
@@ -54,6 +54,7 @@ public class PreloadDatabaseWithData {
             treatmentRepo.deleteAll();
             recordJournalRepo.deleteAll();
             medicalHistoryRepo.deleteAll();
+            passwordResetTokenRepo.deleteAll();
             userRepo.deleteAll();
             hospitalRepo.deleteAll();
             placeRepo.deleteAll();
