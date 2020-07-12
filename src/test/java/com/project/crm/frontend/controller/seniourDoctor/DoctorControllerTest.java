@@ -5,7 +5,6 @@ import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.RoleService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.backend.util.Constants;
-import com.project.crm.frontend.forms.UserRegisterForm;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
@@ -19,12 +18,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.ui.Model;
 
 import java.util.Arrays;
 import java.util.Calendar;
 
-import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,7 +43,6 @@ public class DoctorControllerTest {
     @MockBean
     private PositionService positionService;
 
-    private UserRegisterForm userRegisterForm;
     private Calendar calendar;
     private java.util.Date today;
     private String innSeniorDoctor;
@@ -61,8 +57,6 @@ public class DoctorControllerTest {
     private String correctGender;
     private String testString;
     //Wrong
-
-    private Model model;
 
     @Before
     public void setUp(){
@@ -101,7 +95,7 @@ public class DoctorControllerTest {
     public void getDoctors_checkWrongMethodWithoutAuthorization_ExpectRedirect_Status302() throws Exception {
         mockMvc.perform(get("/senior-doctor/doctors/doctor")
         ).andExpect(status().is(302))
-        .andExpect(redirectedUrl(Constants.LINK_HTTP + Constants.LINK_LOCALHOST + "/login"));
+        .andExpect(redirectedUrl(Constants.URL_HTTP + Constants.URL_LOCALHOST + "/login"));
     }
 
     //AddDoctor
