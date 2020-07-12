@@ -1,6 +1,5 @@
 package com.project.crm.frontend.controller.seniourDoctor;
 
-import com.project.crm.backend.model.User;
 import com.project.crm.backend.services.PlaceService;
 import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.RoleService;
@@ -25,6 +24,7 @@ import org.springframework.ui.Model;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -51,6 +51,7 @@ public class DoctorControllerTest {
     private java.util.Date today;
     private String innSeniorDoctor;
     private String passwordSeniorDoctor;
+    //Correct
     private String correctInn;
     private String correctPassword;
     private String correctDocumentNumber;
@@ -59,6 +60,7 @@ public class DoctorControllerTest {
     private String correctMiddleName;
     private String correctGender;
     private String testString;
+    //Wrong
 
     private Model model;
 
@@ -66,6 +68,7 @@ public class DoctorControllerTest {
     public void setUp(){
         innSeniorDoctor = "22222222222222";
         passwordSeniorDoctor = "22222222222222";
+        //Correct
         correctInn = "12345678912345";
         correctPassword = "123456789";
         correctDocumentNumber = "ID1234567";
@@ -76,9 +79,9 @@ public class DoctorControllerTest {
         calendar = Calendar.getInstance();
         today = calendar.getTime();
         testString = "тест";
+        //Wrong
+
     }
-
-
     @Test   //Проверят успешный Get запрос.
     public void getDoctors_checkMethod_expect() throws Exception {
         this.mockMvc.perform(get("/senior-doctor/doctors/doctor")
@@ -93,6 +96,12 @@ public class DoctorControllerTest {
         .andExpect(model().attribute(Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_SENIOR_DOCTOR))
         .andExpect(model().attribute(Constants.ROLE_DOCTOR, Constants.ROLE_DOCTOR))
         .andExpect(model().attribute(Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR));
+    }
+    @Test
+    public void getDoctors_checkWrongMethodWithoutAuthorization_ExpectRedirect_Status302() throws Exception {
+        mockMvc.perform(get("/senior-doctor/doctors/doctor")
+        ).andExpect(status().is(302))
+        .andExpect(redirectedUrl(Constants.LINK_HTTP + Constants.LINK_LOCALHOST + "/login"));
     }
 
     //AddDoctor
