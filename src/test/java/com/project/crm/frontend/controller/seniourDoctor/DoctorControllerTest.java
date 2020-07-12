@@ -1,57 +1,57 @@
 package com.project.crm.frontend.controller.seniourDoctor;
 
-import com.project.crm.backend.repository.PlaceRepo;
-import com.project.crm.backend.repository.RegistrationJournalRepo;
-import com.project.crm.backend.repository.RoleRepo;
-import com.project.crm.backend.repository.UserRepo;
-import com.project.crm.backend.services.RegistrationJournalService;
+import com.project.crm.backend.model.User;
+import com.project.crm.backend.services.PlaceService;
+import com.project.crm.backend.services.PositionService;
+import com.project.crm.backend.services.RoleService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.backend.util.Constants;
 import com.project.crm.frontend.forms.UserRegisterForm;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 
-import java.security.Principal;
+import java.util.Arrays;
 import java.util.Calendar;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+
 public class DoctorControllerTest {
     @Autowired
     private MockMvc mockMvc;
-    @Mock
-    UserService userService;
-//    @MockBean
-//    PropertiesService propertiesService;
-//
-//    ObjectMapper mapper = new ObjectMapper();
-    @Mock
-    PlaceRepo placeRepo;
-    @Mock
-    UserRepo userRepo;
-    @Mock
-    RoleRepo roleRepo;
-    @Mock
-    private RegistrationJournalService registrationJournalService;
-    @Mock
-    RegistrationJournalRepo registrationJournalRepo;
+    @MockBean
+    private UserService userService;
+    @MockBean
+    private RoleService roleService;
+    @MockBean
+    private PlaceService placeService;
+    @MockBean
+    private PositionService positionService;
 
     private UserRegisterForm userRegisterForm;
     private Calendar calendar;
     private java.util.Date today;
+    private String innSeniorDoctor;
+    private String passwordSeniorDoctor;
     private String correctInn;
     private String correctPassword;
     private String correctDocumentNumber;
@@ -65,10 +65,10 @@ public class DoctorControllerTest {
 
     @Before
     public void setUp(){
-        userRegisterForm = new UserRegisterForm();
-        model = new ConcurrentModel();
-        correctInn = "22222222222222";
-        correctPassword = "22222222222222";
+        innSeniorDoctor = "22222222222222";
+        passwordSeniorDoctor = "22222222222222";
+        correctInn = "12345678912345";
+        correctPassword = "123456789";
         correctDocumentNumber = "ID1234567";
         correctName = "Тест";
         correctSurname = "Тестов";
@@ -78,55 +78,19 @@ public class DoctorControllerTest {
         today = calendar.getTime();
         testString = "тест";
     }
-
-
     @Test
     public void getDoctors_checkMethod_expect() throws Exception {
-        //Principal principal = () -> correctInn;
-
         this.mockMvc.perform(get("/senior-doctor/doctors/doctor")
-                    .with(user(correctInn).password(correctPassword).roles(Constants.SENIOR_DOCTOR))
-                ).andExpect(status().isOk())
-                .andExpect(view().name("seniorDoctor/doctorController/doctorRegister"))
-        ;
-
-        //verify(userService, times(1)).checkUserPresence(model, principal);
-        //verifyNoMoreInteractions(todoServiceMock);
-
-
-
-
-
-        /*List<Role> roleList = new ArrayList<>();
-        for (int i = 1; i<=5; i++){
-            roleList.add(Role.builder()
-                    .id(Long.parseLong(Integer.toString(i)))
-                    .name(testString)
-                    .build()
-            );
-        }
-        when(roleRepo.findAll()).thenReturn(roleList);
-        when(registrationJournalRepo.existsByUserInnAndRoleId(Long.parseLong(correctInn), Long.parseLong("3"))).thenReturn(true);       //когда цикл доходит до нужной роли return true. Тем самым понятно что if срабатывает на той роли, на которой нужно
-        when(userRepo.findByInn(Long.parseLong(correctInn))).thenReturn(Optional.of(User.builder()
-                .id((long) 1)
-                .inn(Long.parseLong(correctInn))
-                .password(correctPassword)
-                .documentNumber(correctDocumentNumber)
-                .name(correctName)
-                .surname(correctSurname)
-                .middleName(correctMiddleName)
-                .fullName(correctSurname+" "+correctName+" "+correctMiddleName)
-                .gender(correctGender)
-                .place(Place.builder()
-                        .id((long) 1)
-                        .name(testString)
-                        .codePlace((long) 11111111)
-                        .groupCode((long)1)
-                        .build())
-                .birthDate(today)
-                .build())
-        );*/
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+        ).andExpect(status().isOk())
+        .andExpect(view().name("seniorDoctor/doctorController/doctorRegister"))
+        .andExpect(model().attribute("user", userService.getByInn(Long.parseLong(innSeniorDoctor))))
+        //.andExpect(model().attribute("reg", new UserRegisterForm()))
+        .andExpect(model().attribute("places", placeService.getAll()))
+        .andExpect(model().attribute("roles", roleService.getAll()))
+        .andExpect(model().attribute("positions", positionService.getAll()))
+        .andExpect(model().attribute(Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_SENIOR_DOCTOR))
+        .andExpect(model().attribute(Constants.ROLE_DOCTOR, Constants.ROLE_DOCTOR))
+        .andExpect(model().attribute(Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR));
     }
-
-
 }
