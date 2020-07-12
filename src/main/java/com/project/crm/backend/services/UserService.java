@@ -4,6 +4,7 @@ import com.project.crm.backend.dto.UserDTO;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.*;
+import com.project.crm.frontend.forms.NewPasswordRegisterForm;
 import com.project.crm.frontend.forms.PatientRegisterForm;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,11 @@ public class UserService {
     }
 
     public List<User> getAll(){return userRepo.findAll();}
+
+    public Page<UserDTO> getAll(Pageable pageable){
+        return userRepo.findAll(pageable).map(UserDTO::from);
+    }
+
 
     public Page<UserDTO> getAllPatients(Pageable pageable){
         return userRepo.findAllPatients(pageable).map(UserDTO::from);
