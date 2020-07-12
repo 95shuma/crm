@@ -100,11 +100,11 @@ public class DoctorControllerTest {
 
     //AddDoctor
     @Test
-    public void addDoctors_checkMethod_shouldRedirectToViewAfterSave() throws Exception {                            //Так как указан MockBean сохранение не происходит.
-        mockMvc.perform(post("/senior-doctor/doctors/doctor")                                               //Эмитируем Post запрос на нужную страницу
-                .with(csrf())                                                                                          //Добавляем token в параметы запроса. Иначе будет ошибка 403
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))             //Эмитируем авторизованный запрос - Иначе будет redirect 302
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                    //Тип данных при запросе
+    public void addDoctors_checkSuccessMethod_shouldRedirectToViewAfterSave() throws Exception {                        //Так как указан MockBean сохранение не происходит.
+        mockMvc.perform(post("/senior-doctor/doctors/doctor")                                                //Эмитируем Post запрос на нужную страницу
+                .with(csrf())                                                                                           //Добавляем token в параметы запроса. Иначе будет ошибка 403
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))              //Эмитируем авторизованный запрос - Иначе будет redirect 302
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
                         new BasicNameValuePair("inn", correctInn),
                         new BasicNameValuePair("password", correctPassword),
@@ -119,7 +119,13 @@ public class DoctorControllerTest {
                         new BasicNameValuePair("roleId", "1"),
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
-        ).andExpect(status().is(302))                                                                           //Если все прошло успешно, то додет до redirect на нужную страницу
-                .andExpect(view().name("redirect:/senior-doctor"));                                  //Соответственно проверяем страницу
+        ).andExpect(status().is(302))                                                                            //Если все прошло успешно, то додет до redirect на нужную страницу
+                .andExpect(view().name("redirect:/senior-doctor"));                                    //Соответственно проверяем страницу
+    }
+    @Test       //Проверем что при Post запросе без токена выйдет ошибка 403
+    public void addDoctors_checkWrongMethodWithoutCsrfToken_shouldRedirectTo403View() throws Exception {
+        mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+        ).andExpect(status().is(403));
     }
 }
