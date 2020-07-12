@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Constants {
+    public static final String LINK_HTTP = "http://";
+    public static final String LINK_LOCALHOST = "localhost"; //Потом поменяется
 
     public static final String ADMIN = "ADMIN" ;
     public static final String SENIOR_DOCTOR = "SENIOR_DOCTOR";
