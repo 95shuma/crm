@@ -83,19 +83,19 @@ public class DoctorControllerTest {
 
     }
     @Test   //Проверят успешный Get запрос.
-    public void getDoctors_checkMethod_expect() throws Exception {
+    public void getDoctors_checkSuccessMethodAuthorizedBySeniorDoctor_expectGet_Authorized_View_FilledModels() throws Exception {
         this.mockMvc.perform(get("/senior-doctor/doctors/doctor")
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))          //Эмитируем авторизованный запрос - Иначе будет redirect 302
-        ).andExpect(status().isOk())                                                                                //Ожидается успешный ответ 200
-        .andExpect(view().name("seniorDoctor/doctorController/doctorRegister"))                    //Ожидается return на view
-        .andExpect(model().attribute("user", userService.getByInn(Long.parseLong(innSeniorDoctor))))          //Под кем авторизовались, должен отобразиться в model attribute - user
-        //.andExpect(model().attribute("reg", new UserRegisterForm()))
-        .andExpect(model().attribute("places", placeService.getAll()))                                        //Далее аналогично с User
-        .andExpect(model().attribute("roles", roleService.getAll()))
-        .andExpect(model().attribute("positions", positionService.getAll()))
-        .andExpect(model().attribute(Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_SENIOR_DOCTOR))
-        .andExpect(model().attribute(Constants.ROLE_DOCTOR, Constants.ROLE_DOCTOR))
-        .andExpect(model().attribute(Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR));
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))                  //Эмитируем авторизованный запрос - Иначе будет redirect 302
+        ).andExpect(status().isOk())                                                                                        //Ожидается успешный ответ 200
+                .andExpect(view().name("seniorDoctor/doctorController/doctorRegister"))                    //Ожидается return на view
+                .andExpect(model().attribute("user", userService.getByInn(Long.parseLong(innSeniorDoctor))))          //Под кем авторизовались, должен отобразиться в model attribute - user
+                .andExpect(model().attributeExists("reg"))                                                          //Или Создается пустой UserRegisterForm, либо уже должен быть - Проверяю на наличие.
+                .andExpect(model().attribute("places", placeService.getAll()))                                        //Далее аналогично с User
+                .andExpect(model().attribute("roles", roleService.getAll()))
+                .andExpect(model().attribute("positions", positionService.getAll()))
+                .andExpect(model().attribute(Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_SENIOR_DOCTOR))
+                .andExpect(model().attribute(Constants.ROLE_DOCTOR, Constants.ROLE_DOCTOR))
+                .andExpect(model().attribute(Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR));
     }
     @Test
     public void getDoctors_checkWrongMethodWithoutAuthorization_ExpectRedirect_Status302() throws Exception {
