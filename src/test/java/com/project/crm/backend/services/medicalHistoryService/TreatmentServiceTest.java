@@ -50,6 +50,32 @@ public class TreatmentServiceTest {
         test_type = true;
     }
 
+    @Test
+    public void createTreatment_saveCorrectTreatment_expectSave(){
 
+        when(remedyRepo.findById((long) 1)).thenReturn(Optional.of(Remedy.builder()
+                .id((long) 1)
+                .name(test_remedy_note)
+                .build())
+        );
+
+        when(procedureRepo.findById((long)1)).thenReturn(Optional.of(Procedure.builder()
+                .id((long)1)
+                .name(test_procedure_note)
+                .build())
+        );
+
+        when(medicalHistoryRepo.findById((long)1)).thenReturn(Optional.of(MedicalHistory.builder()
+                .id((long)1)
+                .typeOfVisit(test_type)
+                .build())
+        );
+
+        treatmentRegisterForm.setRemedyId((long)1);
+        treatmentRegisterForm.setProcedureId((long)1);
+        treatmentRegisterForm.setMedicalHistoryId((long)1);
+
+        Assertions.assertDoesNotThrow(()-> treatmentService.createTreatment(treatmentRegisterForm));
+    }
 
 }
