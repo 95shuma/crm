@@ -42,6 +42,14 @@ public class TreatmentServiceTest {
     private String test_procedure_note;
     private boolean test_type;
 
+    @Before
+    public void setUp(){
+        treatmentRegisterForm = new TreatmentRegisterForm();
+        test_remedy_note = "орбидол";
+        test_procedure_note = "внутримышечно";
+        test_type = true;
+    }
+
 
 
 }
