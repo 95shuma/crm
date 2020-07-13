@@ -3,54 +3,52 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <form class="box-1" id="registration-sick-list" action="/admin/sickLists" method="post">
-                    <h3>Создать Больничный лист</h3>
+                <form class="box-1" id="registration-hospital" action="/doctor/directions" method="post">
+                    <h3>Добавить направление</h3>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
+                    <input name="medicalHistoryId" type="hidden" value="${medicalHistory_id}">
                     <div class="form-group">
-                        <p><label for="sikcList" class="col-form-label">Номер больничного листа</label></p>
-                        <input class="form-control" id="sikcList" maxlength="45" type="text" name="number" placeholder="Номер" autofocus>
-                        <#if errors??>
-                            <#list errors as fieldError>
-                                <#if fieldError.field == 'number'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
-                                </#if>
-                            </#list>
-                        </#if>
-                    </div>
-                    <div class="form-group">
-                        <p><label class="col-form-label" for="startDate">Дата открытия</label></p>
-                        <input class="form-control" id="startDate" type="date" name="startDate">
-                        <#if errors??>
-                            <#list errors as fieldError>
-                                <#if fieldError.field == 'startDate'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
-                                </#if>
-                            </#list>
-                        </#if>
-                    </div>
-                    <div class="form-group">
-                        <p><label class="col-form-label" for="endDate">Дата закрытия</label></p>
-                        <input class="form-control" id="endDate" type="date" name="endDate">
-                        <#if errors??>
-                            <#list errors as fieldError>
-                                <#if fieldError.field == 'endDate'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
-                                </#if>
-                            </#list>
-                        </#if>
-                    </div>
-                    <div class="form-group">
-                        <p><label for="medicalHistoryId" class="col-form-label">надо скрыть</label></p>
-                        <select class="form-control" id="medicalHistoryId" name="placeId">
-                            <#list histories as history>
-                                <option value="${history.id?c}">${history.name}</option>
+                        <p><label for="lpuPlaceId" class="col-form-label">Лабораторные исследования</label></p>
+                        <select class="form-control" id="lpuPlaceId" name="labExaminationId">
+                            <#list labExamination as labExamination>
+                                <option value="${labExamination.id}">${labExamination.name} - ${labExamination.rate}</option>
                             </#list>
                         </select>
                         <#if errors??>
                             <#list errors as fieldError>
-                                <#if fieldError.field == 'medicalHistoryId'>
+                                <#if fieldError.field == 'labExaminationId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </div>
+                    <div class="form-group">
+                        <p><label for="puPlaceId" class="col-form-label">Инструментальные исследования</label></p>
+                        <select class="form-control" id="puPlaceId" name="instrumExaminationId">
+                            <#list instrumExamination as instrumExamination>
+                                <option value="${instrumExamination.id}">${instrumExamination.name} - ${instrumExamination.rate} - ${instrumExamination.description}</option>
+                            </#list>
+                        </select>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'instrumExaminationId'>
+                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </div>
+                    <div class="form-group">
+                        <p><label for="puPlaceId" class="col-form-label">Должность</label></p>
+                        <select class="form-control" id="puPlaceId" name="positionId">
+                            <#list position as position>
+                                <option value="${position.id}">${position.name}</option>
+                            </#list>
+                        </select>
+                        <#if errors??>
+                            <#list errors as fieldError>
+                                <#if fieldError.field == 'positionId'>
                                     <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
                                 </#if>
                             </#list>

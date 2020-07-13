@@ -40,17 +40,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/default")
                 .authenticated()
                 .antMatchers("/admin/**")
-                .hasRole("ADMIN")
+                .hasRole(Constants.ADMIN)
                 .antMatchers("/senior-doctor/**")
-                .hasRole("SENIOR_DOCTOR")
+                .hasRole(Constants.SENIOR_DOCTOR)
                 .antMatchers("/doctor/**")
-                .hasRole("DOCTOR")
+                .hasRole(Constants.DOCTOR)
                 .antMatchers("/junior-doctor/**")
-                .hasRole("JUNIOR_DOCTOR")
+                .hasRole(Constants.JUNIOR_DOCTOR)
                 .antMatchers("/patient/**")
-                .hasRole("PATIENT");
+                .hasRole(Constants.PATIENT);
 
         http.authorizeRequests()
+                .antMatchers("/login")
+                .anonymous()
                 .anyRequest()
                 .permitAll();
     }

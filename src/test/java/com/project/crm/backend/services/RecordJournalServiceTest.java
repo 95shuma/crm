@@ -2,6 +2,7 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.services.HospitalService;
 import com.project.crm.backend.services.RecordJournalService;
+import com.project.crm.backend.services.medicalHistoryService.MedicalHistoryService;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.validation.ConstraintViolationException;
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,6 +25,9 @@ public class RecordJournalServiceTest {
 
     @Autowired
     private HospitalService hospitalService;
+
+    @Autowired
+    private MedicalHistoryService medicalHistoryService;
 
     private RecordJournalRegisterForm recordJournalRegisterForm;
 
@@ -41,8 +46,10 @@ public class RecordJournalServiceTest {
 
         // Allocate
         recordJournalRegisterForm.setReason("живот");
+        recordJournalRegisterForm.setDateTime(LocalDateTime.now());
         recordJournalRegisterForm.setDoctorId(Long.parseLong("33333333333333"));
         recordJournalRegisterForm.setHospitalId(hospitalService.getAll().get(0).getId());
+        recordJournalRegisterForm.setMedicalHistoryId(medicalHistoryService.getAll().get(0).getId());
 
         Principal principal = () -> "55555555555555";
 
@@ -58,6 +65,8 @@ public class RecordJournalServiceTest {
         recordJournalRegisterForm.setDoctorId(Long.parseLong("33333333333333"));
         recordJournalRegisterForm.setRegistrarId(Long.parseLong("33333333333333"));
         recordJournalRegisterForm.setHospitalId(hospitalService.getAll().get(0).getId());
+        recordJournalRegisterForm.setMedicalHistoryId(medicalHistoryService.getAll().get(0).getId());
+
 
         Principal principal = () -> "55555555555555";
 

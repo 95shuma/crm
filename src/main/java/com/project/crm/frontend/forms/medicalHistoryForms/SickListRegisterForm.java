@@ -1,4 +1,4 @@
-package com.project.crm.frontend.forms;
+package com.project.crm.frontend.forms.medicalHistoryForms;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ public class SickListRegisterForm {
     @NotNull(message = "Обязательное поле")
     @Size(min = 7, max = 7, message = "Требуется ввести 7 цифр")
     @Pattern(regexp="^\\d+$", message = "№ состоит только из цифр : ${validatedValue}")
-    private Long number;
+    private String number;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Обязательное поле")

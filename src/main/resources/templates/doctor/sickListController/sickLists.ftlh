@@ -9,7 +9,6 @@
             <th scope="col">Номер </th>
             <th scope="col">открытие</th>
             <th scope="col">закрытие</th>
-            <th scope="col">чей</th>
         </tr>
         </thead>
         <tbody id="Table">
@@ -19,12 +18,11 @@
                 <td>${list.number}</td>
                 <td>${list.startDate}</td>
                 <td>${list.endDate}</td>
-
             </tr>
         </#list>
         </tbody>
     </table>
-    <a type="button" class="btn btn-primary w-100" href="/doctor/sickLists/sickList">
+    <a type="button" class="btn btn-primary w-100" href="/doctor/medical-history/${medicalHistoryId?c}/sickList">
         Добавить
     </a>
     <#include "../../partials/pagination.ftlh">

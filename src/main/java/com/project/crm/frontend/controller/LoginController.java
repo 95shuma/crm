@@ -1,6 +1,8 @@
 package com.project.crm.frontend.controller;
 import com.project.crm.backend.services.RegistrationJournalService;
+import com.project.crm.backend.services.RoleService;
 import com.project.crm.backend.services.UserService;
+import com.project.crm.backend.util.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ public class LoginController {
 
     private final UserService userService;
     private final RegistrationJournalService registrationJournalService;
+    private RoleService roleService;
 
     @GetMapping("/login")
     public String login(Model model, @RequestParam(required = false, defaultValue = "false") Boolean error, Principal principal) {
@@ -26,23 +29,15 @@ public class LoginController {
 
     @GetMapping("/default")
     public String defaultPage(@RequestParam(required = false, defaultValue = "false") Boolean error, Model model, Principal principal) {
-
         model.addAttribute("error", error);
 
         if(principal != null){
-
             Long inn = Long.parseLong(principal.getName());
 
-            if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 1)) {
-                return "redirect:/admin";
-            } else if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 2)){
-                return "redirect:/senior-doctor";
-            } else if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 3)){
-                return "redirect:/doctor";
-            } else if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 4)){
-                return "redirect:/junior-doctor";
-            } else if (registrationJournalService.existsByUserInnAndRoleId(inn, (long) 5)){
-                return "redirect:/patient";
+            for (int i = 0; i < roleService.getAll().size(); i++){
+                if (registrationJournalService.existsByUserInnAndRoleId(inn, roleService.getAll().get(i).getId())){
+                    return Constants.REDIRECT_LIST().get(i);
+                }
             }
         }
         return "/login";

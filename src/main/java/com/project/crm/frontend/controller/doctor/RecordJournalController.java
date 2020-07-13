@@ -1,12 +1,11 @@
 package com.project.crm.frontend.controller.doctor;
 
-import com.project.crm.backend.model.catalog.MedicalHistory;
-import com.project.crm.backend.services.MedicalHistoryService;
-import com.project.crm.backend.services.PropertiesService;
-import com.project.crm.backend.services.RecordJournalService;
-import com.project.crm.backend.services.UserService;
-import com.project.crm.frontend.forms.MedicalHistoryRegisterForm;
-import com.project.crm.frontend.forms.RecordJournalRegisterForm;
+import com.project.crm.backend.services.*;
+import com.project.crm.backend.services.medicalHistoryService.DirectionService;
+import com.project.crm.backend.services.medicalHistoryService.InstrumExaminationService;
+import com.project.crm.backend.services.medicalHistoryService.LabExaminationService;
+import com.project.crm.backend.services.medicalHistoryService.MedicalHistoryService;
+import com.project.crm.frontend.forms.medicalHistoryForms.MedicalHistoryRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -29,9 +28,13 @@ import static com.project.crm.backend.services.PropertiesService.constructPageab
 @AllArgsConstructor
 public class RecordJournalController {
 
+    private final DirectionService directionService;
     private final RecordJournalService recordJournalService;
     private final UserService userService;
     private final PropertiesService propertiesService;
+    private final LabExaminationService labExaminationService;
+    private final InstrumExaminationService instrumExaminationService;
+    private final PositionService positionService;
     private final MedicalHistoryService medicalHistoryService;
 
 

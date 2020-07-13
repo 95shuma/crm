@@ -1,7 +1,11 @@
 package com.project.crm.frontend.controller.doctor;
 
 import com.project.crm.backend.services.*;
-import com.project.crm.frontend.forms.TreatmentRegisterForm;
+import com.project.crm.backend.services.medicalHistoryService.MedicalHistoryService;
+import com.project.crm.backend.services.medicalHistoryService.ProcedureService;
+import com.project.crm.backend.services.medicalHistoryService.TreatmentService;
+import com.project.crm.backend.services.remediesService.RemedyService;
+import com.project.crm.frontend.forms.medicalHistoryForms.TreatmentRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;

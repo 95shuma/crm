@@ -1,4 +1,4 @@
-package com.project.crm.frontend.forms;
+package com.project.crm.frontend.forms.medicalHistoryForms;
 
 import lombok.Getter;
 import lombok.Setter;

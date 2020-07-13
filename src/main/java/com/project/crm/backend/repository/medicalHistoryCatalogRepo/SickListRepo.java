@@ -14,5 +14,5 @@ public interface SickListRepo extends JpaRepository<SickList, Long> {
     Optional<SickList> findByNumber(Long number);
 
     @Query(value = "select * from sick_lists as s order by s.start_date asc", nativeQuery = true)
-    Page<SickList> findAll(Pageable page);
+    Page<SickList> findAllByMedicalHistoryId(Pageable page, Long Id);
 }

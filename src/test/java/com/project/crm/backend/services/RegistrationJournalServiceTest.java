@@ -54,9 +54,9 @@ public class RegistrationJournalServiceTest {
     }
     @Test
     public void createRegistrationJournal_saveCorrectUser_expectSave() {
-        when(roleRepo.findByName(Constants.ADMIN)).thenReturn(Optional.of(Role.builder()
+        when(roleRepo.findByName(Constants.ROLE_ADMIN)).thenReturn(Optional.of(Role.builder()
                 .id((long) 1)
-                .name(Constants.ADMIN)
+                .name(Constants.ROLE_ADMIN)
                 .build()
         ));
         userRegisterForm.setInn(correctInn);

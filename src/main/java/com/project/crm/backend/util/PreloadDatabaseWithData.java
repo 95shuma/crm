@@ -36,7 +36,7 @@ public class PreloadDatabaseWithData {
                                    MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo,
                                    MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
                                    ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
-                                   ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo){
+                                   ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo){
         return (args) -> {
 
             examinationRepo.deleteAll();
@@ -54,6 +54,7 @@ public class PreloadDatabaseWithData {
             treatmentRepo.deleteAll();
             recordJournalRepo.deleteAll();
             medicalHistoryRepo.deleteAll();
+            passwordResetTokenRepo.deleteAll();
             userRepo.deleteAll();
             hospitalRepo.deleteAll();
             placeRepo.deleteAll();
@@ -149,7 +150,7 @@ public class PreloadDatabaseWithData {
             //-->======================== Place ========================
             //--<======================== Roles ========================
             List <Role> roleList = new ArrayList<>();
-            String[] roles = {Constants.ADMIN, Constants.SENIOR_DOCTOR, Constants.DOCTOR, Constants.JUNIOR_DOCTOR, Constants.PATIENT};
+            String[] roles = {Constants.ROLE_ADMIN, Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_PATIENT};
             for (int i=0; i<roles.length; i++){
                 roleRepo.insertRoleWithId(Long.parseLong(Integer.toString(i+1)), roles[i]);
             }
@@ -352,6 +353,19 @@ public class PreloadDatabaseWithData {
             for (int i = 0; i < qty; i++){
                 recordJournalList.add(RecordJournal.builder()
                         .doctor(userRepo.findAllDoctors().get(rn.nextInt(userRepo.findAllDoctors().size())))
+                        .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
+                        .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                        .dateTime(LocalDateTime.now())
+                        .dateTimeNow(LocalDateTime.now())
+                        .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
+                        .build()
+                );
+            }
+            for (int i = 0; i < 5; i++){
+                recordJournalList.add(RecordJournal.builder()
+                        .doctor(userRepo.findByInn(33333333333333L).get())
                         .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
                         .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
                         .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))

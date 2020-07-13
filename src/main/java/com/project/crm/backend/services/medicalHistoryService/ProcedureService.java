@@ -1,4 +1,4 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.medicalHistoryService;
 
 import com.project.crm.backend.dto.medicalHistoryCatalogDTO.ProcedureDTO;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.ProcedureRepo;

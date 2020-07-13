@@ -1,6 +1,7 @@
 package com.project.crm.frontend.forms;
 
 
+import com.project.crm.frontend.forms.remediesForm.RemedyRegisterForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;

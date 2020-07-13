@@ -1,11 +1,11 @@
-package com.project.crm.backend.services;
+package com.project.crm.backend.services.medicalHistoryService;
 
 
 import com.project.crm.backend.dto.medicalHistoryCatalogDTO.SickListDTO;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.SickList;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.SickListRepo;
-import com.project.crm.frontend.forms.SickListRegisterForm;
+import com.project.crm.frontend.forms.medicalHistoryForms.SickListRegisterForm;
 import lombok.AllArgsConstructor;
 
 import org.springframework.data.domain.Page;
@@ -29,13 +29,13 @@ public class SickListService {
 
     public List<SickList> getAll(){return sickListRepo.findAll();}
 
-    public Page<SickListDTO> getAllSickLists(Pageable pageable){
-        return sickListRepo.findAll(pageable).map(SickListDTO::from);
+    public Page<SickListDTO> getAllSickLists(Pageable pageable, Long medicalHistoryId){
+        return sickListRepo.findAllByMedicalHistoryId(pageable,medicalHistoryId).map(SickListDTO::from);
     }
 
     public void createSickList(SickListRegisterForm sickListRegisterForm){
         var user = SickList.builder()
-                .number(sickListRegisterForm.getNumber())
+                .number(Long.valueOf(sickListRegisterForm.getNumber()))
                 .startDate(sickListRegisterForm.getStartDate())
                 .endDate(sickListRegisterForm.getEndDate())
                 .medicalHistory(medicalHistoryRepo.findById(sickListRegisterForm.getMedicalHistoryId()).get())
