@@ -54,6 +54,9 @@
                         <a href="/doctor/directions/${patient.medicalHistory.id?c}/direction" class="btn btn-primary btn-block">Создать направление</a>
                     </div>
                     <div class="form-group">
+                        <a href="/doctor/treatments/treatment" class="btn btn-primary btn-block">Добавить назначение</a>
+                    </div>
+                    <div class="form-group">
                         <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/examination-results" class="btn btn-primary btn-block">Обнаружено (осмотр и результаты исследований)</a>
                     </div>
                     <div class="form-group">
