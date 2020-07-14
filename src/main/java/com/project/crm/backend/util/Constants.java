@@ -10,6 +10,9 @@ public final class Constants {
     public static final String PROFILE_ENVIRONMENT_DEVELOPMENT = "development";
     public static final String PROFILE_ENVIRONMENT_PRODUCTION = "production";
 
+    public static final String ADMIN_MAIN_INN = "11111111111111";
+    public static final String ADMIN_MAIN_PASSWORD = "root123#$";
+
     public static final String ADMIN = "ADMIN" ;
     public static final String SENIOR_DOCTOR = "SENIOR_DOCTOR";
     public static final String DOCTOR = "DOCTOR";
