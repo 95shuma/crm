@@ -31,10 +31,6 @@ public class PreloadDatabaseWithData {
     @Profile(Constants.PROFILE_ENVIRONMENT_PRODUCTION)
     CommandLineRunner fillDatabaseWithConstantData(UserRepo userRepo, RegistrationJournalRepo registrationJournalRepo,  RoleRepo roleRepo){
         return (args) -> {
-            registrationJournalRepo.deleteAll();
-            roleRepo.deleteAll();
-            userRepo.deleteAll();
-
             String[] roles = {Constants.ROLE_ADMIN, Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_PATIENT};
             for (int i=0; i<roles.length; i++){
                 roleRepo.insertRoleWithId(Long.parseLong(Integer.toString(i+1)), roles[i]);
