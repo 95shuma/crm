@@ -1,7 +1,6 @@
 package com.project.crm.backend.util;
 
 import com.github.javafaker.Faker;
-import com.project.crm.backend.dto.MedicalHistoryDTO;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.*;
@@ -12,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
@@ -29,6 +29,7 @@ public class PreloadDatabaseWithData {
     private static final Faker faker = new Faker(new Locale("ru"));
 
     @Bean
+    @Profile(Constants.PROFILE_ENVIRONMENT_DEVELOPMENT)
     CommandLineRunner fillDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
                                    HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo,
                                    RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
