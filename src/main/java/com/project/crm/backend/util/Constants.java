@@ -7,6 +7,9 @@ public final class Constants {
     public static final String URL_HTTP = "http://";
     public static final String URL_LOCALHOST = "localhost"; //Потом поменяется
 
+    public static final String PROFILE_ENVIRONMENT_DEVELOPMENT = "development";
+    public static final String PROFILE_ENVIRONMENT_PRODUCTION = "production";
+
     public static final String ADMIN = "ADMIN" ;
     public static final String SENIOR_DOCTOR = "SENIOR_DOCTOR";
     public static final String DOCTOR = "DOCTOR";
