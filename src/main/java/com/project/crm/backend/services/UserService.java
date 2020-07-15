@@ -113,7 +113,7 @@ public class UserService {
             Long inn = Long.parseLong(principal.getName());
             for (Role role: roleRepo.findAll()){
                 if (registrationJournalRepo.existsByUserInnAndRoleId(inn, role.getId())){
-                    model.addAttribute("user", userRepo.findByInn(inn).get());
+                    model.addAttribute("user", getByInn(inn));
                     break;
                 }
             }
