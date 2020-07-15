@@ -1,4 +1,4 @@
-package com.project.crm.ui.editPasswordSteps;
+package com.project.crm.ui.steps;
 
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.И;
@@ -7,8 +7,6 @@ import io.cucumber.java.ru.Тогда;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class EditPassword extends Steps {
 
