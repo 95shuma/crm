@@ -31,36 +31,40 @@ public class PreloadDatabaseWithData {
     @Profile(Constants.PROFILE_ENVIRONMENT_PRODUCTION)
     CommandLineRunner fillDatabaseWithConstantData(UserRepo userRepo, RegistrationJournalRepo registrationJournalRepo,  RoleRepo roleRepo){
         return (args) -> {
-            String[] roles = {Constants.ROLE_ADMIN, Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_PATIENT};
-            for (int i=0; i<roles.length; i++){
-                roleRepo.insertRoleWithId(Long.parseLong(Integer.toString(i+1)), roles[i]);
+            if (roleRepo.findAll().size() == 0){
+                String[] roles = {Constants.ROLE_ADMIN, Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_PATIENT};
+                for (int i=0; i<roles.length; i++){
+                    roleRepo.insertRoleWithId(Long.parseLong(Integer.toString(i+1)), roles[i]);
+                }
             }
-            //--<======================== Admin ========================
-            String[] adminName = {" ", faker.name().lastName(), faker.name().firstName(), faker.name().lastName()};
+            if (userRepo.findAll().size() == 0){
+                //--<======================== Admin ========================
+                String[] adminName = {" ", faker.name().lastName(), faker.name().firstName(), faker.name().lastName()};
 
-            var user = User.builder()
-                    .id(Long.parseLong("1"))
-                    .inn(Long.parseLong(Constants.ADMIN_MAIN_INN))
-                    .password(passwordEncoder.encode(Constants.ADMIN_MAIN_PASSWORD))
-                    .documentNumber("ID".concat(faker.number().digits(7)))
-                    .fullName(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
-                    .surname(adminName[1])
-                    .name(adminName[2])
-                    .middleName(adminName[3])
-                    .birthDate(faker.date().birthday())
-                    .gender(getRandomGender())
-                    .enabled(true)
-                    .build();
+                var user = User.builder()
+                        .id(Long.parseLong("1"))
+                        .inn(Long.parseLong(Constants.ADMIN_MAIN_INN))
+                        .password(passwordEncoder.encode(Constants.ADMIN_MAIN_PASSWORD))
+                        .documentNumber("ID".concat(faker.number().digits(7)))
+                        .fullName(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
+                        .surname(adminName[1])
+                        .name(adminName[2])
+                        .middleName(adminName[3])
+                        .birthDate(faker.date().birthday())
+                        .gender(getRandomGender())
+                        .enabled(true)
+                        .build();
 
-            userRepo.save(user);
+                userRepo.save(user);
 
-            var registrationJournal = RegistrationJournal.builder()
-                    .user(userRepo.findByInn(Long.parseLong(Constants.ADMIN_MAIN_INN)).get())
-                    .role(roleRepo.findById((long) 1).get())
-                    .build();
+                var registrationJournal = RegistrationJournal.builder()
+                        .user(userRepo.findByInn(Long.parseLong(Constants.ADMIN_MAIN_INN)).get())
+                        .role(roleRepo.findById((long) 1).get())
+                        .build();
 
-            registrationJournalRepo.save(registrationJournal);
-            //-->======================== Admin ========================
+                registrationJournalRepo.save(registrationJournal);
+                //-->======================== Admin ========================
+            }
         };
     }
 
