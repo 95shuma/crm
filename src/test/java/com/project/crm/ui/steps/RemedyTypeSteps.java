@@ -59,12 +59,12 @@ public class RemedyTypeSteps extends Steps {
     }
     @Тогда("выходит ошибка об Обязательном поле")
     public void выходитОшибкаОбОбязательномПоле() {
-        Assertions.assertEquals("Название должно содержать только буквы : letters4444",  webDriver.findElement(By.xpath("//form[@id='type']//div[@class='alert alert-warning mt-1']")).getText());
+        Assertions.assertEquals("Обязательное поле",  webDriver.findElement(By.xpath("//form[@id='type']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
     @Тогда("выходят уведомления об ошибках")
     public void выходятУведомленияОбОшибках() {
-        Assertions.assertEquals("Обязательное поле",  webDriver.findElement(By.xpath("//form[@id='type']//div[@class='alert alert-warning mt-1']")).getText());
+        Assertions.assertEquals("Название должно содержать только буквы : letters4444",  webDriver.findElement(By.xpath("//form[@id='type']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
 }

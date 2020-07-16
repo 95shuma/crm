@@ -64,7 +64,7 @@ public class PharmGroupSteps extends Steps {
 
     @Тогда("выходят ошибки")
     public void выходятОшибки() {
-        Assertions.assertEquals("Название должно содержать только буквы : letters4444", webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1']")).getText());
+        Assertions.assertEquals("Обязательное поле", webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
 }

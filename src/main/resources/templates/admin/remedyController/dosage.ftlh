@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <p><label for="measureId" class="col-form-label">Единица измерения</label></p>
-                        <select class="form-control" id="lpuPlaceId" name="placeId">
+                        <select class="form-control" id="measureId" name="measureId">
                             <#list measures as measure>
                                 <option value="${measure.id?c}">${measure.name}</option>
                             </#list>
