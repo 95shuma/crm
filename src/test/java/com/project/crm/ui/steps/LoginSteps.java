@@ -1,5 +1,7 @@
 package com.project.crm.ui.steps;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
@@ -10,6 +12,17 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 public class LoginSteps extends Steps {
+
+
+    @Before("@loginPage")
+    public void start(){
+        setUp();
+    }
+
+    @After("@loginPage")
+    public void finish(){
+        tearDown();
+    }
 
     @Допустим("я захожу на главную страницу")
     public void яЗахожуНаГлавнуюСтраницу() {
@@ -28,30 +41,20 @@ public class LoginSteps extends Steps {
     @И("кнопка {string} должна быть скрыта")
     public void кнопкаДолжнаБытьСкрыта(String arg0) {
         Assertions.assertThrows(NoSuchElementException.class, () -> getElementByTextFromHeader(arg0));
-        webDriver.close();
     }
 
     @Когда("я авторизованный пользователь")
     public void яАвторизованныйПользователь() {
-        WebElement username = webDriver.findElement(By.name("username"));
-        username.sendKeys("11111111111111");
-        WebElement password = webDriver.findElement(By.name("password"));
-        password.sendKeys("11111111111111");
-        password.submit();
+        login("11111111111111","11111111111111");
     }
 
     @Когда("я введу неверный инн и пароль")
     public void яВведуНеверныйИннИПароль() {
-        WebElement username = webDriver.findElement(By.name("username"));
-        username.sendKeys("66666666666666");
-        WebElement password = webDriver.findElement(By.name("password"));
-        password.sendKeys("66666666666666");
-        password.submit();
+        login("66666666666666","66666666666666");
     }
 
     @Тогда("высвечуться сообщение ошибки")
     public void высвечутьсяСообщениеОшибки() {
-        Assertions.assertEquals("Вы ввели неверный ИНН или пароль", getElementFromLoginForm().getText());
-        webDriver.close();
+        Assertions.assertEquals("Вы ввели неверный ИНН или пароль", webDriver.findElement(By.xpath("//form[@id='login-form']//div[@class='alert alert-warning mt-1']")).getText());
     }
 }
