@@ -54,7 +54,7 @@
                     </#list>
                 </#if>
                 <input type="hidden" name="regJournalId" class="form-control" value=${regJournalId?c}>
-                <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px">Добавить</button>
+                <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px" id="button">Добавить</button>
             </div>
         </form>
     </div>
