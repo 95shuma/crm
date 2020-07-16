@@ -672,5 +672,43 @@ public class FillDatabase {
 
 
     // --> ========================================= SAVE методы =========================================
+    // --< ========================================= DELETE методы =========================================
+    public static void deleteAllData(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
+                                     HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo,
+                                     RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
+                                     RemedyRepo remedyRepo, ExaminationRepo examinationRepo, DosageRepo dosageRepo, InternationalNameRepo internationalNameRepo,
+                                     MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo,
+                                     MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
+                                     ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
+                                     ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo){
+        examinationRepo.deleteAll();
+        diseaseRepo.deleteAll();
+        registrationJournalRepo.deleteAll();
+        roleRepo.deleteAll();
+        diagnoseResultRepo.deleteAll();
+        diagnoseRepo.deleteAll();
+        directionRepo.deleteAll();
+        examinationResultRepo.deleteAll();
+        instrumExaminationRepo.deleteAll();
+        labExaminationRepo.deleteAll();
+        positionRepo.deleteAll();
+        sickListRepo.deleteAll();
+        treatmentRepo.deleteAll();
+        recordJournalRepo.deleteAll();
+        medicalHistoryRepo.deleteAll();
+        passwordResetTokenRepo.deleteAll();
+        userRepo.deleteAll();
+        hospitalRepo.deleteAll();
+        placeRepo.deleteAll();
+        procedureRepo.deleteAll();
+        remedyRepo.deleteAll();
+        dosageRepo.deleteAll();
+        measureRepo.deleteAll();
+        remediesFormRepo.deleteAll();
+        remedyTypeRepo.deleteAll();
+        internationalNameRepo.deleteAll();
+        pharmacologicalGroupRepo.deleteAll();
+    }
+    // --> ========================================= DELETE методы =========================================
 }
 
