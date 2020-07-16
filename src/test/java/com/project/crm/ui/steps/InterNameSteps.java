@@ -1,19 +1,13 @@
 package com.project.crm.ui.steps;
 
-import com.project.crm.frontend.forms.PatientRegisterForm;
-import com.project.crm.frontend.forms.PlaceRegisterForm;
+
 import com.project.crm.frontend.forms.remediesForm.InternationalNameRegisterForm;
-import com.project.crm.frontend.forms.remediesForm.RemedyRegisterForm;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
