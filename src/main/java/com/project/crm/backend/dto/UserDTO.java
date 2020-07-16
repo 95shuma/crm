@@ -40,6 +40,19 @@ public class UserDTO {
                 .place(PlaceDTO.from(user.getPlace()))
                 .build();
     }
+    public static UserDTO fromWithoutPlace(User user) {
+        return builder()
+                .id(user.getId())
+                .inn(user.getInn())
+                .documentNumber(user.getDocumentNumber())
+                .fullName(user.getFullName())
+                .name(user.getName())
+                .surname(user.getSurname())
+                .middleName(user.getMiddleName())
+                .birthDate(user.getBirthDate())
+                .gender(user.getGender())
+                .build();
+    }
 
     public static List<UserDTO> listFrom(List<User> objList){
         List<UserDTO> listDto = new ArrayList<>();

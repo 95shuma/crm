@@ -32,7 +32,10 @@ public class UserService {
 
     public UserDTO getByInn(Long inn){
         User user = userRepo.findByInn(inn).get();
-        return UserDTO.from(user);
+        if (user.getPlace() == null)
+            return UserDTO.fromWithoutPlace(user);
+        else
+            return UserDTO.from(user);
     }
 
     public boolean existByInn(Long inn){
