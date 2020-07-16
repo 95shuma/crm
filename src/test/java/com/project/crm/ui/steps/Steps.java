@@ -40,5 +40,7 @@ public class Steps {
     protected WebElement getElementFromPharmGroup(){
         return webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1']"));
     }
-
+    protected WebElement getElementFromRemediesForm(){
+        return webDriver.findElement(By.xpath("//form[@id='remedyForm']//div[@class='alert alert-warning mt-1']"));
+    }
 }
