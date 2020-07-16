@@ -10,9 +10,20 @@ public class Steps {
 
     WebDriver webDriver;
 
-    protected Steps(){
+    public void setUp(){
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
+    }
+
+    public void tearDown(){
+        webDriver.close();
+    }
+
+    public void login(String name, String pass){
+        webDriver.get("http://localhost:7777/login");
+        webDriver.findElement(By.name("username")).sendKeys(name);
+        webDriver.findElement(By.name("password")).sendKeys(pass);
+        webDriver.findElement(By.name("login")).click();
     }
 
     protected WebElement getElementByTextFromHeader(String text){
@@ -21,6 +32,10 @@ public class Steps {
 
     protected WebElement getElementFromLoginForm(){
         return webDriver.findElement(By.xpath("//form[@id='login-form']//div[@class='alert alert-warning mt-1']"));
+    }
+
+    protected WebElement getElementFromInterName(){
+        return webDriver.findElement(By.xpath("//form[@id='commentForm']//div[@class='alert alert-warning mt-1']"));
     }
 
 }
