@@ -6,7 +6,7 @@ import com.project.crm.backend.repository.MedicalHistoryRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.ExaminationResultRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.InstrumExaminationRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.LabExaminationRepo;
-import com.project.crm.frontend.forms.remediesForm.ExaminationResultForm;
+import com.project.crm.frontend.forms.medicalHistoryForms.ExaminationResultForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

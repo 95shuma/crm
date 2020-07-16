@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-center">
             <div class="mx-3">
                 <h3>Добавление новых значений дозировок</h3>
-                <form id="measure" action="/admin/dosages" method="post">
+                <form id="doze" action="/admin/dosages" method="post">
                     <#if _csrf??>
                         <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
                     </#if>

@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-center">
             <div class="mx-3">
                 <h3>Добавление типа</h3>
-                <form id="measure" action="/admin/remedyTypes" method="post">
+                <form id="type" action="/admin/remedyTypes" method="post">
                     <#if _csrf??>
                         <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
                     </#if>

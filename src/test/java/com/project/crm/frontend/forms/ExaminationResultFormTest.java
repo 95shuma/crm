@@ -1,7 +1,7 @@
 package com.project.crm.frontend.forms;
 
 
-import com.project.crm.frontend.forms.remediesForm.ExaminationResultForm;
+import com.project.crm.frontend.forms.medicalHistoryForms.ExaminationResultForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -12,7 +12,6 @@ import javax.validation.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.*;
