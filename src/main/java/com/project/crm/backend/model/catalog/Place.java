@@ -21,7 +21,6 @@ public class Place {
     @NotBlank(message = "Обязательное поле")
     private String name;
 
-    @Column(unique = true)
     @NotNull(message = "Обязательное поле")
     private Long codePlace;
 
