@@ -34,16 +34,4 @@ public class Steps {
         return webDriver.findElement(By.xpath("//form[@id='login-form']//div[@class='alert alert-warning mt-1']"));
     }
 
-    protected WebElement getElementFromInterName(){
-        return webDriver.findElement(By.xpath("//form[@id='commentForm']//div[@class='alert alert-warning mt-1']"));
-    }
-    protected WebElement getElementFromPharmGroup(){
-        return webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1']"));
-    }
-    protected WebElement getElementFromRemediesForm(){
-        return webDriver.findElement(By.xpath("//form[@id='remedyForm']//div[@class='alert alert-warning mt-1']"));
-    }
-    protected WebElement getElementFromRemedyType(){
-        return webDriver.findElement(By.xpath("//form[@id='type']//div[@class='alert alert-warning mt-1']"));
-    }
 }
