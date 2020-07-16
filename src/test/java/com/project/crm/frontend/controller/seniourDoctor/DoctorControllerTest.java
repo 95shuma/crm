@@ -10,7 +10,7 @@ import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.RoleService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.backend.util.Constants;
-import com.project.crm.backend.util.CreateMethods;
+import com.project.crm.backend.util.FillDatabase;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)            //Что-то вроде типа теста. В данном случае Интеграционный. От данного параметра зависит как поведут себя анотации @Autowired, @MockBean, @Mock внутри класса
 @SpringBootTest                         //Запускает тест -> Формирует ApplicationContext. Более подробно в #91 тикете.
 @AutoConfigureMockMvc                   //Конфигурирует mockMVC
-public class DoctorControllerTest extends CreateMethods {
+public class DoctorControllerTest extends FillDatabase {
     @Autowired
     private MockMvc mockMvc;
     @Autowired                           //Если указать @Autowired то тест запустится напрямую с БД, т.е. при тестовом repo.save произойдет реальное сохранение в БД
