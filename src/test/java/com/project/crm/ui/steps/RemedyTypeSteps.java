@@ -25,7 +25,7 @@ public class RemedyTypeSteps extends Steps {
     private Validator validator;
 
     private RemedyTypeRegisterForm remedyTypeRegisterForm;
-    @Before
+    @Before("@type")
     public void start(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -33,7 +33,7 @@ public class RemedyTypeSteps extends Steps {
         setUp();
     }
 
-    @After
+    @After("@type")
     public void finish(){
         tearDown();
     }
@@ -78,7 +78,7 @@ public class RemedyTypeSteps extends Steps {
     }
     @Тогда("выходит ошибка об Обязательном поле")
     public void выходитОшибкаОбОбязательномПоле() {
-        Assertions.assertEquals("Название должно содержать только буквы : letters4444", getElementFromRemedyType().getText());
+        Assertions.assertEquals("Название должно содержать только буквы : letters4444",  webDriver.findElement(By.xpath("//form[@id='type']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
     @Тогда("выходят уведомления об ошибках")

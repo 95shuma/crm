@@ -24,7 +24,7 @@ public class InterNameSteps extends Steps {
     private Validator validator;
 
     private InternationalNameRegisterForm internationalNameRegisterForm;
-    @Before
+    @Before("@international")
     public void start(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -32,7 +32,7 @@ public class InterNameSteps extends Steps {
         setUp();
     }
 
-    @After
+    @After("@international")
     public void finish(){
         tearDown();
     }
@@ -77,7 +77,7 @@ public class InterNameSteps extends Steps {
     }
     @Тогда("выходит сообщение об ошибке")
     public void выходитСообщениеОбОшибке() {
-        Assertions.assertEquals("Название должно содержать только буквы : letters4444", getElementFromInterName().getText());
+        Assertions.assertEquals("Название должно содержать только буквы : letters4444",  webDriver.findElement(By.xpath("//form[@id='commentForm']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
     @Тогда("выходят сообщения об ошибке")

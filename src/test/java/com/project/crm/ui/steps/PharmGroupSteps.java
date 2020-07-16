@@ -24,7 +24,7 @@ public class PharmGroupSteps extends Steps {
     private Validator validator;
 
     private PharmacologicalGroupRegisterForm pharmacologicalGroupRegisterForm;
-    @Before
+    @Before("@group")
     public void start(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -32,7 +32,7 @@ public class PharmGroupSteps extends Steps {
         setUp();
     }
 
-    @After
+    @After("@group")
     public void finish(){
         tearDown();
     }
@@ -77,7 +77,7 @@ public class PharmGroupSteps extends Steps {
     }
     @Тогда("выходит ошибка")
     public void выходитОшибка() {
-        Assertions.assertEquals("Название должно содержать только буквы : letters4444", getElementFromPharmGroup().getText());
+        Assertions.assertEquals("Название должно содержать только буквы : letters4444", webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
     @Тогда("выходят ошибки")
