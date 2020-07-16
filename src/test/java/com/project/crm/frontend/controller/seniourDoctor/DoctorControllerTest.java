@@ -111,7 +111,7 @@ public class DoctorControllerTest extends FillDatabase {
     //Этот метод добавляет необходимые для данного класса репозитории. В трех тестах используется, поэтому вынес в отдельный метод
     public void saveRepos(){
         saveRoles(roleRepo);
-        savePositions(positionRepo);
+        savePositionsConstant(positionRepo);
         saveHospitalsWithPlaces(hospitalRepo, placeRepo, size);
 
         User user = User.builder()
