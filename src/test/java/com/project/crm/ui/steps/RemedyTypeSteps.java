@@ -1,35 +1,16 @@
 package com.project.crm.ui.steps;
 
 
-import com.project.crm.frontend.forms.remediesForm.RemediesFormRegisterForm;
-import com.project.crm.frontend.forms.remediesForm.RemedyTypeRegisterForm;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
-import org.springframework.beans.factory.annotation.Autowired;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.*;
 
 public class RemedyTypeSteps extends Steps {
-    @Autowired
-    private Validator validator;
 
-    private RemedyTypeRegisterForm remedyTypeRegisterForm;
     @Before("@type")
     public void start(){
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-        remedyTypeRegisterForm = new RemedyTypeRegisterForm();
         setUp();
     }
 
@@ -83,11 +64,7 @@ public class RemedyTypeSteps extends Steps {
 
     @Тогда("выходят уведомления об ошибках")
     public void выходятУведомленияОбОшибках() {
-        Set<ConstraintViolation<RemedyTypeRegisterForm>> violations = validator.validate(remedyTypeRegisterForm);
-        List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
-        assertEquals(2, violations.size());
-        assertTrue(errorMessages.containsAll(Arrays.asList("Обязательное поле", "Название должно содержать только буквы : ")));
-        assertFalse(violations.isEmpty());
+        Assertions.assertEquals("Обязательное поле",  webDriver.findElement(By.xpath("//form[@id='type']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
 }

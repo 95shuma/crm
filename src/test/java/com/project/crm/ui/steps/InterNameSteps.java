@@ -1,34 +1,15 @@
 package com.project.crm.ui.steps;
 
-
-import com.project.crm.frontend.forms.remediesForm.InternationalNameRegisterForm;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
-import org.springframework.beans.factory.annotation.Autowired;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.*;
 
 public class InterNameSteps extends Steps {
-    @Autowired
-    private Validator validator;
 
-    private InternationalNameRegisterForm internationalNameRegisterForm;
     @Before("@international")
     public void start(){
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-        internationalNameRegisterForm = new InternationalNameRegisterForm();
         setUp();
     }
 
@@ -82,11 +63,7 @@ public class InterNameSteps extends Steps {
 
     @Тогда("выходят сообщения об ошибке")
     public void выходятСообщенияОбОшибке() {
-        Set<ConstraintViolation<InternationalNameRegisterForm>> violations = validator.validate(internationalNameRegisterForm);
-        List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
-        assertEquals(2, violations.size());
-        assertTrue(errorMessages.containsAll(Arrays.asList("Обязательное поле", "Название должно содержать только буквы : ")));
-        assertFalse(violations.isEmpty());
+        Assertions.assertEquals("Обязательное поле",webDriver.findElement(By.xpath("//form[@id='commentForm']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
 }
