@@ -11,7 +11,6 @@ public class DosageSteps extends Steps {
 
     @Before("@dosage")
     public void start() {
-        ;
         setUp();
     }
 
@@ -58,7 +57,6 @@ public class DosageSteps extends Steps {
     }
     @Тогда("сообщения об ошибках")
     public void сообщенияОбОшибках() {
-        //Assertions.assertEquals("Название должно содержать только буквы : ", webDriver.findElement(By.xpath("//form[@id='doze']//div[@class='alert alert-warning mt-1']")).getText());
         Assertions.assertEquals("Обязательное поле", webDriver.findElement(By.xpath("//form[@id='doze']//div[@class='alert alert-warning mt-1']")).getText());
     }
 }
