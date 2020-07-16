@@ -7,11 +7,11 @@ import com.project.crm.backend.model.catalog.medicalHistoryCatalog.*;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
-import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
@@ -20,13 +20,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
-@AllArgsConstructor
 public class FillDatabase {
-
-    private final PasswordEncoder passwordEncoder;
 
     private static final Random rn = new Random();
     private static final Faker faker = new Faker(new Locale("ru"));
+    public PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Bean
     @Profile(Constants.PROFILE_ENVIRONMENT_PRODUCTION)
     CommandLineRunner fillDatabaseWithConstantData(UserRepo userRepo, RegistrationJournalRepo registrationJournalRepo,  RoleRepo roleRepo){
@@ -70,7 +68,7 @@ public class FillDatabase {
 
     @Bean
     @Profile(Constants.PROFILE_ENVIRONMENT_DEVELOPMENT)
-    CommandLineRunner fillDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
+    CommandLineRunner fillFullDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
                                    HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo,
                                    RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
                                    RemedyRepo remedyRepo, ExaminationRepo examinationRepo, DosageRepo dosageRepo, InternationalNameRepo internationalNameRepo,
@@ -79,7 +77,6 @@ public class FillDatabase {
                                    ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
                                    ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo){
         return (args) -> {
-
             examinationRepo.deleteAll();
             diseaseRepo.deleteAll();
             registrationJournalRepo.deleteAll();
