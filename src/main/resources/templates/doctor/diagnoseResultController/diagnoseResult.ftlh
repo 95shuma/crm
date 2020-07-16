@@ -8,12 +8,12 @@
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
-                    <input name="medicalHistoryId" type="hidden" value="${medicalHistory_id}">
+                    <input name="medicalHistoryId" type="hidden" value="${medicalHistory_id?c}">
                     <div class="form-group">
                         <p><label for="lpuPlaceId" class="col-form-label">Выберите диагноз</label></p>
                         <select class="form-control" id="lpuPlaceId" name="diagnoseId">
                             <#list diagnose as diagnose>
-                                <option value="${diagnose.id}">${diagnose.name} - ${diagnose.isdCode}</option>
+                                <option value="${diagnose.id?c}">${diagnose.name} - ${diagnose.isdCode}</option>
                             </#list>
                         </select>
                         <#if errors??>
