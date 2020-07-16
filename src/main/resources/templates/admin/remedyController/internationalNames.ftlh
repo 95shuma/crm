@@ -18,7 +18,7 @@
         </tbody>
     </table>
     <#include "../../partials/pagination.ftlh">
-    <a type="button" class="btn btn-primary w-100" href="/admin/internationalNames/internationalName">
+    <a name="intName" type="button" class="btn btn-primary w-100" href="/admin/internationalNames/internationalName">
         Добавить новое Международное название лекарства
     </a>
 <#--<#include "partials/pagination.ftlh">-->
