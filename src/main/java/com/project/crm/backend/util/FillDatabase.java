@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
 @AllArgsConstructor
-public class PreloadDatabaseWithData {
+public class FillDatabase {
 
     private final PasswordEncoder passwordEncoder;
 
