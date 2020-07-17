@@ -31,7 +31,7 @@
                 <#if errors??>
                     <#list errors as fieldError>
                         <#if fieldError.field == 'documentNumber'>
-                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                            <div class="alert alert-warning mt-1 passportN" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
                         </#if>
                     </#list>
                 </#if>
