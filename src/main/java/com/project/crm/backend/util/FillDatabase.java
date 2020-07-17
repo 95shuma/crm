@@ -90,20 +90,8 @@ public class FillDatabase extends RepoMethods {
             savePositionsConstant(positionRepo);
             //--------------------------------------------------- Справочники ---------------------------------------------------
             saveAdminByInnAndPassword(Constants.ADMIN_DEV_INN, Constants.ADMIN_DEV_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
-            //--<======================== Doctor ========================
-            List <User> doctorList = new ArrayList<>();
-            for (int i = 0; i < (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9)); i++){           //Каждому ЛПУ нужен один Админ ЛПУ, //Каждому ЛПУ нужно 5 медработников, //Каждому ЛПУ нужно 9 врачей
-                if(i == 0)
-                    createUser(doctorList , placeRepo, "22222222222222");
-                else if(i == 3)
-                    createUser(doctorList , placeRepo, "33333333333333");
-                else if(i == 6)
-                    createUser(doctorList , placeRepo, "44444444444444");
-                else
-                    createUser(doctorList , placeRepo, returnUniqueINN(userRepo));
-            }
-            userRepo.saveAll(doctorList);
-            //-->======================== Doctor ========================
+            saveDoctorsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
+            saveDoctorsWithRandomInnForEachHospital(qty, qty, userRepo, hospitalRepo, positionRepo, roleRepo, registrationJournalRepo);
             //--<======================== Patient ========================
             List <User> patientList = new ArrayList<>();
             for (int i = 0; i < qty; i++){
@@ -151,61 +139,6 @@ public class FillDatabase extends RepoMethods {
             }
             examinationRepo.saveAll(examinationList);
             //-->======================== Examination ========================
-            //--<======================== Registration Journal ========================
-            List <RegistrationJournal> registrationJournalList = new ArrayList<>();
-            //Задаем каждому доктору роль и ЛПУ
-                //Каждому ЛПУ нужен один Админ ЛПУ
-                //Каждому ЛПУ нужно 5+ медработников
-                //Каждому ЛПУ нужно 9+ врачей
-            AtomicInteger an = new AtomicInteger(0);
-            hospitalRepo.findAll().forEach(hospital -> {
-                for (int i = 1; i <= (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9))/hospitalRepo.findAll().size(); i++){
-                    if (i == 1){
-                        registrationJournalList.add(RegistrationJournal.builder()
-                                .user(doctorList.get(an.get()))
-                                .hospital(hospital)
-                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findById((long) 2).get())
-                                .build()
-                        );
-                    } else if (i > 1 && i <=6){
-                        registrationJournalList.add(RegistrationJournal.builder()
-                                .user(doctorList.get(an.get()))
-                                .hospital(hospital)
-                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findById((long) 3).get())
-                                .build()
-                        );
-                    } else {
-                        registrationJournalList.add(RegistrationJournal.builder()
-                                .user(doctorList.get(an.get()))
-                                .hospital(hospital)
-                                .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                                .role(roleRepo.findById((long) 4).get())
-                                .build()
-                        );
-                    }
-                    an.set(an.get()+1);
-                }
-
-            });
-            AtomicInteger an2 = new AtomicInteger(0);
-
-            hospitalRepo.findAll().forEach(hospital -> {
-                for (int i = 0; i < qty/hospitalRepo.findAll().size(); i++){
-
-                    registrationJournalList.add(RegistrationJournal.builder()
-                            .user(patientList.get(an2.get()))
-                            .hospital(hospital)
-                            .role(roleRepo.findById((long) 5).get())
-                            .build());
-
-                    an2.set(an2.get()+1);
-                }
-
-            });
-            registrationJournalRepo.saveAll(registrationJournalList);
-            //-->======================== Registration Journal ========================
             //--<======================== MedicalHistory ========================
             List <MedicalHistory> medicalHistories = new ArrayList<>();
             Date date = new Date();
