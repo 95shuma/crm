@@ -1,12 +1,15 @@
 package com.project.crm.backend.util;
 
 import com.github.javafaker.Faker;
+import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.Hospital;
 import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.model.catalog.Position;
+import com.project.crm.backend.model.catalog.RegistrationJournal;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
+import com.project.crm.frontend.forms.UserRegisterForm;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,7 +21,7 @@ import java.util.Random;
 public class RepoMethods {
     private static final Random rn = new Random();
     private static final Faker faker = new Faker(new Locale("ru"));
-    public PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    public static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
     // --< ========================================= SAVE методы =========================================
@@ -140,6 +143,37 @@ public class RepoMethods {
         }
         positionRepo.saveAll(positionList);
     }
+    public static void saveAdminByInnAndPassword(String inn, String password, UserRepo userRepo, RoleRepo roleRepo, RegistrationJournalRepo registrationJournalRepo){
+        String[] adminName = {" ", faker.name().lastName(), faker.name().firstName(), faker.name().lastName()};
+
+        var user = User.builder()
+                .id(Long.parseLong("1"))
+                .inn(Long.parseLong(inn))
+                .password(passwordEncoder.encode(password))
+                .documentNumber("ID".concat(faker.number().digits(7)))
+                .fullName(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
+                .surname(adminName[1])
+                .name(adminName[2])
+                .middleName(adminName[3])
+                .birthDate(faker.date().birthday())
+                .gender(getRandomGender())
+                .enabled(true)
+                .build();
+
+        userRepo.save(user);
+
+        var registrationJournal = RegistrationJournal.builder()
+                .user(userRepo.findByInn(Long.parseLong(inn)).get())
+                .role(roleRepo.findByName(Constants.ROLE_ADMIN).get())
+                .build();
+
+        registrationJournalRepo.save(registrationJournal);
+    }
+
+    public static void saveUserByRole(PositionRepo positionRepo, int qty){
+
+    }
+
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
     public static void deleteAllData(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
@@ -179,4 +213,11 @@ public class RepoMethods {
         pharmacologicalGroupRepo.deleteAll();
     }
     // --> ========================================= DELETE методы =========================================
+
+    private static String  getRandomGender(){
+        if (rn.nextInt(2) == 0)
+            return "Мужской";
+        else
+            return "Женский";
+    }
 }
