@@ -2,14 +2,10 @@ package com.project.crm.backend.util;
 
 import com.github.javafaker.Faker;
 import com.project.crm.backend.model.User;
-import com.project.crm.backend.model.catalog.Hospital;
-import com.project.crm.backend.model.catalog.Place;
-import com.project.crm.backend.model.catalog.Position;
-import com.project.crm.backend.model.catalog.RegistrationJournal;
+import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
-import com.project.crm.frontend.forms.UserRegisterForm;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -17,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RepoMethods {
     private static final Random rn = new Random();
@@ -147,7 +144,6 @@ public class RepoMethods {
         String[] adminName = {" ", faker.name().lastName(), faker.name().firstName(), faker.name().lastName()};
 
         var user = User.builder()
-                .id(Long.parseLong("1"))
                 .inn(Long.parseLong(inn))
                 .password(passwordEncoder.encode(password))
                 .documentNumber("ID".concat(faker.number().digits(7)))
@@ -157,23 +153,70 @@ public class RepoMethods {
                 .middleName(adminName[3])
                 .birthDate(faker.date().birthday())
                 .gender(getRandomGender())
+                .place(null)
                 .enabled(true)
                 .build();
-
         userRepo.save(user);
-
-        var registrationJournal = RegistrationJournal.builder()
-                .user(userRepo.findByInn(Long.parseLong(inn)).get())
-                .role(roleRepo.findByName(Constants.ROLE_ADMIN).get())
-                .build();
-
-        registrationJournalRepo.save(registrationJournal);
+        saveUserInRegistrationJournal(userRepo.findByInn(Long.parseLong(inn)).get(), roleRepo.findByName(Constants.ROLE_ADMIN).get(), null, null, registrationJournalRepo);
     }
     public static void saveAdminWithRoles(String inn, String password, UserRepo userRepo, RoleRepo roleRepo, RegistrationJournalRepo registrationJournalRepo){
         saveRoles(roleRepo);
         saveAdminByInnAndPassword(inn, password, userRepo, roleRepo, registrationJournalRepo);
     }
-
+    public static void saveUserRandomByRole(String roleName, UserRepo userRepo, RoleRepo roleRepo, HospitalRepo hospitalRepo, PlaceRepo placeRepo, PositionRepo positionRepo, RegistrationJournalRepo registrationJournalRepo){
+        String inn = getUniqueINN(userRepo);
+        User user = User.builder()
+                .inn(Long.parseLong(inn))
+                .password(passwordEncoder.encode(inn))
+                .documentNumber("ID".concat(faker.number().digits(7)))
+                .fullName(faker.name().fullName())
+                .surname(faker.name().lastName())
+                .name(faker.name().firstName())
+                .middleName(faker.name().lastName())
+                .birthDate(faker.date().birthday())
+                .gender(getRandomGender())
+                .place(placeRepo.findAll().get(rn.nextInt(placeRepo.findAll().size())))
+                .enabled(true)
+                .build();
+        userRepo.save(user);
+        saveUserInRegistrationJournal(userRepo.findByInn(Long.parseLong(inn)).get(), roleRepo.findByName(roleName).get(), positionRepo.findAll().get(positionRepo.findAll().size()), hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())), registrationJournalRepo);
+    }
+    public static void saveUserConstantByRole(String inn, String password, String roleName, Place place, Hospital hospital, Position position, UserRepo userRepo, RoleRepo roleRepo, RegistrationJournalRepo registrationJournalRepo){
+        User user = User.builder()
+                .inn(Long.parseLong(inn))
+                .password(passwordEncoder.encode(password))
+                .documentNumber("ID".concat(faker.number().digits(7)))
+                .fullName(faker.name().fullName())
+                .surname(faker.name().lastName())
+                .name(faker.name().firstName())
+                .middleName(faker.name().lastName())
+                .birthDate(faker.date().birthday())
+                .gender(getRandomGender())
+                .place(place)
+                .enabled(true)
+                .build();
+        userRepo.save(user);
+        saveUserInRegistrationJournal(user, roleRepo.findByName(roleName).get(), position, hospital, registrationJournalRepo);
+    }
+    public static void saveDoctorsWithRandomInnForEachHospital(int doctorQty, int juniorDoctorQty,UserRepo userRepo, HospitalRepo hospitalRepo, PositionRepo positionRepo, RoleRepo roleRepo, RegistrationJournalRepo registrationJournalRepo){
+        for (Hospital hospital : hospitalRepo.findAll()) {
+            String inn = getUniqueINN(userRepo);
+            saveUserConstantByRole(inn, inn, Constants.ROLE_SENIOR_DOCTOR, hospital.getPlace(), hospital, positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
+            for (int i=0; i<doctorQty; i++) {
+                inn = getUniqueINN(userRepo);
+                saveUserConstantByRole(inn, inn, Constants.ROLE_DOCTOR, hospital.getPlace(), hospital, positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
+            }
+            for (int i=0; i<juniorDoctorQty; i++) {
+                inn = getUniqueINN(userRepo);
+                saveUserConstantByRole(inn, inn, Constants.ROLE_JUNIOR_DOCTOR, hospital.getPlace(), hospital, positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
+            }
+        }
+    }
+    public static void saveDoctorsConstant(UserRepo userRepo, HospitalRepo hospitalRepo, RoleRepo roleRepo, PositionRepo positionRepo, RegistrationJournalRepo registrationJournalRepo){
+        saveUserConstantByRole(Constants.SENIOR_DOCTOR_INN, Constants.SENIOR_DOCTOR_PASSWORD, Constants.ROLE_SENIOR_DOCTOR, hospitalRepo.findAll().get(0).getPlace(), hospitalRepo.findAll().get(0), positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
+        saveUserConstantByRole(Constants.DOCTOR_INN, Constants.DOCTOR_PASSWORD, Constants.ROLE_DOCTOR, hospitalRepo.findAll().get(0).getPlace(), hospitalRepo.findAll().get(0), positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
+        saveUserConstantByRole(Constants.JUNIOR_DOCTOR_INN, Constants.JUNIOR_DOCTOR_PASSWORD, Constants.ROLE_JUNIOR_DOCTOR, hospitalRepo.findAll().get(0).getPlace(), hospitalRepo.findAll().get(0), positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
+    }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
     public static void deleteAllData(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
@@ -219,5 +262,31 @@ public class RepoMethods {
             return "Мужской";
         else
             return "Женский";
+    }
+    private static String getUniqueINN(UserRepo userRepo){
+        List<String> innList = new ArrayList<>();
+        String newInn = faker.number().digits(14);
+        AtomicBoolean makeNew = new AtomicBoolean(true);
+        userRepo.findAll().forEach(obj -> {
+            innList.add(obj.getInn().toString());
+        });
+        innList.forEach(inn -> {
+            if (inn.equals(newInn)){
+                makeNew.set(false);
+            }
+        });
+        if (makeNew.get())
+            return newInn;
+        else
+            return getUniqueINN(userRepo);
+    }
+    private static void saveUserInRegistrationJournal(User user, Role role, Position position, Hospital hospital, RegistrationJournalRepo registrationJournalRepo){
+        var registrationJournal = RegistrationJournal.builder()
+                .user(user)
+                .role(role)
+                .position(position)
+                .hospital(hospital)
+                .build();
+        registrationJournalRepo.save(registrationJournal);
     }
 }
