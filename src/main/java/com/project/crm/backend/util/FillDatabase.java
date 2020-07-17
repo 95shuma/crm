@@ -29,38 +29,10 @@ public class FillDatabase extends RepoMethods {
     CommandLineRunner fillDatabaseWithConstantData(UserRepo userRepo, RegistrationJournalRepo registrationJournalRepo,  RoleRepo roleRepo){
         return (args) -> {
             if (roleRepo.findAll().size() == 0){
-                String[] roles = {Constants.ROLE_ADMIN, Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_PATIENT};
-                for (int i=0; i<roles.length; i++){
-                    roleRepo.insertRoleWithId(Long.parseLong(Integer.toString(i+1)), roles[i]);
-                }
+                saveRoles(roleRepo);
             }
             if (userRepo.findAll().size() == 0){
-                //--<======================== Admin ========================
-                String[] adminName = {" ", faker.name().lastName(), faker.name().firstName(), faker.name().lastName()};
-
-                var user = User.builder()
-                        .id(Long.parseLong("1"))
-                        .inn(Long.parseLong(Constants.ADMIN_MAIN_INN))
-                        .password(passwordEncoder.encode(Constants.ADMIN_MAIN_PASSWORD))
-                        .documentNumber("ID".concat(faker.number().digits(7)))
-                        .fullName(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
-                        .surname(adminName[1])
-                        .name(adminName[2])
-                        .middleName(adminName[3])
-                        .birthDate(faker.date().birthday())
-                        .gender(getRandomGender())
-                        .enabled(true)
-                        .build();
-
-                userRepo.save(user);
-
-                var registrationJournal = RegistrationJournal.builder()
-                        .user(userRepo.findByInn(Long.parseLong(Constants.ADMIN_MAIN_INN)).get())
-                        .role(roleRepo.findById((long) 1).get())
-                        .build();
-
-                registrationJournalRepo.save(registrationJournal);
-                //-->======================== Admin ========================
+                saveAdminByInnAndPassword(Constants.ADMIN_PROD_INN, Constants.ADMIN_PROD_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
             }
         };
     }
@@ -117,32 +89,7 @@ public class FillDatabase extends RepoMethods {
             saveHospitals(hospitalRepo, placeRepo, qty);
             savePositionsConstant(positionRepo);
             //--------------------------------------------------- Справочники ---------------------------------------------------
-            //--<======================== Admin ========================
-            String[] adminName = {" ", faker.name().lastName(), faker.name().firstName(), faker.name().lastName()};
-
-            var user = User.builder()
-                    .id(Long.parseLong("1"))
-                    .inn(Long.parseLong("11111111111111"))
-                    .password(passwordEncoder.encode("11111111111111"))
-                    .documentNumber("ID".concat(faker.number().digits(7)))
-                    .fullName(adminName[1] + adminName[0] + adminName[2] + adminName[0] + adminName[3])
-                    .surname(adminName[1])
-                    .name(adminName[2])
-                    .middleName(adminName[3])
-                    .birthDate(faker.date().birthday())
-                    .gender(getRandomGender())
-                    .enabled(true)
-                    .build();
-
-            userRepo.save(user);
-
-            var registrationJournal = RegistrationJournal.builder()
-                    .user(userRepo.findByInn(Long.parseLong("11111111111111")).get())
-                    .role(roleRepo.findById((long) 1).get())
-                    .build();
-
-            registrationJournalRepo.save(registrationJournal);
-            //-->======================== Admin ========================
+            saveAdminByInnAndPassword(Constants.ADMIN_DEV_INN, Constants.ADMIN_DEV_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
             //--<======================== Doctor ========================
             List <User> doctorList = new ArrayList<>();
             for (int i = 0; i < (hospitalRepo.findAll().size() + (hospitalRepo.findAll().size()*5) + (hospitalRepo.findAll().size()*9)); i++){           //Каждому ЛПУ нужен один Админ ЛПУ, //Каждому ЛПУ нужно 5 медработников, //Каждому ЛПУ нужно 9 врачей
