@@ -26,7 +26,7 @@ public class DoctorRegisterBySenior extends Steps {
 
     @Затем("нажимает на кнопку Зарегистрировать доктора")
     public void нажимаетКнопкуДобавить() {
-        webDriver.findElement(By.linkText("Зарегистрировать доктора")).click();
+        webDriver.findElement(By.className("doctors")).click();
     }
 
     @Когда("админ ЛПУ заполняет все поля")
