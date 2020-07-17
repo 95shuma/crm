@@ -169,9 +169,9 @@ public class RepoMethods {
 
         registrationJournalRepo.save(registrationJournal);
     }
-
-    public static void saveUserByRole(PositionRepo positionRepo, int qty){
-
+    public static void saveAdminWithRoles(String inn, String password, UserRepo userRepo, RoleRepo roleRepo, RegistrationJournalRepo registrationJournalRepo){
+        saveRoles(roleRepo);
+        saveAdminByInnAndPassword(inn, password, userRepo, roleRepo, registrationJournalRepo);
     }
 
     // --> ========================================= SAVE методы =========================================
