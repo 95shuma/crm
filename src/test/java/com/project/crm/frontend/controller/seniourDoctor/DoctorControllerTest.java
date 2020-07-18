@@ -110,9 +110,9 @@ public class DoctorControllerTest extends RepoMethods {
     }
     //Этот метод добавляет необходимые для данного класса репозитории. В трех тестах используется, поэтому вынес в отдельный метод
     public void saveRepos(){
-        saveRoles(roleRepo);
+        saveRolesConstant(roleRepo);
         savePositionsConstant(positionRepo);
-        saveHospitalsWithPlaces(hospitalRepo, placeRepo, size);
+        saveHospitalsWithPlaces(size, hospitalRepo, placeRepo);
 
         User user = User.builder()
                 .inn(Long.parseLong(innSeniorDoctor))
