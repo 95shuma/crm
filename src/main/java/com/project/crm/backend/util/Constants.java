@@ -15,14 +15,14 @@ public final class Constants {
     public static final String ADMIN_PROD_INN = "11111111111111";
     public static final String ADMIN_PROD_PASSWORD = "root123#$";
 
-    public static final String SENIOR_DOCTOR_INN = "22222222222222";
-    public static final String SENIOR_DOCTOR_PASSWORD = "22222222222222";
-    public static final String DOCTOR_INN = "23333333333333";
-    public static final String DOCTOR_PASSWORD = "23333333333333";
-    public static final String JUNIOR_DOCTOR_INN = "24444444444444";
-    public static final String JUNIOR_DOCTOR_PASSWORD = "24444444444444";
-    public static final String PATIENT_INN = "25555555555555";
-    public static final String PATIENT_PASSWORD = "25555555555555";
+    public static final String SENIOR_DOCTOR_INN = "12222222222222";
+    public static final String SENIOR_DOCTOR_PASSWORD = "12222222222222";
+    public static final String DOCTOR_INN = "13333333333333";
+    public static final String DOCTOR_PASSWORD = "13333333333333";
+    public static final String JUNIOR_DOCTOR_INN = "14444444444444";
+    public static final String JUNIOR_DOCTOR_PASSWORD = "14444444444444";
+    public static final String PATIENT_INN = "15555555555555";
+    public static final String PATIENT_PASSWORD = "15555555555555";
 
     public static final String ADMIN = "ADMIN" ;
     public static final String SENIOR_DOCTOR = "SENIOR_DOCTOR";
