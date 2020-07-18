@@ -3,6 +3,7 @@ package com.project.crm.backend.util;
 import com.github.javafaker.Faker;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Diagnose;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
@@ -234,6 +235,16 @@ public class RepoMethods {
     }
     public static void savePatientsRandom(int qty, UserRepo userRepo, HospitalRepo hospitalRepo, RoleRepo roleRepo, PlaceRepo placeRepo, PositionRepo positionRepo, RegistrationJournalRepo registrationJournalRepo){
         saveUserRandom(qty, Constants.ROLE_PATIENT, false, userRepo, roleRepo, hospitalRepo, placeRepo, positionRepo, registrationJournalRepo);
+    }
+    public static void saveDiseases(int qty, DiseaseRepo diseaseRepo){
+        List <Disease> diseaseList = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            diseaseList.add(Disease.builder()
+                    .name(faker.gameOfThrones().character())
+                    .build()
+            );
+        }
+        diseaseRepo.saveAll(diseaseList);
     }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================

@@ -88,21 +88,14 @@ public class FillDatabase extends RepoMethods {
             saveHospitals(qty, hospitalRepo, placeRepo);
             savePositionsConstant(positionRepo);
             //--------------------------------------------------- Справочники ---------------------------------------------------
+            //--------------------------------------------------- Пользователи ---------------------------------------------------
             saveAdminConstant(Constants.ADMIN_DEV_INN, Constants.ADMIN_DEV_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
             saveDoctorsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
             saveDoctorsRandomForEachHospital(qty, qty, userRepo, hospitalRepo, positionRepo, roleRepo, registrationJournalRepo);
             savePatientsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
             savePatientsRandom(qty, userRepo, hospitalRepo, roleRepo, placeRepo, positionRepo, registrationJournalRepo);
-            //--<======================== Disease ========================
-            List <Disease> diseaseList = new ArrayList<>();
-            for (int i = 0; i < 20; i++){
-                diseaseList.add(Disease.builder()
-                        .name(faker.gameOfThrones().character())
-                        .build()
-                );
-            }
-            diseaseRepo.saveAll(diseaseList);
-            //-->======================== Disease ========================
+            //--------------------------------------------------- Пользователи ---------------------------------------------------
+            saveDiseases(qty, diseaseRepo);
             //--<======================== Remedy ========================
             List <Remedy> remedyList = new ArrayList<>();
             for (int i = 0; i < 30; i++){
