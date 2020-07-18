@@ -175,21 +175,6 @@ public class DoctorRegisterBySenior extends Steps {
 
     @Тогда("выйдет ошибка Обязательное поле для даты")
     public void ошибкаДаты() {
-
         Assertions.assertEquals("Обязательное поле",  webDriver.findElement(By.xpath("//div[@class='alert alert-warning mt-1'][text()='Обязательное поле']")).getText());
-
-
-    //List<String> expectedAlert = new ArrayList<String>();
-       // List<String> actualAlert = new ArrayList<String>();
-
-     //   actualAlert.add(webDriver.findElement(By.xpath("//div[@class='alert alert-warning mt-1 passportN'][text()='Обязательное поле']")).getText());
-      //  actualAlert.add(webDriver.findElement(By.xpath("//div[@class='alert alert-warning mt-1 passportN'][text()='№ докумета начинается с AN или ID и состоит из 7 цифр : ']")).getText());
-       // actualAlert.add(webDriver.findElement(By.xpath("//div[@class='alert alert-warning mt-1 passportN'][text()='Дата рождения не может быть в будущем времени']")).getText());
-
-        //expectedAlert.add("Обязательное поле");
-      //  expectedAlert.add("№ докумета начинается с AN или ID и состоит из 7 цифр :");
-       // expectedAlert.add("Дата рождения не может быть в будущем времени");
-
-        //assertEquals(expectedAlert,actualAlert);
     }
 }
