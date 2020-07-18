@@ -29,10 +29,10 @@ public class FillDatabase extends RepoMethods {
     CommandLineRunner fillDatabaseWithConstantData(UserRepo userRepo, RegistrationJournalRepo registrationJournalRepo,  RoleRepo roleRepo){
         return (args) -> {
             if (roleRepo.findAll().size() == 0){
-                saveRoles(roleRepo);
+                saveRolesConstant(roleRepo);
             }
             if (userRepo.findAll().size() == 0){
-                saveAdminByInnAndPassword(Constants.ADMIN_PROD_INN, Constants.ADMIN_PROD_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
+                saveAdminConstant(Constants.ADMIN_PROD_INN, Constants.ADMIN_PROD_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
             }
         };
     }
@@ -78,20 +78,20 @@ public class FillDatabase extends RepoMethods {
 
             int qty = rn.nextInt(20)+10;
             //--------------------------------------------------- Справочники ---------------------------------------------------
-            saveRemedyTypes(remedyTypeRepo, qty);
-            saveRemedyForms(remediesFormRepo, qty);
-            savePharmacologicalGroups(pharmacologicalGroupRepo, qty);
-            saveMeasures(measureRepo, qty);
-            saveInternationalNames(internationalNameRepo, qty);
-            saveDosages(dosageRepo, measureRepo, qty);
-            savePlaces(placeRepo, qty);
-            saveRoles(roleRepo);
-            saveHospitals(hospitalRepo, placeRepo, qty);
+            saveRemedyTypes(qty, remedyTypeRepo);
+            saveRemedyForms(qty, remediesFormRepo);
+            savePharmacologicalGroups(qty, pharmacologicalGroupRepo);
+            saveMeasures(qty, measureRepo);
+            saveInternationalNames(qty, internationalNameRepo);
+            saveDosages(qty, dosageRepo, measureRepo);
+            savePlaces(qty, placeRepo);
+            saveRolesConstant(roleRepo);
+            saveHospitals(qty, hospitalRepo, placeRepo);
             savePositionsConstant(positionRepo);
             //--------------------------------------------------- Справочники ---------------------------------------------------
-            saveAdminByInnAndPassword(Constants.ADMIN_DEV_INN, Constants.ADMIN_DEV_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
+            saveAdminConstant(Constants.ADMIN_DEV_INN, Constants.ADMIN_DEV_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
             saveDoctorsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
-            saveDoctorsWithRandomInnForEachHospital(qty, qty, userRepo, hospitalRepo, positionRepo, roleRepo, registrationJournalRepo);
+            saveDoctorsRandomForEachHospital(qty, qty, userRepo, hospitalRepo, positionRepo, roleRepo, registrationJournalRepo);
             //--<======================== Patient ========================
             List <User> patientList = new ArrayList<>();
             for (int i = 0; i < qty; i++){
@@ -103,6 +103,7 @@ public class FillDatabase extends RepoMethods {
             }
 
             userRepo.saveAll(patientList);
+
             //-->======================== Patient ========================
             //--<======================== Disease ========================
             List <Disease> diseaseList = new ArrayList<>();
