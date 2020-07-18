@@ -170,7 +170,7 @@ public class RepoMethods {
         saveRolesConstant(roleRepo);
         saveAdminConstant(inn, password, userRepo, roleRepo, registrationJournalRepo);
     }
-    public static void saveUserRandom(int qty, String roleName, UserRepo userRepo, RoleRepo roleRepo, HospitalRepo hospitalRepo, PlaceRepo placeRepo, PositionRepo positionRepo, RegistrationJournalRepo registrationJournalRepo){
+    public static void saveUserRandom(int qty, String roleName, Boolean randomPosition, UserRepo userRepo, RoleRepo roleRepo, HospitalRepo hospitalRepo, PlaceRepo placeRepo, PositionRepo positionRepo, RegistrationJournalRepo registrationJournalRepo){
         for (int i=0;i<qty;i++){
             String inn = getUniqueINN(userRepo);
             User user = User.builder()
@@ -187,7 +187,10 @@ public class RepoMethods {
                     .enabled(true)
                     .build();
             userRepo.save(user);
-            saveUserInRegistrationJournal(userRepo.findByInn(Long.parseLong(inn)).get(), roleRepo.findByName(roleName).get(), positionRepo.findAll().get(positionRepo.findAll().size()), hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())), registrationJournalRepo);
+            if (randomPosition)
+                saveUserInRegistrationJournal(userRepo.findByInn(Long.parseLong(inn)).get(), roleRepo.findByName(roleName).get(), positionRepo.findAll().get(positionRepo.findAll().size()), hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())), registrationJournalRepo);
+            else
+                saveUserInRegistrationJournal(userRepo.findByInn(Long.parseLong(inn)).get(), roleRepo.findByName(roleName).get(), null, hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())), registrationJournalRepo);
         }
     }
     public static void saveUserConstant(String inn, String password, String roleName, Place place, Hospital hospital, Position position, UserRepo userRepo, RoleRepo roleRepo, RegistrationJournalRepo registrationJournalRepo){
@@ -225,6 +228,12 @@ public class RepoMethods {
         saveUserConstant(Constants.SENIOR_DOCTOR_INN, Constants.SENIOR_DOCTOR_PASSWORD, Constants.ROLE_SENIOR_DOCTOR, hospitalRepo.findAll().get(0).getPlace(), hospitalRepo.findAll().get(0), positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
         saveUserConstant(Constants.DOCTOR_INN, Constants.DOCTOR_PASSWORD, Constants.ROLE_DOCTOR, hospitalRepo.findAll().get(0).getPlace(), hospitalRepo.findAll().get(0), positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
         saveUserConstant(Constants.JUNIOR_DOCTOR_INN, Constants.JUNIOR_DOCTOR_PASSWORD, Constants.ROLE_JUNIOR_DOCTOR, hospitalRepo.findAll().get(0).getPlace(), hospitalRepo.findAll().get(0), positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), userRepo, roleRepo, registrationJournalRepo);
+    }
+    public static void savePatientsConstant(UserRepo userRepo, HospitalRepo hospitalRepo, RoleRepo roleRepo, PositionRepo positionRepo, RegistrationJournalRepo registrationJournalRepo){
+        saveUserConstant(Constants.PATIENT_INN, Constants.PATIENT_PASSWORD, Constants.ROLE_PATIENT, hospitalRepo.findAll().get(0).getPlace(), hospitalRepo.findAll().get(0), null, userRepo, roleRepo, registrationJournalRepo);
+    }
+    public static void savePatientsRandom(int qty, UserRepo userRepo, HospitalRepo hospitalRepo, RoleRepo roleRepo, PlaceRepo placeRepo, PositionRepo positionRepo, RegistrationJournalRepo registrationJournalRepo){
+        saveUserRandom(qty, Constants.ROLE_PATIENT, false, userRepo, roleRepo, hospitalRepo, placeRepo, positionRepo, registrationJournalRepo);
     }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
