@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
 public class FillDatabase extends RepoMethods {
@@ -92,19 +91,8 @@ public class FillDatabase extends RepoMethods {
             saveAdminConstant(Constants.ADMIN_DEV_INN, Constants.ADMIN_DEV_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
             saveDoctorsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
             saveDoctorsRandomForEachHospital(qty, qty, userRepo, hospitalRepo, positionRepo, roleRepo, registrationJournalRepo);
-            //--<======================== Patient ========================
-            List <User> patientList = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-
-                if (i == 0)
-                    createUser(patientList, placeRepo, "55555555555555");
-                else
-                    createUser(patientList, placeRepo, returnUniqueINN(userRepo));
-            }
-
-            userRepo.saveAll(patientList);
-
-            //-->======================== Patient ========================
+            savePatientsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
+            savePatientsRandom(qty, userRepo, hospitalRepo, roleRepo, placeRepo, positionRepo, registrationJournalRepo);
             //--<======================== Disease ========================
             List <Disease> diseaseList = new ArrayList<>();
             for (int i = 0; i < 20; i++){
@@ -181,7 +169,7 @@ public class FillDatabase extends RepoMethods {
             }
             for (int i = 0; i < 5; i++){
                 recordJournalList.add(RecordJournal.builder()
-                        .doctor(userRepo.findByInn(33333333333333L).get())
+                        .doctor(userRepo.findByInn(Long.parseLong(Constants.DOCTOR_INN)).get())
                         .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
                         .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
                         .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
@@ -193,9 +181,9 @@ public class FillDatabase extends RepoMethods {
                 );
             }
             recordJournalList.add(RecordJournal.builder()
-                    .doctor(userRepo.findByInn(33333333333333L).get())
+                    .doctor(userRepo.findByInn(Long.parseLong(Constants.DOCTOR_INN)).get())
                     .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
-                    .patient(userRepo.findByInn(55555555555555L).get())
+                    .patient(userRepo.findByInn(Long.parseLong(Constants.PATIENT_INN)).get())
                     .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                     .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
                     .dateTime(LocalDateTime.now())
