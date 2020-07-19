@@ -5,6 +5,7 @@ import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Diagnose;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.DiagnoseResult;
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.LabExamination;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
@@ -349,7 +350,6 @@ public class RepoMethods {
                     .name(faker.book().title())
                     .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
                     .build());
-
         }
         diagnoseRepo.saveAll(diagnoses);
     }
@@ -360,20 +360,18 @@ public class RepoMethods {
     public static void saveDiagnoseResults(int qty, DiagnoseResultRepo diagnoseResultRepo, DiagnoseRepo diagnoseRepo, MedicalHistoryRepo medicalHistoryRepo){
         List <DiagnoseResult> diagnoseResults = new ArrayList<>();
         for (int i = 0; i < qty; i++){
-            if (i % 2 == 0){
+            if (i % 2 == 0)
                 diagnoseResults.add(DiagnoseResult.builder()
                         .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
                         .state(true)
                         .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                         .build());
-            }
-            else {
+            else
                 diagnoseResults.add(DiagnoseResult.builder()
                         .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
                         .state(false)
                         .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                         .build());
-            }
 
         }
         diagnoseResultRepo.saveAll(diagnoseResults);
@@ -382,6 +380,16 @@ public class RepoMethods {
         saveDiagnosesWith(qty, diagnoseRepo, positionRepo);
         saveMedicalHistory(qty, medicalHistoryRepo);
         saveDiagnoseResults(qty, diagnoseResultRepo, diagnoseRepo, medicalHistoryRepo);
+    }
+    public static void saveLabExaminations(int qty, LabExaminationRepo labExaminationRepo){
+        List <LabExamination> labExaminations = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            labExaminations.add(LabExamination.builder()
+                    .name(faker.superhero().name())
+                    .rate(faker.book().title())
+                    .build());
+        }
+        labExaminationRepo.saveAll(labExaminations);
     }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================

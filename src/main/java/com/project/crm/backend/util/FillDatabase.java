@@ -102,17 +102,7 @@ public class FillDatabase extends RepoMethods {
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
             saveDiagnoses(qty, diagnoseRepo, positionRepo);
             saveDiagnoseResults(qty, diagnoseResultRepo, diagnoseRepo, medicalHistoryRepo);
-            //--<======================== LabExamination ========================
-            List <LabExamination> labExaminations = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                labExaminations.add(LabExamination.builder()
-                        .name(faker.superhero().name())
-                        .rate(faker.book().title())
-                        .build());
-
-            }
-            labExaminationRepo.saveAll(labExaminations);
-            //-->======================== LabExamination ========================
+            saveLabExaminations(qty, labExaminationRepo);
             //--<======================== InstrumExamination ========================
             List <InstrumExamination> instrumExaminations = new ArrayList<>();
             for (int i = 0; i < qty; i++){
