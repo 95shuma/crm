@@ -28,7 +28,7 @@ public class RepoMethods {
     //      Random -> Генерирует полностью рандомный список
     //      Если не указано -> Random по умолчанию
     //  With: -> Сохраняются несколько репозиториев.
-    //          Например: saveHospitalsWithPlaces() -> Так как для сохранения  Hospitals нужны Places, сначала сделает savePlaces, потом saveHospitals. Чтобы не вызывать 2 метода подряд.
+    //          Например: saveHospitalsWith -> Так как для сохранения  Hospitals нужны Places, сначала сделает savePlaces, потом saveHospitals. Чтобы не вызывать 2 метода подряд.
 
     public static void saveRemedyTypes(int qty, RemedyTypeRepo remedyTypeRepo) {
         List<RemedyType> typeList = new ArrayList<>();
@@ -93,7 +93,7 @@ public class RepoMethods {
         }
         dosageRepo.saveAll(dosages);
     }
-    public static void saveDosagesWithMeasureRepo(int qty, DosageRepo dosageRepo, MeasureRepo measureRepo) {
+    public static void saveDosagesWith(int qty, DosageRepo dosageRepo, MeasureRepo measureRepo) {
         saveMeasures(qty, measureRepo);
         saveDosages(qty, dosageRepo, measureRepo);
     }
@@ -127,7 +127,7 @@ public class RepoMethods {
         }
         hospitalRepo.saveAll(hospitalList);
     }
-    public static void saveHospitalsWithPlaces(int qty, HospitalRepo hospitalRepo, PlaceRepo placeRepo){
+    public static void saveHospitalsWith(int qty, HospitalRepo hospitalRepo, PlaceRepo placeRepo){
         savePlaces(qty, placeRepo);
         saveHospitals(qty, hospitalRepo, placeRepo);
     }
@@ -265,7 +265,7 @@ public class RepoMethods {
         saveRemedyForms(qty, remediesFormRepo);
         savePharmacologicalGroups(qty, pharmacologicalGroupRepo);
         saveInternationalNames(qty, internationalNameRepo);
-        saveDosagesWithMeasureRepo(qty, dosageRepo, measureRepo);
+        saveDosagesWith(qty, dosageRepo, measureRepo);
         saveRemedies(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo);
     }
     public static void saveExaminations(int qty, ExaminationRepo examinationRepo){
