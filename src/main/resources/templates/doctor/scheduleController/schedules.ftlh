@@ -18,10 +18,10 @@
                 <tr>
                     <td>${schedule.date}</td>
                     <td>${schedule.registrationJournal.user.inn}</td>
-                    <td>${schedule.dayStart}</td>
-                    <td>${schedule.dayEnd}</td>
-                    <td>${schedule.lunchStart}</td>
-                    <td>${schedule.lunchEnd}</td>
+                    <td>${schedule.dayStart.format('dd-MM-yyyy HH:mm')}</td>
+                    <td>${schedule.dayEnd.format('dd-MM-yyyy HH:mm')}</td>
+                    <td>${schedule.lunchStart.format('dd-MM-yyyy HH:mm')}</td>
+                    <td>${schedule.lunchEnd.format('dd-MM-yyyy HH:mm')}</td>
                 </tr>
             </#list>
         </tbody>
