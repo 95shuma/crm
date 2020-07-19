@@ -106,19 +106,7 @@ public class FillDatabase extends RepoMethods {
             saveInstrumExaminations(qty, instrumExaminationRepo);
             saveExaminationResults(qty, examinationResultRepo, instrumExaminationRepo, labExaminationRepo, medicalHistoryRepo);
             saveSickList(qty, sickListRepo, medicalHistoryRepo);
-            //--<======================== Direction ========================
-            List <Direction> directions = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                directions.add(Direction.builder()
-                        .labExamination(labExaminationRepo.findAll().get(rn.nextInt(labExaminationRepo.findAll().size())))
-                        .instrumExamination(instrumExaminationRepo.findAll().get(rn.nextInt(instrumExaminationRepo.findAll().size())))
-                        .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                        .build());
-
-            }
-            directionRepo.saveAll(directions);
-            //-->======================== Direction ========================
+            saveDirections(qty, directionRepo, labExaminationRepo, instrumExaminationRepo, positionRepo, medicalHistoryRepo);
             //--<======================== Procedure ========================
             List <Procedure> procedures = new ArrayList<>();
             for (int i = 0; i < qty; i++){

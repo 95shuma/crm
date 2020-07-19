@@ -435,6 +435,25 @@ public class RepoMethods {
         saveMedicalHistory(qty, medicalHistoryRepo);
         saveSickList(qty, sickListRepo, medicalHistoryRepo);
     }
+    public static void saveDirections(int qty, DirectionRepo directionRepo, LabExaminationRepo labExaminationRepo, InstrumExaminationRepo instrumExaminationRepo, PositionRepo positionRepo, MedicalHistoryRepo medicalHistoryRepo){
+        List <Direction> directions = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            directions.add(Direction.builder()
+                    .labExamination(labExaminationRepo.findAll().get(rn.nextInt(labExaminationRepo.findAll().size())))
+                    .instrumExamination(instrumExaminationRepo.findAll().get(rn.nextInt(instrumExaminationRepo.findAll().size())))
+                    .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                    .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                    .build());
+        }
+        directionRepo.saveAll(directions);
+    }
+    public static void saveDirectionsWith(int qty, DirectionRepo directionRepo, LabExaminationRepo labExaminationRepo, InstrumExaminationRepo instrumExaminationRepo, PositionRepo positionRepo, MedicalHistoryRepo medicalHistoryRepo){
+        saveLabExaminations(qty, labExaminationRepo);
+        saveInstrumExaminations(qty, instrumExaminationRepo);
+        savePositionsRandom(qty, positionRepo);
+        saveMedicalHistory(qty, medicalHistoryRepo);
+        saveDirections(qty, directionRepo, labExaminationRepo, instrumExaminationRepo, positionRepo, medicalHistoryRepo);
+    }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
     public static void deleteAllData(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
