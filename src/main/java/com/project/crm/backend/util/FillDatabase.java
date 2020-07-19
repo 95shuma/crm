@@ -104,21 +104,7 @@ public class FillDatabase extends RepoMethods {
             saveDiagnoseResults(qty, diagnoseResultRepo, diagnoseRepo, medicalHistoryRepo);
             saveLabExaminations(qty, labExaminationRepo);
             saveInstrumExaminations(qty, instrumExaminationRepo);
-            //--<======================== ExaminationResult ========================
-            List <ExaminationResult> examinationResults = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                examinationResults.add(ExaminationResult.builder()
-                        .labExamination(labExaminationRepo.findAll().get(rn.nextInt(labExaminationRepo.findAll().size())))
-                        .instrumExamination(instrumExaminationRepo.findAll().get(rn.nextInt(instrumExaminationRepo.findAll().size())))
-                        .labExaminationResult(faker.harryPotter().character())
-                        .instrumExaminationResult(faker.harryPotter().location())
-                        .generalState(faker.university().name())
-                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                        .build());
-
-            }
-            examinationResultRepo.saveAll(examinationResults);
-            //-->======================== ExaminationResult ========================
+            saveExaminationResults(qty, examinationResultRepo, instrumExaminationRepo, labExaminationRepo, medicalHistoryRepo);
             //--<======================== SickList ========================
             List <SickList> sickLists = new ArrayList<>();
             for (int i = 0; i < qty; i++){

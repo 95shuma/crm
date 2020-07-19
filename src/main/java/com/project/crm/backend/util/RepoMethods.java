@@ -3,10 +3,7 @@ package com.project.crm.backend.util;
 import com.github.javafaker.Faker;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
-import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Diagnose;
-import com.project.crm.backend.model.catalog.medicalHistoryCatalog.DiagnoseResult;
-import com.project.crm.backend.model.catalog.medicalHistoryCatalog.InstrumExamination;
-import com.project.crm.backend.model.catalog.medicalHistoryCatalog.LabExamination;
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.*;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
@@ -373,7 +370,6 @@ public class RepoMethods {
                         .state(false)
                         .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
                         .build());
-
         }
         diagnoseResultRepo.saveAll(diagnoseResults);
     }
@@ -400,10 +396,30 @@ public class RepoMethods {
                     .rate(faker.superhero().power())
                     .description(faker.superhero().descriptor())
                     .build());
-
         }
         instrumExaminationRepo.saveAll(instrumExaminations);
     }
+    public static void saveExaminationResults(int qty, ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo, MedicalHistoryRepo medicalHistoryRepo){
+        List <ExaminationResult> examinationResults = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            examinationResults.add(ExaminationResult.builder()
+                    .labExamination(labExaminationRepo.findAll().get(rn.nextInt(labExaminationRepo.findAll().size())))
+                    .instrumExamination(instrumExaminationRepo.findAll().get(rn.nextInt(instrumExaminationRepo.findAll().size())))
+                    .labExaminationResult(faker.harryPotter().character())
+                    .instrumExaminationResult(faker.harryPotter().location())
+                    .generalState(faker.university().name())
+                    .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                    .build());
+        }
+        examinationResultRepo.saveAll(examinationResults);
+    }
+    public static void saveExaminationResultsWith(int qty, ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo, MedicalHistoryRepo medicalHistoryRepo){
+        saveMedicalHistory(qty, medicalHistoryRepo);
+        saveInstrumExaminations(qty, instrumExaminationRepo);
+        saveLabExaminations(qty, labExaminationRepo);
+        saveExaminationResults(qty, examinationResultRepo, instrumExaminationRepo, labExaminationRepo, medicalHistoryRepo);
+    }
+
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
     public static void deleteAllData(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
