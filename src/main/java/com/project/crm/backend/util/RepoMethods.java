@@ -5,6 +5,7 @@ import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Diagnose;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.DiagnoseResult;
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.InstrumExamination;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.LabExamination;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
@@ -390,6 +391,18 @@ public class RepoMethods {
                     .build());
         }
         labExaminationRepo.saveAll(labExaminations);
+    }
+    public static void saveInstrumExaminations(int qty, InstrumExaminationRepo instrumExaminationRepo){
+        List <InstrumExamination> instrumExaminations = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            instrumExaminations.add(InstrumExamination.builder()
+                    .name(faker.superhero().name())
+                    .rate(faker.superhero().power())
+                    .description(faker.superhero().descriptor())
+                    .build());
+
+        }
+        instrumExaminationRepo.saveAll(instrumExaminations);
     }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
