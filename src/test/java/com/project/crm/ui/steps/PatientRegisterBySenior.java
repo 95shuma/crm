@@ -45,7 +45,6 @@ public class PatientRegisterBySenior extends Steps {
         webDriver.findElement(By.name("birthDate")).sendKeys("20.01.2010");
         webDriver.findElement(By.name("gender")).sendKeys("1");
         webDriver.findElement(By.name("placeId")).sendKeys("2");
-        webDriver.findElement(By.name("hospitalId")).sendKeys("4");
         webDriver.findElement(By.name("name")).submit();
     }
     @Тогда("попадет в главную страницу админа ЛПУ")
@@ -79,7 +78,6 @@ public class PatientRegisterBySenior extends Steps {
         webDriver.findElement(By.name("birthDate")).sendKeys("20.01.2010");
         webDriver.findElement(By.name("gender")).sendKeys("1");
         webDriver.findElement(By.name("placeId")).sendKeys("2");
-        webDriver.findElement(By.name("hospitalId")).sendKeys("4");
         webDriver.findElement(By.name("name")).submit();
     }
 
@@ -99,7 +97,6 @@ public class PatientRegisterBySenior extends Steps {
         webDriver.findElement(By.name("birthDate")).sendKeys("20.01.2010");
         webDriver.findElement(By.name("gender")).sendKeys("1");
         webDriver.findElement(By.name("placeId")).sendKeys("2");
-        webDriver.findElement(By.name("hospitalId")).sendKeys("4");
         webDriver.findElement(By.name("name")).submit();
     }
 
@@ -119,7 +116,6 @@ public class PatientRegisterBySenior extends Steps {
         webDriver.findElement(By.name("birthDate")).sendKeys("20.01.2010");
         webDriver.findElement(By.name("gender")).sendKeys("1");
         webDriver.findElement(By.name("placeId")).sendKeys("2");
-        webDriver.findElement(By.name("hospitalId")).sendKeys("4");
         webDriver.findElement(By.name("name")).submit();
     }
     @Тогда("выйдет ошибка Обязательное поле")
@@ -150,7 +146,6 @@ public class PatientRegisterBySenior extends Steps {
         webDriver.findElement(By.name("birthDate")).sendKeys("20.01.2010");
         webDriver.findElement(By.name("gender")).sendKeys("1");
         webDriver.findElement(By.name("placeId")).sendKeys("1");
-        webDriver.findElement(By.name("hospitalId")).sendKeys("1");
         webDriver.findElement(By.name("name")).submit();
     }
 
@@ -170,7 +165,6 @@ public class PatientRegisterBySenior extends Steps {
         webDriver.findElement(By.name("birthDate")).sendKeys("20.01.2010");
         webDriver.findElement(By.name("gender")).sendKeys("1");
         webDriver.findElement(By.name("placeId")).sendKeys("2");
-        webDriver.findElement(By.name("hospitalId")).sendKeys("4");
         webDriver.findElement(By.name("name")).submit();
     }
     @Тогда("выйдет ошибка2 Обязательное поле")
@@ -199,7 +193,6 @@ public class PatientRegisterBySenior extends Steps {
         webDriver.findElement(By.name("birthDate")).sendKeys("20.01.2010");
         webDriver.findElement(By.name("gender")).sendKeys("1");
         webDriver.findElement(By.name("placeId")).sendKeys("2");
-        webDriver.findElement(By.name("hospitalId")).sendKeys("4");
         webDriver.findElement(By.name("name")).submit();
     }
 
