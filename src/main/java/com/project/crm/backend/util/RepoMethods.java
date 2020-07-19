@@ -4,23 +4,22 @@ import com.github.javafaker.Faker;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Diagnose;
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.DiagnoseResult;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
-import org.springframework.data.repository.Repository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RepoMethods {
     private static final Random rn = new Random();
     private static final Faker faker = new Faker(new Locale("ru"));
     public static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    public static Date date = new Date();
+
 
 
     // --< ========================================= SAVE методы =========================================
@@ -270,7 +269,7 @@ public class RepoMethods {
         saveDosagesWithMeasureRepo(qty, dosageRepo, measureRepo);
         saveRemedies(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo);
     }
-    public static void saveExamination(int qty, ExaminationRepo examinationRepo){
+    public static void saveExaminations(int qty, ExaminationRepo examinationRepo){
         List <Examination> examinationList = new ArrayList<>();
         for (int i = 0; i < qty; i++){
             examinationList.add(Examination.builder()
@@ -279,6 +278,110 @@ public class RepoMethods {
             );
         }
         examinationRepo.saveAll(examinationList);
+    }
+    public static void saveMedicalHistory(int qty, MedicalHistoryRepo medicalHistoryRepo){
+        List <MedicalHistory> medicalHistories = new ArrayList<>();
+
+        for (int i = 0; i < qty; i++){
+            if(i % 2 == 0)
+                medicalHistories.add(MedicalHistory.builder()
+                        .date(date)
+                        .typeOfVisit(true)
+                        .complaint(faker.music().instrument())
+                        .recommendation(faker.lorem().characters())
+                        .build());
+            else
+                medicalHistories.add(MedicalHistory.builder()
+                        .date(date)
+                        .typeOfVisit(false)
+                        .complaint(faker.music().instrument())
+                        .recommendation(faker.lorem().characters())
+                        .build());
+        }
+        medicalHistoryRepo.saveAll(medicalHistories);
+    }
+    public static void saveRecordJournal(int qty, RecordJournalRepo recordJournalRepo, UserRepo userRepo, MedicalHistoryRepo medicalHistoryRepo, HospitalRepo hospitalRepo){
+        List <RecordJournal> recordJournalList = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            recordJournalList.add(RecordJournal.builder()
+                    .doctor(userRepo.findAllDoctors().get(rn.nextInt(userRepo.findAllDoctors().size())))
+                    .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
+                    .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
+                    .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                    .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                    .dateTime(LocalDateTime.now())
+                    .dateTimeNow(LocalDateTime.now())
+                    .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
+                    .build()
+            );
+        }
+        for (int i = 0; i < 5; i++){
+            recordJournalList.add(RecordJournal.builder()
+                    .doctor(userRepo.findByInn(Long.parseLong(Constants.DOCTOR_INN)).get())
+                    .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
+                    .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
+                    .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                    .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                    .dateTime(LocalDateTime.now())
+                    .dateTimeNow(LocalDateTime.now())
+                    .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
+                    .build()
+            );
+        }
+        recordJournalList.add(RecordJournal.builder()
+                .doctor(userRepo.findByInn(Long.parseLong(Constants.DOCTOR_INN)).get())
+                .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
+                .patient(userRepo.findByInn(Long.parseLong(Constants.PATIENT_INN)).get())
+                .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
+                .dateTime(LocalDateTime.now())
+                .dateTimeNow(LocalDateTime.now())
+                .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
+                .build()
+        );
+        recordJournalRepo.saveAll(recordJournalList);
+    }
+    public static void saveDiagnoses(int qty, DiagnoseRepo diagnoseRepo, PositionRepo positionRepo){
+        List <Diagnose> diagnoses = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            diagnoses.add(Diagnose.builder()
+                    .isdCode(faker.superhero().name())
+                    .name(faker.book().title())
+                    .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
+                    .build());
+
+        }
+        diagnoseRepo.saveAll(diagnoses);
+    }
+    public static void saveDiagnosesWith(int qty, DiagnoseRepo diagnoseRepo, PositionRepo positionRepo){
+        savePositionsRandom(qty, positionRepo);
+        saveDiagnoses(qty, diagnoseRepo, positionRepo);
+    }
+    public static void saveDiagnoseResults(int qty, DiagnoseResultRepo diagnoseResultRepo, DiagnoseRepo diagnoseRepo, MedicalHistoryRepo medicalHistoryRepo){
+        List <DiagnoseResult> diagnoseResults = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            if (i % 2 == 0){
+                diagnoseResults.add(DiagnoseResult.builder()
+                        .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
+                        .state(true)
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                        .build());
+            }
+            else {
+                diagnoseResults.add(DiagnoseResult.builder()
+                        .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
+                        .state(false)
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                        .build());
+            }
+
+        }
+        diagnoseResultRepo.saveAll(diagnoseResults);
+    }
+    public static void saveDiagnoseResultsWith(int qty, DiagnoseResultRepo diagnoseResultRepo, DiagnoseRepo diagnoseRepo,MedicalHistoryRepo medicalHistoryRepo, PositionRepo positionRepo){
+        saveDiagnosesWith(qty, diagnoseRepo, positionRepo);
+        saveMedicalHistory(qty, medicalHistoryRepo);
+        saveDiagnoseResults(qty, diagnoseResultRepo, diagnoseRepo, medicalHistoryRepo);
     }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================

@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -97,106 +96,12 @@ public class FillDatabase extends RepoMethods {
             //--------------------------------------------------- Пользователи ---------------------------------------------------
             saveDiseases(qty, diseaseRepo);
             saveRemedies(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo);
-            saveExamination(qty, examinationRepo);
-            //--<======================== MedicalHistory ========================
-            List <MedicalHistory> medicalHistories = new ArrayList<>();
-            Date date = new Date();
-            for (int i = 0; i < qty; i++){
-                if(i % 2 == 0){
-                    medicalHistories.add(MedicalHistory.builder()
-                            .date(date)
-                            .typeOfVisit(true)
-                            .complaint(faker.music().instrument())
-                            .recommendation(faker.lorem().characters())
-                            .build());
-                }
-                else {
-                    medicalHistories.add(MedicalHistory.builder()
-                            .date(date)
-                            .typeOfVisit(false)
-                            .complaint(faker.music().instrument())
-                            .recommendation(faker.lorem().characters())
-                            .build());
-                }
-
-            }
-            medicalHistoryRepo.saveAll(medicalHistories);
-            //-->======================== MedicalHistory ========================
-            //--<======================== Record Journal ========================
-            List <RecordJournal> recordJournalList = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                recordJournalList.add(RecordJournal.builder()
-                        .doctor(userRepo.findAllDoctors().get(rn.nextInt(userRepo.findAllDoctors().size())))
-                        .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
-                        .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
-                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
-                        .dateTime(LocalDateTime.now())
-                        .dateTimeNow(LocalDateTime.now())
-                        .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
-                        .build()
-                );
-            }
-            for (int i = 0; i < 5; i++){
-                recordJournalList.add(RecordJournal.builder()
-                        .doctor(userRepo.findByInn(Long.parseLong(Constants.DOCTOR_INN)).get())
-                        .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
-                        .patient(userRepo.findAllPatients().get(rn.nextInt(userRepo.findAllPatients().size())))
-                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                        .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
-                        .dateTime(LocalDateTime.now())
-                        .dateTimeNow(LocalDateTime.now())
-                        .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
-                        .build()
-                );
-            }
-            recordJournalList.add(RecordJournal.builder()
-                    .doctor(userRepo.findByInn(Long.parseLong(Constants.DOCTOR_INN)).get())
-                    .registrar(userRepo.findAllHospitalStaff().get(rn.nextInt(userRepo.findAllHospitalStaff().size())))
-                    .patient(userRepo.findByInn(Long.parseLong(Constants.PATIENT_INN)).get())
-                    .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                    .hospital(hospitalRepo.findAll().get(rn.nextInt(hospitalRepo.findAll().size())))
-                    .dateTime(LocalDateTime.now())
-                    .dateTimeNow(LocalDateTime.now())
-                    .reason(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())).getComplaint())
-                    .build()
-            );
-            recordJournalRepo.saveAll(recordJournalList);
-            //-->======================== Record Journal ========================
+            saveExaminations(qty, examinationRepo);
+            saveMedicalHistory(qty, medicalHistoryRepo);
+            saveRecordJournal(qty, recordJournalRepo, userRepo, medicalHistoryRepo, hospitalRepo);
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
-            //--<======================== Diagnose ========================
-            List <Diagnose> diagnoses = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                diagnoses.add(Diagnose.builder()
-                        .isdCode(faker.superhero().name())
-                        .name(faker.book().title())
-                        .position(positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())))
-                        .build());
-
-            }
-            diagnoseRepo.saveAll(diagnoses);
-            //-->======================== Diagnose ========================
-            //--<======================== DiagnoseResult ========================
-            List <DiagnoseResult> diagnoseResults = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                if (i % 2 == 0){
-                    diagnoseResults.add(DiagnoseResult.builder()
-                            .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
-                            .state(true)
-                            .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                            .build());
-                }
-                else {
-                    diagnoseResults.add(DiagnoseResult.builder()
-                            .diagnose(diagnoseRepo.findAll().get(rn.nextInt(diagnoseRepo.findAll().size())))
-                            .state(false)
-                            .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                            .build());
-                }
-
-            }
-            diagnoseResultRepo.saveAll(diagnoseResults);
-            //-->======================== DiagnoseResult ========================
+            saveDiagnoses(qty, diagnoseRepo, positionRepo);
+            saveDiagnoseResults(qty, diagnoseResultRepo, diagnoseRepo, medicalHistoryRepo);
             //--<======================== LabExamination ========================
             List <LabExamination> labExaminations = new ArrayList<>();
             for (int i = 0; i < qty; i++){
