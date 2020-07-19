@@ -28,7 +28,7 @@
                         <select class="form-control" name="dateTime">
                             <#if dateTime??>
                                 <#list dateTime as dateTime>
-                                    <option>${dateTime}</option>
+                                    <option>${dateTime.format("dd-MM-yyyy HH:mm")}</option>
                                 </#list>
                             </#if>
                         </select>
