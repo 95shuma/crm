@@ -7,6 +7,7 @@ import com.project.crm.backend.model.catalog.medicalHistoryCatalog.Diagnose;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
+import org.springframework.data.repository.Repository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -245,6 +246,39 @@ public class RepoMethods {
             );
         }
         diseaseRepo.saveAll(diseaseList);
+    }
+    public static void saveRemedies(int qty, RemedyRepo remedyRepo, RemedyTypeRepo remedyTypeRepo, RemediesFormRepo remediesFormRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, InternationalNameRepo internationalNameRepo, DosageRepo dosageRepo){
+        List <Remedy> remedyList = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            remedyList.add(Remedy.builder()
+                    .remedyType(remedyTypeRepo.findAll().get(rn.nextInt(remedyTypeRepo.findAll().size())))
+                    .pharmacologicalGroup(pharmacologicalGroupRepo.findAll().get(rn.nextInt(pharmacologicalGroupRepo.findAll().size())))
+                    .internationalName(internationalNameRepo.findAll().get(rn.nextInt(internationalNameRepo.findAll().size())))
+                    .name((faker.superhero().name()))
+                    .dosage(dosageRepo.findAll().get(rn.nextInt(dosageRepo.findAll().size())))
+                    .remediesForm(remediesFormRepo.findAll().get(rn.nextInt(remediesFormRepo.findAll().size())))
+                    .build()
+            );
+        }
+        remedyRepo.saveAll(remedyList);
+    }
+    public static void saveRemediesWith(int qty, RemedyRepo remedyRepo, RemedyTypeRepo remedyTypeRepo, RemediesFormRepo remediesFormRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, InternationalNameRepo internationalNameRepo, DosageRepo dosageRepo, MeasureRepo measureRepo){
+        saveRemedyTypes(qty, remedyTypeRepo);
+        saveRemedyForms(qty, remediesFormRepo);
+        savePharmacologicalGroups(qty, pharmacologicalGroupRepo);
+        saveInternationalNames(qty, internationalNameRepo);
+        saveDosagesWithMeasureRepo(qty, dosageRepo, measureRepo);
+        saveRemedies(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo);
+    }
+    public static void saveExamination(int qty, ExaminationRepo examinationRepo){
+        List <Examination> examinationList = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            examinationList.add(Examination.builder()
+                    .name(faker.esports().player())
+                    .build()
+            );
+        }
+        examinationRepo.saveAll(examinationList);
     }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================

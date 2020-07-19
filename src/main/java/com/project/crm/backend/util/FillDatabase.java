@@ -96,31 +96,8 @@ public class FillDatabase extends RepoMethods {
             savePatientsRandom(qty, userRepo, hospitalRepo, roleRepo, placeRepo, positionRepo, registrationJournalRepo);
             //--------------------------------------------------- Пользователи ---------------------------------------------------
             saveDiseases(qty, diseaseRepo);
-            //--<======================== Remedy ========================
-            List <Remedy> remedyList = new ArrayList<>();
-            for (int i = 0; i < 30; i++){
-                remedyList.add(Remedy.builder()
-                        .remedyType(remedyTypeRepo.findAll().get(rn.nextInt(remedyTypeRepo.findAll().size())))
-                        .pharmacologicalGroup(pharmacologicalGroupRepo.findAll().get(rn.nextInt(pharmacologicalGroupRepo.findAll().size())))
-                        .internationalName(internationalNameRepo.findAll().get(rn.nextInt(internationalNameRepo.findAll().size())))
-                        .name((faker.superhero().name()))
-                        .dosage(dosageRepo.findAll().get(rn.nextInt(dosageRepo.findAll().size())))
-                        .remediesForm(remediesFormRepo.findAll().get(rn.nextInt(remediesFormRepo.findAll().size())))
-                        .build()
-                );
-            }
-            remedyRepo.saveAll(remedyList);
-            //-->======================== Remedy ========================
-            //--<======================== Examination ========================
-            List <Examination> examinationList = new ArrayList<>();
-            for (int i = 0; i < 20; i++){
-                examinationList.add(Examination.builder()
-                        .name(faker.esports().player())
-                        .build()
-                );
-            }
-            examinationRepo.saveAll(examinationList);
-            //-->======================== Examination ========================
+            saveRemedies(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo);
+            saveExamination(qty, examinationRepo);
             //--<======================== MedicalHistory ========================
             List <MedicalHistory> medicalHistories = new ArrayList<>();
             Date date = new Date();
