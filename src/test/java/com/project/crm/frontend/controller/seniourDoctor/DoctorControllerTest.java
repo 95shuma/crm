@@ -112,7 +112,7 @@ public class DoctorControllerTest extends RepoMethods {
     public void saveRepos(){
         saveRolesConstant(roleRepo);
         savePositionsConstant(positionRepo);
-        saveHospitalsWithPlaces(size, hospitalRepo, placeRepo);
+        saveHospitalsWith(size, hospitalRepo, placeRepo);
 
         User user = User.builder()
                 .inn(Long.parseLong(innSeniorDoctor))
