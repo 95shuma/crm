@@ -419,7 +419,22 @@ public class RepoMethods {
         saveLabExaminations(qty, labExaminationRepo);
         saveExaminationResults(qty, examinationResultRepo, instrumExaminationRepo, labExaminationRepo, medicalHistoryRepo);
     }
-
+    public static void saveSickList(int qty, SickListRepo sickListRepo, MedicalHistoryRepo medicalHistoryRepo){
+        List <SickList> sickLists = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            sickLists.add(SickList.builder()
+                    .number((long)faker.number().numberBetween(10, 30))
+                    .startDate(date)
+                    .endDate(date)
+                    .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                    .build());
+        }
+        sickListRepo.saveAll(sickLists);
+    }
+    public static void saveSickListWith(int qty, SickListRepo sickListRepo, MedicalHistoryRepo medicalHistoryRepo){
+        saveMedicalHistory(qty, medicalHistoryRepo);
+        saveSickList(qty, sickListRepo, medicalHistoryRepo);
+    }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
     public static void deleteAllData(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
