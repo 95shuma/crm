@@ -45,7 +45,6 @@ public class DoctorRegisterBySenior extends Steps {
         webDriver.findElement(By.name("gender")).sendKeys("1");
         webDriver.findElement(By.name("placeId")).sendKeys("2");
         webDriver.findElement(By.name("positionId")).sendKeys("3");
-        webDriver.findElement(By.name("hospitalId")).sendKeys("4");
         webDriver.findElement(By.name("name")).submit();
     }
     @Тогда("перейдет в главную страницу админа ЛПУ")
