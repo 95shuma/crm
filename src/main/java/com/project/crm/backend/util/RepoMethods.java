@@ -454,6 +454,16 @@ public class RepoMethods {
         saveMedicalHistory(qty, medicalHistoryRepo);
         saveDirections(qty, directionRepo, labExaminationRepo, instrumExaminationRepo, positionRepo, medicalHistoryRepo);
     }
+    public static void saveProcedures(int qty, ProcedureRepo procedureRepo){
+        List <Procedure> procedures = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            procedures.add(Procedure.builder()
+                    .name(faker.pokemon().name())
+                    .description(faker.pokemon().location())
+                    .build());
+        }
+        procedureRepo.saveAll(procedures);
+    }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
     public static void deleteAllData(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,

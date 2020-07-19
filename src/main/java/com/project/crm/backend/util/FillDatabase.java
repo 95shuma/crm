@@ -107,17 +107,7 @@ public class FillDatabase extends RepoMethods {
             saveExaminationResults(qty, examinationResultRepo, instrumExaminationRepo, labExaminationRepo, medicalHistoryRepo);
             saveSickList(qty, sickListRepo, medicalHistoryRepo);
             saveDirections(qty, directionRepo, labExaminationRepo, instrumExaminationRepo, positionRepo, medicalHistoryRepo);
-            //--<======================== Procedure ========================
-            List <Procedure> procedures = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                procedures.add(Procedure.builder()
-                        .name(faker.pokemon().name())
-                        .description(faker.pokemon().location())
-                        .build());
-
-            }
-            procedureRepo.saveAll(procedures);
-            //-->======================== Procedure ========================
+            saveProcedures(qty, procedureRepo);
             //--<======================== Treatment ========================
             List <Treatment> treatments = new ArrayList<>();
             for (int i = 0; i < qty; i++){
