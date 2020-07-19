@@ -1,12 +1,14 @@
 package com.project.crm.backend.model;
 
 import com.project.crm.backend.model.catalog.Place;
+import com.project.crm.backend.model.catalog.RegistrationJournal;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -64,4 +66,7 @@ public class User {
     @Column
     @Builder.Default
     private boolean enabled = true;
+
+    @OneToMany(mappedBy="user")
+    private List<RegistrationJournal> registrationJournals;
 }
