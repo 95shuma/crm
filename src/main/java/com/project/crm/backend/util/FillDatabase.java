@@ -108,38 +108,8 @@ public class FillDatabase extends RepoMethods {
             saveSickList(qty, sickListRepo, medicalHistoryRepo);
             saveDirections(qty, directionRepo, labExaminationRepo, instrumExaminationRepo, positionRepo, medicalHistoryRepo);
             saveProcedures(qty, procedureRepo);
-            //--<======================== Treatment ========================
-            List <Treatment> treatments = new ArrayList<>();
-            for (int i = 0; i < qty; i++){
-                if (i % 2 == 0){
-                    treatments.add(Treatment.builder()
-                            .remedy(remedyRepo.findAll().get(rn.nextInt(remedyRepo.findAll().size())))
-                            .remediesNote(faker.book().title())
-                            .procedure(procedureRepo.findAll().get(rn.nextInt(procedureRepo.findAll().size())))
-                            .procedureNote(faker.book().title())
-                            .remediesNote(faker.book().author())
-                            .type(true)
-                            .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                            .build());
-                }
-                else {
-                    treatments.add(Treatment.builder()
-                            .remedy(remedyRepo.findAll().get(rn.nextInt(remedyRepo.findAll().size())))
-                            .remediesNote(faker.book().title())
-                            .procedure(procedureRepo.findAll().get(rn.nextInt(procedureRepo.findAll().size())))
-                            .procedureNote(faker.book().title())
-                            .remediesNote(faker.book().author())
-                            .type(false)
-                            .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
-                            .build());
-                }
-
-            }
-            treatmentRepo.saveAll(treatments);
-            //-->======================== Treatment ========================
-
+            saveTreatments(qty, treatmentRepo, remedyRepo, procedureRepo, medicalHistoryRepo);
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
-
         };
     }
 

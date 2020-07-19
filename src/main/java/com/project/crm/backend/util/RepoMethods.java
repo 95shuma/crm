@@ -464,6 +464,39 @@ public class RepoMethods {
         }
         procedureRepo.saveAll(procedures);
     }
+    public static void saveTreatments(int qty, TreatmentRepo treatmentRepo, RemedyRepo remedyRepo, ProcedureRepo procedureRepo, MedicalHistoryRepo medicalHistoryRepo){
+        List <Treatment> treatments = new ArrayList<>();
+        for (int i = 0; i < qty; i++){
+            if (i % 2 == 0)
+                treatments.add(Treatment.builder()
+                        .remedy(remedyRepo.findAll().get(rn.nextInt(remedyRepo.findAll().size())))
+                        .remediesNote(faker.book().title())
+                        .procedure(procedureRepo.findAll().get(rn.nextInt(procedureRepo.findAll().size())))
+                        .procedureNote(faker.book().title())
+                        .remediesNote(faker.book().author())
+                        .type(true)
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                        .build());
+            else
+                treatments.add(Treatment.builder()
+                        .remedy(remedyRepo.findAll().get(rn.nextInt(remedyRepo.findAll().size())))
+                        .remediesNote(faker.book().title())
+                        .procedure(procedureRepo.findAll().get(rn.nextInt(procedureRepo.findAll().size())))
+                        .procedureNote(faker.book().title())
+                        .remediesNote(faker.book().author())
+                        .type(false)
+                        .medicalHistory(medicalHistoryRepo.findAll().get(rn.nextInt(medicalHistoryRepo.findAll().size())))
+                        .build());
+        }
+        treatmentRepo.saveAll(treatments);
+    }
+    public static void saveTreatmentsWith(int qty, TreatmentRepo treatmentRepo, RemedyRepo remedyRepo, ProcedureRepo procedureRepo, MedicalHistoryRepo medicalHistoryRepo,
+                                          RemedyTypeRepo remedyTypeRepo, RemediesFormRepo remediesFormRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, InternationalNameRepo internationalNameRepo, DosageRepo dosageRepo, MeasureRepo measureRepo){
+        saveRemediesWith(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo, measureRepo);
+        saveProcedures(qty, procedureRepo);
+        saveMedicalHistory(qty, medicalHistoryRepo);
+        saveTreatments(qty, treatmentRepo, remedyRepo, procedureRepo, medicalHistoryRepo);
+    }
     // --> ========================================= SAVE методы =========================================
     // --< ========================================= DELETE методы =========================================
     public static void deleteAllData(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
