@@ -4,20 +4,26 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th scope="col">Дата приёма</th>
                     <th scope="col">Время приёма</th>
                     <th scope="col">Лечащий врач</th>
+                    <th scope="col">Должность</th>
                     <th scope="col">Больница</th>
                     <th scope="col">Жалоба</th>
                 </tr>
             </thead>
             <tbody>
             <#list items as journal>
+                <!--#list journal.doctor.registrationJournals as regJournal-->
                 <tr>
-                    <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
+                    <td>${journal.dateTime.format("dd-MM-yyyy")}</td>
+                    <td>${journal.dateTime.format("HH:mm")}</td>
                     <td>${journal.doctor.fullName}</td>
+                    <td>${journal.doctor.registrationJournals[0].position.name}</td>
                     <td>${journal.hospital.name} - ${journal.hospital.address}</td>
                     <td>${journal.reason}</td>
                 </tr>
+                <!--/#list-->
             </#list>
             </tbody>
         </table>
