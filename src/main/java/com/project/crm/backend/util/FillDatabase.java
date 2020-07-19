@@ -1,27 +1,18 @@
 package com.project.crm.backend.util;
 
-import com.github.javafaker.Faker;
-import com.project.crm.backend.model.User;
-import com.project.crm.backend.model.catalog.*;
-import com.project.crm.backend.model.catalog.medicalHistoryCatalog.*;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Configuration
 public class FillDatabase extends RepoMethods {
 
     private static final Random rn = new Random();
-    private static final Faker faker = new Faker(new Locale("ru"));
-    public PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Bean
     @Profile(Constants.PROFILE_ENVIRONMENT_PRODUCTION)
     CommandLineRunner fillDatabaseWithConstantData(UserRepo userRepo, RegistrationJournalRepo registrationJournalRepo,  RoleRepo roleRepo){
@@ -34,7 +25,6 @@ public class FillDatabase extends RepoMethods {
             }
         };
     }
-
     @Bean
     @Profile(Constants.PROFILE_ENVIRONMENT_DEVELOPMENT)
     CommandLineRunner fillFullDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
@@ -112,60 +102,5 @@ public class FillDatabase extends RepoMethods {
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
         };
     }
-
-    private void createUser(List<User> users, PlaceRepo placeRepo,String inn){
-        users.add(User.builder()
-                .inn(Long.parseLong(inn))
-                .password(passwordEncoder.encode(inn))
-                .documentNumber("ID".concat(faker.number().digits(7)))
-                .fullName(faker.name().fullName())
-                .surname(faker.name().lastName())
-                .name(faker.name().firstName())
-                .middleName(faker.name().lastName())
-                .birthDate(faker.date().birthday())
-                .gender(getRandomGender())
-                .place(placeRepo.findAll().get(rn.nextInt(placeRepo.findAll().size())))
-                .enabled(true)
-                .build()
-        );
-    }
-    private String  getRandomGender(){
-        if (rn.nextInt(2) == 0)
-            return "Мужской";
-        else
-            return "Женский";
-    }
-    private String  getAnyDoctorRole(){
-        int r = rn.nextInt(3)+1;
-        if (r == 1)
-            return "2";
-        if (r == 2)
-            return "3";
-        else
-            return "4";
-    }
-
-    private String returnUniqueINN(UserRepo userRepo){
-        List<String> innList = new ArrayList<>();
-        String newInn = faker.number().digits(14);
-        AtomicBoolean makeNew = new AtomicBoolean(true);
-        userRepo.findAll().forEach(obj -> {
-            innList.add(obj.getInn().toString());
-        });
-
-        innList.forEach(inn -> {
-            if (inn.equals(newInn)){
-                makeNew.set(false);
-            }
-        });
-        if (makeNew.get()){
-            return newInn;
-        } else {
-            return returnUniqueINN(userRepo);
-        }
-    }
-
-
-
 }
 
