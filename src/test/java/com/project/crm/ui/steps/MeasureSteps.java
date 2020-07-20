@@ -69,7 +69,6 @@ public class MeasureSteps extends Steps {
         expectedAlert.add("Название должно содержать только буквы :");
 
         assertEquals(expectedAlert,actualAlert);
-        //Assertions.assertEquals("Обязательное поле", webDriver.findElement(By.xpath("//form[@id='measureDos']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
     @Когда("добавляет слово из букв и цифр")

@@ -1,10 +1,16 @@
 package com.project.crm.ui.steps;
 
+import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class InterNameSteps extends Steps {
 
@@ -20,7 +26,7 @@ public class InterNameSteps extends Steps {
 
     @Допустим("пользователь авторизуется под админом и открывает список лекарств")
     public void пользовательАвторизуетсяПодАдминомиОткрываетСписокЛекарств() {
-        login("11111111111111","11111111111111");
+        login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
         webDriver.findElement(By.name("remedies")).click();
     }
 
@@ -63,7 +69,16 @@ public class InterNameSteps extends Steps {
 
     @Тогда("выходят сообщения об ошибке")
     public void выходятСообщенияОбОшибке() {
-        Assertions.assertEquals("Обязательное поле",webDriver.findElement(By.xpath("//form[@id='commentForm']//div[@class='alert alert-warning mt-1']")).getText());
+        List<String> expectedAlert = new ArrayList<String>();
+        List<String> actualAlert = new ArrayList<String>();
+
+        actualAlert.add(webDriver.findElement(By.xpath("//form[@id='commentForm']//div[@class='alert alert-warning mt-1'][text()='Обязательное поле']")).getText());
+        actualAlert.add(webDriver.findElement(By.xpath("//form[@id='commentForm']//div[@class='alert alert-warning mt-1'][text()='Название должно содержать только буквы : ']")).getText());
+
+        expectedAlert.add("Обязательное поле");
+        expectedAlert.add("Название должно содержать только буквы :");
+
+        assertEquals(expectedAlert,actualAlert);
     }
 
 }
