@@ -32,7 +32,10 @@ public class UserService {
 
     public UserDTO getByInn(Long inn){
         User user = userRepo.findByInn(inn).get();
-        return UserDTO.from(user);
+        if (user.getPlace() == null)
+            return UserDTO.fromWithoutPlace(user);
+        else
+            return UserDTO.from(user);
     }
 
     public boolean existByInn(Long inn){
@@ -113,7 +116,7 @@ public class UserService {
             Long inn = Long.parseLong(principal.getName());
             for (Role role: roleRepo.findAll()){
                 if (registrationJournalRepo.existsByUserInnAndRoleId(inn, role.getId())){
-                    model.addAttribute("user", userRepo.findByInn(inn).get());
+                    model.addAttribute("user", getByInn(inn));
                     break;
                 }
             }

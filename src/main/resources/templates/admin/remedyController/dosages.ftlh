@@ -6,7 +6,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Дозировка лекарств</th>
-            <th scope="col">Единица измерения</th>
+            <th scope="col"><a href="/admin/measures">Единица измерения</th>
             <th scope="col">Количество в упаковке</th>
         </tr>
         </thead>
@@ -24,7 +24,7 @@
     </table>
     <#include "../../partials/pagination.ftlh">
     <a type="button" class="btn btn-primary w-100" href="/admin/dosages/dosage">
-        Добавить новую форму
+        Добавить новую дозу
     </a>
 
 </@main.renderWith>

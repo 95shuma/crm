@@ -3,7 +3,7 @@
 <@main.renderWith>
     <div class="mx-auto mt-3 w-50">
         <h3 class="text-center">Новый пациент</h3>
-        <form action="/senior-doctor/patients/patient" method="post" style="margin-bottom: 50px">
+        <form id="patient" action="/senior-doctor/patients/patient" method="post" style="margin-bottom: 50px">
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
@@ -90,14 +90,7 @@
                         </#list>
                     </#if>
                 </select>
-                <label for="registrationHospitalId">ЛПУ пациента</label>
-                <select class="form-control" id="registrationHospitalId" name="hospitalId">
-                    <#if hospitals??>
-                        <#list hospitals as hospital>
-                            <option value= "${hospital.id}">${hospital.name}</option>
-                        </#list>
-                    </#if>
-                </select>
+                <input id="hospitalId" type="hidden" name="hospitalId" value="${user.place.id}">
                 <input type="hidden" name="roleId"  class="form-control" value="5">
                 <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px">Добавить</button>
             </div>

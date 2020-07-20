@@ -17,7 +17,7 @@
                 <label>Введите пароль:</label>
                 <input type="password" name="password" class="form-control" placeholder="Пароль">
             </div>
-            <button class="btn btn-primary btn-block">Войти</button>
+            <button name="login" class="btn btn-primary btn-block">Войти</button>
 
             <div>
                 <#if error!false >

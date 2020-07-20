@@ -17,7 +17,7 @@ public class RecordJournalRegisterForm {
     private Long registrarId = null;
 
     @Future(message = "Нельзя записаться в прошлое")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat( pattern = "dd-MM-yyyy HH:mm")
     @NotNull(message = "Выберите подходящее время и дату записи")
     private LocalDateTime dateTime = null;
 

@@ -71,7 +71,7 @@
                             </#list>
                         </#if>
                     </div>
-                    <input type="hidden" name="medicalHistoryId" value="${medicalHistoryId}">
+                    <input type="hidden" name="medicalHistoryId" value="${medicalHistoryId?c}">
                     <button type="submit" class="btn btn-primary w-100">Добавить</button>
                 </form>
             </div>

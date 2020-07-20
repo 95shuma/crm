@@ -5,7 +5,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">Время записи</th>
+                <th scope="col">Дата приёма</th>
                 <th scope="col">Время приёма</th>
                 <th scope="col">ФИО больного</th>
                 <th scope="col">Пол</th>
@@ -18,9 +18,9 @@
             <#list items as journal>
                 <#if journal.medicalHistory.recommendation == "">
                          <tr>
-                             <td>${journal.dateTimeNow.format('MMM-dd HH:mm')}</td>
-                             <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
-                             <td><a href="/doctor/records/${journal.id?c}">${journal.patient.fullName}</td>
+                             <td>${journal.dateTime.format('dd-MM-yyyy')}</td>
+                             <td>${journal.dateTime.format('HH:mm')}</td>
+                             <td><a href="/doctor/records/${journal.id?c}" id="${journal.patient.inn}">${journal.patient.fullName}</td>
                              <td>${journal.patient.gender}</td>
                              <td>${journal.patient.birthDate?date}</td>
                              <td>${journal.medicalHistory.complaint}</td>
@@ -28,9 +28,9 @@
                          </tr>
                     <#else>
                         <tr>
-                            <td>${journal.dateTimeNow.format('MMM-dd HH:mm')}</td>
-                            <td>${journal.dateTime.format('MMM-dd HH:mm')}</td>
-                            <td><a href="/doctor/records/${journal.id?c}">${journal.patient.fullName}</td>
+                            <td>${journal.dateTime.format('dd-MM-yyyy')}</td>
+                            <td>${journal.dateTime.format('HH:mm')}</td>
+                            <td><a href="/doctor/records/${journal.id?c}" id="${journal.patient.inn?c}">${journal.patient.fullName}</td>
                             <td>${journal.patient.gender}</td>
                             <td>${journal.patient.birthDate?date}</td>
                             <td>${journal.medicalHistory.complaint}</td>

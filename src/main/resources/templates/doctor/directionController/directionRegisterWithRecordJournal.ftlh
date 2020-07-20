@@ -8,12 +8,12 @@
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
-                    <input name="medicalHistoryId" type="hidden" value="${medicalHistory_id}">
+                    <input name="medicalHistoryId" type="hidden" value="${medicalHistory_id?c}">
                     <div class="form-group">
                         <p><label for="lpuPlaceId" class="col-form-label">Лабораторные исследования</label></p>
                         <select class="form-control" id="lpuPlaceId" name="labExaminationId">
                             <#list labExamination as labExamination>
-                                <option value="${labExamination.id}">${labExamination.name} - ${labExamination.rate}</option>
+                                <option value="${labExamination.id?c}">${labExamination.name} - ${labExamination.rate}</option>
                             </#list>
                         </select>
                         <#if errors??>
@@ -28,7 +28,7 @@
                         <p><label for="puPlaceId" class="col-form-label">Инструментальные исследования</label></p>
                         <select class="form-control" id="puPlaceId" name="instrumExaminationId">
                             <#list instrumExamination as instrumExamination>
-                                <option value="${instrumExamination.id}">${instrumExamination.name} - ${instrumExamination.rate} - ${instrumExamination.description}</option>
+                                <option value="${instrumExamination.id?c}">${instrumExamination.name} - ${instrumExamination.rate} - ${instrumExamination.description}</option>
                             </#list>
                         </select>
                         <#if errors??>
@@ -43,7 +43,7 @@
                         <p><label for="puPlaceId" class="col-form-label">Должность</label></p>
                         <select class="form-control" id="puPlaceId" name="positionId">
                             <#list position as position>
-                                <option value="${position.id}">${position.name}</option>
+                                <option value="${position.id?c}">${position.name}</option>
                             </#list>
                         </select>
                         <#if errors??>

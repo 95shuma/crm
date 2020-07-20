@@ -12,7 +12,7 @@
                         <p><label for="lpuPlaceId" class="col-form-label">Лекарство</label></p>
                         <select class="form-control" id="lpuPlaceId" name="remedyId">
                             <#list remedies as remedy>
-                                <option value="${remedy.id}">${remedy.name}</option>
+                                <option value="${remedy.id?c}">${remedy.name}</option>
                             </#list>
                         </select>
                         <#if errors??>
@@ -27,7 +27,7 @@
                         <p><label for="puPlaceId" class="col-form-label">Процедура</label></p>
                         <select class="form-control" id="puPlaceId" name="procedureId">
                             <#list procedures as procedure>
-                                <option value="${procedure.id}">${procedure.name}</option>
+                                <option value="${procedure.id?c}">${procedure.name}</option>
                             </#list>
                         </select>
                         <#if errors??>
@@ -42,7 +42,7 @@
                         <p><label for="puPlaceId" class="col-form-label">Мед история</label></p>
                         <select class="form-control" id="puPlaceId" name="medicalHistoryId">
                             <#list medicalHistories as medicalHistory>
-                                <option value="${medicalHistory.id}">${medicalHistory.complaint}</option>
+                                <option value="${medicalHistory.id?c}">${medicalHistory.complaint}</option>
                             </#list>
                         </select>
                         <#if errors??>

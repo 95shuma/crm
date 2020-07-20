@@ -14,7 +14,7 @@
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'number'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                    <div class="alert alert-warning mt-1 sickListNumber" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
                                 </#if>
                             </#list>
                         </#if>
@@ -25,7 +25,7 @@
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'startDate'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                    <div class="alert alert-warning mt-1 startDate" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
                                 </#if>
                             </#list>
                         </#if>
@@ -36,12 +36,12 @@
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'endDate'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                                    <div class="alert alert-warning mt-1 endDate" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
                                 </#if>
                             </#list>
                         </#if>
                     </div>
-                    <input type="hidden" name="medicalHistoryId" value="${medicalHistoryId}">
+                    <input type="hidden" name="medicalHistoryId" value="${medicalHistoryId?c}">
                     <button class="btn btn-primary w-100" type="submit">Добавить</button>
                 </form>
             </div>

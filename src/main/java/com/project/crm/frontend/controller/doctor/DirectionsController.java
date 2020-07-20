@@ -71,7 +71,7 @@ public class DirectionsController {
                                   RedirectAttributes attributes){
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/doctor/direction/"+directionRegisterForm.getMedicalHistoryId()+"/direction";
+            return "redirect:/doctor/directions/"+directionRegisterForm.getMedicalHistoryId()+"/direction";
         }
 
         directionService.createDirection(directionRegisterForm);

@@ -6,6 +6,7 @@
         <thead>
         <tr>
             <th scope="col">№</th>
+            <th scope="col"><a href="/admin/remedyTypes">тип</th>
             <th scope="col"><a href="/admin/groups">фарм группа</th>
             <th scope="col"><a href="/admin/internationalNames">Международное название </th>
             <th scope="col">Торговое название</th>
@@ -17,6 +18,7 @@
         <#list items as remedy>
             <tr>
                 <th scope="row">${remedy?counter}</th>
+                <td>${remedy.remedyType.name}</td>
                 <td>${remedy.pharmacologicalGroup.name}</td>
                 <td>${remedy.internationalName.name}</td>
                 <td>${remedy.name}</td>

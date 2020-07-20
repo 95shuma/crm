@@ -19,7 +19,7 @@
     </table>
     <#include "../../partials/pagination.ftlh">
     <a type="button" class="btn btn-primary w-100" href="/admin/measures/measure">
-        Добавить новое Международное название лекарства
+        Добавить новую единицу измерения
     </a>
 
 </@main.renderWith>

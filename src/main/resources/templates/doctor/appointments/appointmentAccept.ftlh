@@ -57,10 +57,10 @@
                         <a href="/doctor/treatments/treatment" class="btn btn-primary btn-block">Добавить назначение</a>
                     </div>
                     <div class="form-group">
-                        <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/examination-results" class="btn btn-primary btn-block">Обнаружено (осмотр и результаты исследований)</a>
+                        <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/examination-results" class="btn btn-primary btn-block" id="examinationResult">Обнаружено (осмотр и результаты исследований)</a>
                     </div>
                     <div class="form-group">
-                        <a href="/doctor/diagnoseResult/${patient.medicalHistory.id?c}/diagnoseResult" class="btn btn-primary btn-block">Постановка диагноза</a>
+                        <a href="/doctor/diagnoseResult/${patient.medicalHistory.id?c}/diagnoseResult" class="btn btn-primary btn-block" id="diagnoseResult">Постановка диагноза</a>
                     </div>
                     <div class="form-group">
                         <p><label class="col-form-label"><strong>Рекомендации к лечению</strong></label></p>
@@ -70,7 +70,7 @@
                         <a href="/doctor/records/${patient.id?c}/treatment" class="btn btn-primary btn-block">Назначить лечение</a>
                     </div>
                     <div class="form-group">
-                        <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/sickList" class="btn btn-primary btn-block">Открыть больничный лист</a>
+                        <a href="/doctor/medical-history/${patient.medicalHistory.id?c}/sickList" class="btn btn-primary btn-block" id="sickList">Открыть больничный лист</a>
                     </div>
                     <button type="submit" style="margin-top: 5px" class="btn btn-primary btn-block">Записать</button>
                 </form>

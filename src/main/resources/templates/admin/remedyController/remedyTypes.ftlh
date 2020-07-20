@@ -18,7 +18,7 @@
         </tbody>
     </table>
     <#include "../../partials/pagination.ftlh">
-    <a type="button" class="btn btn-primary w-100" href="/admin/forms/form">
+    <a type="button" class="btn btn-primary w-100" href="/admin/remedyTypes/remedyType">
         Добавить новый тип
     </a>
 

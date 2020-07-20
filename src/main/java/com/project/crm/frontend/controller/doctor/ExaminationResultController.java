@@ -5,7 +5,7 @@ import com.project.crm.backend.services.UserService;
 import com.project.crm.backend.services.remediesService.ExaminationResultService;
 import com.project.crm.backend.services.medicalHistoryService.InstrumExaminationService;
 import com.project.crm.backend.services.medicalHistoryService.LabExaminationService;
-import com.project.crm.frontend.forms.remediesForm.ExaminationResultForm;
+import com.project.crm.frontend.forms.medicalHistoryForms.ExaminationResultForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;

@@ -31,7 +31,7 @@
                 <#if errors??>
                     <#list errors as fieldError>
                         <#if fieldError.field == 'documentNumber'>
-                            <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                            <div class="alert alert-warning mt-1 passportN" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
                         </#if>
                     </#list>
                 </#if>
@@ -113,14 +113,7 @@
                         </#list>
                     </#if>
                 </select>
-                <label for="registrationHospitalId">ЛПУ</label>
-                <select class="form-control" id="registrationHospitalId" name="hospitalId">
-                    <#if hospitals??>
-                        <#list hospitals as hospital>
-                            <option value="${hospital.id}">${hospital.name}</option>
-                        </#list>
-                    </#if>
-                </select>
+                <input id="hospitalId" type="hidden" name="hospitalId" value="${user.place.id}">
                 <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px">Добавить</button>
             </div>
         </form>

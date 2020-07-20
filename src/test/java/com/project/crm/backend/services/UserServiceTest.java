@@ -133,6 +133,6 @@ public class UserServiceTest {
         Principal principal = () -> correctInn;
 
         userService.checkUserPresence(model, principal);            //checkUserPresence отрабатывает, model заполняется данными в зависимости от principal.
-        Assertions.assertEquals(model.getAttribute("user") , userRepo.findByInn(Long.parseLong(correctInn)).get());
+        Assertions.assertEquals(model.getAttribute("user") , userService.getByInn(Long.parseLong(correctInn)));
     }
 }

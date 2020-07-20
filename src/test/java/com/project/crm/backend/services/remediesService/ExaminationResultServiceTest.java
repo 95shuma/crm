@@ -7,7 +7,7 @@ import com.project.crm.backend.repository.MedicalHistoryRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.ExaminationResultRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.InstrumExaminationRepo;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.LabExaminationRepo;
-import com.project.crm.frontend.forms.remediesForm.ExaminationResultForm;
+import com.project.crm.frontend.forms.medicalHistoryForms.ExaminationResultForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
