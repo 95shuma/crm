@@ -1,6 +1,7 @@
 package com.project.crm.ui.steps;
 
 
+import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
@@ -21,7 +22,7 @@ public class DosageSteps extends Steps {
 
     @Допустим("логинится и открывает список лекарств")
     public void логинитсяиОткрываетСписокЛекарств() {
-        login("11111111111111", "11111111111111");
+        login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
         webDriver.findElement(By.name("remedies")).click();
     }
 
