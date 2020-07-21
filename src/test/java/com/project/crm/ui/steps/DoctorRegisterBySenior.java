@@ -1,6 +1,7 @@
 package com.project.crm.ui.steps;
 
 
+import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
@@ -25,7 +26,7 @@ public class DoctorRegisterBySenior extends Steps {
 
     @Допустим("админ ЛПУ авторизуется")
     public void админЛПУавторизуется() {
-        login("12222222222222", "12222222222222");
+        login(Constants.SENIOR_DOCTOR_INN, Constants.SENIOR_DOCTOR_PASSWORD);
     }
 
     @Затем("нажимает на кнопку Зарегистрировать доктора")
