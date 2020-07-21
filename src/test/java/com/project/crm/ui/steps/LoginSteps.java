@@ -1,5 +1,6 @@
 package com.project.crm.ui.steps;
 
+import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.Допустим;
@@ -9,7 +10,6 @@ import io.cucumber.java.ru.Тогда;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 
 public class LoginSteps extends Steps {
 
@@ -45,7 +45,7 @@ public class LoginSteps extends Steps {
 
     @Когда("я авторизованный пользователь")
     public void яАвторизованныйПользователь() {
-        login("11111111111111","11111111111111");
+        login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
     }
 
     @Когда("я введу неверный инн и пароль")
