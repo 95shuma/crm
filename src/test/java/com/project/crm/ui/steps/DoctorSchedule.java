@@ -1,5 +1,6 @@
 package com.project.crm.ui.steps;
 
+import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.Допустим;
@@ -24,7 +25,7 @@ public class DoctorSchedule extends Steps{
 
     @Допустим("врач входит на сайт")
     public void врачВходитНаСайт() {
-        login("13333333333333", "13333333333333");
+        login(Constants.DOCTOR_INN, Constants.DOCTOR_PASSWORD);
     }
 
 
