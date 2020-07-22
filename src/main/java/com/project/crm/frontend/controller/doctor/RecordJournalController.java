@@ -112,4 +112,17 @@ public class RecordJournalController {
         return "redirect:/doctor/records";
     }
 
+    @GetMapping("/{record_id}/result")
+    public String getRecordInfoPageResult(Model model,Principal principal, @PathVariable("record_id") String record_id) {
+
+        if(principal == null){
+            return "errorPage";
+        }
+
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("patient", recordJournalService.getById(record_id));
+
+        return "/doctor/appointments/appointmentResult";
+    }
+
 }
