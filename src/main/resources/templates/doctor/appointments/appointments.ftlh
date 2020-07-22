@@ -34,7 +34,7 @@
                             <td>${journal.patient.gender}</td>
                             <td>${journal.patient.birthDate?date}</td>
                             <td>${journal.medicalHistory.complaint}</td>
-                            <td>Просмотрен</td>
+                            <td><a href="/doctor/records/${journal.id?c}/result" id="${journal.patient.inn}">Просмотрен</td>
                         </tr>
                 </#if>
             </#list>
