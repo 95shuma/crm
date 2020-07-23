@@ -24,10 +24,13 @@ git pull --rebase origin development
 
 Установить переменные среды
 ```
-SPRING_DATASOURCE_MED_CRM_DATABASE  = "Название вашей базы данных"
-SPRING_DATASOURCE_MED_CRM_LOCALHOST = "Порт от вашего воркбенча"
-SPRING_DATASOURCE_PASSWORD          = "Ваш пароль от воркбенча"
-SPRING_DATASOURCE_USERNAME          = "Ваше имя учетной записи от воркбенча"
+DB_HOST      = "IP адрес или имя сервера БД"
+DB_PORT      = "Порт сервера БД"
+DB_NAME      = "Название производственной БД"
+DB_TEST_NAME = "Название тестовой БД"
+DB_PASSWORD  = "Ваш пароль от производственной и тестовой БД"
+DB_USER      = "Ваше имя учетной записи от производственной и тестовой БД"
+ENVIRONMENT  = "Переменная может принимать значение development или production"
 ```
 ```
 mvn package -Dmaven.test.skip=true 
