@@ -2,6 +2,7 @@ package com.project.crm.backend.services.medicalHistoryService;
 
 
 import com.project.crm.backend.dto.MedicalHistoryDTO;
+import com.project.crm.backend.dto.RecordJournalDTO;
 import com.project.crm.backend.model.catalog.MedicalHistory;
 import com.project.crm.backend.repository.MedicalHistoryRepo;
 import com.project.crm.backend.repository.RecordJournalRepo;
@@ -32,5 +33,6 @@ public class MedicalHistoryService {
     public List<MedicalHistoryDTO> getAll(){
         return medicalHistoryRepo.findAll().stream().map(MedicalHistoryDTO::from).collect(Collectors.toList());
     }
-
+    public MedicalHistoryDTO getById(String medicalHistoryId){
+        return MedicalHistoryDTO.from(medicalHistoryRepo.findById(Long.parseLong(medicalHistoryId)).get());}
 }
