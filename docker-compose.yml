@@ -10,7 +10,7 @@ services:
       - "/app_crm_med/mysql:/var/lib/mysql"
 
   app:
-    image: crm_med:${TAG}
+    image: 13333333333333/crm_med:${TAG}
     build: .
     restart: always
     depends_on: 
