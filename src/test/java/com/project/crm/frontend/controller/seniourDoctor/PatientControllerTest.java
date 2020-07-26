@@ -220,8 +220,10 @@ public class PatientControllerTest extends RepoMethods {
                         new BasicNameValuePair("roleId", "1"),
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
-        ).andExpect(status().is(302));
-       // .andExpect(model().attributeHasFieldErrors("errors", "Требуется ввести 9 значений без пробела"));
+        )
+        .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"));
+        //.andExpect(model().attributeHasFieldErrors("errors", "Требуется ввести 9 значений без пробела"));
     }
 
     @Test
