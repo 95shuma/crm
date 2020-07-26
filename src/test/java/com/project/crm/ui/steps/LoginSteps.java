@@ -26,7 +26,7 @@ public class LoginSteps extends Steps {
 
     @Допустим("я захожу на главную страницу")
     public void яЗахожуНаГлавнуюСтраницу() {
-        webDriver.get("http://localhost:7777/login");
+        webDriver.get("http://localhost:7777/");
     }
 
     @Когда("я не авторизованный пользователь")

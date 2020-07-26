@@ -26,13 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
+                .loginPage("/")
+                .failureUrl("/?error=true")
                 .defaultSuccessUrl("/default", true);
 
         http.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true);
 
@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole(Constants.PATIENT);
 
         http.authorizeRequests()
-                .antMatchers("/login")
+                .antMatchers("/")
                 .anonymous()
                 .anyRequest()
                 .permitAll();

@@ -20,7 +20,7 @@ public class Steps {
     }
 
     public void login(String name, String pass){
-        webDriver.get("http://localhost:7777/login");
+        webDriver.get("http://localhost:7777/");
         webDriver.findElement(By.name("username")).sendKeys(name);
         webDriver.findElement(By.name("password")).sendKeys(pass);
         webDriver.findElement(By.name("login")).click();

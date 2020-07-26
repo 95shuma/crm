@@ -162,7 +162,7 @@ public class PatientControllerTest extends RepoMethods {
     public void getPatients_checkWrongMethodWithoutAuthorization_ExpectRedirect_Status302() throws Exception {
         mockMvc.perform(get("/senior-doctor/patients/patient")
         ).andExpect(status().is(302))
-                .andExpect(redirectedUrl(Constants.URL_HTTP + Constants.URL_LOCALHOST + "/login"));
+                .andExpect(redirectedUrl(Constants.URL_HTTP + Constants.URL_LOCALHOST + "/"));
     }
 
     @Test
