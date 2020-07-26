@@ -8,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +28,7 @@ public class DoctorController {
     private final PropertiesService propertiesService;
 
     @GetMapping("/doctor")
-    public String getDoctor(Model model, Principal principal){
+    public String getDoctor(Model model, Principal principal) {
 
         userService.checkUserPresence(model, principal);
 
@@ -49,7 +47,7 @@ public class DoctorController {
     }
 
     @GetMapping
-    public String getDoctors(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal){
+    public String getDoctors(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal) {
         userService.checkUserPresence(model, principal);
         PropertiesService.constructPageable(userService.getAllDoctors(pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
 
@@ -71,4 +69,19 @@ public class DoctorController {
 
         return "redirect:/senior-doctor";
     }
+
+
+    @PostMapping("/doctorTest")
+    public String createDoctorTest(@Valid @ModelAttribute("user") UserRegisterForm userRegisterForm,
+                                   BindingResult validationResult) {
+
+        if (validationResult.hasFieldErrors()) {
+            return "senior-doctor/doctors/doctor";
+        }
+
+        userService.createUser(userRegisterForm);
+
+        return "redirect:/senior-doctor";
+    }
+
 }
