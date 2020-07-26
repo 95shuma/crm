@@ -99,7 +99,7 @@ public class PatientFormValidatorTest {
         patientRegisterForm.setHospitalId((long) 1);
         patientRegisterForm.setRoleId((long) 1);
         Set<ConstraintViolation<PatientRegisterForm>> violations = validator.validate(patientRegisterForm);
-        assertTrue(violations.isEmpty());
+        assertFalse(violations.isEmpty());
     }
 
 
