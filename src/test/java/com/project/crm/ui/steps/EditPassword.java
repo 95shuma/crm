@@ -25,7 +25,7 @@ public class EditPassword extends Steps {
 
     @Допустим("пользователь входит на сайт")
     public void пользовательВходитНаСайт() {
-        webDriver.get("http://localhost:7777/login");
+        webDriver.get("http://localhost:7777/");
     }
 
     @Когда("пользователь вводит неправильные значения пароля")
