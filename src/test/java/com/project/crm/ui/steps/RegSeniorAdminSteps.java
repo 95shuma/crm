@@ -55,4 +55,23 @@ public class RegSeniorAdminSteps extends Steps{
         };
         Assertions.assertTrue(flag);
     }
+
+    @Когда("администратор не заполняет обязательные поля")
+    public void администраторНеЗаполняетОбязательныеПоля() {
+        webDriver.findElement(By.name("inn")).sendKeys("12345678901234");
+        webDriver.findElement(By.name("documentNumber")).sendKeys("ID1234567");
+        webDriver.findElement(By.name("name")).sendKeys("Роберт");
+        webDriver.findElement(By.name("surname")).sendKeys("Робертов");
+        webDriver.findElement(By.name("middleName")).sendKeys("Робертович");
+        webDriver.findElement(By.name("birthDate")).sendKeys("20.01.2010");
+        webDriver.findElement(By.name("gender")).sendKeys("1");
+        webDriver.findElement(By.name("placeId")).sendKeys("2");
+        webDriver.findElement(By.name("positionId")).sendKeys("3");
+        webDriver.findElement(By.name("name")).submit();
+    }
+
+    @Тогда("появляется ошибка Обязательное поле")
+    public void появляетсяОшибкаОбязательноеПоле() {
+        Assertions.assertEquals("Обязательное поле",  webDriver.findElement(By.xpath("//div[@class='alert alert-warning mt-1'][text()='Обязательное поле']")).getText());
+    }
 }
