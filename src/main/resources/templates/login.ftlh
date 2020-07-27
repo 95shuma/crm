@@ -1,8 +1,8 @@
 <#import "partials/main.ftlh" as main>
 <@main.renderWith>
-<#--<@main.renderWith scripts=["scripts/login.js"]>-->
+<#--<@main.renderWith scripts=["scripts/.js"]>-->
     <div class="mx-auto mt-3 w-50">
-        <form id="login-form" action="/login" method="post">
+        <form id="login-form" action="/" method="post">
 
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>

@@ -1,5 +1,6 @@
 package com.project.crm.ui.steps;
 
+import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
@@ -19,28 +20,21 @@ public class PatientRecordJournal extends Steps{
         tearDown();
     }
 
-    @Допустим("пациент входит на сайт")
+    @Допустим("пациент входит на сайт и попадает к себе на страницу")
     public void пациентВходитНаСайт() {
-        webDriver.get("http://localhost:7777/login");
+        login(Constants.PATIENT_INN,Constants.PATIENT_PASSWORD);
     }
 
-    @Когда("пациент попадает к себе на страницу")
-    public void пациентПопадаетКСебеНаСтраницу(){
-        WebElement username = webDriver.findElement(By.name("username"));
-        username.sendKeys("15555555555555");
-        WebElement password = webDriver.findElement(By.name("password"));
-        password.sendKeys("15555555555555");
-        password.submit();
-    }
-
-    @Тогда("пациент записывается к врачу не заполняя поле жалоба")
+    @Когда("пациент записывается к врачу не заполняя поле жалоба")
     public void пациентЗаписываетсяКВрачуНеЗаполняяПолеЖалоба(){
         webDriver.get("http://localhost:7777/patient/records/record");
         webDriver.findElement(By.className("btn-primary")).submit();
     }
-    @И("выходит ошибка Укажите причину")
+
+    @Тогда ("выходит ошибка Укажите причину")
     public void выходитОшибкаУкажитеПричину(){
         Assertions.assertEquals("Укажите причину", webDriver.findElement(By.id("indicateReason")).getText());
         Assertions.assertEquals("Выберите подходящее время и дату записи", webDriver.findElement(By.id("indicateDateTime")).getText());
     }
+
 }

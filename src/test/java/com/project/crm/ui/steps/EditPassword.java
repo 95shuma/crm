@@ -1,5 +1,6 @@
 package com.project.crm.ui.steps;
 
+import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.Допустим;
@@ -24,7 +25,7 @@ public class EditPassword extends Steps {
 
     @Допустим("пользователь входит на сайт")
     public void пользовательВходитНаСайт() {
-        webDriver.get("http://localhost:7777/login");
+        webDriver.get("http://localhost:7777/");
     }
 
     @Когда("пользователь вводит неправильные значения пароля")
@@ -41,21 +42,17 @@ public class EditPassword extends Steps {
         Assertions.assertEquals("Вы ввели неверный ИНН или пароль", getElementFromLoginForm().getText());
     }
 
-    @Когда("пользователь вводит правильные значения пароля")
+    @Допустим("админ ЛПУ входит на свою страницу")
     public void пользовательВводитПравильныеЗначенияПароля() {
-        WebElement username = webDriver.findElement(By.name("username"));
-        username.sendKeys("12222222222222");
-        WebElement password = webDriver.findElement(By.name("password"));
-        password.sendKeys("12222222222222");
-        password.submit();
+        login(Constants.SENIOR_DOCTOR_INN,Constants.SENIOR_DOCTOR_PASSWORD);
     }
 
-    @Тогда("входит на страницу и находит пользователя")
+    @И("находит пользователя пользователя забывшего свой пароль")
     public void входитНаСтраницуИНаходитПользователя() {
         webDriver.get("http://localhost:7777/senior-doctor/users/12222222222222/password");
     }
 
-    @И("меняет пароль")
+    @Тогда("меняет пароль")
     public void меняетПароль() {
         WebElement firstPassword = webDriver.findElement(By.name("firstPassword"));
         firstPassword.sendKeys("123456789");

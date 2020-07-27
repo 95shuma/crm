@@ -6,7 +6,6 @@
         <a href="/doctor/records/today" class="btn btn-primary btn-block">Просмотр записей на сегодня</a>
         <a href="/doctor/records" class="btn btn-primary btn-block" id="allAppointments">Просмотр всех записей</a>
         <a href="/doctor/schedules" class="btn btn-primary btn-block">Просмотр рабочего графика</a>
-        <a href="/doctor/treatments" class="btn btn-primary btn-block">Просмотр всех назначений</a>
 
     </div>
 </@main.renderWith>

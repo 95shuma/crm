@@ -78,14 +78,21 @@ public class PatientControllerTest extends RepoMethods {
     private String testString;
     //Wrong
     private String wrongDocumentNumber;
+    private String wrongInn;
+    private String wrongPassword;
+    private String wrongName;
+    private String wrongSurname;
+    private String wrongMiddleName;
+    private String wrongGender;
+
 
     @Before
     public void setUp(){
         rn = new Random();
         faker = new Faker(new Locale("ru"));
         size = 5;
-        innSeniorDoctor = "12222222222222";
-        passwordSeniorDoctor = "12222222222222";
+        innSeniorDoctor = Constants.SENIOR_DOCTOR_INN;
+        passwordSeniorDoctor =  Constants.SENIOR_DOCTOR_PASSWORD;
         //Correct
         correctInn = "15555555555555";
         correctPassword = "123456789";
@@ -99,6 +106,12 @@ public class PatientControllerTest extends RepoMethods {
         testString = "тест";
         //Wrong
         wrongDocumentNumber = "AN12345678";
+        wrongInn="123";
+        wrongPassword="abc";
+        wrongName="";
+        wrongSurname="1wer";
+        wrongMiddleName="";
+        wrongGender="";
     }
     @After
     public void tearDown(){
@@ -149,7 +162,7 @@ public class PatientControllerTest extends RepoMethods {
     public void getPatients_checkWrongMethodWithoutAuthorization_ExpectRedirect_Status302() throws Exception {
         mockMvc.perform(get("/senior-doctor/patients/patient")
         ).andExpect(status().is(302))
-                .andExpect(redirectedUrl(Constants.URL_HTTP + Constants.URL_LOCALHOST + "/login"));
+                .andExpect(redirectedUrl(Constants.URL_HTTP + Constants.URL_LOCALHOST + "/"));
     }
 
     @Test
@@ -197,11 +210,38 @@ public class PatientControllerTest extends RepoMethods {
                         new BasicNameValuePair("inn", correctInn),
                         new BasicNameValuePair("password", correctPassword),
                         new BasicNameValuePair("documentNumber", wrongDocumentNumber),
-                        new BasicNameValuePair("surname", correctPassword),
+                        new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
                         new BasicNameValuePair("birthDate", "1995-10-28"),
                         new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+        .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"));
+        //.andExpect(model().attributeHasFieldErrors("errors", "Требуется ввести 9 значений без пробела"));
+    }
+
+    @Test
+    public void createPatient_withWrongDatas_shouldReturnValidationErrorsForWrongAndRedirectToView() throws Exception {
+        saveRepos();
+        mockMvc.perform(post("/senior-doctor/patients/patient")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("inn", wrongInn),
+                        new BasicNameValuePair("password", wrongPassword),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", wrongSurname),
+                        new BasicNameValuePair("name", wrongName),
+                        new BasicNameValuePair("middleName", wrongMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", wrongGender),
                         new BasicNameValuePair("placeId", "1"),
                         new BasicNameValuePair("positionId", "1"),
                         new BasicNameValuePair("roleId", "1"),

@@ -20,21 +20,21 @@
                          <tr>
                              <td>${journal.dateTime.format('dd-MM-yyyy')}</td>
                              <td>${journal.dateTime.format('HH:mm')}</td>
-                             <td><a href="/doctor/records/${journal.id?c}" id="${journal.patient.inn}">${journal.patient.fullName}</td>
+                             <td>${journal.patient.fullName}</td>
                              <td>${journal.patient.gender}</td>
                              <td>${journal.patient.birthDate?date}</td>
                              <td>${journal.medicalHistory.complaint}</td>
-                             <td><a href="/doctor/records/${journal.id?c}">Не просмотрен</a></td>
+                             <td><a href="/doctor/records/${journal.id?c}/accept" id="${journal.patient.inn}">Принять</td>
                          </tr>
                     <#else>
                         <tr>
                             <td>${journal.dateTime.format('dd-MM-yyyy')}</td>
                             <td>${journal.dateTime.format('HH:mm')}</td>
-                            <td><a href="/doctor/records/${journal.id?c}" id="${journal.patient.inn?c}">${journal.patient.fullName}</td>
+                            <td>${journal.patient.fullName}</td>
                             <td>${journal.patient.gender}</td>
                             <td>${journal.patient.birthDate?date}</td>
                             <td>${journal.medicalHistory.complaint}</td>
-                            <td>Просмотрен</td>
+                            <td><a href="/doctor/records/${journal.id?c}/result" id="${journal.patient.inn}">Просмотрен</td>
                         </tr>
                 </#if>
             </#list>

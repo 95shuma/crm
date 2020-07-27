@@ -18,7 +18,7 @@ public class LoginController {
     private final RegistrationJournalService registrationJournalService;
     private RoleService roleService;
 
-    @GetMapping("/login")
+    @GetMapping("/")
     public String login(Model model, @RequestParam(required = false, defaultValue = "false") Boolean error, Principal principal) {
 
         userService.checkUserPresence(model, principal);
@@ -40,6 +40,6 @@ public class LoginController {
                 }
             }
         }
-        return "/login";
+        return "/";
     }
 }

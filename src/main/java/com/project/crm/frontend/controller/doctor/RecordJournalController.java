@@ -38,21 +38,21 @@ public class RecordJournalController {
     private final MedicalHistoryService medicalHistoryService;
 
 
-   @GetMapping
-   public String getAllRecords(Model model,Principal principal, Pageable pageable, HttpServletRequest uriBuilder) {
+    @GetMapping
+    public String getAllRecords(Model model,Principal principal, Pageable pageable, HttpServletRequest uriBuilder) {
 
-       if(principal == null){
-           return "errorPage";
-       }
+        if(principal == null){
+            return "errorPage";
+        }
 
-       userService.checkUserPresence(model, principal);
+        userService.checkUserPresence(model, principal);
 
-       var records = recordJournalService.getPatientsByDoctor(userService.getByInn(Long.parseLong(principal.getName())).getId(),pageable);
-       var uri = uriBuilder.getRequestURI();
-       constructPageable(records, propertiesService.getDefaultPageSize(), model, uri);
+        var records = recordJournalService.getPatientsByDoctor(userService.getByInn(Long.parseLong(principal.getName())).getId(),pageable);
+        var uri = uriBuilder.getRequestURI();
+        constructPageable(records, propertiesService.getDefaultPageSize(), model, uri);
 
-       return "/doctor/appointments/appointments";
-   }
+        return "/doctor/appointments/appointments";
+    }
 
     @GetMapping("/today")
     public String getAllRecordsOfToday(Model model,Principal principal, Pageable pageable, HttpServletRequest uriBuilder) {
@@ -110,6 +110,46 @@ public class RecordJournalController {
         medicalHistoryService.setMedicalHistory(medicalHistoryRegisterForm, record_id);
 
         return "redirect:/doctor/records";
+    }
+
+    @GetMapping("/{medicalHistory_id}")
+    public String getMedicalHistory(Model model,Principal principal, @PathVariable("medicalHistory_id") String medicalHistory_id) {
+
+        if(principal == null){
+            return "errorPage";
+        }
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("journal", medicalHistoryService.getById(medicalHistory_id));
+
+        return "/doctor/appointments/appointmentResult";
+    }
+
+    @GetMapping("/{record_id}/result")
+    public String getRecordInfoPageResult(Model model,Principal principal, @PathVariable("record_id") String record_id) {
+
+        if(principal == null){
+            return "errorPage";
+        }
+
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("patient", recordJournalService.getById(record_id));
+
+        return "/doctor/appointments/appointmentResult";
+    }
+
+    @GetMapping("/{medicalHistory}/directions")
+    public String getRecordJournalDirections(Model model,Principal principal,HttpServletRequest uriBuilder, @PathVariable("medicalHistory") Long medicalHistory, Pageable pageable) {
+
+        if (principal == null) {
+            return "errorPage";
+        }
+
+        userService.checkUserPresence(model, principal);
+        var directions = directionService.getAll(pageable, (medicalHistory));
+        var uri = uriBuilder.getRequestURI();
+        PropertiesService.constructPageable(directions, propertiesService.getDefaultPageSize(), model, uri);
+        model.addAttribute("medicalHistory_id", medicalHistory);
+        return "/doctor/appointments/appointmentResult";
     }
 
 }

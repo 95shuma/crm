@@ -1,11 +1,17 @@
 package com.project.crm.ui.steps;
 
 
+import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class PharmGroupSteps extends Steps {
 
@@ -21,7 +27,7 @@ public class PharmGroupSteps extends Steps {
 
     @Допустим("админ авторизуется и открывает список лекарств")
     public void админАвторизуетсяиОткрываетСписокЛекарств() {
-        login("11111111111111","11111111111111");
+        login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
         webDriver.findElement(By.name("remedies")).click();
     }
 
@@ -64,7 +70,17 @@ public class PharmGroupSteps extends Steps {
 
     @Тогда("выходят ошибки")
     public void выходятОшибки() {
-        Assertions.assertEquals("Обязательное поле", webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1']")).getText());
+        List<String> expectedAlert = new ArrayList<String>();
+        List<String> actualAlert = new ArrayList<String>();
+
+        actualAlert.add(webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1'][text()='Обязательное поле']")).getText());
+        actualAlert.add(webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1'][text()='Название должно содержать только буквы : ']")).getText());
+
+        expectedAlert.add("Обязательное поле");
+        expectedAlert.add("Название должно содержать только буквы :");
+
+        assertEquals(expectedAlert,actualAlert);
+       // Assertions.assertEquals("Обязательное поле", webDriver.findElement(By.xpath("//form[@id='group']//div[@class='alert alert-warning mt-1']")).getText());
     }
 
 }

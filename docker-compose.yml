@@ -1,0 +1,21 @@
+version: '3'
+services: 
+  db:
+    image: mysql:8.0
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_0900_ai_ci']
+    restart: always
+    env_file: 
+      - .env
+    volumes:
+      - "/app_crm_med/mysql:/var/lib/mysql"
+
+  app:
+    image: 13333333333333/crm_med:${TAG}
+    build: .
+    restart: always
+    depends_on: 
+      - db
+    env_file: 
+      - .env
+    ports:
+      - "80:${SERVER_PORT}"
