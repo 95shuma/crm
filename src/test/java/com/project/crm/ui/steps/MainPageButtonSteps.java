@@ -4,7 +4,6 @@ import com.project.crm.backend.util.Constants;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
 public class MainPageButtonSteps extends Steps{
@@ -59,4 +58,27 @@ public class MainPageButtonSteps extends Steps{
     public void перейдетНаГлавнуюСтр() {
         webDriver.get("http://localhost:7777/senior-doctor");
     }
+
+    //проверка 3 роли
+    @Допустим("доктор авторизуется")
+    public void докторАвторизуется() {
+        login(Constants.DOCTOR_INN, Constants.DOCTOR_PASSWORD);
+    }
+
+    @Затем("нажимает на кнопку Просмотр всех записей")
+    public void нажимаетКнопкуПросмотр() {
+        webDriver.findElement(By.linkText("Просмотр всех записей")).click();
+    }
+
+    @Когда("нажимает на кнопку Главная страница")
+    public void нажимаетКнопкуГлавная() {
+        webDriver.findElement(By.id("main")).click();
+    }
+
+    @Тогда("перейдет в главную стр-цу доктора")
+    public void перейдетНаГлавнуюСтраницу() {
+        webDriver.get("http://localhost:7777/doctor");
+    }
+
+
 }
