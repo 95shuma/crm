@@ -46,11 +46,7 @@ public class MeasureSteps extends Steps {
     }
     @Тогда("появляется список единиц измерений")
     public void появляетсяСписокЕдиницИзмерений() {
-        Boolean flag = false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin/measures")) {
-            flag = true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin/measures");
     }
     @Когда("не заполнив поле  нажимает кнопку добавить")
     public void неЗаполнивПолеНажимаетКнопкуДобавить() {

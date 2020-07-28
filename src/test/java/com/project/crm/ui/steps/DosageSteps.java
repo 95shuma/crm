@@ -42,11 +42,7 @@ public class DosageSteps extends Steps {
 
     @Тогда("появляется список дозировок")
     public void появляетсяСписокДозировок() {
-        Boolean flag = false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin/dosages")) {
-            flag = true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin/dosages");
     }
 
     @Когда("заполняет не все поля и нажимает кнопку добавить")

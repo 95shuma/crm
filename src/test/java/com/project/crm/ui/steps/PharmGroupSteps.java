@@ -45,11 +45,7 @@ public class PharmGroupSteps extends Steps {
 
     @Тогда("появляется список фарм групп лекарств")
     public void появляетсяСписокФармГруппЛекарств() {
-        Boolean flag=false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin/groups")){
-            flag=true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin/groups");
     }
 
     @Когда("админ вводит слово из букв и цифр и нажимает кнопку добавить")

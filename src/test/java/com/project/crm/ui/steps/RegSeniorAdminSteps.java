@@ -49,11 +49,7 @@ public class RegSeniorAdminSteps extends Steps{
 
     @Тогда("администратор обратно переходит в панель администратора")
     public void администраторОбратноПереходитВПанельАдминистратора() {
-        Boolean flag=false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin")){
-            flag=true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin");
     }
 
     @Когда("администратор не заполняет обязательные поля")

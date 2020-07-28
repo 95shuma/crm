@@ -45,11 +45,7 @@ public class RemedyTypeSteps extends Steps {
 
     @Тогда("появляется список типов")
     public void появляетсяСписокТипов() {
-        Boolean flag=false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin/remedyTypes")){
-            flag=true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin/remedyTypes");
     }
 
     @Когда("вводит значение из букв и цифр и нажимает кнопку добавить")

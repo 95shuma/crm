@@ -44,11 +44,7 @@ public class InterNameSteps extends Steps {
 
     @Тогда("появляется список Международных названий лекарств")
     public void появляетсяСписокМеждународныхНазванийЛекарств() {
-        Boolean flag=false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin/internationalNames")){
-            flag=true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin/internationalNames");
     }
 
     @Когда("пользователь вводит слово из букв и цифр и нажимает кнопку добавить")

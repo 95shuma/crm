@@ -50,21 +50,13 @@ public class PatientRegisterBySenior extends Steps {
     }
     @Тогда("попадет в главную страницу админа ЛПУ")
     public void попадетвГлавнуюСтраницуАдминаЛПУ() {
-        Boolean flag = false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/senior-doctor")) {
-            flag = true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/senior-doctor");
     }
 
     @И("результат появляется в списке пациентов")
     public void результатПоявляетсявСпискеПациентов() {
         webDriver.findElement(By.linkText("Список пациентов")).click();
-        Boolean flag = false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/senior-doctor/patients")) {
-            flag = true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/senior-doctor/patients");
     }
 
 
