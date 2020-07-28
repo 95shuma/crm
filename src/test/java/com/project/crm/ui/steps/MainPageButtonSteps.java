@@ -80,5 +80,25 @@ public class MainPageButtonSteps extends Steps{
         webDriver.get("http://localhost:7777/doctor");
     }
 
+    //проверка 4 роли
 
+    @Допустим("пациент авторизуется")
+    public void пациентВходитНаСайт() {
+        login(Constants.PATIENT_INN,Constants.PATIENT_PASSWORD);
+    }
+
+    @Затем("нажимает на кнопку Записаться к врачу")
+    public void нажимаетКнопкуЗаписаться() {
+        webDriver.findElement(By.linkText("Записаться к врачу")).click();
+    }
+
+    @Когда("нажимает на кнопку Главная стр-ца")
+    public void нажимаетКнопкуГлавнаяСтр() {
+        webDriver.findElement(By.id("main")).click();
+    }
+
+    @Тогда("перейдет в главную стр-цу пациента")
+    public void перейдетНаГлавнуюСтраницуПациента() {
+        webDriver.get("http://localhost:7777/patient");
+    }
 }
