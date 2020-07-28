@@ -19,6 +19,7 @@ public class MainPageButtonSteps extends Steps{
         tearDown();
     }
 
+    //проверка 1 роли
     @Допустим("Администратор авторизуется")
     public void администраторАвторизуется() {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
@@ -36,5 +37,26 @@ public class MainPageButtonSteps extends Steps{
     @Тогда("перейдет в главную страницу админа")
     public void перейдетНаГлавную() {
         webDriver.get("http://localhost:7777/admin");
+    }
+
+    //проверка 2 роли
+    @Допустим("Админ ЛПУ авторизуется")
+    public void админЛПУавторизуется() {
+        login(Constants.SENIOR_DOCTOR_INN, Constants.SENIOR_DOCTOR_PASSWORD);
+    }
+
+    @Затем("нажимает на кнопку Список докторов")
+    public void нажимаетКнопкуСписокДокторов() {
+        webDriver.findElement(By.linkText("Список докторов")).click();
+    }
+
+    @Когда("нажимает на ссылку Главная страница")
+    public void нажимаетСсылкуГлавная() {
+        webDriver.findElement(By.id("main")).click();
+    }
+
+    @Тогда("перейдет в главную стр-цу админа ЛПУ")
+    public void перейдетНаГлавнуюСтр() {
+        webDriver.get("http://localhost:7777/senior-doctor");
     }
 }
