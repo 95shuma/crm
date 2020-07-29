@@ -1,6 +1,6 @@
 package com.project.crm.backend.repository;
 
-import com.project.crm.backend.model.catalog.WorkSchedule;
+import com.project.crm.backend.model.WorkSchedule;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

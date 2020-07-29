@@ -2,7 +2,7 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.RegistrationJournal;
-import com.project.crm.backend.model.catalog.WorkSchedule;
+import com.project.crm.backend.model.WorkSchedule;
 import com.project.crm.backend.repository.RecordJournalRepo;
 import com.project.crm.backend.repository.RegistrationJournalRepo;
 import com.project.crm.backend.repository.UserRepo;
