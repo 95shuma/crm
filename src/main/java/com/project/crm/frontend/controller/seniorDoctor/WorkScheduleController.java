@@ -33,14 +33,14 @@ public class WorkScheduleController {
 
     @GetMapping("new-schedule")
     public String newSchedule(Model model, Principal principal){
-        return "doctor/scheduleController/scheduleRegister";
+        return "seniorDoctor/scheduleController/newSchedule";
     }
 
     @PostMapping("new-schedule")
     public String createSchedule(@Valid WorkScheduleForm workScheduleForm,BindingResult validationResult,RedirectAttributes attributes){
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/doctor/schedules/new-schedule";
+            return "redirect:/senior-doctor/schedules/new-schedule";
         }
         return "redirect:";
     }
