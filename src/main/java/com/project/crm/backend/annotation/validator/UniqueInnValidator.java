@@ -15,9 +15,9 @@ public class UniqueInnValidator implements ConstraintValidator<UniqueInn, String
     public void initialize(UniqueInn constraint) {
     }
 
-    public boolean isValid(String login, ConstraintValidatorContext context) {
+    public boolean isValid(String inn, ConstraintValidatorContext context) {
         try {
-            return userRepo.findByInn(Long.parseLong(login)).isEmpty();
+            return !userRepo.existsByInn(Long.parseLong(inn));
         }catch (NumberFormatException ignored){}
 
         return true;
