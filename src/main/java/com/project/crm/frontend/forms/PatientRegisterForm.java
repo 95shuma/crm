@@ -1,5 +1,6 @@
 package com.project.crm.frontend.forms;
 
+import com.project.crm.backend.annotation.UniqueDocumentNumber;
 import com.project.crm.backend.annotation.UniqueInn;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class PatientRegisterForm {
     @NotNull(message = "Обязательное поле")
     @Size(min = 9, max = 9, message = "Требуется ввести 9 значений без пробела")
     @Pattern(regexp="^([{2}ID|AN]).{7}\\d+$", message = "№ докумета начинается с AN или ID и состоит из 7 цифр : ${validatedValue}")
+    @UniqueDocumentNumber
     private String documentNumber = "";
 
     @NotBlank(message = "Обязательное поле")

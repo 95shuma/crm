@@ -1,5 +1,6 @@
 package com.project.crm.frontend.forms;
 
+import com.project.crm.backend.annotation.UniqueCodePlace;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -19,6 +20,7 @@ public class PlaceRegisterForm {
     @Size(min = 14, max = 14, message = "Требуется ввести код из 14 цифр")
     @Pattern(regexp="^\\d+$", message = "Код состоит только из цифр : ${validatedValue}")
     @NotBlank(message = "Это поле не может быть пустым")
+    @UniqueCodePlace
     private String codePlace = "";
 
     @NotNull(message = "Обязательное поле")
