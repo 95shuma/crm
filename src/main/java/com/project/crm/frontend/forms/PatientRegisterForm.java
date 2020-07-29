@@ -1,5 +1,6 @@
 package com.project.crm.frontend.forms;
 
+import com.project.crm.backend.annotation.UniqueInn;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +15,7 @@ public class PatientRegisterForm {
     @Size(min = 14, max = 14, message = "Требуется ввести 14 цифр")
     @Pattern(regexp="^([{1}1|2])\\d+$", message = "ИНН состоит только из цифр, начинается с 1 или 2 : ${validatedValue}")
     @NotBlank(message = "Обязательное поле")
+    @UniqueInn
     private String inn = "";
 
     @NotBlank(message = "Обязательное поле")
