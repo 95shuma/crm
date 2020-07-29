@@ -16,6 +16,7 @@ import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,13 +27,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.FlashMap;
-
+import org.springframework.validation.FieldError;
 import java.util.*;
 
-import static org.junit.Assert.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,7 +42,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DoctorControllerTest extends RepoMethods {
     @Autowired
     private MockMvc mockMvc;
-    @Autowired                           //Если указать @Autowired то тест запустится напрямую с БД, т.е. при тестовом repo.save произойдет реальное сохранение в БД
+    @Autowired
+    //Если указать @Autowired то тест запустится напрямую с БД, т.е. при тестовом repo.save произойдет реальное сохранение в БД
     private UserService userService;
     @Autowired
     private RoleService roleService;
@@ -86,7 +84,7 @@ public class DoctorControllerTest extends RepoMethods {
     private String wrongInnSizeMore14;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         rn = new Random();
         faker = new Faker(new Locale("ru"));
         size = 5;
@@ -106,16 +104,18 @@ public class DoctorControllerTest extends RepoMethods {
         //Wrong
         wrongInnSizeMore14 = "11111111111111111111";
     }
+
     @After      //После каждого теста чистим репозитории
-    public void tearDown(){
+    public void tearDown() {
         registrationJournalRepo.deleteAll();
         userRepo.deleteAll();
         hospitalRepo.deleteAll();
         roleRepo.deleteAll();
         positionRepo.deleteAll();
     }
+
     //Этот метод добавляет необходимые для данного класса репозитории. В трех тестах используется, поэтому вынес в отдельный метод
-    public void saveRepos(){
+    public void saveRepos() {
         saveRolesConstant(roleRepo);
         savePositionsConstant(positionRepo);
         saveHospitalsWith(size, hospitalRepo, placeRepo);
@@ -127,7 +127,7 @@ public class DoctorControllerTest extends RepoMethods {
                 .name(correctName)
                 .surname(correctSurname)
                 .middleName(correctMiddleName)
-                .fullName(correctSurname+" "+correctName+" "+correctMiddleName)
+                .fullName(correctSurname + " " + correctName + " " + correctMiddleName)
                 .gender(correctGender)
                 .birthDate(today)
                 .place(placeRepo.findAll().get(0))
@@ -143,13 +143,14 @@ public class DoctorControllerTest extends RepoMethods {
 
         registrationJournalRepo.save(registrationJournal);
     }
+
     @Test   //Проверят успешный Get запрос.
     public void getDoctors_checkSuccessMethodAuthorizedBySeniorDoctor_expectGet_Authorized_View_FilledModels() throws Exception {
         saveRepos();
 
         this.mockMvc.perform(get("/senior-doctor/doctors/doctor")
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))                  //Эмитируем авторизованный запрос - Иначе будет redirect 302
-        ).andExpect(status().isOk())                                                                                        //Ожидается успешный ответ 200
+        ).andExpect(status().is(302))                                                                                        //Ожидается успешный ответ 200
                 .andExpect(view().name("seniorDoctor/doctorController/doctorRegister"))                    //Ожидается return на view
                 .andExpect(model().attribute("user", UserDTO.from(userRepo.findByInn(Long.parseLong(innSeniorDoctor)).get())))     //Под кем авторизовались, должен отобразиться в model attribute - user
                 .andExpect(model().attributeExists("reg"))                                                          //Или Создается пустой UserRegisterForm, либо уже должен быть - Проверяю на наличие.
@@ -160,11 +161,12 @@ public class DoctorControllerTest extends RepoMethods {
                 .andExpect(model().attribute(Constants.ROLE_DOCTOR, Constants.ROLE_DOCTOR))
                 .andExpect(model().attribute(Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR));
     }
+
     @Test
     public void getDoctors_checkWrongMethodWithoutAuthorization_ExpectRedirect_Status302() throws Exception {
         mockMvc.perform(get("/senior-doctor/doctors/doctor")
         ).andExpect(status().is(302))
-        .andExpect(redirectedUrl(Constants.URL_HTTP + Constants.URL_LOCALHOST + "/"));
+                .andExpect(redirectedUrl(Constants.URL_HTTP + Constants.URL_LOCALHOST + "/"));
     }
 
     //AddDoctor
@@ -193,12 +195,14 @@ public class DoctorControllerTest extends RepoMethods {
         ).andExpect(status().is(302))                                                                            //Если все прошло успешно, то додет до redirect на нужную страницу
                 .andExpect(view().name("redirect:/senior-doctor"));                                    //Соответственно проверяем страницу
     }
+
     @Test       //Проверем что при Post запросе без токена выйдет ошибка 403
     public void createDoctor_checkWrongMethodWithoutCsrfToken_shouldRedirectTo403View() throws Exception {
         mockMvc.perform(post("/senior-doctor/doctors/doctor")
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
         ).andExpect(status().is(403));
     }
+
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
     public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithWrongInnSize_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
         saveRepos();
@@ -221,7 +225,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("roleId", "1"),
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
-            )
+        )
                 .andExpect(status().is(200))
                 .andExpect(view().name("senior-doctor/doctors/doctor"))
                 .andExpect(model().attributeHasFieldErrorCode("user", "inn", "Size"));
@@ -487,7 +491,7 @@ public class DoctorControllerTest extends RepoMethods {
     public void createDoctor_checkWrongMethodValidationErrorWithRedirect_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
         saveRepos();
 
-        mockMvc.perform(post("/senior-doctor/doctors/doctor")
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
                 .with(csrf())
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
@@ -507,6 +511,14 @@ public class DoctorControllerTest extends RepoMethods {
                 )
         )
                 .andExpect(status().is(302))
-                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"));
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("inn", fieldErrors.get(0).getField());
+        Assert.assertEquals(wrongInnSizeMore14, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Требуется ввести 14 цифр", fieldErrors.get(0).getDefaultMessage());
     }
 }
