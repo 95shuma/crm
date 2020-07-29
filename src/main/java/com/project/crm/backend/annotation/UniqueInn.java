@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = UniqueInnValidator.class)
 public @interface UniqueInn {
-    String message() default "ИНН уже занят";
+    String message() default "Этот ИНН уже используется другим пользователем";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
