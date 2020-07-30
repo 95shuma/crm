@@ -261,8 +261,8 @@ public class PatientControllerTest extends RepoMethods {
         MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
                 .with(csrf())
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("inn", wrongInnSizeMore14),
                         new BasicNameValuePair("password", correctPassword),
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
@@ -296,8 +296,8 @@ public class PatientControllerTest extends RepoMethods {
         MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
                 .with(csrf())
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("inn", wrongInnSizeLess14),
                         new BasicNameValuePair("password", correctPassword),
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
@@ -331,8 +331,8 @@ public class PatientControllerTest extends RepoMethods {
         MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
                 .with(csrf())
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("inn", emptyInn),
                         new BasicNameValuePair("password", correctPassword),
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
@@ -463,4 +463,75 @@ public class PatientControllerTest extends RepoMethods {
         Assert.assertEquals(wrongDocumentNumber2, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("№ докумета начинается с AN или ID и состоит из 7 цифр : SK1234567", fieldErrors.get(0).getDefaultMessage());
     }
+
+    @Test
+    public void createPatient_checkWrongMethodValidationErrorWithRedirect_shouldReturnValidationErrorsForWrongNameRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("inn", "15358796794512"),
+                        new BasicNameValuePair("password", "1297854796"),
+                        new BasicNameValuePair("documentNumber", "ID1584794"),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", wrongName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("name", fieldErrors.get(0).getField());
+        Assert.assertEquals(wrongName, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Имя должно содержать только буквы : 111jkjkj", fieldErrors.get(0).getDefaultMessage());
+    }
+
+    @Test
+    public void createPatient_checkWrongMethodValidationErrorWithRedirect_shouldReturnValidationErrorsForEmptyNameRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("inn", "15358795794512"),
+                        new BasicNameValuePair("password", "1292854796"),
+                        new BasicNameValuePair("documentNumber", "ID1584794"),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", emptyName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("name", fieldErrors.get(0).getField());
+        Assert.assertEquals(emptyName, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
+    }
+
 }
