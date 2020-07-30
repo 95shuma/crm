@@ -15,6 +15,7 @@ import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.validation.FieldError;
 
 import java.util.*;
 
@@ -77,6 +80,7 @@ public class PatientControllerTest extends RepoMethods {
     private String correctGender;
     private String testString;
     //Wrong
+    private String wrongInnSizeMore14;
     private String wrongDocumentNumber;
     private String wrongInn;
     private String wrongPassword;
@@ -105,6 +109,7 @@ public class PatientControllerTest extends RepoMethods {
         today = calendar.getTime();
         testString = "тест";
         //Wrong
+        wrongInnSizeMore14="12345678912345678";
         wrongDocumentNumber = "AN12345678";
         wrongInn="123";
         wrongPassword="abc";
@@ -202,7 +207,8 @@ public class PatientControllerTest extends RepoMethods {
     @Test
     public void createPatient_checkWrongMethodValidationError_shouldReturnValidationErrorsForDocNumbAndRedirectToView() throws Exception {
         saveRepos();
-        mockMvc.perform(post("/senior-doctor/patients/patient")
+
+         MvcResult mvcResult =   mockMvc.perform(post("/senior-doctor/patients/patient")
                 .with(csrf())
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -221,33 +227,51 @@ public class PatientControllerTest extends RepoMethods {
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
         )
-        .andExpect(status().is(302))
-                .andExpect(view().name("redirect:/senior-doctor/patients/patient"));
-        //.andExpect(model().attributeHasFieldErrors("errors", "Требуется ввести 9 значений без пробела"));
+                 .andExpect(status().is(302))
+                 .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                 .andExpect(flash().attributeExists("errors"))
+                 .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
+        Assert.assertEquals(wrongDocumentNumber, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Требуется ввести 9 значений без пробела", fieldErrors.get(0).getDefaultMessage());
     }
 
+
     @Test
-    public void createPatient_withWrongDatas_shouldReturnValidationErrorsForWrongAndRedirectToView() throws Exception {
+    public void createPatient_checkWrongMethodValidationErrorWithRedirect_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
         saveRepos();
-        mockMvc.perform(post("/senior-doctor/patients/patient")
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
                 .with(csrf())
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
-                        new BasicNameValuePair("inn", wrongInn),
-                        new BasicNameValuePair("password", wrongPassword),
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", wrongInnSizeMore14),
+                        new BasicNameValuePair("password", correctPassword),
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", wrongSurname),
-                        new BasicNameValuePair("name", wrongName),
-                        new BasicNameValuePair("middleName", wrongMiddleName),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
                         new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", wrongGender),
+                        new BasicNameValuePair("gender", correctGender),
                         new BasicNameValuePair("placeId", "1"),
                         new BasicNameValuePair("positionId", "1"),
                         new BasicNameValuePair("roleId", "1"),
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
-        ).andExpect(status().is(302));
-    }
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
 
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("inn", fieldErrors.get(0).getField());
+        Assert.assertEquals(wrongInnSizeMore14, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Требуется ввести 14 цифр", fieldErrors.get(0).getDefaultMessage());
+    }
 }
