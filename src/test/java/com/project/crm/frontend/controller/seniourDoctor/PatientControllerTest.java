@@ -428,4 +428,39 @@ public class PatientControllerTest extends RepoMethods {
         Assert.assertEquals(emptyPassword, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
     }
+
+    @Test
+    public void createPatient_checkWrongMethodValidationErrorWithRedirect_shouldReturnValidationErrorsForDocumentNumbAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", "15352696314512"),
+                        new BasicNameValuePair("password", "17345678"),
+                        new BasicNameValuePair("documentNumber", wrongDocumentNumber2),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
+        Assert.assertEquals(wrongDocumentNumber2, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("№ докумета начинается с AN или ID и состоит из 7 цифр : SK1234567", fieldErrors.get(0).getDefaultMessage());
+    }
 }
