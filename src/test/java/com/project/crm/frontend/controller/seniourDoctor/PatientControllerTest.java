@@ -83,12 +83,17 @@ public class PatientControllerTest extends RepoMethods {
     private String wrongDocumentNumber;
     private String wrongInnSizeMore14;
     private String wrongInnSizeLess14;
-    private String wrongInn;
     private String emptyInn;
     private String wrongPassword;
+    private String emptyPassword;
+    private String emptyDocumentNumber;
+    private String wrongDocumentNumber2;
     private String wrongName;
+    private String emptyName;
     private String wrongSurname;
+    private String emptySurname;
     private String wrongMiddleName;
+    private String emptyMiddleName;
     private String wrongGender;
 
 
@@ -114,12 +119,17 @@ public class PatientControllerTest extends RepoMethods {
         wrongDocumentNumber = "AN12345678";
         wrongInnSizeMore14="12345678912345678";
         wrongInnSizeLess14="123456789";
-        wrongInn="31234567891234";
         emptyInn="";
         wrongPassword="abc";
-        wrongName="";
+        emptyPassword="";
+        emptyDocumentNumber="";
+        wrongDocumentNumber2="SK1234567";
+        wrongName="111jkjkj";
+        emptyName="";
         wrongSurname="1wer";
-        wrongMiddleName="";
+        emptySurname="";
+        wrongMiddleName="555jjjjj";
+        emptyMiddleName="";
         wrongGender="";
     }
     @After
@@ -346,6 +356,76 @@ public class PatientControllerTest extends RepoMethods {
         Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("inn", fieldErrors.get(0).getField());
         Assert.assertEquals(emptyInn, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
+    }
+
+    @Test
+    public void createPatient_checkWrongMethodValidationErrorWithRedirect_shouldReturnValidationErrorsForPasswordAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", "15358796314511"),
+                        new BasicNameValuePair("password", wrongPassword),
+                        new BasicNameValuePair("documentNumber", "ID2012328"),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("password", fieldErrors.get(0).getField());
+        Assert.assertEquals(wrongPassword, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Пароль должен содержать минимум 8 символов", fieldErrors.get(0).getDefaultMessage());
+    }
+
+    @Test
+    public void createPatient_checkWrongMethodValidationErrorWithRedirect_shouldReturnValidationErrorsForEmptyPasswordAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", "15358796314512"),
+                        new BasicNameValuePair("password", emptyPassword),
+                        new BasicNameValuePair("documentNumber", "ID2012338"),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("password", fieldErrors.get(0).getField());
+        Assert.assertEquals(emptyPassword, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
     }
 }
