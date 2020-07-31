@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface RegistrationJournalRepo extends JpaRepository<RegistrationJournal, Long> {
     List<RegistrationJournal> findByHospitalId(Long hospitalId);
+    List<RegistrationJournal> findByHospitalIdAndPositionId(Long hospitalId, Long positionId);
     RegistrationJournal findByUserInn(Long inn);
     boolean existsByUserInnAndRoleId(Long inn, Long id);
 }

@@ -1,6 +1,7 @@
 package com.project.crm.backend.services;
 
 
+import com.project.crm.backend.dto.RegistrationJournalDTO;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.repository.*;
@@ -35,6 +36,10 @@ public class RegistrationJournalService {
 
     public List<RegistrationJournal> getDoctorsByHospitalId (Long hospitalId){
         return registrationJournalRepo.findByHospitalId(hospitalId);
+    }
+
+    public List<RegistrationJournalDTO> getDoctorsByHospitalIdAndPositionId(Long hospitalId, Long positionId){
+        return RegistrationJournalDTO.listFrom(registrationJournalRepo.findByHospitalIdAndPositionId(hospitalId, positionId));
     }
 
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){
