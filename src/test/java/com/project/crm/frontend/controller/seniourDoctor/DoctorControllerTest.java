@@ -443,7 +443,7 @@ public class DoctorControllerTest extends RepoMethods {
         Assert.assertEquals("Обязательное поле", fieldErrors.get(2).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongDocumentNumberSize_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongDocumentNumberSizeMax_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
         saveRepos();
 
         MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
@@ -474,6 +474,40 @@ public class DoctorControllerTest extends RepoMethods {
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
         Assert.assertEquals("ID123456789", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Требуется ввести 9 значений без пробела", fieldErrors.get(0).getDefaultMessage());
+    }
+    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongDocumentNumberSizeMin_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", correctInn),
+                        new BasicNameValuePair("password", correctPassword),
+                        new BasicNameValuePair("documentNumber", "ID12345"),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
+        Assert.assertEquals("ID12345", fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Требуется ввести 9 значений без пробела", fieldErrors.get(0).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
