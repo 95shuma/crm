@@ -284,7 +284,7 @@ public class DoctorControllerTest extends RepoMethods {
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", ""),
+                        new BasicNameValuePair("inn", null),
                         new BasicNameValuePair("password", correctPassword),
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
                         new BasicNameValuePair("surname", correctSurname),
@@ -306,7 +306,7 @@ public class DoctorControllerTest extends RepoMethods {
 
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("inn", fieldErrors.get(0).getField());
-        Assert.assertEquals("", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals(null, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Это поле не может быть пустым", fieldErrors.get(0).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
@@ -387,7 +387,7 @@ public class DoctorControllerTest extends RepoMethods {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
                         new BasicNameValuePair("inn", correctInn),
-                        new BasicNameValuePair("password", ""),
+                        new BasicNameValuePair("password", null),
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
@@ -408,7 +408,7 @@ public class DoctorControllerTest extends RepoMethods {
 
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("password", fieldErrors.get(0).getField());
-        Assert.assertEquals("", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals(null, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
@@ -456,7 +456,7 @@ public class DoctorControllerTest extends RepoMethods {
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
                         new BasicNameValuePair("inn", correctInn),
                         new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", ""),
+                        new BasicNameValuePair("documentNumber", null),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
@@ -474,10 +474,10 @@ public class DoctorControllerTest extends RepoMethods {
                 .andReturn();
         List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
 
-        Assert.assertEquals("userRegisterForm", fieldErrors.get(2).getObjectName());
-        Assert.assertEquals("documentNumber", fieldErrors.get(2).getField());
-        Assert.assertEquals("", fieldErrors.get(2).getRejectedValue());
-        Assert.assertEquals("Обязательное поле", fieldErrors.get(2).getDefaultMessage());
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
+        Assert.assertEquals(null, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
     public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongDocumentNumberSizeMax_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
@@ -627,7 +627,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("inn", correctInn),
                         new BasicNameValuePair("password", correctPassword),
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", ""),
+                        new BasicNameValuePair("surname", null),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
                         new BasicNameValuePair("birthDate", "1995-10-28"),
@@ -646,7 +646,7 @@ public class DoctorControllerTest extends RepoMethods {
 
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("surname", fieldErrors.get(0).getField());
-        Assert.assertEquals("", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals(null, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
@@ -695,7 +695,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("inn", correctInn),
                         new BasicNameValuePair("password", correctPassword),
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("name", ""),
+                        new BasicNameValuePair("name", null),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("middleName", correctMiddleName),
                         new BasicNameValuePair("birthDate", "1995-10-28"),
@@ -714,7 +714,7 @@ public class DoctorControllerTest extends RepoMethods {
 
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("name", fieldErrors.get(0).getField());
-        Assert.assertEquals("", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals(null, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
@@ -765,7 +765,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("documentNumber", correctDocumentNumber),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("middleName", ""),
+                        new BasicNameValuePair("middleName", null),
                         new BasicNameValuePair("birthDate", "1995-10-28"),
                         new BasicNameValuePair("gender", correctGender),
                         new BasicNameValuePair("placeId", "1"),
@@ -782,7 +782,7 @@ public class DoctorControllerTest extends RepoMethods {
 
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("middleName", fieldErrors.get(0).getField());
-        Assert.assertEquals("", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals(null, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
@@ -834,7 +834,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", ""),
+                        new BasicNameValuePair("birthDate", null),
                         new BasicNameValuePair("gender", correctGender),
                         new BasicNameValuePair("placeId", "1"),
                         new BasicNameValuePair("positionId", "1"),
@@ -905,7 +905,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("middleName", correctMiddleName),
                         new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", ""),
+                        new BasicNameValuePair("gender", null),
                         new BasicNameValuePair("placeId", "1"),
                         new BasicNameValuePair("positionId", "1"),
                         new BasicNameValuePair("roleId", "1"),
@@ -920,7 +920,7 @@ public class DoctorControllerTest extends RepoMethods {
 
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("gender", fieldErrors.get(0).getField());
-        Assert.assertEquals("", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals(null, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
@@ -940,7 +940,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("middleName", correctMiddleName),
                         new BasicNameValuePair("birthDate", "1995-10-28"),
                         new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", ""),
+                        new BasicNameValuePair("placeId", null),
                         new BasicNameValuePair("positionId", "1"),
                         new BasicNameValuePair("roleId", "1"),
                         new BasicNameValuePair("hospitalId", "1"))))
@@ -975,7 +975,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("birthDate", "1995-10-28"),
                         new BasicNameValuePair("gender", correctGender),
                         new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", ""),
+                        new BasicNameValuePair("positionId", null),
                         new BasicNameValuePair("roleId", "1"),
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
@@ -1010,7 +1010,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("gender", correctGender),
                         new BasicNameValuePair("placeId", "1"),
                         new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", ""),
+                        new BasicNameValuePair("roleId", null),
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
         )
@@ -1045,7 +1045,7 @@ public class DoctorControllerTest extends RepoMethods {
                         new BasicNameValuePair("placeId", "1"),
                         new BasicNameValuePair("positionId", "1"),
                         new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", ""))))
+                        new BasicNameValuePair("hospitalId", null))))
                 )
         )
                 .andExpect(status().is(302))
