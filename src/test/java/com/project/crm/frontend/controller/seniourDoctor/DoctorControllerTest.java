@@ -123,7 +123,7 @@ public class DoctorControllerTest extends RepoMethods {
         User user = User.builder()
                 .inn(Long.parseLong(innSeniorDoctor))
                 .password(passwordSeniorDoctor)
-                .documentNumber(correctDocumentNumber)
+                .documentNumber("ID6666667")
                 .name(correctName)
                 .surname(correctSurname)
                 .middleName(correctMiddleName)
@@ -150,7 +150,7 @@ public class DoctorControllerTest extends RepoMethods {
 
         this.mockMvc.perform(get("/senior-doctor/doctors/doctor")
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))                  //Эмитируем авторизованный запрос - Иначе будет redirect 302
-        ).andExpect(status().is(302))                                                                                        //Ожидается успешный ответ 200
+        ).andExpect(status().is(200))                                                                                        //Ожидается успешный ответ 200
                 .andExpect(view().name("seniorDoctor/doctorController/doctorRegister"))                    //Ожидается return на view
                 .andExpect(model().attribute("user", UserDTO.from(userRepo.findByInn(Long.parseLong(innSeniorDoctor)).get())))     //Под кем авторизовались, должен отобразиться в model attribute - user
                 .andExpect(model().attributeExists("reg"))                                                          //Или Создается пустой UserRegisterForm, либо уже должен быть - Проверяю на наличие.
@@ -204,291 +204,7 @@ public class DoctorControllerTest extends RepoMethods {
     }
 
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithWrongInnSize_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", wrongInnSizeMore14),
-                        new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("name", correctName),
-                        new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "inn", "Size"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithoutInn_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", ""),
-                        new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("name", correctName),
-                        new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "inn", "NotBlank"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithWrongInnPattern_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", "qwertyuqwertyu"),
-                        new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("name", correctName),
-                        new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "inn", "Pattern"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithWrongPasswordSize_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", correctInn),
-                        new BasicNameValuePair("password", "1234567"),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("name", correctName),
-                        new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "password", "Size"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithoutPassword_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", correctInn),
-                        new BasicNameValuePair("password", ""),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("name", correctName),
-                        new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "password", "NotBlank"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithoutDocumentNumber_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", correctInn),
-                        new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", ""),
-                        new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("name", correctName),
-                        new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "documentNumber", "NotBlank"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithWrongDocumentNumberSize_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", correctInn),
-                        new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", "AN25"),
-                        new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("name", correctName),
-                        new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "documentNumber", "Pattern"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithWrongDocumentNumberPattern_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", correctInn),
-                        new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", "123456789"),
-                        new BasicNameValuePair("surname", correctSurname),
-                        new BasicNameValuePair("name", correctName),
-                        new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "documentNumber", "Pattern"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithWrongFullNameNotBlank_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", correctInn),
-                        new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", ""),
-                        new BasicNameValuePair("name", ""),
-                        new BasicNameValuePair("middleName", ""),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "name", "NotBlank"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "middleName", "NotBlank"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "surname", "NotBlank"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithoutRedirectWithWrongFullNamePattern_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
-        saveRepos();
-
-        mockMvc.perform(post("/senior-doctor/doctors/doctorTest")
-                .with(csrf())
-                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("inn", correctInn),
-                        new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
-                        new BasicNameValuePair("surname", "12121"),
-                        new BasicNameValuePair("name", "12121"),
-                        new BasicNameValuePair("middleName", "12121"),
-                        new BasicNameValuePair("birthDate", "1995-10-28"),
-                        new BasicNameValuePair("gender", correctGender),
-                        new BasicNameValuePair("placeId", "1"),
-                        new BasicNameValuePair("positionId", "1"),
-                        new BasicNameValuePair("roleId", "1"),
-                        new BasicNameValuePair("hospitalId", "1"))))
-                )
-        )
-                .andExpect(status().is(200))
-                .andExpect(view().name("senior-doctor/doctors/doctor"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "name", "Pattern"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "middleName", "Pattern"))
-                .andExpect(model().attributeHasFieldErrorCode("user", "surname", "Pattern"));
-    }
-
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createDoctor_checkWrongMethodValidationErrorWithRedirect_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongInnSize_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
         saveRepos();
 
         MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
@@ -520,5 +236,108 @@ public class DoctorControllerTest extends RepoMethods {
         Assert.assertEquals("inn", fieldErrors.get(0).getField());
         Assert.assertEquals(wrongInnSizeMore14, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Требуется ввести 14 цифр", fieldErrors.get(0).getDefaultMessage());
+    }
+
+    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithoutInn_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", ""),
+                        new BasicNameValuePair("password", correctPassword),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("inn", fieldErrors.get(0).getField());
+        Assert.assertEquals("", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Это поле не может быть пустым", fieldErrors.get(0).getDefaultMessage());
+    }
+    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongInnPattern_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", "ggasdfghjklhgf"),
+                        new BasicNameValuePair("password", correctPassword),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("inn", fieldErrors.get(0).getField());
+        Assert.assertEquals("ggasdfghjklhgf", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("ИНН состоит только из цифр начинается с 1 или 2 : ggasdfghjklhgf", fieldErrors.get(0).getDefaultMessage());
+    }
+    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithExistInn_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", innSeniorDoctor),
+                        new BasicNameValuePair("password", correctPassword),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("inn", fieldErrors.get(0).getField());
+        Assert.assertEquals(innSeniorDoctor, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Этот ИНН уже используется другим пользователем", fieldErrors.get(0).getDefaultMessage());
     }
 }
