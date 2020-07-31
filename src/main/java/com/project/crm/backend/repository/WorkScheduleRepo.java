@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 
 public interface WorkScheduleRepo extends JpaRepository <WorkSchedule, Long> {
-    Page<WorkSchedule> findByRegistrationJournalUserInn(Long inn, Pageable pageable);
-    WorkSchedule findByDateAndRegistrationJournalUserInn(LocalDate date,Long inn);
+//    Page<WorkSchedule> findByRegistrationJournalUserInn(Long inn, Pageable pageable);
+//    WorkSchedule findByDateAndRegistrationJournalUserInn(LocalDate date,Long inn);
 }
