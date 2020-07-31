@@ -28,6 +28,8 @@ public class WorkScheduleService {
     private final RecordJournalRepo recordJournalRepo;
     private final UserRepo userRepo;
 
+
+    /*
     public void createWorkSchedule (WorkScheduleForm workScheduleForm){
         WorkSchedule workSchedule = WorkSchedule.builder()
                 .date(workScheduleForm.getDate())
@@ -69,5 +71,5 @@ public class WorkScheduleService {
         workTimes.removeAll(workBusyTimes);
         workTimes.removeIf(workTime->(workTime.isBefore(LocalDateTime.now())));
         return workTimes;
-    }
+    }*/
 }

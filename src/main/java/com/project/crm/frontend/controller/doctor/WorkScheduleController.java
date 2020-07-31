@@ -31,6 +31,7 @@ public class WorkScheduleController {
     private final RegistrationJournalService registrationJournalService;
     private final PropertiesService propertiesService;
 
+    /*
     @GetMapping
     public String getSchedules(Model model, Principal principal, Pageable pageable, HttpServletRequest uriBuilder){
         userService.checkUserPresence(model, principal);
@@ -53,5 +54,5 @@ public class WorkScheduleController {
         }
         workScheduleService.createWorkSchedule(workScheduleForm);
         return "redirect:";
-    }
+    }*/
 }
