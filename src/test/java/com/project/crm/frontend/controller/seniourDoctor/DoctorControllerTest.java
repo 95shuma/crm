@@ -340,4 +340,72 @@ public class DoctorControllerTest extends RepoMethods {
         Assert.assertEquals(innSeniorDoctor, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Этот ИНН уже используется другим пользователем", fieldErrors.get(0).getDefaultMessage());
     }
+    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithoutPassword_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", correctInn),
+                        new BasicNameValuePair("password", ""),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("password", fieldErrors.get(0).getField());
+        Assert.assertEquals("", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
+    }
+    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongPasswordSize_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", correctInn),
+                        new BasicNameValuePair("password", "1234"),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("password", fieldErrors.get(0).getField());
+        Assert.assertEquals("1234", fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Пароль должен содержать минимум 8 символов", fieldErrors.get(0).getDefaultMessage());
+    }
 }
