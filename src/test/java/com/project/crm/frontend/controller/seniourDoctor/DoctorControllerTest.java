@@ -28,6 +28,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.validation.FieldError;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -816,5 +818,75 @@ public class DoctorControllerTest extends RepoMethods {
         Assert.assertEquals("middleName", fieldErrors.get(0).getField());
         Assert.assertEquals("123", fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Отчество должно содержать только буквы : 123", fieldErrors.get(0).getDefaultMessage());
+    }
+    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithoutBirthDate_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", correctInn),
+                        new BasicNameValuePair("password", correctPassword),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", ""),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("birthDate", fieldErrors.get(0).getField());
+        Assert.assertEquals(null, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
+    }
+    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
+    public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongBirthDatePast_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
+        saveRepos();
+
+        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse("3033-10-28");
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/doctors/doctor")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("inn", correctInn),
+                        new BasicNameValuePair("password", correctPassword),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "3033-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/doctors/doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("birthDate", fieldErrors.get(0).getField());
+        Assert.assertEquals(date1, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Дата рождения не может быть в будущем времени", fieldErrors.get(0).getDefaultMessage());
     }
 }
