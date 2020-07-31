@@ -1,9 +1,6 @@
 package com.project.crm.frontend.controller.seniorDoctor;
 
-import com.project.crm.backend.services.PropertiesService;
-import com.project.crm.backend.services.RegistrationJournalService;
-import com.project.crm.backend.services.UserService;
-import com.project.crm.backend.services.WorkScheduleService;
+import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.WorkScheduleForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,18 +18,22 @@ import java.security.Principal;
 
 import static com.project.crm.backend.services.PropertiesService.constructPageable;
 
-@Controller("pkg seniorDoctor WorkScheduleController")
+@Controller("pkg seniorDoctor NewScheduleController")
 @RequestMapping("/senior-doctor/schedules")
 @AllArgsConstructor
-public class WorkScheduleController {
+public class NewScheduleController {
 
     private final UserService userService;
     private final WorkScheduleService workScheduleService;
     private final RegistrationJournalService registrationJournalService;
     private final PropertiesService propertiesService;
+    private final PositionService positionService;
 
     @GetMapping("new-schedule")
     public String newSchedule(Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("positions", positionService.getAll());
+
         return "seniorDoctor/scheduleController/newSchedule";
     }
 
