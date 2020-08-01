@@ -120,18 +120,11 @@ public class PatientControllerTest extends RepoMethods {
         wrongDocumentNumber = "AN12345678";
         wrongInnSizeMore14="12345678912345678";
         wrongInnSizeLess14="123456789";
-        emptyInn="";
         wrongPassword="abc";
-        emptyPassword="";
-        emptyHospital="";
         wrongDocumentNumber2="SK1234567";
         wrongName="111jkjkj";
-        emptyName="";
         wrongSurname="1wer";
-        emptySurname="";
         wrongMiddleName="555jjjjj";
-        emptyMiddleName="";
-        wrongGender="";
     }
     @After
     public void tearDown(){
@@ -225,7 +218,7 @@ public class PatientControllerTest extends RepoMethods {
     public void createPatient_checkWrongMethodValidationError_shouldReturnValidationErrorsForDocNumbAndRedirectToView() throws Exception {
         saveRepos();
 
-         MvcResult mvcResult =   mockMvc.perform(post("/senior-doctor/patients/patient")
+        MvcResult mvcResult =   mockMvc.perform(post("/senior-doctor/patients/patient")
                 .with(csrf())
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -244,10 +237,10 @@ public class PatientControllerTest extends RepoMethods {
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
         )
-                 .andExpect(status().is(302))
-                 .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
-                 .andExpect(flash().attributeExists("errors"))
-                 .andReturn();
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
         List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
 
         Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
@@ -721,13 +714,13 @@ public class PatientControllerTest extends RepoMethods {
                 .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
-                        new BasicNameValuePair("inn", "15348795694512"),
+                        new BasicNameValuePair("inn", "15348795654512"),
                         new BasicNameValuePair("password", "1292853796"),
-                        new BasicNameValuePair("documentNumber", "ID3584784"),
+                        new BasicNameValuePair("documentNumber", "ID3583784"),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
-                        new BasicNameValuePair("birthDate", emptyDate),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
                         new BasicNameValuePair("gender", wrongGender),
                         new BasicNameValuePair("placeId", "1"),
                         new BasicNameValuePair("positionId", "1"),
