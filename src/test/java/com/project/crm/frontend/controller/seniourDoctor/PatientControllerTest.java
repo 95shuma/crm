@@ -139,6 +139,8 @@ public class PatientControllerTest extends RepoMethods {
         userRepo.deleteAll();
         hospitalRepo.deleteAll();
         roleRepo.deleteAll();
+        placeRepo.deleteAll();
+        positionRepo.deleteAll();
     }
     public void saveRepos(){
         saveRolesConstant(roleRepo);
@@ -203,7 +205,7 @@ public class PatientControllerTest extends RepoMethods {
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("inn", correctInn),
                         new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("documentNumber", "ID2012328"),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
@@ -266,7 +268,7 @@ public class PatientControllerTest extends RepoMethods {
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("inn", wrongInnSizeMore14),
                         new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("documentNumber", "ID2012328"),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
@@ -301,7 +303,7 @@ public class PatientControllerTest extends RepoMethods {
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("inn", wrongInnSizeLess14),
                         new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("documentNumber", "ID2012328"),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
@@ -336,7 +338,7 @@ public class PatientControllerTest extends RepoMethods {
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("inn", emptyInn),
                         new BasicNameValuePair("password", correctPassword),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("documentNumber", "ID2012328"),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
@@ -743,5 +745,75 @@ public class PatientControllerTest extends RepoMethods {
         Assert.assertEquals("gender", fieldErrors.get(0).getField());
         Assert.assertEquals(wrongGender, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Обязательное поле", fieldErrors.get(0).getDefaultMessage());
+    }
+
+    @Test
+    public void createPatient_expectInnExistError() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("inn", innSeniorDoctor),
+                        new BasicNameValuePair("password", "1292853796"),
+                        new BasicNameValuePair("documentNumber", "ID2366666"),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", "1"),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("inn", fieldErrors.get(0).getField());
+        Assert.assertEquals(innSeniorDoctor, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Этот ИНН уже используется другим пользователем", fieldErrors.get(0).getDefaultMessage());
+    }
+
+    @Test
+    public void createPatient_expectDocumentNumberExistError() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/patients/patient")
+                .with(csrf())
+                .with(user(innSeniorDoctor).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("inn", "12355555555555"),
+                        new BasicNameValuePair("password", "1292853796"),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", "1"),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/patients/patient"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+
+        Assert.assertEquals("patientRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
+        Assert.assertEquals(correctDocumentNumber, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Этот номер паспорта уже используется другим пользователем", fieldErrors.get(0).getDefaultMessage());
     }
 }
