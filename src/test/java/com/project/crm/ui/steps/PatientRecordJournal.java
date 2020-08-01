@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
+
 public class PatientRecordJournal extends Steps{
 
     @Before("@patientRecordJournal")
@@ -21,7 +23,7 @@ public class PatientRecordJournal extends Steps{
     }
 
     @Допустим("пациент входит на сайт и попадает к себе на страницу")
-    public void пациентВходитНаСайт() {
+    public void пациентВходитНаСайт() throws IOException {
         login(Constants.PATIENT_INN,Constants.PATIENT_PASSWORD);
     }
 

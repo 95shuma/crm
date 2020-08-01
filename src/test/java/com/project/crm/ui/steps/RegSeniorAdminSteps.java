@@ -10,6 +10,8 @@ import io.cucumber.java.ru.Тогда;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
+
 public class RegSeniorAdminSteps extends Steps{
 
     @Before("@group")
@@ -23,7 +25,7 @@ public class RegSeniorAdminSteps extends Steps{
     }
 
     @Допустим("администратор авторизуется")
-    public void администраторАвторизуется() {
+    public void администраторАвторизуется() throws IOException {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
     }
 

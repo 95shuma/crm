@@ -8,6 +8,7 @@ import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class MeasureSteps extends Steps {
         tearDown();
     }
     @Допустим("авторизуется и открывает список лекарств")
-    public void авторизуетсяиОткрываетСписокЛекарств() {
+    public void авторизуетсяиОткрываетСписокЛекарств() throws IOException {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
         webDriver.findElement(By.name("remedies")).click();
     }

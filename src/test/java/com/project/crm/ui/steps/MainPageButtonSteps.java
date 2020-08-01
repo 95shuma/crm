@@ -6,6 +6,8 @@ import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
+
 public class MainPageButtonSteps extends Steps{
 
     @Before("@button")
@@ -20,7 +22,7 @@ public class MainPageButtonSteps extends Steps{
 
     //проверка 1 роли
     @Допустим("Администратор авторизуется")
-    public void администраторАвторизуется() {
+    public void администраторАвторизуется() throws IOException {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
     }
 
@@ -40,7 +42,7 @@ public class MainPageButtonSteps extends Steps{
 
     //проверка 2 роли
     @Допустим("Админ ЛПУ авторизуется")
-    public void админЛПУавторизуется() {
+    public void админЛПУавторизуется() throws IOException {
         login(Constants.SENIOR_DOCTOR_INN, Constants.SENIOR_DOCTOR_PASSWORD);
     }
 
@@ -61,7 +63,7 @@ public class MainPageButtonSteps extends Steps{
 
     //проверка 3 роли
     @Допустим("доктор авторизуется")
-    public void докторАвторизуется() {
+    public void докторАвторизуется() throws IOException {
         login(Constants.DOCTOR_INN, Constants.DOCTOR_PASSWORD);
     }
 
@@ -83,7 +85,7 @@ public class MainPageButtonSteps extends Steps{
     //проверка 4 роли
 
     @Допустим("пациент авторизуется")
-    public void пациентВходитНаСайт() {
+    public void пациентВходитНаСайт() throws IOException {
         login(Constants.PATIENT_INN,Constants.PATIENT_PASSWORD);
     }
 

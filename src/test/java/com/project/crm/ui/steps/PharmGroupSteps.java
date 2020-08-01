@@ -7,7 +7,9 @@ import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class PharmGroupSteps extends Steps {
     }
 
     @Допустим("админ авторизуется и открывает список лекарств")
-    public void админАвторизуетсяиОткрываетСписокЛекарств() {
+    public void админАвторизуетсяиОткрываетСписокЛекарств() throws NoSuchElementException, IOException {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
         webDriver.findElement(By.name("remedies")).click();
     }

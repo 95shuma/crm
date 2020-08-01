@@ -10,6 +10,8 @@ import io.cucumber.java.ru.Тогда;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class DoctorAppointment extends Steps{
@@ -25,7 +27,7 @@ public class DoctorAppointment extends Steps{
     }
 
     @Допустим("врач входит на сайт и попадает к себе на страницу")
-    public void врачВходитНаСайтПопадаетКСебеНаСтраницу() {
+    public void врачВходитНаСайтПопадаетКСебеНаСтраницу() throws IOException {
         login(Constants.DOCTOR_INN, Constants.DOCTOR_PASSWORD);
     }
 

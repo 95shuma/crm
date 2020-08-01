@@ -8,6 +8,7 @@ import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class PatientRegisterBySenior extends Steps {
     }
 
     @Допустим("админ ЛПУ логинится")
-    public void админЛПУлогинится() {
+    public void админЛПУлогинится() throws IOException {
         login(Constants.SENIOR_DOCTOR_INN, Constants.SENIOR_DOCTOR_PASSWORD);
     }
 

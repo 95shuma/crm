@@ -8,6 +8,7 @@ import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class RemedyFormSteps extends Steps {
     }
 
     @Допустим("админ логинится и открывает список лекарств")
-    public void админАвторизуетсяиОткрываетСписокЛекарств() {
+    public void админАвторизуетсяиОткрываетСписокЛекарств()  throws IOException {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
         webDriver.findElement(By.name("remedies")).click();
     }
