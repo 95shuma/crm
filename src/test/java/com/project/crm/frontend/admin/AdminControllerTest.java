@@ -136,18 +136,18 @@ public class AdminControllerTest extends RepoMethods {
         registrationJournalRepo.save(registrationJournal);
     }
 
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createSeniorDoctor_expectValidationErrors() throws Exception {
+    @Test
+    public void createSeniorDoctor_expectInnExistsError() throws Exception {
         saveRepos();
 
         MvcResult mvcResult = mockMvc.perform(post("/admin/senior-doctors")
                 .with(csrf())
                 .with(user(innAdmin).password(passwordAdmin).roles(Constants.ADMIN))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("inn", innAdmin),
                         new BasicNameValuePair("password", passwordAdmin),
-                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("documentNumber", "ID6666699"),
                         new BasicNameValuePair("surname", correctSurname),
                         new BasicNameValuePair("name", correctName),
                         new BasicNameValuePair("middleName", correctMiddleName),
@@ -167,8 +167,38 @@ public class AdminControllerTest extends RepoMethods {
         Assert.assertEquals("inn", fieldErrors.get(0).getField());
         Assert.assertEquals(innAdmin, fieldErrors.get(0).getRejectedValue());
         Assert.assertEquals("Этот ИНН уже используется другим пользователем", fieldErrors.get(0).getDefaultMessage());
-        Assert.assertEquals("documentNumber", fieldErrors.get(1).getField());
-        Assert.assertEquals(correctDocumentNumber, fieldErrors.get(1).getRejectedValue());
-        Assert.assertEquals("Этот номер паспорта уже используется другим пользователем", fieldErrors.get(1).getDefaultMessage());
+    }
+
+    @Test
+    public void createSeniorDoctor_expectDocumentNumberExistsError() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/admin/senior-doctors")
+                .with(csrf())
+                .with(user(innAdmin).password(passwordAdmin).roles(Constants.ADMIN))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("inn", "11111111111155"),
+                        new BasicNameValuePair("password", passwordAdmin),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/admin/senior-doctors/senior-doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
+        Assert.assertEquals(correctDocumentNumber, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Этот номер паспорта уже используется другим пользователем", fieldErrors.get(0).getDefaultMessage());
     }
 }
