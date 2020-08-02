@@ -2,9 +2,12 @@ package com.project.crm.backend.restControllers;
 
 import com.project.crm.backend.dto.RegistrationJournalDTO;
 import com.project.crm.backend.services.RegistrationJournalService;
+import com.project.crm.backend.services.RoleService;
+import com.project.crm.backend.util.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -13,10 +16,14 @@ import java.util.List;
 public class RegistrationJournalRestController {
 
     private final RegistrationJournalService registrationJournalService;
+    private final RoleService roleService;
 
-    @GetMapping("/{positionId}/{placeId}")
-    public List<RegistrationJournalDTO> getDoctorsByPosition(@PathVariable String positionId, @PathVariable String placeId){
-        return registrationJournalService.getDoctorsByHospitalIdAndPositionId(Long.parseLong(positionId), Long.parseLong(placeId));
+    @GetMapping("/positions/{positionId}")
+    public List<RegistrationJournalDTO> getDoctorsByPosition(@PathVariable String positionId, Principal principal){
+        Long inn = Long.parseLong(principal.getName());
+        //Переделать, нужно чтобы principal хранил id из registrationJournal, чтобы в последующем знать под каким ЛПУ вернуть должности
+        RegistrationJournalDTO registrationJournalDTOUser = registrationJournalService.findFirstByUserInnAndRole(inn, roleService.getByName(Constants.ROLE_SENIOR_DOCTOR).getId());
+        return registrationJournalService.getDoctorsByHospitalIdAndPositionId(Long.parseLong(positionId), registrationJournalDTOUser.getHospital().getId());
     }
 
 }
