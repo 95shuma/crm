@@ -25,6 +25,9 @@ public class RegistrationJournalService {
     public boolean existsByUserInnAndRoleId(Long inn, Long roleId){
         return registrationJournalRepo.existsByUserInnAndRoleId(inn, roleId);
     }
+    public RegistrationJournalDTO findFirstByUserInnAndRole(Long inn, Long roleId){
+        return  RegistrationJournalDTO.from(registrationJournalRepo.findFirstByUserInnAndRoleId(inn, roleId));
+    }
 
     public List<RegistrationJournal> getAll(){
         return registrationJournalRepo.findAll();
