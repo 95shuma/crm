@@ -52,10 +52,10 @@ public class UserRegisterForm {
     @NotNull(message = "Обязательное поле")
     private Long placeId;
 
-//    @NotNull(message = "Обязательное поле")
+    @NotNull(message = "Обязательное поле")
     private Long positionId;
 
-//    @NotNull(message = "Обязательное поле")
+    @NotNull(message = "Обязательное поле")
     private Long hospitalId;
 
     @NotNull(message = "Обязательное поле")
