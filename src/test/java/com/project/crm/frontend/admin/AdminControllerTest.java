@@ -131,6 +131,7 @@ public class AdminControllerTest extends RepoMethods {
                 .role(roleRepo.findByName(Constants.ROLE_ADMIN).get())
                 .user(user)
                 .hospital(hospitalRepo.findAll().get(0))
+                .position(positionRepo.findAll().get(0))
                 .build();
 
         registrationJournalRepo.save(registrationJournal);
