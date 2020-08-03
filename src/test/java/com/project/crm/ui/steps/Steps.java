@@ -40,7 +40,7 @@ public class Steps {
         webDriver.findElement(By.name("login")).click();
     }catch(Exception e){
         File screenshotFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshotFile, new File("D:\\SoftwareTestingMaterial.png"));//скрин ошибки при логине
+        FileUtils.copyFile(screenshotFile, new File("С:\\SoftwareTestingMaterial.png"));//скрин ошибки при логине
          System.out.println("скрин ошибки сохранена в папке Д");
     }
     }
@@ -53,7 +53,7 @@ public class Steps {
             try{
                 TakesScreenshot screenshot=(TakesScreenshot)webDriver;
                 File src=screenshot.getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(src, new File("D:\\"+result.getName()+".png"));
+                FileUtils.copyFile(src, new File("С:\\"+result.getName()+".png"));
                 System.out.println("Successfully captured a screenshot");
             }catch (Exception e){
                 System.out.println("Exception while taking screenshot "+e.getMessage());
