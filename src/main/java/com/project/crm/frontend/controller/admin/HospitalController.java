@@ -52,6 +52,7 @@ public class HospitalController {
 
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
+            attributes.addFlashAttribute("hospitalForm", hospitalRegisterForm);
             return "redirect:/admin/hospitals/hospital";
         }
 
