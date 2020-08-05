@@ -19,12 +19,12 @@ public class RegistrationJournalRestController {
     private final RoleService roleService;
 
     @GetMapping("/positions/{positionId}")
-    public List<RegistrationJournalDTO> getDoctorsByPosition(@PathVariable String positionId, Principal principal){
+    public List<RegistrationJournalDTO> getRegUsersByPosition(@PathVariable String positionId, Principal principal){
         Long inn = Long.parseLong(principal.getName());
 
         //Переделать, нужно чтобы в url после авторизации была hospitalId. Пока временно будет для Админа ЛПУ Constants.SENIOR_DOCTOR_INN
         RegistrationJournalDTO registrationJournalDTOUser = registrationJournalService.findFirstByUserInnAndRole(inn, roleService.getByName(Constants.ROLE_SENIOR_DOCTOR).getId());
-        return registrationJournalService.getRegJournalsByHospitalIdAndPositionId(Long.parseLong(positionId), registrationJournalDTOUser.getHospital().getId());
+        return registrationJournalService.getRegUsersByHospitalIdAndPositionId(Long.parseLong(positionId), registrationJournalDTOUser.getHospital().getId());
     }
 
 }
