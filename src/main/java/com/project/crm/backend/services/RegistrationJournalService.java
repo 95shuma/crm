@@ -40,8 +40,7 @@ public class RegistrationJournalService {
     public List<RegistrationJournal> getDoctorsByHospitalId (Long hospitalId){
         return registrationJournalRepo.findByHospitalId(hospitalId);
     }
-
-    public List<RegistrationJournalDTO> getDoctorsByHospitalIdAndPositionId(Long hospitalId, Long positionId){
+    public List<RegistrationJournalDTO> getRegJournalsByHospitalIdAndPositionId(Long hospitalId, Long positionId){
         return RegistrationJournalDTO.listFrom(registrationJournalRepo.findByHospitalIdAndPositionId(hospitalId, positionId));
     }
 
