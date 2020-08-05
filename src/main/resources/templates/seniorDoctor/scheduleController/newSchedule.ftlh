@@ -1,6 +1,6 @@
 <#import "../../partials/main.ftlh" as main />
 
-<@main.renderWith scripts=["/js/main.js"]>
+<@main.renderWith scripts=["/js/newSchedule.js"]>
     <div class="mx-auto mt-3 w-50">
         <h3 class="text-center">Новый график</h3>
         <label for="positionIdList">Выберите должность</label>
@@ -12,6 +12,7 @@
                 </#list>
             </#if>
         </select>
+        <div id="regUserList"></div>
 
         <form action="/senior-doctor/schedules/new-schedule" method="post" style="margin-bottom: 50px">
             <#if _csrf??>
