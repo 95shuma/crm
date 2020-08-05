@@ -24,7 +24,7 @@ public class RegistrationJournalRestController {
 
         //Переделать, нужно чтобы в url после авторизации была hospitalId. Пока временно будет для Админа ЛПУ Constants.SENIOR_DOCTOR_INN
         RegistrationJournalDTO registrationJournalDTOUser = registrationJournalService.findFirstByUserInnAndRole(inn, roleService.getByName(Constants.ROLE_SENIOR_DOCTOR).getId());
-        return registrationJournalService.getRegUsersByHospitalIdAndPositionId(Long.parseLong(positionId), registrationJournalDTOUser.getHospital().getId());
+        return registrationJournalService.getRegUsersByHospitalIdAndPositionId(registrationJournalDTOUser.getHospital().getId(), Long.parseLong(positionId));
     }
 
 }

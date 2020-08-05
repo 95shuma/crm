@@ -73,8 +73,8 @@ public class RegistrationJournalRestControllerTest extends RepoMethods {
         rn = new Random();
         faker = new Faker(new Locale("ru"));
         size = 5;
-        innSeniorDoctor = "12222222222222";
-        passwordSeniorDoctor = "12222222222222";
+        innSeniorDoctor = Constants.SENIOR_DOCTOR_INN;
+        passwordSeniorDoctor = Constants.SENIOR_DOCTOR_PASSWORD;
     }
 
     @After      //После каждого теста чистим репозитории
