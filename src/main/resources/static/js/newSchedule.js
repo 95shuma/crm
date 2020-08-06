@@ -1,7 +1,7 @@
 'use strict';
 //--< ============================================================== Константы ====================================================================
 const baseUrl = 'http://localhost:7777';
-const regUserList = document.getElementById('regUserList');
+const newSchedule = document.getElementById('newSchedule');
 //--> ============================================================== Константы ====================================================================
 //--< ============================================================== Переменные ====================================================================
 let newLet;
@@ -13,10 +13,10 @@ function Place(id, name, codePlace, groupCode) {
     this.codePlace = codePlace;
     this.groupCode = groupCode;
 }
-function Hospital(id, name, Place, address) {
+function Hospital(id, name, place, address) {
     this.id = id;
     this.name = name;
-    this.Place = Place;
+    this.place = place;
     this.address = address;
 }
 function Position(id, name) {
@@ -27,7 +27,7 @@ function Role(id, name) {
     this.id = id;
     this.name = name;
 }
-function User(id, inn, documentNumber, fullName, name, surname, middleName, birthDate, gender, Place) {
+function User(id, inn, documentNumber, fullName, name, surname, middleName, birthDate, gender, place) {
     this.id = id;
     this.inn = inn;
     this.documentNumber = documentNumber;
@@ -37,14 +37,14 @@ function User(id, inn, documentNumber, fullName, name, surname, middleName, birt
     this.middleName = middleName;
     this.birthDate = birthDate;
     this.gender = gender;
-    this.Place = Place;
+    this.place = place;
 }
-function RegistrationJournal(id, Hospital, User, Position, Role) {
+function RegistrationJournal(id, hospital, user, position, role) {
     this.id = id;
-    this.Hospital = Hospital;
-    this.User = User;
-    this.Position = Position;
-    this.Role = Role;
+    this.hospital = hospital;
+    this.user = user;
+    this.position = position;
+    this.role = role;
 }
 
 //--> ============================================================== Объекты ========================================================================
@@ -61,6 +61,52 @@ function clearLocalStorage(){
     localStorage.clear();
     //при выходе обновить
 }
+function createScheduleForm() {
+    let scheduleForm = document.createElement('form');
+    scheduleForm.action = '#';
+    scheduleForm.method = 'post';
+    scheduleForm.style.marginBottom = '50px';
+    scheduleForm.innerHTML =
+        `<div id="regUserList">
+            <div class="d-flex justify-content-center">
+                <div class="mx-auto mt-3 w-100">
+                    <h3>Выберите врачей:</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Выбрать</th>
+                            <th scope="col">ФИО</th>
+                            <th scope="col">Должность</th>
+                            <th scope="col">ИНН</th>
+                        </tr>
+                        </thead>
+                        <tbody id="chosenRegUsersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h3>Настройте рабочую неделю</h3>
+        </div>
+        <button id="newScheduleBtn" class="btn btn-primary btn-block" style="margin-top: 20px">Сформировать</button>`
+    ;
+    return scheduleForm;
+}
+function createChosenRegUserTr(regUser) {
+    let chosenRegUserTr = document.createElement('tr');
+    chosenRegUserTr.innerHTML = `
+        <td style="text-align: center">
+            <div class="form-check">
+                <input class="form-check-input chosenRegUser" type="checkbox" name="gender" id="chosenRegUser${regUser.user.id}" value="${regUser.user.id}">
+            </div>
+        </td>
+        <td>${regUser.user.fullName}</td>
+        <td>${regUser.position.name}</td>
+        <td>${regUser.user.inn}</td>
+    `;
+    return chosenRegUserTr;
+}
+
 function addElement(dom_element, adding_element){
     dom_element.append(adding_element);
 }
@@ -82,13 +128,30 @@ const fetchDoctorsByPosition = async (positionId) => {
 function getDoctorsByPosition(fetch) {
     fetch.then(data => {
         console.log(data);
-        productList.innerHTML = '';
-        for (let i = 0; i<data.content.length; i++){
-            addElement(productList, createProductElement(new Product(data.content[i].id, data.content[i].name, data.content[i].image, data.content[i].qty, data.content[i].description, data.content[i].price)));
-        }
-        // for (let i = 0; i < data.content.length; i++) {
-        //     let registrationJournal = new RegistrationJournal(data.content[i].id)
+        newSchedule.innerHTML = '';
+        addElement(newSchedule , createScheduleForm());
+        // for (let i = 0; i<data.content.length; i++){
+        //     addElement(regUserList, createProductElement(new Product(data.content[i].id, data.content[i].name, data.content[i].image, data.content[i].qty, data.content[i].description, data.content[i].price)));
         // }
+        for (let i = 0; i<data.length; i++){
+            addElement(document.getElementById('chosenRegUsersTableBody'), createChosenRegUserTr(new RegistrationJournal(data[i].id,
+                new Hospital(data[i].hospital.id, data[i].hospital.name, new Place(data[i].hospital.place.id, data[i].hospital.place.name, data[i].hospital.place.codePlace, data[i].hospital.place.groupCode ), data[i].hospital.address),
+                new User(   data[i].user.id,
+                            data[i].user.inn,
+                            data[i].user.documentNumber,
+                            data[i].user.fullName,
+                            data[i].user.name,
+                            data[i].user.surname,
+                            data[i].user.middleName,
+                            data[i].user.birthDate,
+                            data[i].user.gender,
+                            new Place(data[i].user.place. id,data[i].user.place.name)
+                ),
+                new Position(data[i].position.id, data[i].position.name),
+                new Role(data[i].role.id, data[i].role.name)
+                ))
+            );
+        }
     });
 }
 //--> ============================================================== Запросы ========================================================================
