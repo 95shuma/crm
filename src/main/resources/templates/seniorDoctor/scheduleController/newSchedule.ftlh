@@ -12,14 +12,9 @@
                 </#list>
             </#if>
         </select>
-        <div id="regUserList"></div>
-
-        <form action="/senior-doctor/schedules/new-schedule" method="post" style="margin-bottom: 50px">
-            <#if _csrf??>
-                <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
-            </#if>
-
-
-        </form>
     </div>
+
+    <div id="newSchedule"></div>
+
+
 </@main.renderWith>
