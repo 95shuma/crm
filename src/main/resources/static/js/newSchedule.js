@@ -170,28 +170,33 @@ function getDoctorsByPosition(fetch) {
     fetch.then(data => {
         console.log(data);
         newSchedule.innerHTML = '';
-        addElement(newSchedule , createScheduleForm());
-        // for (let i = 0; i<data.content.length; i++){
-        //     addElement(regUserList, createProductElement(new Product(data.content[i].id, data.content[i].name, data.content[i].image, data.content[i].qty, data.content[i].description, data.content[i].price)));
-        // }
-        for (let i = 0; i<data.length; i++){
-            addElement(document.getElementById('chosenRegUsersTableBody'), createChosenRegUserTr(new RegistrationJournal(data[i].id,
-                new Hospital(data[i].hospital.id, data[i].hospital.name, new Place(data[i].hospital.place.id, data[i].hospital.place.name, data[i].hospital.place.codePlace, data[i].hospital.place.groupCode ), data[i].hospital.address),
-                new User(   data[i].user.id,
-                            data[i].user.inn,
-                            data[i].user.documentNumber,
-                            data[i].user.fullName,
-                            data[i].user.name,
-                            data[i].user.surname,
-                            data[i].user.middleName,
-                            data[i].user.birthDate,
-                            data[i].user.gender,
-                            new Place(data[i].user.place. id,data[i].user.place.name)
-                ),
-                new Position(data[i].position.id, data[i].position.name),
-                new Role(data[i].role.id, data[i].role.name)
-                ))
-            );
+        if (data.length === 0){
+            let newScheduleError = document.createElement('div');
+            newScheduleError.className = 'alert alert-warning mt-1';
+            newScheduleError.role = 'alert';
+            newScheduleError.innerHTML = 'По выбранной должности врачи не найдены';
+            addElement(newSchedule, newScheduleError);
+        } else {
+            addElement(newSchedule , createScheduleForm());
+            for (let i = 0; i<data.length; i++){
+                addElement(document.getElementById('chosenRegUsersTableBody'), createChosenRegUserTr(new RegistrationJournal(data[i].id,
+                    new Hospital(data[i].hospital.id, data[i].hospital.name, new Place(data[i].hospital.place.id, data[i].hospital.place.name, data[i].hospital.place.codePlace, data[i].hospital.place.groupCode ), data[i].hospital.address),
+                    new User(   data[i].user.id,
+                        data[i].user.inn,
+                        data[i].user.documentNumber,
+                        data[i].user.fullName,
+                        data[i].user.name,
+                        data[i].user.surname,
+                        data[i].user.middleName,
+                        data[i].user.birthDate,
+                        data[i].user.gender,
+                        new Place(data[i].user.place. id,data[i].user.place.name)
+                    ),
+                    new Position(data[i].position.id, data[i].position.name),
+                    new Role(data[i].role.id, data[i].role.name)
+                    ))
+                );
+            }
         }
     });
 }
