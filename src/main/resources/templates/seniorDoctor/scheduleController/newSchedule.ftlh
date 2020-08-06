@@ -1,9 +1,9 @@
 <#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith scripts=["/js/newSchedule.js"]>
-    <div class="mx-auto mt-3 w-50">
-        <h3 class="text-center">Новый график</h3>
-        <label for="positionIdList">Выберите должность</label>
+    <h3 class="text-center">Новый график</h3>
+    <div class="mt-3 w-50" style="text-align: left">
+        <h5>1) Выберите должность</h5>
         <select class="form-control" id="positionIdList" name="positionIdList">
             <option disabled hidden selected value> -- выберите -- </option>
             <#if positions??>
