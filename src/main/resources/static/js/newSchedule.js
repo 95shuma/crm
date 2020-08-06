@@ -63,7 +63,7 @@ function clearLocalStorage(){
 }
 function createScheduleForm() {
     let scheduleForm = document.createElement('form');
-    scheduleForm.action = '#';
+    scheduleForm.action = '/senior-doctor/schedules/new-schedule';
     scheduleForm.method = 'post';
     scheduleForm.style.marginBottom = '50px';
     scheduleForm.innerHTML =
