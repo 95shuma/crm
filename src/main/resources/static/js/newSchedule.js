@@ -111,7 +111,7 @@ function createScheduleForm() {
                                 <td><input type="time" name="monday_from" class="form-control"></td>
                                 <td><input type="time" name="tuesday_from" class="form-control"></td>
                                 <td><input type="time" name="wednesday_from" class="form-control"></td>
-                                <td><input type="time" name="tuesday_from" class="form-control"></td>
+                                <td><input type="time" name="thursday_from" class="form-control"></td>
                                 <td><input type="time" name="friday_from" class="form-control"></td>
                                 <td><input type="time" name="saturday_from" class="form-control"></td>
                                 <td><input type="time" name="sunday_from" class="form-control"></td>
@@ -121,7 +121,7 @@ function createScheduleForm() {
                                 <td><input type="time" name="monday_to" class="form-control"></td>
                                 <td><input type="time" name="tuesday_to" class="form-control"></td>
                                 <td><input type="time" name="wednesday_to" class="form-control"></td>
-                                <td><input type="time" name="tuesday_to" class="form-control"></td>
+                                <td><input type="time" name="thursday_to" class="form-control"></td>
                                 <td><input type="time" name="friday_to" class="form-control"></td>
                                 <td><input type="time" name="saturday_to" class="form-control"></td>
                                 <td><input type="time" name="sunday_to" class="form-control"></td>
