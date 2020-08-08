@@ -2,6 +2,8 @@
 //--< ============================================================== Константы ====================================================================
 const baseUrl = 'http://localhost:7777';
 const newSchedule = document.getElementById('newSchedule');
+const _csrf = document.getElementById('_csrf').content;
+const _csrf_token = document.getElementById('_csrf_token').content;
 //--> ============================================================== Константы ====================================================================
 //--< ============================================================== Переменные ====================================================================
 let newLet;
@@ -67,7 +69,8 @@ function createScheduleForm() {
     scheduleForm.method = 'post';
     scheduleForm.style.marginBottom = '50px';
     scheduleForm.innerHTML =
-        `<div id="regUserList">
+        `<input type="hidden" name="${_csrf}" value="${_csrf_token}"/>
+         <div id="regUserList">
             <div class="d-flex justify-content-center">
                 <div class="mx-auto mt-3 w-100">
                     <h5>2) Выберите врачей:</h5>
