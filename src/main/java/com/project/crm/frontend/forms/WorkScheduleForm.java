@@ -7,30 +7,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
 public class WorkScheduleForm {
-    @NotNull(message = "Обязательное поле")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate date;
+    private List<String> chosenRegUser;
 
-    @NotNull(message = "Обязательное поле")
-    private Long regJournalId;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime monday_from;
 
-    @NotNull(message = "Обязательное поле")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime dayStart;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime monday_to;
 
-    @NotNull(message = "Обязательное поле")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime dayEnd;
-
-    @NotNull(message = "Обязательное поле")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime lunchStart;
-
-    @NotNull(message = "Обязательное поле")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime lunchEnd;
 }

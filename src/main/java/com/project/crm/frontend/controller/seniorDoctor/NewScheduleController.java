@@ -38,11 +38,12 @@ public class NewScheduleController {
     }
 
     @PostMapping("new-schedule")
-    public String createSchedule(@Valid WorkScheduleForm workScheduleForm,BindingResult validationResult,RedirectAttributes attributes){
+    public String createSchedule(@Valid WorkScheduleForm workScheduleForm, BindingResult validationResult,RedirectAttributes attributes){
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
             return "redirect:/senior-doctor/schedules/new-schedule";
         }
+        workScheduleForm.getChosenRegUser().stream().forEach(System.out::println);
         return "redirect:";
     }
 }
