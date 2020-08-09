@@ -25,7 +25,7 @@ public class WorkScheduleService {
             newSchedule.getWeekDayList().forEach(weekDay -> {
                 workScheduleRepo.save(WorkSchedule.builder()
                         .registrationJournal(registrationJournalRepo.findById(Long.parseLong(regUser)).get())
-                        .dayOfWeek(weekDay.getDayOfWeek())
+                        .dayOfWeek(weekDay.getDayOfWeek().getValue())
                         .timeStart(weekDay.getFrom())
                         .timeEnd(weekDay.getTo())
                         .build()
@@ -50,31 +50,31 @@ public class WorkScheduleService {
                     .build());
         if (newScheduleForm.getWednesdayFrom() != null)
             weekDayList.add(WeekDay.builder()
-                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .dayOfWeek(DayOfWeek.WEDNESDAY)
                     .from(newScheduleForm.getWednesdayFrom())
                     .to(newScheduleForm.getWednesdayTo())
                     .build());
         if (newScheduleForm.getThursdayFrom() != null)
             weekDayList.add(WeekDay.builder()
-                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .dayOfWeek(DayOfWeek.THURSDAY)
                     .from(newScheduleForm.getThursdayFrom())
                     .to(newScheduleForm.getThursdayTo())
                     .build());
         if (newScheduleForm.getFridayFrom() != null)
             weekDayList.add(WeekDay.builder()
-                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .dayOfWeek(DayOfWeek.FRIDAY)
                     .from(newScheduleForm.getFridayFrom())
                     .to(newScheduleForm.getFridayTo())
                     .build());
         if (newScheduleForm.getSaturdayFrom() != null)
             weekDayList.add(WeekDay.builder()
-                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .dayOfWeek(DayOfWeek.SATURDAY)
                     .from(newScheduleForm.getSaturdayFrom())
                     .to(newScheduleForm.getSaturdayTo())
                     .build());
         if (newScheduleForm.getSundayFrom() != null)
             weekDayList.add(WeekDay.builder()
-                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .dayOfWeek(DayOfWeek.SUNDAY)
                     .from(newScheduleForm.getSundayFrom())
                     .to(newScheduleForm.getSundayTo())
                     .build());
@@ -83,6 +83,10 @@ public class WorkScheduleService {
                 .weekDayList(weekDayList)
                 .build();
     }
+    public List<WorkSchedule> getWorkScheduleListByRegUserId (Long regUserId){
+        return workScheduleRepo.findAllByRegistrationJournalId(regUserId);
+    }
+
     /*
     public void createWorkSchedule (NewSchedule workScheduleForm){
         WorkSchedule workSchedule = WorkSchedule.builder()

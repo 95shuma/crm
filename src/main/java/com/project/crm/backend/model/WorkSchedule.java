@@ -28,5 +28,5 @@ public class WorkSchedule {
 
     private LocalTime timeEnd;
 
-    private DayOfWeek dayOfWeek;
+    private int dayOfWeek;
 }
