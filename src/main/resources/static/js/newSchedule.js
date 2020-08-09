@@ -108,23 +108,23 @@ function createScheduleForm() {
                         <tbody>
                             <tr>
                                 <td>С</td>
-                                <td><input type="time" name="monday_from" class="form-control"></td>
-                                <td><input type="time" name="tuesday_from" class="form-control"></td>
-                                <td><input type="time" name="wednesday_from" class="form-control"></td>
-                                <td><input type="time" name="thursday_from" class="form-control"></td>
-                                <td><input type="time" name="friday_from" class="form-control"></td>
-                                <td><input type="time" name="saturday_from" class="form-control"></td>
-                                <td><input type="time" name="sunday_from" class="form-control"></td>
+                                <td><input type="time" name="mondayFrom" class="form-control"></td>
+                                <td><input type="time" name="tuesdayFrom" class="form-control"></td>
+                                <td><input type="time" name="wednesdayFrom" class="form-control"></td>
+                                <td><input type="time" name="thursdayFrom" class="form-control"></td>
+                                <td><input type="time" name="fridayFrom" class="form-control"></td>
+                                <td><input type="time" name="saturdayFrom" class="form-control"></td>
+                                <td><input type="time" name="sundayFrom" class="form-control"></td>
                             </tr>
                             <tr>
                                 <td>По</td>
-                                <td><input type="time" name="monday_to" class="form-control"></td>
-                                <td><input type="time" name="tuesday_to" class="form-control"></td>
-                                <td><input type="time" name="wednesday_to" class="form-control"></td>
-                                <td><input type="time" name="thursday_to" class="form-control"></td>
-                                <td><input type="time" name="friday_to" class="form-control"></td>
-                                <td><input type="time" name="saturday_to" class="form-control"></td>
-                                <td><input type="time" name="sunday_to" class="form-control"></td>
+                                <td><input type="time" name="mondayTo" class="form-control"></td>
+                                <td><input type="time" name="tuesdayTo" class="form-control"></td>
+                                <td><input type="time" name="wednesdayTo" class="form-control"></td>
+                                <td><input type="time" name="thursdayTo" class="form-control"></td>
+                                <td><input type="time" name="fridayTo" class="form-control"></td>
+                                <td><input type="time" name="saturdayTo" class="form-control"></td>
+                                <td><input type="time" name="sundayTo" class="form-control"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -141,7 +141,7 @@ function createChosenRegUserTr(regUser) {
     chosenRegUserTr.innerHTML = `
         <td style="text-align: center">
             <div class="form-check">
-                <input class="form-check-input chosenRegUser" type="checkbox" name="chosenRegUser" id="chosenRegUser${regUser.user.id}" value="${regUser.user.id}">
+                <input class="form-check-input chosenRegUser" type="checkbox" name="chosenRegUser" id="${regUser.user.id}" value="${regUser.user.id}">
             </div>
         </td>
         <td>${regUser.user.fullName}</td>
