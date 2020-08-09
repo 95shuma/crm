@@ -57,6 +57,10 @@ public class NewScheduleControllerTest extends RepoMethods {
     @Autowired
     private PositionService positionService;
     @Autowired
+    private WorkScheduleService workScheduleService;
+    @Autowired
+    private DayScheduleService dayScheduleService;
+    @Autowired
     UserRepo userRepo;
     @Autowired
     PlaceRepo placeRepo;
@@ -68,6 +72,10 @@ public class NewScheduleControllerTest extends RepoMethods {
     HospitalRepo hospitalRepo;
     @Autowired
     PositionRepo positionRepo;
+    @Autowired
+    WorkScheduleRepo workScheduleRepo;
+    @Autowired
+    DayScheduleRepo dayScheduleRepo;
     @Autowired
     ObjectMapper objectMapper;
 
@@ -88,6 +96,8 @@ public class NewScheduleControllerTest extends RepoMethods {
 
     @After      //После каждого теста чистим репозитории
     public void tearDown() {
+        dayScheduleRepo.deleteAll();
+        workScheduleRepo.deleteAll();
         registrationJournalRepo.deleteAll();
         userRepo.deleteAll();
         hospitalRepo.deleteAll();
@@ -119,7 +129,11 @@ public class NewScheduleControllerTest extends RepoMethods {
                         new BasicNameValuePair("chosenRegUser", registrationJournalRepo.findByHospitalIdAndPositionId(registrationJournalUser.getHospital().getId(), roleRepo.findAll().get(0).getId()).get(0).getId().toString()),
                         new BasicNameValuePair("chosenRegUser", registrationJournalRepo.findByHospitalIdAndPositionId(registrationJournalUser.getHospital().getId(), roleRepo.findAll().get(0).getId()).get(1).getId().toString()),
                         new BasicNameValuePair("mondayFrom", LocalTime.of(9, 0).toString()),
-                        new BasicNameValuePair("mondayTo", LocalTime.of(18, 0).toString())
+                        new BasicNameValuePair("mondayTo", LocalTime.of(18, 0).toString()),
+                        new BasicNameValuePair("tuesdayFrom", LocalTime.of(8, 30).toString()),
+                        new BasicNameValuePair("tuesdayTo", LocalTime.of(17, 30).toString()),
+                        new BasicNameValuePair("fridayFrom", LocalTime.of(10, 0).toString()),
+                        new BasicNameValuePair("fridayTo", LocalTime.of(18, 30).toString())
                 ))))
         )
                 .andExpect(status().is(302))
