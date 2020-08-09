@@ -12,6 +12,13 @@
                 </#list>
             </#if>
         </select>
+        <#if errors??>
+            <#list errors as fieldError>
+                <#if fieldError.field == 'chosen_reg_user'>
+                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
+                </#if>
+            </#list>
+        </#if>
     </div>
 
     <div id="newSchedule"></div>
