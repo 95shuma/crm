@@ -5,55 +5,55 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import javax.validation.constraints.Size;
 import java.time.LocalTime;
 import java.util.List;
 
 @Getter
 @Setter
-public class WorkScheduleForm {
+public class NewScheduleForm {
+    @NotNull(message = "Отметьте врача/врачей, к которым необходимо создать график")
     private List<String> chosenRegUser;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime monday_from;
+    private LocalTime mondayFrom;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime monday_to;
+    private LocalTime mondayTo;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime tuesday_from;
+    private LocalTime tuesdayFrom;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime tuesday_to;
+    private LocalTime tuesdayTo;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime wednesday_from;
+    private LocalTime wednesdayFrom;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime wednesday_to;
+    private LocalTime wednesdayTo;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime thursday_from;
+    private LocalTime thursdayFrom;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime thursday_to;
+    private LocalTime thursdayTo;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime friday_from;
+    private LocalTime fridayFrom;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime friday_to;
+    private LocalTime fridayTo;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime saturday_from;
+    private LocalTime saturdayFrom;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime saturday_to;
+    private LocalTime saturdayTo;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime sunday_from;
+    private LocalTime sundayFrom;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime sunday_to;
+    private LocalTime sundayTo;
 }
