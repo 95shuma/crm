@@ -24,10 +24,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.validation.FieldError;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -113,17 +115,42 @@ public class NewScheduleControllerTest extends RepoMethods {
                 .with(csrf())
                 .with(user(registrationJournalUser.getUser().getInn().toString()).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
                         new BasicNameValuePair("chosenRegUser", registrationJournalRepo.findByHospitalIdAndPositionId(registrationJournalUser.getHospital().getId(), roleRepo.findAll().get(0).getId()).get(0).getId().toString()),
                         new BasicNameValuePair("chosenRegUser", registrationJournalRepo.findByHospitalIdAndPositionId(registrationJournalUser.getHospital().getId(), roleRepo.findAll().get(0).getId()).get(1).getId().toString()),
-                        new BasicNameValuePair("monday_from", LocalTime.of(9, 0).toString()),
-                        new BasicNameValuePair("monday_to", LocalTime.of(18, 0).toString())
+                        new BasicNameValuePair("mondayFrom", LocalTime.of(9, 0).toString()),
+                        new BasicNameValuePair("mondayTo", LocalTime.of(18, 0).toString())
                 ))))
         )
                 .andExpect(status().is(302))
                 .andExpect(view().name("redirect:"))
                 .andReturn();
 
+    }
+
+    @Test
+    public void createSchedule_checkWrongMethodValidationErrorWithRedirectWithoutChosenRegUser_shouldReturnValidationErrorsForChosenRegUserAndRedirectToView() throws Exception {
+        saveRepos();
+        RegistrationJournal registrationJournalUser = registrationJournalRepo.findFirstByUserInnAndRoleId(Long.parseLong(innSeniorDoctor), roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId());
+        Position positionTest = positionRepo.findAll().get(0);
+
+        MvcResult mvcResult = mockMvc.perform(post("/senior-doctor/schedules/new-schedule")
+                .with(csrf())
+                .with(user(registrationJournalUser.getUser().getInn().toString()).password(passwordSeniorDoctor).roles(Constants.SENIOR_DOCTOR))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
+                        new BasicNameValuePair("mondayFrom", LocalTime.of(9, 0).toString()),
+                        new BasicNameValuePair("mondayTo", LocalTime.of(18, 0).toString())
+                ))))
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/senior-doctor/schedules/new-schedule"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+        Assert.assertEquals("newScheduleForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("chosenRegUser", fieldErrors.get(0).getField());
+        Assert.assertNull(fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Отметьте врача/врачей, к которым необходимо создать график", fieldErrors.get(0).getDefaultMessage());
     }
 
 }
