@@ -58,4 +58,15 @@ public class PositionService {
         return positionRepo.getById(id).orElse(null);
     }
 
+    public Position updatePosition(Position position){
+        Position existingPosition=positionRepo.findById(position.getId()).orElse(null);
+        existingPosition.setName(position.getName());
+        return positionRepo.save(existingPosition);
+    }
+
+    public Optional<Position> deletePosition(Long id) {
+        Optional<Position> position = positionRepo.findById(id);
+        positionRepo.deleteById(id);
+        return position;
+    }
 }
