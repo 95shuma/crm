@@ -1,20 +1,15 @@
 package com.project.crm.backend.services;
 
-import com.project.crm.backend.model.User;
-import com.project.crm.backend.model.catalog.RegistrationJournal;
-import com.project.crm.backend.repository.RecordJournalRepo;
+import com.project.crm.backend.model.WorkSchedule;
+import com.project.crm.backend.model.catalog.newScheduleModels.WeekDay;
+import com.project.crm.backend.model.catalog.newScheduleModels.NewSchedule;
 import com.project.crm.backend.repository.RegistrationJournalRepo;
-import com.project.crm.backend.repository.UserRepo;
 import com.project.crm.backend.repository.WorkScheduleRepo;
-import com.project.crm.frontend.forms.WorkScheduleForm;
+import com.project.crm.frontend.forms.NewScheduleForm;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +19,72 @@ public class WorkScheduleService {
 
     private final WorkScheduleRepo workScheduleRepo;
     private final RegistrationJournalRepo registrationJournalRepo;
-    private final RecordJournalRepo recordJournalRepo;
-    private final UserRepo userRepo;
 
+    public void createWorkSchedule (NewSchedule newSchedule){
+        newSchedule.getChosenRegUserList().stream().forEach(regUser -> {
+            newSchedule.getWeekDayList().forEach(weekDay -> {
+                workScheduleRepo.save(WorkSchedule.builder()
+                        .registrationJournal(registrationJournalRepo.findById(Long.parseLong(regUser)).get())
+                        .dayOfWeek(weekDay.getDayOfWeek())
+                        .timeStart(weekDay.getFrom())
+                        .timeEnd(weekDay.getTo())
+                        .build()
+                );
+            });
+        });
+    }
 
+    public NewSchedule fillNewSchedule(NewScheduleForm newScheduleForm){
+        List<WeekDay> weekDayList = new ArrayList<>();
+        if (newScheduleForm.getMondayFrom() != null)
+            weekDayList.add(WeekDay.builder()
+                    .dayOfWeek(DayOfWeek.MONDAY)
+                    .from(newScheduleForm.getMondayFrom())
+                    .to(newScheduleForm.getMondayTo())
+                    .build());
+        if (newScheduleForm.getTuesdayFrom() != null)
+            weekDayList.add(WeekDay.builder()
+                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .from(newScheduleForm.getTuesdayFrom())
+                    .to(newScheduleForm.getTuesdayTo())
+                    .build());
+        if (newScheduleForm.getWednesdayFrom() != null)
+            weekDayList.add(WeekDay.builder()
+                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .from(newScheduleForm.getWednesdayFrom())
+                    .to(newScheduleForm.getWednesdayTo())
+                    .build());
+        if (newScheduleForm.getThursdayFrom() != null)
+            weekDayList.add(WeekDay.builder()
+                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .from(newScheduleForm.getThursdayFrom())
+                    .to(newScheduleForm.getThursdayTo())
+                    .build());
+        if (newScheduleForm.getFridayFrom() != null)
+            weekDayList.add(WeekDay.builder()
+                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .from(newScheduleForm.getFridayFrom())
+                    .to(newScheduleForm.getFridayTo())
+                    .build());
+        if (newScheduleForm.getSaturdayFrom() != null)
+            weekDayList.add(WeekDay.builder()
+                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .from(newScheduleForm.getSaturdayFrom())
+                    .to(newScheduleForm.getSaturdayTo())
+                    .build());
+        if (newScheduleForm.getSundayFrom() != null)
+            weekDayList.add(WeekDay.builder()
+                    .dayOfWeek(DayOfWeek.TUESDAY)
+                    .from(newScheduleForm.getSundayFrom())
+                    .to(newScheduleForm.getSundayTo())
+                    .build());
+        return NewSchedule.builder()
+                .chosenRegUserList(newScheduleForm.getChosenRegUser())
+                .weekDayList(weekDayList)
+                .build();
+    }
     /*
-    public void createWorkSchedule (WorkScheduleForm workScheduleForm){
+    public void createWorkSchedule (NewSchedule workScheduleForm){
         WorkSchedule workSchedule = WorkSchedule.builder()
                 .date(workScheduleForm.getDate())
                 .registrationJournal(registrationJournalRepo.findById(workScheduleForm.getRegJournalId()).orElseGet(RegistrationJournal::new))

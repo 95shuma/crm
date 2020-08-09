@@ -1,9 +1,9 @@
 package com.project.crm.frontend.controller.seniorDoctor;
 
+import com.project.crm.backend.model.catalog.newScheduleModels.NewSchedule;
 import com.project.crm.backend.services.*;
-import com.project.crm.frontend.forms.WorkScheduleForm;
+import com.project.crm.frontend.forms.NewScheduleForm;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-
-import static com.project.crm.backend.services.PropertiesService.constructPageable;
 
 @Controller("pkg seniorDoctor NewScheduleController")
 @RequestMapping("/senior-doctor/schedules")
@@ -38,12 +35,15 @@ public class NewScheduleController {
     }
 
     @PostMapping("new-schedule")
-    public String createSchedule(@Valid WorkScheduleForm workScheduleForm, BindingResult validationResult,RedirectAttributes attributes){
+    public String createSchedule(@Valid NewScheduleForm newScheduleForm, BindingResult validationResult, RedirectAttributes attributes){
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
             return "redirect:/senior-doctor/schedules/new-schedule";
         }
-        workScheduleForm.getChosenRegUser().stream().forEach(System.out::println);
+        //Нужно потом добавить валидацию, если время не полностью заполнено. Например только from без To и еще разобраться как его поместить в JS
+        NewSchedule newSchedule =  workScheduleService.fillNewSchedule(newScheduleForm);
+        workScheduleService.createWorkSchedule(newSchedule);
+
         return "redirect:";
     }
 }
