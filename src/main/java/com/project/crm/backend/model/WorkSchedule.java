@@ -15,8 +15,8 @@ import java.util.Calendar;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Table(name = "week_schedule")
-public class WeekSchedule {
+@Table(name = "work_schedule")
+public class WorkSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
