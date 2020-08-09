@@ -22,8 +22,8 @@ public class NewScheduleController {
 
     private final UserService userService;
     private final WorkScheduleService workScheduleService;
-    private final RegistrationJournalService registrationJournalService;
-    private final PropertiesService propertiesService;
+
+    private final DayScheduleService dayScheduleService;
     private final PositionService positionService;
 
     @GetMapping("new-schedule")
@@ -43,7 +43,10 @@ public class NewScheduleController {
         //Нужно потом добавить валидацию, если время не полностью заполнено. Например только from без To и еще разобраться как его поместить в JS
         NewSchedule newSchedule =  workScheduleService.fillNewSchedule(newScheduleForm);
         workScheduleService.createWorkSchedule(newSchedule);
-
+        //Надо заполнить DaySchedule на текущую неделю и неделю вперед. AutoFillDaySchedule заполнит уже на 2-ую неделю автоматически в понедельник
+        newSchedule.getChosenRegUserList().stream().forEach(regUserStringId -> {
+            dayScheduleService.fillThisAndNextWeek(workScheduleService.getWorkScheduleListByRegUserId(Long.parseLong(regUserStringId)));
+        });
         return "redirect:";
     }
 }
