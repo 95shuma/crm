@@ -8,9 +8,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -50,4 +53,9 @@ public class PositionService {
         Position position = positionRepo.findByName(name).get();
         return PositionDTO.from(position);
     }
+
+    public Position getPositionById(Long id){
+        return positionRepo.getById(id).orElse(null);
+    }
+
 }

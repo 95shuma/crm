@@ -25,7 +25,7 @@ public class Steps {
         chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         chromeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
         webDriver = new ChromeDriver(chromeOptions);
-       // webDriver.get("http://seleniumhq.org");
+        // webDriver.get("http://seleniumhq.org");
     }
 
     public void tearDown(){
@@ -33,16 +33,16 @@ public class Steps {
     }
 
     public void login(String name, String pass) throws IOException {
-     try{   webDriver.get("http://localhost:7777/");
-        System.out.println("открылась главная страница" +webDriver.getTitle());
-        webDriver.findElement(By.name("username")).sendKeys(name);
-        webDriver.findElement(By.name("password")).sendKeys(pass);
-        webDriver.findElement(By.name("login")).click();
-    }catch(Exception e){
-        File screenshotFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshotFile, new File("С:\\SoftwareTestingMaterial.png"));//скрин ошибки при логине
-         System.out.println("скрин ошибки сохранена в папке Д");
-    }
+        try{   webDriver.get("http://localhost:7777/");
+            System.out.println("открылась главная страница" +webDriver.getTitle());
+            webDriver.findElement(By.name("username")).sendKeys(name);
+            webDriver.findElement(By.name("password")).sendKeys(pass);
+            webDriver.findElement(By.name("login")).click();
+        }catch(Exception e){
+            File screenshotFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshotFile, new File("С:\\SoftwareTestingMaterial.png"));//скрин ошибки при логине
+            System.out.println("скрин ошибки сохранена в папке Д");
+        }
     }
 
 
