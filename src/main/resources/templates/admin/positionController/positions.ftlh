@@ -7,6 +7,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Направление</th>
+                <th scope="col">Действие
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -14,6 +16,7 @@
                 <tr>
                     <th scope="row">${position?counter}</th>
                     <td>${position.name}</td>
+                    <td><a href="/positions/update/${position.id?c}">Редактировать</td>
                 </tr>
             </#list>
         </tbody>
