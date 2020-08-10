@@ -25,9 +25,9 @@ public class DayScheduleService {
     private final DayScheduleRepo dayScheduleRepo;
 
     public void fillThisAndNextWeek(List<WorkSchedule> workScheduleList){
-        int dayOfWeek = Calendar.DAY_OF_WEEK;           // 1 - 7
+        DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();           // 1 - 7
         //Заполняем текущую неделю
-        for (int i = dayOfWeek; i <= 7; i++){
+        for (int i = dayOfWeek.getValue(); i <= 7; i++){
             int finalI = i;
             workScheduleList.stream().forEach(workSchedule -> {
                 if (DayOfWeek.values()[finalI-1].getValue() == workSchedule.getDayOfWeek()){
@@ -48,7 +48,7 @@ public class DayScheduleService {
         }
         //Заполняем следующую неделю.
         LocalDate nextSunday = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
-        for (int i = dayOfWeek; i <= 7; i++){
+        for (int i = dayOfWeek.getValue(); i <= 7; i++){
             int finalI = i;
             workScheduleList.stream().forEach(workSchedule -> {
                 if (DayOfWeek.values()[finalI - 1].equals(workSchedule.getDayOfWeek())) {
