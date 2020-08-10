@@ -155,6 +155,7 @@ public class AdminControllerTest extends RepoMethods {
                         new BasicNameValuePair("birthDate", "1995-10-28"),
                         new BasicNameValuePair("gender", correctGender),
                         new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
                         new BasicNameValuePair("roleId", "1"),
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
@@ -188,6 +189,7 @@ public class AdminControllerTest extends RepoMethods {
                         new BasicNameValuePair("birthDate", "1995-10-28"),
                         new BasicNameValuePair("gender", correctGender),
                         new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
                         new BasicNameValuePair("roleId", "1"),
                         new BasicNameValuePair("hospitalId", "1"))))
                 )
