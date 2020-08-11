@@ -76,7 +76,7 @@ public class PositionController {
     public String getPositionUpdated(@PathVariable Long id, Model model, Principal principal){
 
         userService.checkUserPresence(model, principal);
-        model.addAttribute("task", positionService.getPositionById(id));
+        model.addAttribute("position", positionService.getPositionById(id));
         return "/admin/positionController/updatePosition";
     }
 
