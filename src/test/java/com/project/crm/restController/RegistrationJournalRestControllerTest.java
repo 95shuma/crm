@@ -1,4 +1,4 @@
-package com.project.crm.frontend.controller.seniourDoctor;
+package com.project.crm.restController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
