@@ -55,11 +55,11 @@ public class PositionService {
     }
 
     public Position getPositionById(Long id){
-        return positionRepo.getById(id).orElse(null);
+        return positionRepo.findById(id).get();
     }
 
-    public Position updatePosition(Position position){
-        Position existingPosition=positionRepo.findById(position.getId()).orElse(null);
+    public Position updatePosition(Long id, PositionRegisterForm position){
+        Position existingPosition=positionRepo.findById(id).get();
         existingPosition.setName(position.getName());
         return positionRepo.save(existingPosition);
     }
@@ -69,4 +69,5 @@ public class PositionService {
         positionRepo.deleteById(id);
         return position;
     }
+
 }
