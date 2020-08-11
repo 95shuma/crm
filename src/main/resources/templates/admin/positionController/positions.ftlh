@@ -15,8 +15,8 @@
             <#list items as position>
                 <tr>
                     <th scope="row">${position?counter}</th>
-                    <td>${position.name}</td>
-                    <td><a href="/positions/update/${position.id?c}">Редактировать</td>
+                    <td><a href="/admin/positions/position/${position.id?c}">${position.name}</td>
+                    <td><a href="/admin/positions/position/${position.id?c}/update">Редактировать</a> </td>
                 </tr>
             </#list>
         </tbody>
