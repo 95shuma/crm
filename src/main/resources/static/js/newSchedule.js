@@ -141,7 +141,7 @@ function createChosenRegUserTr(regUser) {
     chosenRegUserTr.innerHTML = `
         <td style="text-align: center">
             <div class="form-check">
-                <input class="form-check-input chosenRegUser" type="checkbox" name="chosenRegUser" id="${regUser.user.id}" value="${regUser.user.id}">
+                <input class="form-check-input chosenRegUser" type="checkbox" name="chosenRegUser" id="${regUser.id}" value="${regUser.id}">
             </div>
         </td>
         <td>${regUser.user.fullName}</td>
