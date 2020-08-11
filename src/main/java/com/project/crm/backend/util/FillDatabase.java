@@ -1,5 +1,6 @@
 package com.project.crm.backend.util;
 
+import com.project.crm.backend.model.DaySchedule;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
 import org.springframework.boot.CommandLineRunner;
@@ -28,16 +29,19 @@ public class FillDatabase extends RepoMethods {
     @Bean
     @Profile(Constants.PROFILE_ENVIRONMENT_DEVELOPMENT)
     CommandLineRunner fillFullDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
-                                   HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo,
-                                   RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
-                                   RemedyRepo remedyRepo, ExaminationRepo examinationRepo, DosageRepo dosageRepo, InternationalNameRepo internationalNameRepo,
-                                   MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo,
-                                   MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
-                                   ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
-                                   ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo){
+                                       HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo,
+                                       RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
+                                       RemedyRepo remedyRepo, ExaminationRepo examinationRepo, DosageRepo dosageRepo, InternationalNameRepo internationalNameRepo,
+                                       MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo,
+                                       MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
+                                       ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
+                                       ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo,
+                                       WorkScheduleRepo workScheduleRepo, DayScheduleRepo dayScheduleRepo){
         return (args) -> {
             examinationRepo.deleteAll();
             diseaseRepo.deleteAll();
+            dayScheduleRepo.deleteAll();
+            workScheduleRepo.deleteAll();
             registrationJournalRepo.deleteAll();
             roleRepo.deleteAll();
             diagnoseResultRepo.deleteAll();
