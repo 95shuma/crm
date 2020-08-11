@@ -20,9 +20,11 @@
             </#list>
         </#if>
     </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary w-100">Добавить</button>
+    </div>
 </form>
     </div>
     </div>
     </section>
-    <p><button type="submit" class="btn btn-primary w-100">Добавить</button></p>
 </@main.renderWith>
