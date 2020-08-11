@@ -137,7 +137,7 @@ public class NewScheduleControllerTest extends RepoMethods {
                 ))))
         )
                 .andExpect(status().is(302))
-                .andExpect(view().name("redirect:"))
+                .andExpect(view().name("redirect:/default"))
                 .andReturn();
 
     }

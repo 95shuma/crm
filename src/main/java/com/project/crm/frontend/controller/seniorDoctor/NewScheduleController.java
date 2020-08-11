@@ -41,6 +41,6 @@ public class NewScheduleController {
         //Нужно потом добавить валидацию, если время не полностью заполнено. Например только from без To и еще разобраться как его поместить в JS
         NewSchedule newSchedule =  workScheduleService.fillNewSchedule(newScheduleForm);
         workScheduleService.createWorkSchedule(newSchedule);
-        return "redirect:";
+        return "redirect:/default";
     }
 }
