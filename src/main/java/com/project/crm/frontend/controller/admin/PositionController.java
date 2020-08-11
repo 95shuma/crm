@@ -20,7 +20,6 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
 
-//@RestController
 @Controller
 @RequestMapping("/admin/positions")
 @AllArgsConstructor
@@ -65,24 +64,33 @@ public class PositionController {
         return "redirect:/admin/positions";
     }
 
-    @GetMapping("{/positions/update/{position_id}")
-    public String getPositionUpdated(Model model, Principal principal, @PathVariable("position_id") Long position_id){
+   @GetMapping("/position/{id}")
+   public String getOnePosition(@PathVariable String id, Model model, Principal principal){
+
+       userService.checkUserPresence(model, principal);
+       model.addAttribute("position", positionService.getPositionById(Long.parseLong(id)));
+       return "/admin/positionController/aboutPosition";
+   }
+
+    @GetMapping("/position/{id}/update")
+    public String getPositionUpdated(@PathVariable Long id, Model model, Principal principal){
+
         userService.checkUserPresence(model, principal);
-        model.addAttribute("position_id", positionService.getPositionById(position_id));
+        model.addAttribute("task", positionService.getPositionById(id));
         return "/admin/positionController/updatePosition";
     }
 
-    @PostMapping("/positions/update")
-    public String createPosition2(@Valid Position positionRegisterForm,Long position_id, BindingResult validationResult,
-                                 RedirectAttributes attributes){
+    @PostMapping("/position/{id}/update")
+    public String updatePosition(@PathVariable Long id, @Valid PositionRegisterForm positionRegisterForm,
+                           BindingResult validationResult,
+                           RedirectAttributes attributes){
 
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/admin/positions/update"+positionService.getPositionById(position_id);
+            return "redirect:admin/positions/position/{id}/update";
         }
 
-        positionService.updatePosition(positionRegisterForm);
+        positionService.updatePosition(id, positionRegisterForm);
         return "redirect:/admin/positions";
     }
-
 }
