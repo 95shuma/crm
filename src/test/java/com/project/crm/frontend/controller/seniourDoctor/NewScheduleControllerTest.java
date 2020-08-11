@@ -59,8 +59,6 @@ public class NewScheduleControllerTest extends RepoMethods {
     @Autowired
     private WorkScheduleService workScheduleService;
     @Autowired
-    private DayScheduleService dayScheduleService;
-    @Autowired
     UserRepo userRepo;
     @Autowired
     PlaceRepo placeRepo;
@@ -74,8 +72,6 @@ public class NewScheduleControllerTest extends RepoMethods {
     PositionRepo positionRepo;
     @Autowired
     WorkScheduleRepo workScheduleRepo;
-    @Autowired
-    DayScheduleRepo dayScheduleRepo;
     @Autowired
     ObjectMapper objectMapper;
 
@@ -96,7 +92,6 @@ public class NewScheduleControllerTest extends RepoMethods {
 
     @After      //После каждого теста чистим репозитории
     public void tearDown() {
-        dayScheduleRepo.deleteAll();
         workScheduleRepo.deleteAll();
         registrationJournalRepo.deleteAll();
         userRepo.deleteAll();
