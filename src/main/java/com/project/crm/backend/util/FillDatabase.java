@@ -1,6 +1,5 @@
 package com.project.crm.backend.util;
 
-import com.project.crm.backend.model.DaySchedule;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
 import org.springframework.boot.CommandLineRunner;
@@ -36,11 +35,10 @@ public class FillDatabase extends RepoMethods {
                                        MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
                                        ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
                                        ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo,
-                                       WorkScheduleRepo workScheduleRepo, DayScheduleRepo dayScheduleRepo){
+                                       WorkScheduleRepo workScheduleRepo){
         return (args) -> {
             examinationRepo.deleteAll();
             diseaseRepo.deleteAll();
-            dayScheduleRepo.deleteAll();
             workScheduleRepo.deleteAll();
             registrationJournalRepo.deleteAll();
             roleRepo.deleteAll();
