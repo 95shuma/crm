@@ -39,6 +39,10 @@ public class UserService {
             return UserDTO.from(user);
     }
 
+    public User getUserByInn(Long inn){
+        return userRepo.findByInn(inn).get();
+    }
+
     public boolean existByInn(Long inn){
         return userRepo.existsByInn(inn);
     }
