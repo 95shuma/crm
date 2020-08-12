@@ -1,6 +1,8 @@
 package com.project.crm.backend.services;
 
 import com.project.crm.backend.dto.RecordJournalDTO;
+import com.project.crm.backend.dto.UserDTO;
+import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.MedicalHistory;
 import com.project.crm.backend.model.catalog.RecordJournal;
 import com.project.crm.backend.repository.HospitalRepo;
@@ -58,6 +60,13 @@ public class RecordJournalService {
 
     public Page<RecordJournal> getByPatient(Long inn, Pageable pageable){
         return recordJournalRepo.findByPatientInn(inn, pageable);
+    }
+    public Page<RecordJournal> getByPatientId(Long id, Pageable pageable){
+        return recordJournalRepo.findByPatientId(id, pageable);
+    }
+
+    public Page<UserDTO> getAcceptedPatients(User user, Pageable pageable){
+        return recordJournalRepo.findAllAcceptedPatients(user, pageable).map(UserDTO::from);
     }
 
     public RecordJournalDTO createRecordJournal(RecordJournalRegisterForm recordJournalRegisterForm, Principal principal){
