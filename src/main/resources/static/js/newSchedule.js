@@ -177,7 +177,7 @@ function getDoctorsByPosition(fetch) {
             let newScheduleError = document.createElement('div');
             newScheduleError.className = 'alert alert-warning mt-1';
             newScheduleError.role = 'alert';
-            newScheduleError.innerHTML = 'По выбранной должности врачи не найдены';
+            newScheduleError.innerHTML = 'По выбранной специальности врачи не найдены';
             addElement(newSchedule, newScheduleError);
         } else {
             addElement(newSchedule , createScheduleForm());
