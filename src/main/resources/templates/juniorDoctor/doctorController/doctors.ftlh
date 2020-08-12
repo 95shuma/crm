@@ -15,17 +15,14 @@
         <#list items as doctor>
             <tr>
                 <th scope="row">${doctor?counter}</th>
-                <td>${doctor.inn}</td>
-                <td>${doctor.documentNumber}</td>
-                <td>${doctor.fullName}</td>
+                <td><a href="/junior-doctor/doctors/doctor/${doctor.id?c}">${doctor.fullName}</td>
                 <td>${doctor.birthDate?date}</td>
-                <td>${doctor.gender}</td>
             </tr>
         </#list>
         </tbody>
     </table>
     <#include "../../partials/pagination.ftlh">
-    <a type="button" class="btn btn-primary w-100" href="/junior-doctor/doctors/doctor">Добавить доктора</a>
+
     <div>
         <#if errors??>
             <p>Входные данные с ошибками!</p>

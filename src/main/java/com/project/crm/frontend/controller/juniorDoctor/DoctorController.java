@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -29,24 +30,7 @@ public class DoctorController {
     private final PositionService positionService;
     private final PlaceService placeService;
 
-    @GetMapping("/doctor")
-    public String getDoctor(Model model, Principal principal) {
 
-        userService.checkUserPresence(model, principal);
-
-        if (!model.containsAttribute("reg")) {
-            model.addAttribute("reg", new UserRegisterForm());
-        }
-        model.addAttribute("places", placeService.getAll());
-        model.addAttribute("hospitals", hospitalService.getAll());
-        model.addAttribute("roles", roleService.getAll());
-        model.addAttribute("positions", positionService.getAll());
-        //Constants
-        model.addAttribute(Constants.ROLE_SENIOR_DOCTOR, Constants.ROLE_SENIOR_DOCTOR);
-        model.addAttribute(Constants.ROLE_DOCTOR, Constants.ROLE_DOCTOR);
-        model.addAttribute(Constants.ROLE_JUNIOR_DOCTOR, Constants.ROLE_JUNIOR_DOCTOR);
-        return "seniorDoctor/doctorController/doctorRegister";
-    }
     @GetMapping
     public String getDoctors(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal) {
         userService.checkUserPresence(model, principal);
@@ -55,5 +39,10 @@ public class DoctorController {
         return "juniorDoctor/doctorController/doctors";
     }
 
-
+    @GetMapping("/doctor/{id}")
+    public String getOneDoctor(@PathVariable Long id, Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("doctor", userService.getUserById(id));
+        return "/juniorDoctor/doctorController/aboutDoctor";
+    }
 }
