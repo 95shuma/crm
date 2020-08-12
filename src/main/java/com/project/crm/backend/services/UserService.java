@@ -2,6 +2,7 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.dto.UserDTO;
 import com.project.crm.backend.model.User;
+import com.project.crm.backend.model.catalog.Position;
 import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.*;
 import com.project.crm.frontend.forms.NewPasswordRegisterForm;
@@ -51,6 +52,10 @@ public class UserService {
 
     public Page<UserDTO> getAllPatients(Pageable pageable){
         return userRepo.findAllPatients(pageable).map(UserDTO::from);
+    }
+
+    public UserDTO getUserById(Long id){
+        return UserDTO.from(userRepo.findById(id).get());
     }
 
     public Page<UserDTO> getAllDoctors(Pageable pageable){

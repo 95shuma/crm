@@ -21,6 +21,7 @@
                 <td>${patient.inn}</td>
                 <td>${patient.documentNumber}</td>
                 <td>${patient.fullName}</td>
+                <td><a href="/junior-doctor/patients/patient/${patient.id?c}">${patient.fullName}</td>
                 <td>${patient.birthDate?date}</td>
                 <td>${patient.gender}</td>
             </tr>

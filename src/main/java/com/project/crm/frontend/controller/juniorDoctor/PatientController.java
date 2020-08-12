@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,5 +58,12 @@ public class PatientController {
         }
         userService.createUserFormPatientForm(patientRegisterForm);
         return "redirect:/junior-doctor";
+    }
+
+    @GetMapping("/patient/{id}")
+    public String getOnePatient(@PathVariable Long id, Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("patient", userService.getUserById(id));
+        return "/juniorDoctor/patientController/aboutPatient";
     }
 }
