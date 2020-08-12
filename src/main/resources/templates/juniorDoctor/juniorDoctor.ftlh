@@ -3,6 +3,8 @@
 <@main.renderWith>
     <div class="mx-auto mt-3 w-50">
         <h3 class="text-center">Панель медперсонала</h3>
+        <a href="/junior-doctor/patients/patient" class="btn btn-primary btn-block">Зарегистрировать пациента</a>
+        <a href="/junior-doctor/patients" class="btn btn-primary btn-block">Список пациентов</a>
     </div>
     <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
