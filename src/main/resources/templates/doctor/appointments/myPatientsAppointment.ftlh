@@ -14,7 +14,7 @@
         <tbody>
         <#list items as patient>
             <tr>
-                <td><a href="/doctor/records/patients/${patient.id}">${patient.fullName}</a></td>
+                <td><a href="/doctor/records/patients/${patient.id?c}">${patient.fullName}</a></td>
                 <td>${patient.inn}</td>
                 <td>${patient.birthDate?date}</td>
             </tr>
