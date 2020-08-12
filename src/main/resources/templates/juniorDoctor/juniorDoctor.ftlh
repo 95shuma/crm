@@ -5,6 +5,6 @@
         <h3 class="text-center">Панель медперсонала</h3>
         <a href="/junior-doctor/patients/patient" class="btn btn-primary btn-block">Зарегистрировать пациента</a>
         <a href="/junior-doctor/patients" class="btn btn-primary btn-block">Список пациентов</a>
+        <a href="/junior-doctor/doctors" class="btn btn-primary btn-block">Список докторов</a>
     </div>
-    <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>
