@@ -10,20 +10,22 @@ import io.cucumber.java.ru.Тогда;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
+
 public class AdminAddHospitalSteps extends Steps{
 
-    @Before("@group")
-    public void start(){
+    @Before("@place")
+    public void start() throws IOException {
         setUp();
     }
 
-    @After("@group")
+    @After("@place")
     public void finish(){
         tearDown();
     }
 
     @Допустим("администратор авторизуется.")
-    public void администраторАвторизуется() {
+    public void администраторАвторизуется() throws IOException {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
     }
 
@@ -43,10 +45,6 @@ public class AdminAddHospitalSteps extends Steps{
 
     @Тогда("администратор обратно переходит в панель администратора.")
     public void администраторОбратноПереходитВПанельАдминистратора() {
-        Boolean flag=false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin")){
-            flag=true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin");
     }
 }

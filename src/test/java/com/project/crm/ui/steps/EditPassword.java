@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
+
 public class EditPassword extends Steps {
 
     @Before("@editPassword")
@@ -43,7 +45,7 @@ public class EditPassword extends Steps {
     }
 
     @Допустим("админ ЛПУ входит на свою страницу")
-    public void пользовательВводитПравильныеЗначенияПароля() {
+    public void пользовательВводитПравильныеЗначенияПароля() throws IOException {
         login(Constants.SENIOR_DOCTOR_INN,Constants.SENIOR_DOCTOR_PASSWORD);
     }
 

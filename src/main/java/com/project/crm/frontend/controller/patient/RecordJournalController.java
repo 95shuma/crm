@@ -82,7 +82,7 @@ public class RecordJournalController {
         return "patient/recordJournalController/patientAppointmentDoctor";
     }
 
-    @PostMapping("/doctor")
+    /*@PostMapping("/doctor")
     public String recordDoctor(RecordJournalRegisterForm recordJournalRegisterForm, RedirectAttributes attributes){
         attributes.addFlashAttribute("medicalHistoryId", recordJournalRegisterForm.getMedicalHistoryId());
         attributes.addFlashAttribute("hospitalId", recordJournalRegisterForm.getHospitalId());
@@ -90,7 +90,7 @@ public class RecordJournalController {
         attributes.addFlashAttribute("dateTime",workScheduleService.getWorkSchedule(LocalDate.now(),recordJournalRegisterForm.getDoctorId()));
 
         return "redirect:/patient/records/record";
-    }
+    }*/
 
     @PostMapping
     public String record(@Valid RecordJournalRegisterForm recordJournalRegisterForm,

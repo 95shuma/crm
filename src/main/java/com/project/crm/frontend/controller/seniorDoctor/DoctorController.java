@@ -70,18 +70,4 @@ public class DoctorController {
         return "redirect:/senior-doctor";
     }
 
-
-    @PostMapping("/doctorTest")
-    public String createDoctorTest(@Valid @ModelAttribute("user") UserRegisterForm userRegisterForm,
-                                   BindingResult validationResult) {
-
-        if (validationResult.hasFieldErrors()) {
-            return "senior-doctor/doctors/doctor";
-        }
-
-        userService.createUser(userRegisterForm);
-
-        return "redirect:/senior-doctor";
-    }
-
 }

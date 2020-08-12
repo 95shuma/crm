@@ -235,6 +235,30 @@ public class RepoMethods {
     public static void savePatientsRandom(int qty, UserRepo userRepo, HospitalRepo hospitalRepo, RoleRepo roleRepo, PlaceRepo placeRepo, PositionRepo positionRepo, RegistrationJournalRepo registrationJournalRepo){
         saveUserRandom(qty, Constants.ROLE_PATIENT, false, userRepo, roleRepo, hospitalRepo, placeRepo, positionRepo, registrationJournalRepo);
     }
+    public static void saveUserRandomByHospitalIdAndRole(Long hospitalId, Role role, UserRepo userRepo, PlaceRepo placeRepo, PositionRepo positionRepo, HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo){
+        String inn = getUniqueINN(userRepo);
+        User user = User.builder()
+                .inn(Long.parseLong(inn))
+                .password(passwordEncoder.encode(inn))
+                .documentNumber("ID".concat(faker.number().digits(7)))
+                .fullName(faker.name().fullName())
+                .surname(faker.name().lastName())
+                .name(faker.name().firstName())
+                .middleName(faker.name().lastName())
+                .birthDate(faker.date().birthday())
+                .gender(getRandomGender())
+                .place(placeRepo.findAll().get(rn.nextInt(placeRepo.findAll().size())))
+                .enabled(true)
+                .build();
+        userRepo.save(user);
+        saveUserInRegistrationJournal(user, role, positionRepo.findAll().get(rn.nextInt(positionRepo.findAll().size())), hospitalRepo.findById(hospitalId).get(), registrationJournalRepo);
+    }
+    public static void saveRandomUsersBasedOnAnotherUserAtTheSameHospital(int qty, RegistrationJournal registrationJournalUser, RoleRepo roleRepo, PositionRepo positionRepo, HospitalRepo hospitalRepo, UserRepo userRepo, PlaceRepo placeRepo, RegistrationJournalRepo registrationJournalRepo){
+        for (int i = 0; i < qty; i++){
+            saveUserRandomByHospitalIdAndRole(registrationJournalUser.getHospital().getId(), roleRepo.findByName(Constants.ROLE_DOCTOR).get(), userRepo, placeRepo, positionRepo, hospitalRepo, registrationJournalRepo);
+        }
+    }
+
     public static void saveDiseases(int qty, DiseaseRepo diseaseRepo){
         List <Disease> diseaseList = new ArrayList<>();
         for (int i = 0; i < qty; i++){

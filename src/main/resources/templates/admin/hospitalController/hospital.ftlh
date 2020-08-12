@@ -10,14 +10,12 @@
                     </#if>
                     <div class="form-group">
                         <p><label for="lpuName" class="col-form-label">Название ЛПУ</label></p>
-                        <input class="form-control" id="lpuName" maxlength="45" type="text" name="name" placeholder="Название ЛПУ" autofocus>
+                        <#assign fieldName = "name">
+                        <#assign input ='<input class="form-control" id="lpuName" maxlength="45" type="text" name="name" placeholder="Название ЛПУ" autofocus>'>
                         <#if errors??>
-                            <#list errors as fieldError>
-                                <#if fieldError.field == 'name'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
-                                </#if>
-                            </#list>
+                            <#assign inputWithValue = '<input class="form-control" id="lpuName" maxlength="45" type="text" name="name" value="${hospitalForm.name}" placeholder="Название ЛПУ" autofocus>'>
                         </#if>
+                        <#include "../../partials/inputErrors.ftlh">
                     </div>
                     <div class="form-group">
                         <p><label for="lpuPlaceId" class="col-form-label">Город / Село / ПГТ</label></p>
@@ -36,25 +34,28 @@
                     </div>
                     <div class="form-group">
                         <p><label for="lpuStreet" class="col-form-label">Название улицы</label></p>
-                        <input class="form-control" id="lpuStreet" maxlength="45" type="text" name="street" placeholder="Название улицы">
+                        <#assign fieldName = "street">
+                        <#assign input ='<input class="form-control" id="lpuStreet" maxlength="45" type="text" name="street" placeholder="Название улицы">'>
                         <#if errors??>
-                            <#list errors as fieldError>
-                                <#if fieldError.field == 'street'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
-                                </#if>
-                            </#list>
+                            <#assign inputWithValue = '<input class="form-control" id="lpuStreet" maxlength="45" type="text" name="street" value="${hospitalForm.street}" placeholder="Название улицы">'>
                         </#if>
+                        <#include "../../partials/inputErrors.ftlh">
                     </div>
                     <div class="form-group">
                         <p><label for="lpuHouseNum" class="col-form-label">Номер дома</label></p>
-                        <input class="form-control" id="lpuHouseNum" maxlength="45" type="text" name="houseNum" placeholder="Номер дома">
+<#--                        <#if errors??>-->
+<#--                            <#list errors as fieldError>-->
+<#--                                <#if fieldError.field == 'houseNum'>-->
+<#--                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>-->
+<#--                                </#if>-->
+<#--                            </#list>-->
+<#--                        </#if>-->
+                        <#assign fieldName = "houseNum">
+                        <#assign input ='<input class="form-control" id="lpuHouseNum" maxlength="45" type="text" name="houseNum" placeholder="Номер дома">'>
                         <#if errors??>
-                            <#list errors as fieldError>
-                                <#if fieldError.field == 'houseNum'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
-                                </#if>
-                            </#list>
+                            <#assign inputWithValue = '<input class="form-control" id="lpuHouseNum" maxlength="45" type="text" name="houseNum" value="${hospitalForm.houseNum}" placeholder="Номер дома">'>
                         </#if>
+                        <#include "../../partials/inputErrors.ftlh">
                     </div>
                     <button class="btn btn-primary w-100" type="submit">Добавить</button>
                 </form>

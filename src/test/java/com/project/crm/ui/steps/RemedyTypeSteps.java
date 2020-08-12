@@ -8,6 +8,7 @@ import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class RemedyTypeSteps extends Steps {
     }
 
     @Допустим("он логинится и открывает список лекарств")
-    public void АвторизуетсяиОткрываетСписокЛекарств() {
+    public void АвторизуетсяиОткрываетСписокЛекарств()  throws IOException {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
         webDriver.findElement(By.name("remedies")).click();
     }
@@ -45,11 +46,7 @@ public class RemedyTypeSteps extends Steps {
 
     @Тогда("появляется список типов")
     public void появляетсяСписокТипов() {
-        Boolean flag=false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin/remedyTypes")){
-            flag=true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin/remedyTypes");
     }
 
     @Когда("вводит значение из букв и цифр и нажимает кнопку добавить")

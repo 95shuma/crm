@@ -13,6 +13,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     Optional<User> findByInn(Long inn);
     Optional<User> findByName(String name);
+    boolean existsByDocumentNumber(String documentNumber);
     boolean existsByInn(Long inn);
     @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.role_id = 3", nativeQuery = true)
     List<User> findAllDoctors();

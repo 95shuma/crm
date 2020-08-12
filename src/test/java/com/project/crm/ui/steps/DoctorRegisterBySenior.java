@@ -7,6 +7,8 @@ import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class DoctorRegisterBySenior extends Steps {
     }
 
     @Допустим("админ ЛПУ авторизуется")
-    public void админЛПУавторизуется() {
+    public void админЛПУавторизуется() throws IOException {
         login(Constants.SENIOR_DOCTOR_INN, Constants.SENIOR_DOCTOR_PASSWORD);
     }
 
@@ -50,20 +52,12 @@ public class DoctorRegisterBySenior extends Steps {
     }
     @Тогда("перейдет в главную страницу админа ЛПУ")
     public void перейдетвГлавнуюСтраницуАдминаЛПУ() {
-        Boolean flag = false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/senior-doctor")) {
-            flag = true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/senior-doctor");
     }
     @И("результат появляется в списке докторов")
     public void результатПоявляетсявСпискеДокторов() {
         webDriver.findElement(By.linkText("Список докторов")).click();
-        Boolean flag = false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/senior-doctor/doctors")) {
-            flag = true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/senior-doctor/doctors");
     }
 
     @Когда("админ ЛПУ не заполняет поле № паспорта")

@@ -7,13 +7,16 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Направление</th>
+                <th scope="col">Действие
+                </th>
             </tr>
         </thead>
         <tbody>
             <#list items as position>
                 <tr>
                     <th scope="row">${position?counter}</th>
-                    <td>${position.name}</td>
+                    <td><a href="/admin/positions/position/${position.id?c}">${position.name}</td>
+                    <td><a href="/admin/positions/position/${position.id?c}/update">Редактировать</a> </td>
                 </tr>
             </#list>
         </tbody>

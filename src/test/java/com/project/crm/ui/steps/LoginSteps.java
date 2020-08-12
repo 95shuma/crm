@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
+import java.io.IOException;
+
 public class LoginSteps extends Steps {
 
 
@@ -25,7 +27,7 @@ public class LoginSteps extends Steps {
     }
 
     @Допустим("я захожу на главную страницу")
-    public void яЗахожуНаГлавнуюСтраницу() {
+    public void яЗахожуНаГлавнуюСтраницу() throws IOException {
         webDriver.get("http://localhost:7777/");
     }
 
@@ -44,12 +46,12 @@ public class LoginSteps extends Steps {
     }
 
     @Когда("я авторизованный пользователь")
-    public void яАвторизованныйПользователь() {
+    public void яАвторизованныйПользователь()  throws IOException{
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
     }
 
     @Когда("я введу неверный инн и пароль")
-    public void яВведуНеверныйИннИПароль() {
+    public void яВведуНеверныйИннИПароль()  throws IOException{
         login("66666666666666","66666666666666");
     }
 

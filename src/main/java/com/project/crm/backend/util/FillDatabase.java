@@ -28,16 +28,18 @@ public class FillDatabase extends RepoMethods {
     @Bean
     @Profile(Constants.PROFILE_ENVIRONMENT_DEVELOPMENT)
     CommandLineRunner fillFullDatabase(UserRepo userRepo, PlaceRepo placeRepo, RoleRepo roleRepo,
-                                   HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo,
-                                   RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
-                                   RemedyRepo remedyRepo, ExaminationRepo examinationRepo, DosageRepo dosageRepo, InternationalNameRepo internationalNameRepo,
-                                   MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo,
-                                   MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
-                                   ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
-                                   ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo){
+                                       HospitalRepo hospitalRepo, RegistrationJournalRepo registrationJournalRepo,
+                                       RecordJournalRepo recordJournalRepo, PositionRepo positionRepo, DiseaseRepo diseaseRepo,
+                                       RemedyRepo remedyRepo, ExaminationRepo examinationRepo, DosageRepo dosageRepo, InternationalNameRepo internationalNameRepo,
+                                       MeasureRepo measureRepo, PharmacologicalGroupRepo pharmacologicalGroupRepo, RemediesFormRepo remediesFormRepo, RemedyTypeRepo remedyTypeRepo,
+                                       MedicalHistoryRepo medicalHistoryRepo, DiagnoseRepo diagnoseRepo, DiagnoseResultRepo diagnoseResultRepo, DirectionRepo directionRepo,
+                                       ExaminationResultRepo examinationResultRepo, InstrumExaminationRepo instrumExaminationRepo, LabExaminationRepo labExaminationRepo,
+                                       ProcedureRepo procedureRepo, SickListRepo sickListRepo, TreatmentRepo treatmentRepo, PasswordResetTokenRepo passwordResetTokenRepo,
+                                       WorkScheduleRepo workScheduleRepo){
         return (args) -> {
             examinationRepo.deleteAll();
             diseaseRepo.deleteAll();
+            workScheduleRepo.deleteAll();
             registrationJournalRepo.deleteAll();
             roleRepo.deleteAll();
             diagnoseResultRepo.deleteAll();
@@ -83,6 +85,8 @@ public class FillDatabase extends RepoMethods {
             saveDoctorsRandomForEachHospital(qty, qty, userRepo, hospitalRepo, positionRepo, roleRepo, registrationJournalRepo);
             savePatientsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
             savePatientsRandom(qty, userRepo, hospitalRepo, roleRepo, placeRepo, positionRepo, registrationJournalRepo);
+            saveRandomUsersBasedOnAnotherUserAtTheSameHospital(25, registrationJournalRepo.findFirstByUserInnAndRoleId(Long.parseLong(Constants.SENIOR_DOCTOR_INN), roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId()),
+                    roleRepo, positionRepo, hospitalRepo, userRepo, placeRepo, registrationJournalRepo);
             //--------------------------------------------------- Пользователи ---------------------------------------------------
             saveDiseases(qty, diseaseRepo);
             saveRemedies(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo);

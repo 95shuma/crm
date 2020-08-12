@@ -1,6 +1,7 @@
 package com.project.crm.backend.services;
 
 
+import com.project.crm.backend.dto.RegistrationJournalDTO;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.repository.*;
@@ -9,6 +10,7 @@ import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +18,7 @@ import java.util.List;
 public class RegistrationJournalService {
 
     private final RegistrationJournalRepo registrationJournalRepo;
+    private final WorkScheduleService workScheduleService;
     private final HospitalRepo hospitalRepo;
     private final RoleRepo roleRepo;
     private final PlaceRepo placeRepo;
@@ -23,6 +26,9 @@ public class RegistrationJournalService {
 
     public boolean existsByUserInnAndRoleId(Long inn, Long roleId){
         return registrationJournalRepo.existsByUserInnAndRoleId(inn, roleId);
+    }
+    public RegistrationJournalDTO findFirstByUserInnAndRole(Long inn, Long roleId){
+        return  RegistrationJournalDTO.from(registrationJournalRepo.findFirstByUserInnAndRoleId(inn, roleId));
     }
 
     public List<RegistrationJournal> getAll(){
@@ -35,6 +41,15 @@ public class RegistrationJournalService {
 
     public List<RegistrationJournal> getDoctorsByHospitalId (Long hospitalId){
         return registrationJournalRepo.findByHospitalId(hospitalId);
+    }
+    public List<RegistrationJournalDTO> getRegUsersByHospitalIdAndPositionIdAndWithoutSchedule(Long hospitalId, Long positionId){
+        List<RegistrationJournalDTO> registrationJournalDTOList = RegistrationJournalDTO.listFrom(registrationJournalRepo.findByHospitalIdAndPositionId(hospitalId, positionId));
+        List<RegistrationJournalDTO> finalRegUserDTOList = new ArrayList<>();
+        registrationJournalDTOList.stream().forEach(registrationJournalDTO -> {
+            if (workScheduleService.getWorkScheduleListByRegUserId(registrationJournalDTO.getId()).size() == 0)
+            finalRegUserDTOList.add(registrationJournalDTO);
+        });
+        return finalRegUserDTOList;
     }
 
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){

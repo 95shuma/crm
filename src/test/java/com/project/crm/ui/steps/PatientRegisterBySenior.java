@@ -8,6 +8,7 @@ import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class PatientRegisterBySenior extends Steps {
     }
 
     @Допустим("админ ЛПУ логинится")
-    public void админЛПУлогинится() {
+    public void админЛПУлогинится() throws IOException {
         login(Constants.SENIOR_DOCTOR_INN, Constants.SENIOR_DOCTOR_PASSWORD);
     }
 
@@ -50,21 +51,13 @@ public class PatientRegisterBySenior extends Steps {
     }
     @Тогда("попадет в главную страницу админа ЛПУ")
     public void попадетвГлавнуюСтраницуАдминаЛПУ() {
-        Boolean flag = false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/senior-doctor")) {
-            flag = true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/senior-doctor");
     }
 
     @И("результат появляется в списке пациентов")
     public void результатПоявляетсявСпискеПациентов() {
         webDriver.findElement(By.linkText("Список пациентов")).click();
-        Boolean flag = false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/senior-doctor/patients")) {
-            flag = true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/senior-doctor/patients");
     }
 
 

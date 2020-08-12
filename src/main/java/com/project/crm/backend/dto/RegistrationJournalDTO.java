@@ -1,8 +1,12 @@
 package com.project.crm.backend.dto;
 
 
+import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.RegistrationJournal;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -24,5 +28,13 @@ public class RegistrationJournalDTO {
                 .position(PositionDTO.from(registrationJournal.getPosition()))
                 .role(RoleDTO.from(registrationJournal.getRole()))
                 .build();
+    }
+
+    public static List<RegistrationJournalDTO> listFrom(List<RegistrationJournal> objList){
+        List<RegistrationJournalDTO> listDto = new ArrayList<>();
+        objList.forEach(obj -> {
+            listDto.add(RegistrationJournalDTO.from(obj));
+        });
+        return listDto;
     }
 }

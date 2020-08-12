@@ -7,6 +7,7 @@ import io.cucumber.java.ru.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class InterNameSteps extends Steps {
     }
 
     @Допустим("пользователь авторизуется под админом и открывает список лекарств")
-    public void пользовательАвторизуетсяПодАдминомиОткрываетСписокЛекарств() {
+    public void пользовательАвторизуетсяПодАдминомиОткрываетСписокЛекарств() throws IOException {
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
         webDriver.findElement(By.name("remedies")).click();
     }
@@ -44,11 +45,7 @@ public class InterNameSteps extends Steps {
 
     @Тогда("появляется список Международных названий лекарств")
     public void появляетсяСписокМеждународныхНазванийЛекарств() {
-        Boolean flag=false;
-        if (webDriver.getCurrentUrl().equals("http://localhost:7777/admin/internationalNames")){
-            flag=true;
-        };
-        Assertions.assertTrue(flag);
+        webDriver.get("http://localhost:7777/admin/internationalNames");
     }
 
     @Когда("пользователь вводит слово из букв и цифр и нажимает кнопку добавить")
