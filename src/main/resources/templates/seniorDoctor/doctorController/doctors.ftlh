@@ -12,17 +12,19 @@
             <th scope="col">ФИО</th>
             <th scope="col">Дата-рождения</th>
             <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
         </tr>
         </thead>
         <tbody id="Table">
-        <#list items as doctor>
+        <#list items as regJournal>
             <tr>
-                <th scope="row">${doctor?counter}</th>
-                <td>${doctor.inn}</td>
-                <td>${doctor.documentNumber}</td>
-                <td>${doctor.fullName}</td>
-                <td>${doctor.birthDate?date}</td>
-                <td>${doctor.gender}</td>
+                <th scope="row">${regJournal?counter}</th>
+                <td>${regJournal.user.inn}</td>
+                <td>${regJournal.user.documentNumber}</td>
+                <td>${regJournal.user.fullName}</td>
+                <td>${regJournal.user.birthDate?date}</td>
+                <td>${regJournal.user.gender}</td>
+                <td>${regJournal.position.name}</td>
             </tr>
         </#list>
         </tbody>
