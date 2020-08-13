@@ -15,7 +15,7 @@ public interface PositionRepo extends JpaRepository<Position, Long> {
     Optional<Position> findByName(String name);
     Optional<Position> getById(Long id);
     @Modifying
-    @Query(value = "insert into positions (id, name)  values (:id, :name);", nativeQuery = true)
-    void insertPositionWithId(@Param("id") Long id, @Param("name") String name);
+    @Query(value = "insert into positions (id, name, average_work_time)  values (:id, :name, :averageWorkTime);", nativeQuery = true)
+    void insertPositionWithId(@Param("id") Long id, @Param("name") String name, @Param("averageWorkTime") int averageWorkTime);
 
 }

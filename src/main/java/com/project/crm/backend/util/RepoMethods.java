@@ -137,8 +137,9 @@ public class RepoMethods {
     }
     public static void savePositionsConstant(PositionRepo positionRepo){
         String[] positions = {"терапевт", "кардиолог", "лор", "детский врач", "офтальмолог"};
+        int[] averageWorkTime = {12, 15, 10, 15, 30};
         for (int i=0; i<positions.length; i++){
-            positionRepo.insertPositionWithId(Long.parseLong(Integer.toString(i+1)), positions[i]);
+            positionRepo.insertPositionWithId(Long.parseLong(Integer.toString(i+1)), positions[i], averageWorkTime[i]);
         }
     }
     public static void savePositionsRandom(int qty, PositionRepo positionRepo){

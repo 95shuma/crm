@@ -18,4 +18,7 @@ public class Position {
 
     @NotBlank(message = "Обязательное поле")
     private String name;
+
+    @NotBlank(message = "Обязательное поле")
+    private int averageWorkTime;
 }
