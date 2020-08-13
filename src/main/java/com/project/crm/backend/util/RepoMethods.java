@@ -101,7 +101,7 @@ public class RepoMethods {
         List<Place> placeList = new ArrayList<>();
         for (int i = 0; i < qty; i++) {
             placeList.add(Place.builder()
-                    .name(faker.address().fullAddress())
+                    .name(faker.address().fullAddress().substring(7))
                     .codePlace((long) faker.number().numberBetween(10, 30))
                     .groupCode((long) faker.number().numberBetween(1, 5))
                     .build()
