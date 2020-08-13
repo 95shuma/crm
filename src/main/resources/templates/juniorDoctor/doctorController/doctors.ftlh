@@ -8,7 +8,6 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">ФИО</th>
-            <th scope="col">Дата-рождения</th>
             <th scope="col">Должность</th>
         </tr>
         </thead>
@@ -17,7 +16,6 @@
             <tr>
                 <th scope="row">${regJournal?counter}</th>
                 <td><a href="/junior-doctor/doctors/doctor/${regJournal.user.id?c}">${regJournal.user.fullName}</td>
-                <td>${regJournal.user.birthDate?date}</td>
                 <td>${regJournal.position.name}</td>
             </tr>
         </#list>

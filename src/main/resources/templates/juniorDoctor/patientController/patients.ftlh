@@ -7,22 +7,16 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">ИНН</th>
-            <th scope="col">Паспорт</th>
             <th scope="col">ФИО</th>
             <th scope="col">Дата-рождения</th>
-            <th scope="col">Пол</th>
         </tr>
         </thead>
         <tbody id="Table">
         <#list items as regJournal>
             <tr>
                 <th scope="row">${regJournal?counter}</th>
-                <td>${regJournal.user.inn}</td>
-                <td>${regJournal.user.documentNumber}</td>
                 <td><a href="/junior-doctor/patients/patient/${regJournal.user.id?c}">${regJournal.user.fullName}</td>
                 <td>${regJournal.user.birthDate?date}</td>
-                <td>${regJournal.user.gender}</td>
             </tr>
         </#list>
         </tbody>
