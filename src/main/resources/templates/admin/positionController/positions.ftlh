@@ -1,12 +1,12 @@
 <#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith scripts=["/js/validation.js"] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
-    <h3>Все напраления</h3>
+    <h3 class="mt-3">Все специальности</h3>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Направление</th>
+                <th scope="col">Специальность</th>
                 <th scope="col">Действие
                 </th>
             </tr>
@@ -24,7 +24,7 @@
     </table>
     <#include "../../partials/pagination.ftlh">
     <a type="button" class="btn btn-primary w-100" href="/admin/positions/position">
-        Добавить новое направление
+        Зарегистрировать новую специальность
     </a>
 <#--<#include "partials/pagination.ftlh">-->
 </@main.renderWith>

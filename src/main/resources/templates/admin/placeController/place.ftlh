@@ -4,7 +4,7 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <h3>Регистрация нового места</h3>
+                <h3 class="mt-3">Регистрация нового места</h3>
                 <form id="roleForm" action="/admin/places" method="post">
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>

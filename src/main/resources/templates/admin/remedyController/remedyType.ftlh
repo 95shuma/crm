@@ -4,7 +4,7 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <h3>Добавление типа</h3>
+                <h3 class="mt-3">Добавление типа</h3>
                 <form id="type" action="/admin/remedyTypes" method="post">
                     <#if _csrf??>
                         <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">

@@ -4,7 +4,7 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                    <h3>Направление специалиста</h3>
+                    <h3 class="mt-3">Направление специалиста</h3>
                         <div class="form-group">
                             <p><label for="positionName" class="col-form-label">Название направления</label></p>
                             <p>${position.name}</p>

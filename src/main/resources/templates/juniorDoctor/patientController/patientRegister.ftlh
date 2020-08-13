@@ -2,7 +2,7 @@
 
 <@main.renderWith>
     <div class="mx-auto mt-3 w-50">
-        <h3 class="text-center">Новый пациент</h3>
+        <h3 class="text-center mt-3">Новый пациент</h3>
         <form id="patient" action="/junior-doctor/patients/patient" method="post" style="margin-bottom: 50px">
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
