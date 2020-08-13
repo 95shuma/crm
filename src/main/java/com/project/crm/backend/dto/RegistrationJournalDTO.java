@@ -21,13 +21,22 @@ public class RegistrationJournalDTO {
     private RoleDTO role;
 
     public static RegistrationJournalDTO from(RegistrationJournal registrationJournal) {
-        return builder()
-                .id(registrationJournal.getId())
-                .hospital(HospitalDTO.from(registrationJournal.getHospital()))
-                .user(UserDTO.from(registrationJournal.getUser()))
-                .position(PositionDTO.from(registrationJournal.getPosition()))
-                .role(RoleDTO.from(registrationJournal.getRole()))
-                .build();
+        if(registrationJournal.getPosition() != null){
+            return builder()
+                    .id(registrationJournal.getId())
+                    .hospital(HospitalDTO.from(registrationJournal.getHospital()))
+                    .user(UserDTO.from(registrationJournal.getUser()))
+                    .position(PositionDTO.from(registrationJournal.getPosition()))
+                    .role(RoleDTO.from(registrationJournal.getRole()))
+                    .build();
+        }else {
+            return builder()
+                    .id(registrationJournal.getId())
+                    .hospital(HospitalDTO.from(registrationJournal.getHospital()))
+                    .user(UserDTO.from(registrationJournal.getUser()))
+                    .role(RoleDTO.from(registrationJournal.getRole()))
+                    .build();
+        }
     }
 
     public static List<RegistrationJournalDTO> listFrom(List<RegistrationJournal> objList){
