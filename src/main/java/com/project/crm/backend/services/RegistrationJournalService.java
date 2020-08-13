@@ -22,7 +22,6 @@ public class RegistrationJournalService {
 
     private final RegistrationJournalRepo registrationJournalRepo;
     private final WorkScheduleService workScheduleService;
-    private final UserRepo userRepo;
     private final HospitalRepo hospitalRepo;
     private final RoleRepo roleRepo;
     private final PositionRepo positionRepo;
@@ -38,9 +37,19 @@ public class RegistrationJournalService {
         return registrationJournalRepo.findAllSeniorDoctors(pageable).map(RegistrationJournalDTO::from);
     }
 
+    public Page<RegistrationJournalDTO> getAllHospitalUsers(Pageable pageable, Principal principal){
+        RegistrationJournal registrationJournal = registrationJournalRepo.findByUserInn(Long.parseLong(principal.getName()));
+        return registrationJournalRepo.findAllHospitalUsers(registrationJournal.getHospital().getId(), pageable).map(RegistrationJournalDTO::from);
+    }
+
     public Page<RegistrationJournalDTO> getAllHospitalStaff(Pageable pageable, Principal principal){
         RegistrationJournal registrationJournal = registrationJournalRepo.findByUserInn(Long.parseLong(principal.getName()));
         return registrationJournalRepo.findAllHospitalStaff(registrationJournal.getHospital().getId(), pageable).map(RegistrationJournalDTO::from);
+    }
+
+    public Page<RegistrationJournalDTO> getAllHospitalPatients(Pageable pageable, Principal principal){
+        RegistrationJournal registrationJournal = registrationJournalRepo.findByUserInn(Long.parseLong(principal.getName()));
+        return registrationJournalRepo.findAllHospitalPatients(registrationJournal.getHospital().getId(), pageable).map(RegistrationJournalDTO::from);
     }
 
     public List<RegistrationJournal> getAll(){
