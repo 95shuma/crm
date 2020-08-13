@@ -24,17 +24,14 @@ import java.security.Principal;
 public class DoctorController {
 
     private final UserService userService;
+    private final RegistrationJournalService registrationJournalService;
     private final PropertiesService propertiesService;
-    private final HospitalService hospitalService;
-    private final RoleService roleService;
-    private final PositionService positionService;
-    private final PlaceService placeService;
 
 
     @GetMapping
     public String getDoctors(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal) {
         userService.checkUserPresence(model, principal);
-        PropertiesService.constructPageable(userService.getAllDoctors(pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+        PropertiesService.constructPageable(registrationJournalService.getAllHospitalStaff(pageable, principal), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
 
         return "juniorDoctor/doctorController/doctors";
     }

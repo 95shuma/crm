@@ -1,9 +1,6 @@
 package com.project.crm.frontend.controller.juniorDoctor;
 
-import com.project.crm.backend.services.HospitalService;
-import com.project.crm.backend.services.PlaceService;
-import com.project.crm.backend.services.PropertiesService;
-import com.project.crm.backend.services.UserService;
+import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.PatientRegisterForm;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
@@ -27,6 +24,7 @@ import java.security.Principal;
 public class PatientController {
 
     private final UserService userService;
+    private final RegistrationJournalService registrationJournalService;
     private final HospitalService hospitalService;
     private final PlaceService placeService;
     private final PropertiesService propertiesService;
@@ -44,7 +42,7 @@ public class PatientController {
     @GetMapping
     public String getPatients(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal){
         userService.checkUserPresence(model, principal);
-        PropertiesService.constructPageable(userService.getAllPatients(pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+        PropertiesService.constructPageable(registrationJournalService.getAllHospitalPatients(pageable, principal), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
         return "juniorDoctor/patientController/patients";
     }
     @PostMapping("/patient")
