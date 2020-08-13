@@ -88,6 +88,10 @@ public class FillDatabase extends RepoMethods {
             saveRandomUsersBasedOnAnotherUserAtTheSameHospital(25, registrationJournalRepo.findFirstByUserInnAndRoleId(Long.parseLong(Constants.SENIOR_DOCTOR_INN), roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId()),
                     roleRepo, positionRepo, hospitalRepo, userRepo, placeRepo, registrationJournalRepo);
             //--------------------------------------------------- Пользователи ---------------------------------------------------
+            //--------------------------------------------------- График ---------------------------------------------------------
+            saveWorkScheduleForConstantUser(registrationJournalRepo.findFirstByUserInnAndRoleId(Long.parseLong(Constants.SENIOR_DOCTOR_INN), roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId()), workScheduleRepo);                                               //График нашему АдминуЛПУ
+            saveWorkSchedulesByHospital(registrationJournalRepo.findFirstByUserInnAndRoleId(Long.parseLong(Constants.SENIOR_DOCTOR_INN), roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId()).getHospital(), roleRepo, workScheduleRepo, registrationJournalRepo);
+            //--------------------------------------------------- График ---------------------------------------------------
             saveDiseases(qty, diseaseRepo);
             saveRemedies(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo);
             saveExaminations(qty, examinationRepo);
