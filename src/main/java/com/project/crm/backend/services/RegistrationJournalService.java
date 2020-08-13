@@ -8,8 +8,11 @@ import com.project.crm.backend.repository.*;
 import com.project.crm.backend.util.Constants;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +22,9 @@ public class RegistrationJournalService {
 
     private final RegistrationJournalRepo registrationJournalRepo;
     private final WorkScheduleService workScheduleService;
+    private final UserRepo userRepo;
     private final HospitalRepo hospitalRepo;
     private final RoleRepo roleRepo;
-    private final PlaceRepo placeRepo;
     private final PositionRepo positionRepo;
 
     public boolean existsByUserInnAndRoleId(Long inn, Long roleId){
@@ -29,6 +32,15 @@ public class RegistrationJournalService {
     }
     public RegistrationJournalDTO findFirstByUserInnAndRole(Long inn, Long roleId){
         return  RegistrationJournalDTO.from(registrationJournalRepo.findFirstByUserInnAndRoleId(inn, roleId));
+    }
+
+    public Page<RegistrationJournalDTO> getAllSeniorDoctors(Pageable pageable){
+        return registrationJournalRepo.findAllSeniorDoctors(pageable).map(RegistrationJournalDTO::from);
+    }
+
+    public Page<RegistrationJournalDTO> getAllHospitalStaff(Pageable pageable, Principal principal){
+        RegistrationJournal registrationJournal = registrationJournalRepo.findByUserInn(Long.parseLong(principal.getName()));
+        return registrationJournalRepo.findAllHospitalStaff(registrationJournal.getHospital().getId(), pageable).map(RegistrationJournalDTO::from);
     }
 
     public List<RegistrationJournal> getAll(){
