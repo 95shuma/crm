@@ -72,4 +72,10 @@ public class DoctorController {
         return "redirect:/senior-doctor";
     }
 
+    @GetMapping("/doctor/{id}")
+    public String getOneDoctor(@PathVariable Long id, Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("doctor", userService.getUserById(id));
+        return "/seniorDoctor/doctorController/aboutDoctor";
+    }
 }
