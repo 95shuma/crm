@@ -15,15 +15,14 @@
         </tr>
         </thead>
         <tbody id="Table">
-        <#list items as patient>
+        <#list items as regJournal>
             <tr>
-                <th scope="row">${patient?counter}</th>
-                <td>${patient.inn}</td>
-                <td>${patient.documentNumber}</td>
-                <td>${patient.fullName}</td>
-                <td><a href="/junior-doctor/patients/patient/${patient.id?c}">${patient.fullName}</td>
-                <td>${patient.birthDate?date}</td>
-                <td>${patient.gender}</td>
+                <th scope="row">${regJournal?counter}</th>
+                <td>${regJournal.user.inn}</td>
+                <td>${regJournal.user.documentNumber}</td>
+                <td><a href="/junior-doctor/patients/patient/${regJournal.user.id?c}">${regJournal.user.fullName}</td>
+                <td>${regJournal.user.birthDate?date}</td>
+                <td>${regJournal.user.gender}</td>
             </tr>
         </#list>
         </tbody>

@@ -19,7 +19,7 @@
         <#list items as regJournal>
             <tr>
                 <th scope="row">${regJournal?counter}</th>
-                <td>${regJournal.user.inn}</td>
+                <td>${regJournal.user.inn?c}</td>
                 <td>${regJournal.user.documentNumber}</td>
                 <td>${regJournal.user.fullName}</td>
                 <td>${regJournal.user.birthDate?date}</td>
