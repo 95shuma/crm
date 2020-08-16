@@ -102,12 +102,20 @@ function drowPositionsSelect(fetch) {
     fetch.then(data => {
         console.log(data);
         positionsFromHospitalSelect.innerHTML = '';
-        addElement(positionsFromHospitalSelect, createPositionsSelect());
-            for (let i = 0; i<data.length; i++){
+        if (data.length === 0){
+            let positionsFromHospitalSelectError = document.createElement('div');
+            positionsFromHospitalSelectError.className = 'alert alert-warning mt-1';
+            positionsFromHospitalSelectError.role = 'alert';
+            positionsFromHospitalSelectError.innerHTML = 'По выбранному ЛПУ специальности не найдены';
+            addElement(positionsFromHospitalSelect, positionsFromHospitalSelectError);
+        } else {
+            addElement(positionsFromHospitalSelect, createPositionsSelect());
+            for (let i = 0; i < data.length; i++) {
                 addElement(document.getElementById('positionsSelect'), createPositionsSelectOption(
                     new Position(data[i].id, data[i].name)
                 ));
             }
+        }
     });
 
 }
