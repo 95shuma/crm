@@ -74,6 +74,9 @@ public class RegistrationJournalService {
         });
         return finalRegUserDTOList;
     }
+    public List<RegistrationJournalDTO> getRegUsersByHospitalIdAndPositionId(Long hospitalId, Long positionId){
+        return registrationJournalRepo.findByHospitalIdAndPositionId(hospitalId, positionId).stream().map(RegistrationJournalDTO::from).collect(Collectors.toList());
+    }
 
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){
 

@@ -27,5 +27,9 @@ public class RegistrationJournalRestController {
         RegistrationJournalDTO registrationJournalDTOUser = registrationJournalService.findFirstByUserInnAndRole(inn, roleService.getByName(Constants.ROLE_SENIOR_DOCTOR).getId());
         return registrationJournalService.getRegUsersByHospitalIdAndPositionIdAndWithoutSchedule(registrationJournalDTOUser.getHospital().getId(), Long.parseLong(positionId));
     }
+    @GetMapping("/position-and-hospital/{positionId}&{hospitalId}")
+    public List<RegistrationJournalDTO> getRegUsersByPositionAndHospital(@PathVariable String positionId, @PathVariable String hospitalId){
+        return registrationJournalService.getRegUsersByHospitalIdAndPositionId(Long.parseLong(hospitalId), Long.parseLong(positionId));
+    }
 
 }
