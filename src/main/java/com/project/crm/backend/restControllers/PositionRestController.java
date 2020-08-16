@@ -21,11 +21,10 @@ import java.util.List;
 public class PositionRestController {
 
     private final PositionService positionService;
-    private final RegistrationJournalService registrationJournalService;
 
     @GetMapping("/hospital/{hospitalId}")
     public List<PositionDTO> getPositionsByHospitalBasedOnRegUserJournal(@PathVariable String hospitalId){
-        return registrationJournalService.getPositionsByHospitalBasedOnRegUserJournal(Long.parseLong(hospitalId));
+        return positionService.getPositionsByHospitalBasedOnRegUserJournal(Long.parseLong(hospitalId));
     }
 
 }

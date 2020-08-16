@@ -3,23 +3,24 @@ package com.project.crm.backend.services;
 import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.model.catalog.Position;
 import com.project.crm.backend.repository.PositionRepo;
+import com.project.crm.backend.repository.RegistrationJournalRepo;
 import com.project.crm.frontend.forms.PositionRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class PositionService {
 
     private final PositionRepo positionRepo;
+    private final RegistrationJournalRepo registrationJournalRepo;
 
     public List<PositionDTO> getAll(){
         List<Position> positions = new ArrayList<Position>();
@@ -68,6 +69,14 @@ public class PositionService {
         Optional<Position> position = positionRepo.findById(id);
         positionRepo.deleteById(id);
         return position;
+    }
+    public List<PositionDTO> getPositionsByHospitalBasedOnRegUserJournal(Long hospitalId){
+        List<PositionDTO> positionDTOList = new ArrayList<>();
+        registrationJournalRepo.findByHospitalId(hospitalId).stream().forEach(registrationJournal -> {
+            if (registrationJournal.getPosition() != null)
+            positionDTOList.add(PositionDTO.from(registrationJournal.getPosition()));
+        });
+        return positionDTOList.stream().distinct().collect(Collectors.toList());
     }
 
 }

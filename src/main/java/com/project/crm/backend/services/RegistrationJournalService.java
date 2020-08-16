@@ -74,14 +74,6 @@ public class RegistrationJournalService {
         });
         return finalRegUserDTOList;
     }
-    public List<PositionDTO> getPositionsByHospitalBasedOnRegUserJournal(Long hospitalId){
-        List<PositionDTO> positionDTOList = new ArrayList<>();
-        registrationJournalRepo.findByHospitalId(hospitalId).stream().forEach(registrationJournal -> {
-            positionDTOList.add(PositionDTO.from(registrationJournal.getPosition()));
-        });
-
-        return positionDTOList.stream().distinct().collect(Collectors.toList());
-    }
 
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){
 
