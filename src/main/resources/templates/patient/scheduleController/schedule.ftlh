@@ -4,7 +4,7 @@
     <h3 class="text-center mt-3">Запись к врачу</h3>
     <div class="mt-3 w-50" style="text-align: left">
         <h5 class="wt-3">1) Выберите ЛПУ:</h5>
-        <select class="form-control" id="hospitalSelect" name="positionIdList">
+        <select class="form-control mb-3" id="hospitalSelect" name="positionIdList">
             <option disabled hidden selected value> -- выберите -- </option>
             <#if hospitals??>
                 <#list hospitals as hospital>

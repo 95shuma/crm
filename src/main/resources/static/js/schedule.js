@@ -55,7 +55,7 @@ function createPositionsSelect() {
     let positionsSelect = document.createElement('div');
     positionsSelect.innerHTML =
         `<h5 class="wt-3">2) Выберите специальность:</h5>
-        <select class="form-control" id="positionsSelect" name="positionIdList">
+        <select class="form-control mb-3" id="positionsSelect" name="positionIdList">
             <option disabled hidden selected value> -- выберите -- </option>
         </select>
         <div id="regUsersSelectBlock"></div>
@@ -73,7 +73,7 @@ function createRegUsersSelect() {
     let regUsersSelect = document.createElement('div');
     regUsersSelect.innerHTML =
         `<h5 class="wt-3">3) Выберите врача:</h5>
-        <select class="form-control" id="regUsersSelect"">
+        <select class="form-control mb-3" id="regUsersSelect"">
             <option disabled hidden selected value> -- выберите -- </option>
         </select>
         <div id="scheduleBlock"></div>`
@@ -101,7 +101,7 @@ const fetchRegUsersByPosition = async (positionId, hospitalId) => {
     const data = await fetch(getPath, {cache: 'no-cache'});
     return data.json();
 };
-function drowRegUsersSelect(fetch) {
+function drawRegUsersSelect(fetch) {
     fetch.then(data => {
         console.log(data);
         let regUsersSelectElement = document.getElementById('regUsersSelectBlock');
@@ -137,7 +137,7 @@ function drowRegUsersSelect(fetch) {
         }
     });
 }
-function drowPositionsSelect(fetch, hospitalId) {
+function drawPositionsSelect(fetch, hospitalId) {
     fetch.then(data => {
         console.log(data);
         positionsFromHospitalSelect.innerHTML = '';
@@ -155,7 +155,7 @@ function drowPositionsSelect(fetch, hospitalId) {
                 ));
             }
             document.getElementById('positionsSelect').addEventListener('change', (event) => {
-                drowRegUsersSelect(fetchRegUsersByPosition(event.target.value, hospitalId));
+                drawRegUsersSelect(fetchRegUsersByPosition(event.target.value, hospitalId));
             });
         }
     });
@@ -164,7 +164,7 @@ function drowPositionsSelect(fetch, hospitalId) {
 //--< ============================================================== Обновляю ==============================================================
 const selectElement = document.getElementById('hospitalSelect');
 selectElement.addEventListener('change', (event) => {
-    drowPositionsSelect(fetchPositionsByHospital(event.target.value), event.target.value);
+    drawPositionsSelect(fetchPositionsByHospital(event.target.value), event.target.value);
 });
 
 //--> ============================================================== Обновляю ==============================================================
