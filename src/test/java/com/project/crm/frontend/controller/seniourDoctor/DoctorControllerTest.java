@@ -511,8 +511,11 @@ public class DoctorControllerTest extends RepoMethods {
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
         Assert.assertEquals("ID123456789", fieldErrors.get(0).getRejectedValue());
-        Assert.assertEquals("Требуется ввести 9 значений без пробела", fieldErrors.get(0).getDefaultMessage());
+        fieldErrors.stream()
+             .filter(e -> Objects.equals(e.getDefaultMessage(), "Требуется ввести 9 значений без пробела"))
+             .forEach(e -> Assert.assertEquals("Требуется ввести 9 значений без пробела", e.getDefaultMessage()));
     }
+
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
     public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongDocumentNumberSizeMin_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
         saveRepos();
@@ -545,7 +548,9 @@ public class DoctorControllerTest extends RepoMethods {
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
         Assert.assertEquals("ID12345", fieldErrors.get(0).getRejectedValue());
-        Assert.assertEquals("Требуется ввести 9 значений без пробела", fieldErrors.get(0).getDefaultMessage());
+        fieldErrors.stream()
+                .filter(e -> Objects.equals(e.getDefaultMessage(), "Требуется ввести 9 значений без пробела"))
+                .forEach(e -> Assert.assertEquals("Требуется ввести 9 значений без пробела", e.getDefaultMessage()));
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
     public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithWrongDocumentNumberPattern_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
@@ -579,7 +584,9 @@ public class DoctorControllerTest extends RepoMethods {
         Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
         Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
         Assert.assertEquals("123456789", fieldErrors.get(0).getRejectedValue());
-        Assert.assertEquals("№ докумета начинается с AN или ID и состоит из 7 цифр : 123456789", fieldErrors.get(0).getDefaultMessage());
+        fieldErrors.stream()
+                .filter(e -> Objects.equals(e.getDefaultMessage(), "№ докумета начинается с AN или ID и состоит из 7 цифр : 123456789"))
+                .forEach(e -> Assert.assertEquals("№ докумета начинается с AN или ID и состоит из 7 цифр : 123456789", e.getDefaultMessage()));
     }
     @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
     public void createDoctor_checkWrongMethodValidationErrorWithRedirectWithExistDocumentNumber_shouldReturnValidationErrorsForINNAndRedirectToView() throws Exception {
