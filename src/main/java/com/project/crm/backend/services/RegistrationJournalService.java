@@ -1,6 +1,7 @@
 package com.project.crm.backend.services;
 
 
+import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.dto.RegistrationJournalDTO;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.*;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -71,6 +73,14 @@ public class RegistrationJournalService {
             finalRegUserDTOList.add(registrationJournalDTO);
         });
         return finalRegUserDTOList;
+    }
+    public List<PositionDTO> getPositionsByHospitalBasedOnRegUserJournal(Long hospitalId){
+        List<PositionDTO> positionDTOList = new ArrayList<>();
+        registrationJournalRepo.findByHospitalId(hospitalId).stream().forEach(registrationJournal -> {
+            positionDTOList.add(PositionDTO.from(registrationJournal.getPosition()));
+        });
+
+        return positionDTOList.stream().distinct().collect(Collectors.toList());
     }
 
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){

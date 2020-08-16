@@ -1,5 +1,6 @@
 package com.project.crm.backend.restControllers;
 
+import com.project.crm.backend.dto.PositionDTO;
 import com.project.crm.backend.dto.RegistrationJournalDTO;
 import com.project.crm.backend.services.RegistrationJournalService;
 import com.project.crm.backend.services.RoleService;
