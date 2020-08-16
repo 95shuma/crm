@@ -108,6 +108,7 @@ public class FillDatabase extends RepoMethods {
             saveProcedures(qty, procedureRepo);
             saveTreatments(qty, treatmentRepo, remedyRepo, procedureRepo, medicalHistoryRepo);
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
+            System.out.println("|-------------------------------------- Загрузка фикстурными данными завершена -----------------------------------------------|");
         };
     }
 }
