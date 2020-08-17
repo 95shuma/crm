@@ -50,7 +50,28 @@ function RegistrationJournal(id, hospital, user, position, role) {
 }
 
 //--> ============================================================== Объекты ========================================================================
+//--< ============================================================== Запросы ========================================================================
+const fetchPositionsByHospital = async (hospitalId) => {
+    const getPath = `${baseUrl}/positions/hospital/${hospitalId}`;
+    const data = await fetch(getPath, {cache: 'no-cache'});
+    return data.json();
+};
+const fetchRegUsersByPosition = async (positionId, hospitalId) => {
+    const getPath = `${baseUrl}/users/position-and-hospital/${positionId}&${hospitalId}`;
+    const data = await fetch(getPath, {cache: 'no-cache'});
+    return data.json();
+};
+const fetchWorkDays = async (regUserId) => {
+    const getPath = `${baseUrl}/schedule/reg-user/${regUserId}`;
+    const data = await fetch(getPath, {cache: 'no-cache'});
+    return data.json();
+};
+//--> ============================================================== Запросы ========================================================================
 //--< ============================================================== Разные функции =================================================================
+function addElement(dom_element, adding_element){
+    dom_element.append(adding_element);
+}
+//------------------Positions------------------
 function createPositionsSelect() {
     let positionsSelect = document.createElement('div');
     positionsSelect.innerHTML =
@@ -69,6 +90,31 @@ function createPositionsSelectOption(position) {
     positionsSelectOption.innerText = position.name;
     return positionsSelectOption;
 }
+function drawPositionsSelect(fetch, hospitalId) {
+    fetch.then(data => {
+        console.log(data);
+        positionsFromHospitalSelect.innerHTML = '';
+        if (data.length === 0){
+            let positionsFromHospitalSelectError = document.createElement('div');
+            positionsFromHospitalSelectError.className = 'alert alert-warning mt-1';
+            positionsFromHospitalSelectError.role = 'alert';
+            positionsFromHospitalSelectError.innerHTML = 'По выбранному ЛПУ специальности не найдены';
+            addElement(positionsFromHospitalSelect, positionsFromHospitalSelectError);
+        } else {
+            addElement(positionsFromHospitalSelect, createPositionsSelect());
+            for (let i = 0; i < data.length; i++) {
+                addElement(document.getElementById('positionsSelect'), createPositionsSelectOption(
+                    new Position(data[i].id, data[i].name)
+                ));
+            }
+            document.getElementById('positionsSelect').addEventListener('change', (event) => {
+                drawRegUsersSelect(fetchRegUsersByPosition(event.target.value, hospitalId));
+            });
+        }
+    });
+}
+//------------------Positions------------------
+//------------------RegUsers-------------------
 function createRegUsersSelect() {
     let regUsersSelect = document.createElement('div');
     regUsersSelect.innerHTML =
@@ -86,21 +132,6 @@ function createRegUsersSelectOption(regUser) {
     regUsersSelectOption.innerText = regUser.user.fullName;
     return regUsersSelectOption;
 }
-function addElement(dom_element, adding_element){
-    dom_element.append(adding_element);
-}
-//--> ============================================================== Разные функции =================================================================
-//--< ============================================================== Запросы ========================================================================
-const fetchPositionsByHospital = async (hospitalId) => {
-    const getPath = `${baseUrl}/positions/hospital/${hospitalId}`;
-    const data = await fetch(getPath, {cache: 'no-cache'});
-    return data.json();
-};
-const fetchRegUsersByPosition = async (positionId, hospitalId) => {
-    const getPath = `${baseUrl}/users/position-and-hospital/${positionId}&${hospitalId}`;
-    const data = await fetch(getPath, {cache: 'no-cache'});
-    return data.json();
-};
 function drawRegUsersSelect(fetch) {
     fetch.then(data => {
         console.log(data);
@@ -135,32 +166,43 @@ function drawRegUsersSelect(fetch) {
                 ));
             }
         }
+        document.getElementById('regUsersSelect').addEventListener('change', (event) => {
+            drawWorkDaysSelect(fetchWorkDays(event.target.value));
+        });
     });
 }
-function drawPositionsSelect(fetch, hospitalId) {
+//------------------RegUsers-------------------
+//------------------WorkDays-------------------
+function createWorkDaysSelect() {
+    let regUsersSelect = document.createElement('div');
+    regUsersSelect.innerHTML =
+        `<h5 class="wt-3">4) Выберите доступный день для записи:</h5>
+        <select class="form-control mb-3" id="workDaysSelect"">
+            <option disabled hidden selected value> -- выберите -- </option>
+        </select>
+        <div id="workScheduleBlock"></div>`
+    ;
+    return regUsersSelect;
+}
+function createWorkDaysSelectOption(day) {
+    let workDaySelectOption = document.createElement('option');
+    workDaySelectOption.value = day;
+    workDaySelectOption.innerText = day;
+    return workDaySelectOption;
+}
+function drawWorkDaysSelect(fetch) {
     fetch.then(data => {
         console.log(data);
-        positionsFromHospitalSelect.innerHTML = '';
-        if (data.length === 0){
-            let positionsFromHospitalSelectError = document.createElement('div');
-            positionsFromHospitalSelectError.className = 'alert alert-warning mt-1';
-            positionsFromHospitalSelectError.role = 'alert';
-            positionsFromHospitalSelectError.innerHTML = 'По выбранному ЛПУ специальности не найдены';
-            addElement(positionsFromHospitalSelect, positionsFromHospitalSelectError);
-        } else {
-            addElement(positionsFromHospitalSelect, createPositionsSelect());
-            for (let i = 0; i < data.length; i++) {
-                addElement(document.getElementById('positionsSelect'), createPositionsSelectOption(
-                    new Position(data[i].id, data[i].name)
-                ));
-            }
-            document.getElementById('positionsSelect').addEventListener('change', (event) => {
-                drawRegUsersSelect(fetchRegUsersByPosition(event.target.value, hospitalId));
-            });
+        let regWorkDaysElement = document.getElementById('scheduleBlock');
+        regWorkDaysElement.innerHTML = '';
+        addElement(regWorkDaysElement, createWorkDaysSelect());
+        for (let i = 0; i < data.length; i++) {
+            addElement(document.getElementById('workDaysSelect'), createWorkDaysSelectOption(data[i]));
         }
     });
 }
-//--> ============================================================== Запросы ========================================================================
+//------------------WorkDays-------------------
+//--> ============================================================== Разные функции =================================================================
 //--< ============================================================== Обновляю ==============================================================
 const selectElement = document.getElementById('hospitalSelect');
 selectElement.addEventListener('change', (event) => {
