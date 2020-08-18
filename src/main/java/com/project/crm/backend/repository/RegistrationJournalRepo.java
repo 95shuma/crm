@@ -12,9 +12,10 @@ public interface RegistrationJournalRepo extends JpaRepository<RegistrationJourn
     List<RegistrationJournal> findByHospitalId(Long hospitalId);
     List<RegistrationJournal> findByHospitalIdAndRoleId(Long hospitalId, Long roleId);
     List<RegistrationJournal> findByHospitalIdAndPositionId(Long hospitalId, Long positionId);
+    List<RegistrationJournal> findAllByRoleId(Long roleId);
     RegistrationJournal findByUserInn(Long inn);
     RegistrationJournal findFirstByUserInnAndRoleId(Long inn, Long roleId);
-
+    
     @Query(value = "select * from users u, registrations_journal rj where u.id = rj.user_id and rj.hospital_id = ?1 order by u.full_name asc", nativeQuery = true)
     Page<RegistrationJournal> findAllHospitalUsers(Long hospitalId, Pageable pageable);
 

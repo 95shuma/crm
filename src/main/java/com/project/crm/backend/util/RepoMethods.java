@@ -264,6 +264,14 @@ public class RepoMethods {
         }
     }
     //--------------------------------------------------- График ---------------------------------------------------
+    public static void saveWorkSchedulesForAllRegUsers(RoleRepo roleRepo, WorkScheduleRepo workScheduleRepo, RegistrationJournalRepo registrationJournalRepo){
+        registrationJournalRepo.findAllByRoleId(roleRepo.findByName(Constants.ROLE_DOCTOR).get().getId()).stream().forEach(registrationJournal -> {
+            saveWorkScheduleForConstantUser(registrationJournal, workScheduleRepo);
+        });
+        registrationJournalRepo.findAllByRoleId(roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId()).stream().forEach(registrationJournal -> {
+            saveWorkScheduleForConstantUser(registrationJournal, workScheduleRepo);
+        });
+    }
     public static void saveWorkSchedulesByHospital(Hospital hospital, RoleRepo roleRepo, WorkScheduleRepo workScheduleRepo, RegistrationJournalRepo registrationJournalRepo){
         registrationJournalRepo.findByHospitalIdAndRoleId(hospital.getId(), roleRepo.findByName(Constants.ROLE_DOCTOR).get().getId()).stream().forEach(registrationJournal -> {
             saveWorkScheduleForConstantUser(registrationJournal, workScheduleRepo);
