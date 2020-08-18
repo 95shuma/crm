@@ -9,4 +9,5 @@ public interface WorkScheduleRepo extends JpaRepository <WorkSchedule, Long> {
 //    Page<WorkSchedule> findByRegistrationJournalUserInn(Long inn, Pageable pageable);
 //    WorkSchedule findByDateAndRegistrationJournalUserInn(LocalDate date,Long inn);
     List<WorkSchedule> findAllByRegistrationJournalId (Long id);
+    WorkSchedule findByRegistrationJournalIdAndDayOfWeek (Long id, int dayOfWeek);
 }

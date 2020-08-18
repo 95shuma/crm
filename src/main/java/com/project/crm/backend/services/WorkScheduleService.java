@@ -4,14 +4,20 @@ import com.project.crm.backend.dto.WorkScheduleDTO;
 import com.project.crm.backend.model.WorkSchedule;
 import com.project.crm.backend.model.catalog.newScheduleModels.NewSchedule;
 import com.project.crm.backend.model.catalog.newScheduleModels.WeekDay;
+import com.project.crm.backend.repository.PositionRepo;
 import com.project.crm.backend.repository.RegistrationJournalRepo;
+import com.project.crm.backend.repository.RoleRepo;
 import com.project.crm.backend.repository.WorkScheduleRepo;
+import com.project.crm.backend.util.Constants;
 import com.project.crm.frontend.forms.NewScheduleForm;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +28,8 @@ public class WorkScheduleService {
 
     private final WorkScheduleRepo workScheduleRepo;
     private final RegistrationJournalRepo registrationJournalRepo;
+    private final RoleRepo roleRepo;
+    private final PositionRepo positionRepo;
 
     public void createWorkSchedule (NewSchedule newSchedule){
         newSchedule.getChosenRegUserList().stream().forEach(regUser -> {
@@ -111,6 +119,19 @@ public class WorkScheduleService {
     public List<WorkScheduleDTO> getScheduleByDate(Long regUserId, LocalDate chosenDate){
         return workScheduleRepo.findAllByRegistrationJournalId(regUserId).stream().map(WorkScheduleDTO::from).collect(Collectors.toList());
     }
+    public List<LocalTime> getWorkDayScheduleByDate(LocalDate chosenDate, Long chosenDoctorId, Principal principal){
+        List<LocalTime> resultList = new ArrayList<>();
+
+        WorkSchedule newWorkSchedule = workScheduleRepo.findByRegistrationJournalIdAndDayOfWeek(registrationJournalRepo.findFirstByUserInnAndRoleId(Long.parseLong(principal.getName()), roleRepo.findByName(Constants.ROLE_PATIENT).get().getId()).getId(), chosenDate.getDayOfWeek().getValue());
+        //формируем рассписание согласно графику
+        int averageWorkTime =  registrationJournalRepo.findById(chosenDoctorId).get().getPosition().getAverageWorkTime();
+        long mod=Math.abs(Duration.between(newWorkSchedule.getTimeStart(),newWorkSchedule.getTimeEnd()).toMinutes())%averageWorkTime;
+        for (int i = 0; i < mod; i++){
+            resultList.add(newWorkSchedule.getTimeStart().plusMinutes(averageWorkTime));
+        }
+        return resultList;
+    }
+
     /*
     public void createWorkSchedule (NewSchedule workScheduleForm){
         WorkSchedule workSchedule = WorkSchedule.builder()
