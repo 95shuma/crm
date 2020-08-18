@@ -1,10 +1,8 @@
 package com.project.crm.frontend.controller.doctor;
 
+import com.project.crm.backend.model.catalog.medicalHistoryCatalog.DiagnoseResult;
 import com.project.crm.backend.services.*;
-import com.project.crm.backend.services.medicalHistoryService.DirectionService;
-import com.project.crm.backend.services.medicalHistoryService.InstrumExaminationService;
-import com.project.crm.backend.services.medicalHistoryService.LabExaminationService;
-import com.project.crm.backend.services.medicalHistoryService.MedicalHistoryService;
+import com.project.crm.backend.services.medicalHistoryService.*;
 import com.project.crm.frontend.forms.medicalHistoryForms.MedicalHistoryRegisterForm;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +26,7 @@ import static com.project.crm.backend.services.PropertiesService.constructPageab
 @AllArgsConstructor
 public class RecordJournalController {
 
+    private final DiagnoseResultService diagnoseResultService;
     private final DirectionService directionService;
     private final RecordJournalService recordJournalService;
     private final UserService userService;
@@ -112,20 +111,8 @@ public class RecordJournalController {
         return "redirect:/doctor/records";
     }
 
-    @GetMapping("/{medicalHistory_id}")
-    public String getMedicalHistory(Model model,Principal principal, @PathVariable("medicalHistory_id") String medicalHistory_id) {
-
-        if(principal == null){
-            return "errorPage";
-        }
-        userService.checkUserPresence(model, principal);
-        model.addAttribute("journal", medicalHistoryService.getById(medicalHistory_id));
-
-        return "/doctor/appointments/appointmentResult";
-    }
-
     @GetMapping("/{record_id}/result")
-    public String getRecordInfoPageResult(Model model,Principal principal, @PathVariable("record_id") String record_id) {
+    public String getRecordInfoPageResult(Pageable pageable, HttpServletRequest uriBuilder, Model model,Principal principal, @PathVariable("record_id") String record_id) {
 
         if(principal == null){
             return "errorPage";
@@ -133,24 +120,14 @@ public class RecordJournalController {
 
         userService.checkUserPresence(model, principal);
         model.addAttribute("patient", recordJournalService.getById(record_id));
-
-        return "/doctor/appointments/appointmentResult";
-    }
-
-    @GetMapping("/{medicalHistory}/directions")
-    public String getRecordJournalDirections(Model model,Principal principal,HttpServletRequest uriBuilder, @PathVariable("medicalHistory") Long medicalHistory, Pageable pageable) {
-
-        if (principal == null) {
-            return "errorPage";
-        }
-
-        userService.checkUserPresence(model, principal);
-        var directions = directionService.getAll(pageable, (medicalHistory));
+        var directions = directionService.getAllByRecord(pageable, (Long.parseLong(record_id)));
         var uri = uriBuilder.getRequestURI();
         PropertiesService.constructPageable(directions, propertiesService.getDefaultPageSize(), model, uri);
-        model.addAttribute("medicalHistory_id", medicalHistory);
+
+
         return "/doctor/appointments/appointmentResult";
     }
+
     @GetMapping("/patients/{patientId}")
     public String getAcceptedPatients(@PathVariable String patientId, Model model, Principal principal, HttpServletRequest uriBuilder, Pageable pageable) {
 
