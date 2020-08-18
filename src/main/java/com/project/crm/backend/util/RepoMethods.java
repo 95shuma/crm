@@ -342,7 +342,7 @@ public class RepoMethods {
                         .date(date)
                         .typeOfVisit(true)
                         .complaint(faker.music().instrument())
-                        .recommendation(faker.lorem().characters())
+                        .recommendation("")
                         .build());
             else
                 medicalHistories.add(MedicalHistory.builder()
