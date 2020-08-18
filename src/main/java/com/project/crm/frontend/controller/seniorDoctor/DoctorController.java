@@ -21,6 +21,7 @@ import java.security.Principal;
 public class DoctorController {
 
     private final UserService userService;
+    private final RegistrationJournalService registrationJournalService;
     private final HospitalService hospitalService;
     private final RoleService roleService;
     private final PositionService positionService;
@@ -49,7 +50,8 @@ public class DoctorController {
     @GetMapping
     public String getDoctors(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal) {
         userService.checkUserPresence(model, principal);
-        PropertiesService.constructPageable(userService.getAllDoctors(pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+
+        PropertiesService.constructPageable(registrationJournalService.getAllHospitalStaff(pageable, principal), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
 
         return "seniorDoctor/doctorController/doctors";
     }
@@ -70,4 +72,10 @@ public class DoctorController {
         return "redirect:/senior-doctor";
     }
 
+    @GetMapping("/doctor/{id}")
+    public String getOneDoctor(@PathVariable Long id, Model model, Principal principal){
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("doctor", userService.getUserById(id));
+        return "/seniorDoctor/doctorController/aboutDoctor";
+    }
 }

@@ -2,9 +2,9 @@ package com.project.crm.backend.services;
 
 import com.project.crm.backend.dto.UserDTO;
 import com.project.crm.backend.model.User;
+import com.project.crm.backend.model.catalog.Position;
 import com.project.crm.backend.model.catalog.Role;
 import com.project.crm.backend.repository.*;
-import com.project.crm.frontend.forms.NewPasswordRegisterForm;
 import com.project.crm.frontend.forms.PatientRegisterForm;
 import com.project.crm.frontend.forms.UserRegisterForm;
 import lombok.AllArgsConstructor;
@@ -37,6 +37,18 @@ public class UserService {
         else
             return UserDTO.from(user);
     }
+    public UserDTO getById(Long id){
+        User user = userRepo.findById(id).get();
+        if (user.getPlace() == null)
+            return UserDTO.fromWithoutPlace(user);
+        else
+            return UserDTO.from(user);
+    }
+
+    public User getUserByInn(Long inn){
+        return userRepo.findByInn(inn).get();
+    }
+
 
     public boolean existByInn(Long inn){
         return userRepo.existsByInn(inn);
@@ -51,6 +63,10 @@ public class UserService {
 
     public Page<UserDTO> getAllPatients(Pageable pageable){
         return userRepo.findAllPatients(pageable).map(UserDTO::from);
+    }
+
+    public UserDTO getUserById(Long id){
+        return UserDTO.from(userRepo.findById(id).get());
     }
 
     public Page<UserDTO> getAllDoctors(Pageable pageable){

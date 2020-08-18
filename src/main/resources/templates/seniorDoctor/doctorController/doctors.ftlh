@@ -1,28 +1,22 @@
 <#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <h3>Список докторов</h3>
+    <h3 class="mt-3">Список докторов</h3>
     <input class="form-control" id="Input" type="text" placeholder="Поиск по всем полям...">
     <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">ИНН</th>
-            <th scope="col">Паспорт</th>
             <th scope="col">ФИО</th>
-            <th scope="col">Дата-рождения</th>
-            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
         </tr>
         </thead>
         <tbody id="Table">
-        <#list items as doctor>
+        <#list items as regJournal>
             <tr>
-                <th scope="row">${doctor?counter}</th>
-                <td>${doctor.inn}</td>
-                <td>${doctor.documentNumber}</td>
-                <td>${doctor.fullName}</td>
-                <td>${doctor.birthDate?date}</td>
-                <td>${doctor.gender}</td>
+                <th scope="row">${regJournal?counter}</th>
+                <td><a href="/senior-doctor/doctors/doctor/${regJournal.user.id?c}">${regJournal.user.fullName}</td>
+                <td>${regJournal.position.name}</td>
             </tr>
         </#list>
         </tbody>

@@ -4,7 +4,7 @@
         <div class="d-flex justify-content-center">
             <div class="mx-3">
                 <form class="box-1" id="reg-admin-hospital" action="/admin/remedies" method="post">
-                    <h3>Добавить новое лекарство</h3>
+                    <h3 class="mt-3">Добавить новое лекарство</h3>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>

@@ -4,13 +4,13 @@
     <section id="page-splash" class="page-splash">
         <div class="d-flex justify-content-center">
             <div class="mx-3">
-                <h3>Регистрация нового направления</h3>
+                <h3 class="mt-3">Регистрация новой специальности</h3>
                 <form id="commentForm" action="/admin/positions" method="post">
                         <#if _csrf??>
                         <input class="form-control" type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}">
                     </#if>
                     <div class="form-group">
-                        <p><label for="positionName" class="col-form-label">Название направления</label></p>
+                        <p><label for="positionName" class="col-form-label">Название специальности</label></p>
                         <input id="positionName" placeholder="Название" class="form-control" name="name">
                         <#if errors??>
                             <#list errors as fieldError>

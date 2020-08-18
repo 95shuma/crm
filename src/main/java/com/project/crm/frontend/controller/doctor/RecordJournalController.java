@@ -151,5 +151,28 @@ public class RecordJournalController {
         model.addAttribute("medicalHistory_id", medicalHistory);
         return "/doctor/appointments/appointmentResult";
     }
+    @GetMapping("/patients/{patientId}")
+    public String getAcceptedPatients(@PathVariable String patientId, Model model, Principal principal, HttpServletRequest uriBuilder, Pageable pageable) {
 
+        if(principal == null){
+            return "errorPage";
+        }
+        userService.checkUserPresence(model, principal);
+        model.addAttribute("patient", userService.getById(Long.parseLong(patientId)));
+        PropertiesService.constructPageable(recordJournalService.getByPatientId(Long.parseLong(patientId), pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+
+        return "/doctor/appointments/patientAppointment";
+    }
+
+    @GetMapping("/patients/accepted")
+    public String getAcceptedPatients(Model model, Principal principal, HttpServletRequest uriBuilder, Pageable pageable) {
+
+        if(principal == null){
+            return "errorPage";
+        }
+        userService.checkUserPresence(model, principal);
+        PropertiesService.constructPageable(recordJournalService.getAcceptedPatients(userService.getUserByInn(Long.parseLong(principal.getName())), pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+
+        return "/doctor/appointments/myPatientsAppointment";
+    }
 }

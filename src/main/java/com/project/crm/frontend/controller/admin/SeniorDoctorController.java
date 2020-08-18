@@ -22,6 +22,7 @@ import java.security.Principal;
 public class SeniorDoctorController {
 
     private final UserService userService;
+    private final RegistrationJournalService registrationJournalService;
     private final PlaceService placeService;
     private final PositionService positionService;
     private final HospitalService hospitalService;
@@ -42,7 +43,8 @@ public class SeniorDoctorController {
     @GetMapping
     public String getDoctors(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal){
         userService.checkUserPresence(model, principal);
-        PropertiesService.constructPageable(userService.getAllSeniorDoctors(pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+        PropertiesService.constructPageable(registrationJournalService.getAllSeniorDoctors(pageable),
+                propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
         return "admin/seniorDoctorController/seniorDoctors";
     }
 

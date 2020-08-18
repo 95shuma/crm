@@ -2,6 +2,7 @@ package com.project.crm.frontend.controller.seniorDoctor;
 
 import com.project.crm.backend.services.PasswordResetTokenService;
 import com.project.crm.backend.services.PropertiesService;
+import com.project.crm.backend.services.RegistrationJournalService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.frontend.forms.NewPasswordRegisterForm;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class SeniorDoctorController {
     private final PropertiesService propertiesService;
     private final PasswordResetTokenService passwordResetTokenService;
     private final UserService userService;
+    private final RegistrationJournalService registrationJournalService;
 
     @GetMapping
     public String adminHCFPage(Model model, Principal principal){
@@ -61,7 +63,7 @@ public class SeniorDoctorController {
     @GetMapping("/users/passwords")
     public String userPassword(Model model, Pageable pageable, HttpServletRequest uriBuilder, Principal principal){
         userService.checkUserPresence(model, principal);
-        PropertiesService.constructPageable(userService.getAll(pageable), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+        PropertiesService.constructPageable(registrationJournalService.getAllHospitalUsers(pageable, principal), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
         return "/seniorDoctor/passwordControl";
     }
 

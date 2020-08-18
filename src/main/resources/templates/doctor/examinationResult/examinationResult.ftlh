@@ -4,7 +4,7 @@
         <div class="d-flex justify-content-center">
             <div class="mx-3">
                 <form class="box-1" action="/doctor/medical-history/${medicalHistoryId?c}/examination-results" method="post">
-                    <h3>Добавить результаты исследований</h3>
+                    <h3 class="mt-3">Добавить результаты исследований</h3>
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>

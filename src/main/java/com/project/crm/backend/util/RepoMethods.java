@@ -2,6 +2,7 @@ package com.project.crm.backend.util;
 
 import com.github.javafaker.Faker;
 import com.project.crm.backend.model.User;
+import com.project.crm.backend.model.WorkSchedule;
 import com.project.crm.backend.model.catalog.*;
 import com.project.crm.backend.model.catalog.medicalHistoryCatalog.*;
 import com.project.crm.backend.model.catalog.remediesCatalog.*;
@@ -9,7 +10,10 @@ import com.project.crm.backend.repository.*;
 import com.project.crm.backend.repository.medicalHistoryCatalogRepo.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -101,7 +105,7 @@ public class RepoMethods {
         List<Place> placeList = new ArrayList<>();
         for (int i = 0; i < qty; i++) {
             placeList.add(Place.builder()
-                    .name(faker.address().fullAddress())
+                    .name(faker.address().fullAddress().substring(7))
                     .codePlace((long) faker.number().numberBetween(10, 30))
                     .groupCode((long) faker.number().numberBetween(1, 5))
                     .build()
@@ -133,8 +137,9 @@ public class RepoMethods {
     }
     public static void savePositionsConstant(PositionRepo positionRepo){
         String[] positions = {"терапевт", "кардиолог", "лор", "детский врач", "офтальмолог"};
+        int[] averageWorkTime = {12, 15, 10, 15, 30};
         for (int i=0; i<positions.length; i++){
-            positionRepo.insertPositionWithId(Long.parseLong(Integer.toString(i+1)), positions[i]);
+            positionRepo.insertPositionWithId(Long.parseLong(Integer.toString(i+1)), positions[i], averageWorkTime[i]);
         }
     }
     public static void savePositionsRandom(int qty, PositionRepo positionRepo){
@@ -258,7 +263,33 @@ public class RepoMethods {
             saveUserRandomByHospitalIdAndRole(registrationJournalUser.getHospital().getId(), roleRepo.findByName(Constants.ROLE_DOCTOR).get(), userRepo, placeRepo, positionRepo, hospitalRepo, registrationJournalRepo);
         }
     }
-
+    //--------------------------------------------------- График ---------------------------------------------------
+    public static void saveWorkSchedulesForAllRegUsers(RoleRepo roleRepo, WorkScheduleRepo workScheduleRepo, RegistrationJournalRepo registrationJournalRepo){
+        registrationJournalRepo.findAllByRoleId(roleRepo.findByName(Constants.ROLE_DOCTOR).get().getId()).stream().forEach(registrationJournal -> {
+            saveWorkScheduleForConstantUser(registrationJournal, workScheduleRepo);
+        });
+        registrationJournalRepo.findAllByRoleId(roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId()).stream().forEach(registrationJournal -> {
+            saveWorkScheduleForConstantUser(registrationJournal, workScheduleRepo);
+        });
+    }
+    public static void saveWorkSchedulesByHospital(Hospital hospital, RoleRepo roleRepo, WorkScheduleRepo workScheduleRepo, RegistrationJournalRepo registrationJournalRepo){
+        registrationJournalRepo.findByHospitalIdAndRoleId(hospital.getId(), roleRepo.findByName(Constants.ROLE_DOCTOR).get().getId()).stream().forEach(registrationJournal -> {
+            saveWorkScheduleForConstantUser(registrationJournal, workScheduleRepo);
+        });
+    }
+    public static void saveWorkScheduleForConstantUser(RegistrationJournal registrationJournalUser, WorkScheduleRepo workScheduleRepo){
+        List<WorkSchedule> workScheduleList = new ArrayList<>();
+        for(int i = 0; i<5; i++){
+            workScheduleList.add(WorkSchedule.builder()
+                    .registrationJournal(registrationJournalUser)
+                    .timeStart(LocalTime.of(9, 0))
+                    .timeEnd(LocalTime.of(18, 0))
+                    .dayOfWeek(DayOfWeek.values()[i].getValue())
+                    .build());
+        }
+        workScheduleRepo.saveAll(workScheduleList);
+    }
+    //--------------------------------------------------- График ---------------------------------------------------
     public static void saveDiseases(int qty, DiseaseRepo diseaseRepo){
         List <Disease> diseaseList = new ArrayList<>();
         for (int i = 0; i < qty; i++){

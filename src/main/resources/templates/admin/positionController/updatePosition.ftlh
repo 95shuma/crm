@@ -4,7 +4,7 @@
     <section id="page-splash" class="page-splash">
     <div class="d-flex justify-content-center">
     <div class="mx-3">
-    <h3>Редактирование направления </h3>
+    <h3 class="mt-3">Редактирование направления </h3>
 <form id="commentForm" action="/admin/positions/position/"  method="post">
     <#if _csrf??>
         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>

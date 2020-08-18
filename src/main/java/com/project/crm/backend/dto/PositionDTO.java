@@ -15,11 +15,13 @@ public class PositionDTO {
 
     private Long id;
     private String name;
+    private int averageWorkTime;
 
     public static PositionDTO from(Position position) {
         return builder()
                 .id(position.getId())
                 .name(position.getName())
+                .averageWorkTime(position.getAverageWorkTime())
                 .build();
     }
 }

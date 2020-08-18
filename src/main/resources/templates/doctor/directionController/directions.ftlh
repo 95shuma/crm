@@ -1,7 +1,7 @@
 <#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <h3>Список назначений</h3>
+    <h3 class="mt-3">Список назначений</h3>
     <input class="form-control" id="Input" type="text" placeholder="Поиск по всем полям...">
     <table class="table table-striped">
         <thead>

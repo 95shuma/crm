@@ -66,7 +66,7 @@ public class FillDatabase extends RepoMethods {
             internationalNameRepo.deleteAll();
             pharmacologicalGroupRepo.deleteAll();
 
-            int qty = rn.nextInt(20)+10;
+            int qty = rn.nextInt(10)+10;
             //--------------------------------------------------- Справочники ---------------------------------------------------
             saveRemedyTypes(qty, remedyTypeRepo);
             saveRemedyForms(qty, remediesFormRepo);
@@ -82,12 +82,16 @@ public class FillDatabase extends RepoMethods {
             //--------------------------------------------------- Пользователи ---------------------------------------------------
             saveAdminConstant(Constants.ADMIN_DEV_INN, Constants.ADMIN_DEV_PASSWORD, userRepo, roleRepo, registrationJournalRepo);
             saveDoctorsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
-            saveDoctorsRandomForEachHospital(qty, qty, userRepo, hospitalRepo, positionRepo, roleRepo, registrationJournalRepo);
             savePatientsConstant(userRepo, hospitalRepo, roleRepo, positionRepo, registrationJournalRepo);
+            saveDoctorsRandomForEachHospital(qty, qty, userRepo, hospitalRepo, positionRepo, roleRepo, registrationJournalRepo);
             savePatientsRandom(qty, userRepo, hospitalRepo, roleRepo, placeRepo, positionRepo, registrationJournalRepo);
             saveRandomUsersBasedOnAnotherUserAtTheSameHospital(25, registrationJournalRepo.findFirstByUserInnAndRoleId(Long.parseLong(Constants.SENIOR_DOCTOR_INN), roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId()),
                     roleRepo, positionRepo, hospitalRepo, userRepo, placeRepo, registrationJournalRepo);
             //--------------------------------------------------- Пользователи ---------------------------------------------------
+            //--------------------------------------------------- График ---------------------------------------------------------
+            //saveWorkScheduleForConstantUser(registrationJournalRepo.findFirstByUserInnAndRoleId(Long.parseLong(Constants.SENIOR_DOCTOR_INN), roleRepo.findByName(Constants.ROLE_SENIOR_DOCTOR).get().getId()), workScheduleRepo);                                               //График нашему АдминуЛПУ
+            saveWorkSchedulesForAllRegUsers(roleRepo, workScheduleRepo, registrationJournalRepo);
+            //--------------------------------------------------- График ---------------------------------------------------
             saveDiseases(qty, diseaseRepo);
             saveRemedies(qty, remedyRepo, remedyTypeRepo, remediesFormRepo, pharmacologicalGroupRepo, internationalNameRepo, dosageRepo);
             saveExaminations(qty, examinationRepo);
@@ -104,6 +108,7 @@ public class FillDatabase extends RepoMethods {
             saveProcedures(qty, procedureRepo);
             saveTreatments(qty, treatmentRepo, remedyRepo, procedureRepo, medicalHistoryRepo);
             //--------------------------------------------------- Для ИБ ---------------------------------------------------//
+            System.out.println("|-------------------------------------- Загрузка фикстурными данными завершена -----------------------------------------------|");
         };
     }
 }

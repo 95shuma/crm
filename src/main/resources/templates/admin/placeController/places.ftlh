@@ -1,7 +1,7 @@
 <#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith scripts=["/js/validation.js"] styles=["https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"]>
-    <h3>Все места</h3>
+    <h3 class="mt-3">Все места</h3>
     <table class="table table-striped">
         <thead>
         <tr>

@@ -1,7 +1,7 @@
 <#import "../partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <h3>Список людей</h3>
+    <h3 class="mt-3">Список людей</h3>
     <input class="form-control" id="Input" type="text" placeholder="Поиск по всем полям...">
     <table class="table table-striped">
         <thead>
@@ -15,14 +15,14 @@
         </tr>
         </thead>
         <tbody id="Table">
-        <#list items as users>
+        <#list items as regJournal>
             <tr>
-                <th scope="row">${users?counter}</th>
-                <td>${users.inn}</td>
-                <td>${users.documentNumber}</td>
-                <td><a href="/senior-doctor/users/${users.inn?c}/password">${users.fullName}</a></td>
-                <td>${users.birthDate?date}</td>
-                <td>${users.gender}</td>
+                <th scope="row">${regJournal?counter}</th>
+                <td>${regJournal.user.inn?c}</td>
+                <td>${regJournal.user.documentNumber}</td>
+                <td><a href="/senior-doctor/users/${regJournal.user.inn?c}/password">${regJournal.user.fullName}</a></td>
+                <td>${regJournal.user.birthDate?date}</td>
+                <td>${regJournal.user.gender}</td>
             </tr>
         </#list>
         </tbody>

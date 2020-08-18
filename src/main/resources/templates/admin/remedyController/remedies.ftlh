@@ -1,7 +1,7 @@
 <#import "../../partials/main.ftlh" as main />
 
 <@main.renderWith>
-    <h3>Список лекарственных средств</h3>
+    <h3 class="mt-3">Список лекарственных средств</h3>
        <table class="table table-striped">
         <thead>
         <tr>
