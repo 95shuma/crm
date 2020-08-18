@@ -30,6 +30,35 @@
                         </tr>
                     </tbody>
                 </table>
+                <#if items??>
+                    <h3 style="margin-top: 50px">Его история болезни</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Название лабараторного исследования</th>
+                            <th scope="col">Название инструментального исследования</th>
+                            <th scope="col">Название должности</th>
+                            <th scope="col">Медицинская история</th>
+                        </tr>
+                        </thead>
+                        <tbody id="Table">
+
+                        <#list items as direction>
+                            <tr>
+                                <th scope="row">${direction?counter}</th>
+                                <td>${direction.labExaminationDTO.name}</td>
+                                <td>${direction.instrumExaminationDTO.name}</td>
+                                <td>${direction.positionDTO.name}</td>
+                                <td>${direction.medicalHistoryDTO.complaint}</td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                <#else>
+                    <h3 style="margin-top: 50px">История болезней отсутсвует</h3>
+                </#if>
             </div>
         </div>
     </section>
