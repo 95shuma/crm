@@ -70,19 +70,22 @@ public class RecordJournalController {
     }
 
     @GetMapping("/{record_id}")
-    public String getRecordInfoPage(Model model,Principal principal, @PathVariable("record_id") String recordId) {
+    public String getRecordInfoPage(Pageable pageable, HttpServletRequest uriBuilder, Model model,Principal principal, @PathVariable("record_id") String record_id) {
 
         if(principal == null){
             return "errorPage";
         }
         userService.checkUserPresence(model, principal);
-        model.addAttribute("journal", recordJournalService.getById(recordId));
+        model.addAttribute("journal", recordJournalService.getById(record_id));
+        var directions = directionService.getAllByRecord(pageable, (Long.parseLong(record_id)));
+        var uri = uriBuilder.getRequestURI();
+        PropertiesService.constructPageable(directions, propertiesService.getDefaultPageSize(), model, uri);
 
         return "/doctor/appointments/appointment";
     }
 
     @GetMapping("/{record_id}/accept")
-    public String getRecordInfoPageAccept(Model model,Principal principal, @PathVariable("record_id") String record_id) {
+    public String getRecordInfoPageAccept(Pageable pageable, HttpServletRequest uriBuilder, Model model,Principal principal, @PathVariable("record_id") String record_id) {
 
         if(principal == null){
             return "errorPage";
@@ -90,6 +93,9 @@ public class RecordJournalController {
 
         userService.checkUserPresence(model, principal);
         model.addAttribute("patient", recordJournalService.getById(record_id));
+        var directions = directionService.getAllByRecord(pageable, (Long.parseLong(record_id)));
+        var uri = uriBuilder.getRequestURI();
+        PropertiesService.constructPageable(directions, propertiesService.getDefaultPageSize(), model, uri);
 
         return "/doctor/appointments/appointmentAccept";
     }
