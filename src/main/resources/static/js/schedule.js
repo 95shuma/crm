@@ -96,7 +96,7 @@ function drawPositionsSelect(fetch, hospitalId) {
                 ));
             }
             document.getElementById('positionsSelect').addEventListener('change', (event) => {
-                drawRegUsersSelect(fetchRegUsersByPosition(event.target.value, hospitalId));
+                drawRegUsersSelect(fetchRegUsersByPosition(event.target.value, hospitalId), hospitalId);
             });
         }
     });
@@ -125,10 +125,9 @@ function createRegUsersSelectOption(regUser) {
     regUsersSelectOption.innerText = regUser.user.fullName;
     return regUsersSelectOption;
 }
-function drawRegUsersSelect(fetch) {
+function drawRegUsersSelect(fetch, hospitalId) {
     fetch.then(data => {
         console.log(data);
-        let chosenDoctor;
         let regUsersSelectElement = document.getElementById('regUsersSelectBlock');
         regUsersSelectElement.innerHTML = '';
         if (data.length === 0){
@@ -140,7 +139,8 @@ function drawRegUsersSelect(fetch) {
         } else {
             addElement(regUsersSelectElement, createRegUsersSelect());
             for (let i = 0; i < data.length; i++) {
-                chosenDoctor = new RegistrationJournal(data[i].id,
+
+                addElement(document.getElementById('regUsersSelect'), createRegUsersSelectOption(new RegistrationJournal(data[i].id,
                     new Hospital(data[i].hospital.id, data[i].hospital.name, new Place(data[i].hospital.place.id, data[i].hospital.place.name, data[i].hospital.place.codePlace, data[i].hospital.place.groupCode ), data[i].hospital.address),
                     new User(   data[i].user.id,
                         data[i].user.inn,
@@ -155,12 +155,11 @@ function drawRegUsersSelect(fetch) {
                     ),
                     new Position(data[i].position.id, data[i].position.name),
                     new Role(data[i].role.id, data[i].role.name)
-                )
-                addElement(document.getElementById('regUsersSelect'), createRegUsersSelectOption(chosenDoctor));
+                )));
             }
         }
         document.getElementById('regUsersSelect').addEventListener('change', (event) => {
-            drawWorkDaysSelect(fetchWorkDays(event.target.value), chosenDoctor);
+            drawWorkDaysSelect(fetchWorkDays(event.target.value), event.target.value, hospitalId);
         });
     });
 }
@@ -178,7 +177,7 @@ function createWorkDaysSelect() {
         <select class="form-control mb-3" id="workDaysSelect"">
             <option disabled hidden selected value> -- выберите -- </option>
         </select>
-        <div class="d-flex flex-wrap justify-content-between w-100" id="workDayScheduleBlock"></div>
+        <div id="workDayScheduleBlock"></div>
     `;
     return regUsersSelect;
 }
@@ -188,7 +187,7 @@ function createWorkDaysSelectOption(day) {
     workDaySelectOption.innerText = day;
     return workDaySelectOption;
 }
-function drawWorkDaysSelect(fetch, doctorId) {
+function drawWorkDaysSelect(fetch, doctorId, hospitalId) {
     fetch.then(data => {
         console.log(data);
         let workDaysElement = document.getElementById('workDaysBlock');
@@ -206,7 +205,8 @@ function drawWorkDaysSelect(fetch, doctorId) {
                 addElement(document.getElementById('workDaysSelect'), createWorkDaysSelectOption(data[i]));
             }
             document.getElementById('workDaysSelect').addEventListener('change', (event) => {
-                drawWorkDaySchedule(fetchWorkDaySchedule(event.target.value), doctorId);
+                console.log('doctorId: ' + doctorId);
+                drawWorkDaySchedule(fetchWorkDaySchedule(event.target.value, doctorId), doctorId, hospitalId, event.target.value);
             });
         }
     });
@@ -214,28 +214,60 @@ function drawWorkDaysSelect(fetch, doctorId) {
 //------------------WorkDays-------------------
 //------------------WorkDaySchedule------------------
 const fetchWorkDaySchedule = async (date, doctorId) => {
+    console.log('doctorId: ' + doctorId);
     const getPath = `${baseUrl}/schedule/work-day-schedule/${date}&${doctorId}`;
     const data = await fetch(getPath, {cache: 'no-cache'});
     return data.json();
 };
-function createWorkDayScheduleList(time) {
-    let WorkDayScheduleElement = document.createElement('div');
-    WorkDayScheduleElement.class = 'w_15 p-2';
-    WorkDayScheduleElement.innerHTML =
-        `<form action="/records/add" method="post"> 
-            <input type="hidden" name="${_csrf}" value="${_csrf_token}"/>            
-            <button name="addRecord" class="btn btn-primary btn-block">${time}</button>
-        </form>`
-    ;
-    return WorkDayScheduleElement;
+function createWorkDayScheduleForm(doctorId, hospitalId, date) {
+    console.log('hospitalId: ' + hospitalId);
+    let formElement = document.createElement('form');
+    formElement.action = '/patient/records';
+    formElement.method = 'post';
+    formElement.style.marginBottom = '50px';
+    formElement.style.width = '100%';
+    formElement.innerHTML =
+        `
+        <h5 class="wt-3">5) Выберите доступное время для записи:</h5>
+        <select class="form-control mb-3" id="workTimeSelect" name="time">
+            <option disabled hidden selected value> -- выберите -- </option>
+        </select>
+        <input type="hidden" name="${_csrf}" value="${_csrf_token}"/>
+        <input type="hidden" name="date" value="${date}">
+        <input type="hidden" name="doctorId" value="${doctorId}">
+        <input type="hidden" name="hospitalId" value="${hospitalId}">
+        <h5 class="wt-3">6) Укажите причину записи: </h5>
+        <div class="form-group">
+            <p><label class="col-form-label">На что жалуетесь</label></p>
+            <textarea name="reason" class="form-control" minlength="5" maxlength="45" placeholder="Жалоба"/></textarea>
+       </div> 
+       <button type="submit" style="margin-top: 5px" class="btn btn-primary btn-block">Записаться</button>
+    `;
+    return formElement;
+
+    // let WorkDayScheduleElement = document.createElement('div');
+    // WorkDayScheduleElement.style.width = '10%';
+    // WorkDayScheduleElement.style.padding = '3px';
+    // WorkDayScheduleElement.innerHTML =
+    //     `<a class="btn btn-primary btn-block" href="${baseUrl}/patient/records/record&${doctorId}&${time}">${time}</a>`
+    // ;
+    // return WorkDayScheduleElement;
 }
-function drawWorkDaySchedule(fetch) {
+function createWorkTimeSelectOption(time) {
+    let workTimeSelectOption = document.createElement('option');
+    workTimeSelectOption.value = time;
+    workTimeSelectOption.innerText = time;
+    return workTimeSelectOption;
+}
+function drawWorkDaySchedule(fetch, doctorId, hospitalId, date) {
+    console.log("hosID: " + hospitalId);
     fetch.then(data => {
         console.log(data);
         let workDayScheduleElement = document.getElementById('workDayScheduleBlock');
         workDayScheduleElement.innerHTML = '';
+        addElement(document.getElementById('workDayScheduleBlock'), createWorkDayScheduleForm(doctorId, hospitalId, date));
         for (let i = 0; i < data.length; i++) {
-            addElement(document.getElementById('workDayScheduleBlock'), createWorkDayScheduleList(data[i]));
+            addElement(document.getElementById('workTimeSelect'), createWorkTimeSelectOption(data[i]));
         }
     });
 }

@@ -66,7 +66,7 @@ public class RegistrationJournalService {
         return registrationJournalRepo.findByHospitalId(hospitalId);
     }
     public List<RegistrationJournalDTO> getRegUsersByHospitalIdAndPositionIdAndWithoutSchedule(Long hospitalId, Long positionId){
-        List<RegistrationJournalDTO> registrationJournalDTOList = RegistrationJournalDTO.listFrom(registrationJournalRepo.findByHospitalIdAndPositionId(hospitalId, positionId));
+        List<RegistrationJournalDTO> registrationJournalDTOList = RegistrationJournalDTO.listFrom(registrationJournalRepo.findByHospitalIdAndPositionIdAndRoleIdNot(hospitalId, positionId, roleRepo.findByName(Constants.ROLE_JUNIOR_DOCTOR).get().getId()));
         List<RegistrationJournalDTO> finalRegUserDTOList = new ArrayList<>();
         registrationJournalDTOList.stream().forEach(registrationJournalDTO -> {
             if (workScheduleService.getWorkScheduleListByRegUserId(registrationJournalDTO.getId()).size() == 0)
@@ -75,7 +75,7 @@ public class RegistrationJournalService {
         return finalRegUserDTOList;
     }
     public List<RegistrationJournalDTO> getRegUsersByHospitalIdAndPositionId(Long hospitalId, Long positionId){
-        return registrationJournalRepo.findByHospitalIdAndPositionId(hospitalId, positionId).stream().map(RegistrationJournalDTO::from).collect(Collectors.toList());
+        return registrationJournalRepo.findByHospitalIdAndPositionIdAndRoleIdNot(hospitalId, positionId, roleRepo.findByName(Constants.ROLE_JUNIOR_DOCTOR).get().getId()).stream().map(RegistrationJournalDTO::from).collect(Collectors.toList());
     }
 
     public void createRegistrationJournal(User user, UserRegisterForm userRegisterForm){

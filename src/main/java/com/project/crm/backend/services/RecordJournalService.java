@@ -5,11 +5,9 @@ import com.project.crm.backend.dto.UserDTO;
 import com.project.crm.backend.model.User;
 import com.project.crm.backend.model.catalog.MedicalHistory;
 import com.project.crm.backend.model.catalog.RecordJournal;
-import com.project.crm.backend.repository.HospitalRepo;
-import com.project.crm.backend.repository.MedicalHistoryRepo;
-import com.project.crm.backend.repository.RecordJournalRepo;
-import com.project.crm.backend.repository.UserRepo;
+import com.project.crm.backend.repository.*;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
+import com.project.crm.frontend.forms.remediesForm.RecordJournalRegisterFormNew;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,7 @@ public class RecordJournalService {
     private final RecordJournalRepo recordJournalRepo;
     private final UserRepo userRepo;
     private final MedicalHistoryRepo medicalHistoryRepo;
+    private final RegistrationJournalRepo registrationJournalRepo;
     private final HospitalRepo hospitalRepo;
     private final UserService userService;
 
@@ -139,5 +139,17 @@ public class RecordJournalService {
                 }
             }
 
+    }
+
+    public void createRecordJournalNew(RecordJournalRegisterFormNew recordJournalRegisterFormNew, Principal principal){
+        recordJournalRepo.save(RecordJournal.builder()
+                .doctor(registrationJournalRepo.findById(recordJournalRegisterFormNew.getDoctorId()).get().getUser())
+                .hospital(hospitalRepo.findById(recordJournalRegisterFormNew.getHospitalId()).get())
+                .patient(userRepo.findByInn(Long.parseLong(principal.getName())).get())
+                .dateTime(LocalDateTime.of(LocalDate.parse(recordJournalRegisterFormNew.getDate()), LocalTime.parse(recordJournalRegisterFormNew.getTime())))
+                .dateTimeNow(LocalDateTime.now())
+                .reason(recordJournalRegisterFormNew.getReason())
+                .build()
+        );
     }
 }

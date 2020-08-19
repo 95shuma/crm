@@ -1,8 +1,7 @@
-package com.project.crm.frontend.admin;
+package com.project.crm.frontend.controller.admin;
 
 import com.github.javafaker.Faker;
 import com.project.crm.backend.model.User;
-import com.project.crm.backend.model.catalog.Place;
 import com.project.crm.backend.model.catalog.RegistrationJournal;
 import com.project.crm.backend.repository.*;
 import com.project.crm.backend.services.PlaceService;
@@ -10,6 +9,7 @@ import com.project.crm.backend.services.PositionService;
 import com.project.crm.backend.services.RoleService;
 import com.project.crm.backend.services.UserService;
 import com.project.crm.backend.util.Constants;
+import com.project.crm.backend.util.RepoMethods;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
@@ -29,7 +29,6 @@ import org.springframework.validation.FieldError;
 
 import java.util.*;
 
-import static com.project.crm.backend.util.RepoMethods.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)            //Что-то вроде типа теста. В данном случае Интеграционный. От данного параметра зависит как поведут себя анотации @Autowired, @MockBean, @Mock внутри класса
 @SpringBootTest                         //Запускает тест -> Формирует ApplicationContext. Более подробно в #91 тикете.
 @AutoConfigureMockMvc
-public class PlaceControllerTest {
+public class AdminControllerTest extends RepoMethods {
 
     @Autowired
     private MockMvc mockMvc;
@@ -80,8 +79,6 @@ public class PlaceControllerTest {
     private String correctMiddleName;
     private String correctGender;
     private String testString;
-    private Long correctCodePlace;
-    private Long correctGroupCode;
     @Before
     public void setUp() {
         rn = new Random();
@@ -100,8 +97,6 @@ public class PlaceControllerTest {
         calendar = Calendar.getInstance();
         today = calendar.getTime();
         testString = "тест";
-        correctCodePlace = 14444444444466L;
-        correctGroupCode = 5L;
     }
 
     @After      //После каждого теста чистим репозитории
@@ -111,7 +106,6 @@ public class PlaceControllerTest {
         hospitalRepo.deleteAll();
         roleRepo.deleteAll();
         positionRepo.deleteAll();
-        placeRepo.deleteAll();
     }
 
     public void saveRepos() {
@@ -137,42 +131,77 @@ public class PlaceControllerTest {
                 .role(roleRepo.findByName(Constants.ROLE_ADMIN).get())
                 .user(user)
                 .hospital(hospitalRepo.findAll().get(0))
+                .position(positionRepo.findAll().get(0))
                 .build();
 
         registrationJournalRepo.save(registrationJournal);
-
-        Place place = Place.builder()
-                .codePlace(correctCodePlace)
-                .groupCode(correctGroupCode)
-                .name(correctName)
-                .build();
-
-        placeRepo.save(place);
     }
 
-    @Test       //Проверем что при Post запросе c неправильными данными будут ошибки
-    public void createPlace_expectValidationErrors() throws Exception {
+    @Test
+    public void createSeniorDoctor_expectInnExistsError() throws Exception {
         saveRepos();
 
-        MvcResult mvcResult = mockMvc.perform(post("/admin/places")
+        MvcResult mvcResult = mockMvc.perform(post("/admin/senior-doctors")
                 .with(csrf())
                 .with(user(innAdmin).password(passwordAdmin).roles(Constants.ADMIN))
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)                                                     //Тип данных при запросе
-                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(                                   //Далее передается форма в параметры запроса
-                        new BasicNameValuePair("groupCode", correctGroupCode.toString()),
-                        new BasicNameValuePair("codePlace", correctCodePlace.toString()),
-                        new BasicNameValuePair("name", correctName))))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("inn", innAdmin),
+                        new BasicNameValuePair("password", passwordAdmin),
+                        new BasicNameValuePair("documentNumber", "ID6666699"),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
                 )
         )
                 .andExpect(status().is(302))
-                .andExpect(view().name("redirect:/admin/places/place"))
+                .andExpect(view().name("redirect:/admin/senior-doctors/senior-doctor"))
                 .andExpect(flash().attributeExists("errors"))
                 .andReturn();
         List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("inn", fieldErrors.get(0).getField());
+        Assert.assertEquals(innAdmin, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Этот ИНН уже используется другим пользователем", fieldErrors.get(0).getDefaultMessage());
+    }
 
-        Assert.assertEquals("placeRegisterForm", fieldErrors.get(0).getObjectName());
-        Assert.assertEquals("codePlace", fieldErrors.get(0).getField());
-        Assert.assertEquals(correctCodePlace.toString(), fieldErrors.get(0).getRejectedValue());
-        Assert.assertEquals("Этот код места уже используется", fieldErrors.get(0).getDefaultMessage());
+    @Test
+    public void createSeniorDoctor_expectDocumentNumberExistsError() throws Exception {
+        saveRepos();
+
+        MvcResult mvcResult = mockMvc.perform(post("/admin/senior-doctors")
+                .with(csrf())
+                .with(user(innAdmin).password(passwordAdmin).roles(Constants.ADMIN))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                        new BasicNameValuePair("inn", "11111111111155"),
+                        new BasicNameValuePair("password", passwordAdmin),
+                        new BasicNameValuePair("documentNumber", correctDocumentNumber),
+                        new BasicNameValuePair("surname", correctSurname),
+                        new BasicNameValuePair("name", correctName),
+                        new BasicNameValuePair("middleName", correctMiddleName),
+                        new BasicNameValuePair("birthDate", "1995-10-28"),
+                        new BasicNameValuePair("gender", correctGender),
+                        new BasicNameValuePair("placeId", "1"),
+                        new BasicNameValuePair("positionId", "1"),
+                        new BasicNameValuePair("roleId", "1"),
+                        new BasicNameValuePair("hospitalId", "1"))))
+                )
+        )
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/admin/senior-doctors/senior-doctor"))
+                .andExpect(flash().attributeExists("errors"))
+                .andReturn();
+        List<FieldError> fieldErrors = (List<FieldError>) mvcResult.getFlashMap().get("errors");
+        Assert.assertEquals("userRegisterForm", fieldErrors.get(0).getObjectName());
+        Assert.assertEquals("documentNumber", fieldErrors.get(0).getField());
+        Assert.assertEquals(correctDocumentNumber, fieldErrors.get(0).getRejectedValue());
+        Assert.assertEquals("Этот номер паспорта уже используется другим пользователем", fieldErrors.get(0).getDefaultMessage());
     }
 }

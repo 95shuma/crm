@@ -2,6 +2,7 @@ package com.project.crm.frontend.controller.patient;
 
 import com.project.crm.backend.services.*;
 import com.project.crm.frontend.forms.RecordJournalRegisterForm;
+import com.project.crm.frontend.forms.remediesForm.RecordJournalRegisterFormNew;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class RecordJournalController {
     private final WorkScheduleService workScheduleService;
     private final PropertiesService propertiesService;
 
-    @GetMapping("/record")
+    @GetMapping("/record&{time}")
     public String getRecord(Model model, Principal principal){
 
         if(principal == null){
@@ -92,20 +93,29 @@ public class RecordJournalController {
         return "redirect:/patient/records/record";
     }*/
 
+//    @PostMapping
+//    public String record(@Valid RecordJournalRegisterForm recordJournalRegisterForm,
+//                                     BindingResult validationResult,
+//                                     RedirectAttributes attributes, Principal principal){
+//        attributes.addFlashAttribute("recordJournalRegisterForm", recordJournalRegisterForm);
+//
+//        if (validationResult.hasFieldErrors()) {
+//            attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
+//            return "redirect:/patient/records/record";
+//        }
+//
+//        recordJournalService.createRecordJournal(recordJournalRegisterForm, principal);
+//
+//        return "redirect:/patient/records";
+//
+//    }
+
     @PostMapping
-    public String record(@Valid RecordJournalRegisterForm recordJournalRegisterForm,
-                                     BindingResult validationResult,
-                                     RedirectAttributes attributes, Principal principal){
-        attributes.addFlashAttribute("recordJournalRegisterForm", recordJournalRegisterForm);
+    public String addRecord(RecordJournalRegisterFormNew recordJournalRegisterFormNew, Principal principal){
 
-        if (validationResult.hasFieldErrors()) {
-            attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/patient/records/record";
-        }
+        recordJournalService.createRecordJournalNew(recordJournalRegisterFormNew, principal);
 
-        recordJournalService.createRecordJournal(recordJournalRegisterForm, principal);
-
-        return "redirect:/patient/records";
+        return "redirect:/default";
 
     }
     @GetMapping

@@ -25,11 +25,9 @@ public class ScheduleRestController {
     public List<LocalDate> getScheduleByRegUserId(@PathVariable String regUserId){
         return workScheduleService.getWeekScheduleActiveDaysByRegUserId(Long.parseLong(regUserId));
     }
-    @GetMapping("/work-day-schedule/{date}&{chosenDoctorId}")
-    public List<LocalTime> getWorkDaySchedule(@PathVariable String date, @PathVariable String chosenDoctorId, Principal principal){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-        LocalDate chosenDate = LocalDate.parse(date, formatter);
-        return workScheduleService.getWorkDayScheduleByDate(chosenDate, Long.parseLong(chosenDoctorId), principal);
+    @GetMapping("/work-day-schedule/{date}&{doctorId}")
+    public List<LocalTime> getWorkDaySchedule(@PathVariable String date, @PathVariable String doctorId){
+        return workScheduleService.getWorkDayScheduleByDate(LocalDate.parse(date), Long.parseLong(doctorId));
     }
 
 }

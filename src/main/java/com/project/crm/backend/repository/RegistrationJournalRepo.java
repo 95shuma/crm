@@ -12,6 +12,7 @@ public interface RegistrationJournalRepo extends JpaRepository<RegistrationJourn
     List<RegistrationJournal> findByHospitalId(Long hospitalId);
     List<RegistrationJournal> findByHospitalIdAndRoleId(Long hospitalId, Long roleId);
     List<RegistrationJournal> findByHospitalIdAndPositionId(Long hospitalId, Long positionId);
+    List<RegistrationJournal> findByHospitalIdAndPositionIdAndRoleIdNot(Long hospitalId, Long positionId, Long roleId);
     List<RegistrationJournal> findAllByRoleId(Long roleId);
     RegistrationJournal findByUserInn(Long inn);
     RegistrationJournal findFirstByUserInnAndRoleId(Long inn, Long roleId);
