@@ -26,9 +26,9 @@ public class MainPageButtonSteps extends Steps{
         login(Constants.ADMIN_DEV_INN,Constants.ADMIN_DEV_PASSWORD);
     }
 
-    @Затем("нажимает на кнопку Показать список ЛПУ")
+    @Затем("нажимает на кнопку Список ЛПУ")
     public void нажимаетКнопкуПоказать() {
-        webDriver.findElement(By.linkText("Показать список ЛПУ")).click();
+        webDriver.findElement(By.linkText("Список ЛПУ")).click();
     }
 
     @Когда("нажимает на ссылку \"Главная страница\"")
@@ -67,9 +67,9 @@ public class MainPageButtonSteps extends Steps{
         login(Constants.DOCTOR_INN, Constants.DOCTOR_PASSWORD);
     }
 
-    @Затем("нажимает на кнопку Просмотр всех записей")
+    @Затем("нажимает на кнопку Все записи")
     public void нажимаетКнопкуПросмотр() {
-        webDriver.findElement(By.linkText("Просмотр всех записей")).click();
+        webDriver.findElement(By.linkText("Все записи")).click();
     }
 
     @Когда("нажимает на кнопку Главная страница")
