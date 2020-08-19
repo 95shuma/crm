@@ -34,7 +34,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <form style="margin-top: 50px" id="form">
+                <form style="margin-top: 50px" id="form" action="/senior-doctor/users/password" method="post">
                     <#if _csrf??>
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
                     </#if>
@@ -47,18 +47,6 @@
                         <#if errors??>
                             <#list errors as fieldError>
                                 <#if fieldError.field == 'firstPassword'>
-                                    <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
-                                </#if>
-                            </#list>
-                        </#if>
-                    </div>
-                    <div class="form-group" id="div2">
-                        <p><label for="lpuPlaceId" class="col-form-label">Повторите новый пароль</label></p>
-                        <input type="password" id="secondPassword" placeholder="Повторите пароль" name="secondPassword" class="form-control">
-                        <a href="#" class="password-control" onclick="return show_hide_password2(this);">Посмотреть пароль</a>
-                        <#if errors??>
-                            <#list errors as fieldError>
-                                <#if fieldError.field == 'secondPassword'>
                                     <div class="alert alert-warning mt-1" role="alert">${fieldError.defaultMessage!'-- no message --'}</div>
                                 </#if>
                             </#list>
@@ -81,32 +69,5 @@
             }
             return false;
         }
-        function show_hide_password2(target){
-            let input = document.getElementById('secondPassword');
-            if (input.getAttribute('type') == 'password') {
-                target.classList.add('view');
-                input.setAttribute('type', 'text');
-            } else {
-                target.classList.remove('view');
-                input.setAttribute('type', 'password');
-            }
-            return false;
-        }
-        document.getElementById('save-button').addEventListener('click', function (e) {
-            e.preventDefault();
-            if (document.getElementById('firstPassword').value == document.getElementById('secondPassword').value){
-                let settings = {
-                    method: 'POST',
-                    body: new FormData(document.getElementById('form'))
-                }
-                fetch('http://localhost:7777/senior-doctor/users/password', settings)
-            }
-            else {
-                let passwordError = document.createElement('h3');
-                passwordError.style.color = 'red';
-                passwordError.innerHTML = 'Пароли не одинаковые';
-                document.getElementById('div2').after(passwordError);
-            }
-        })
     </script>
 </@main.renderWith>

@@ -1,5 +1,6 @@
 package com.project.crm.ui.steps;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -16,7 +17,12 @@ public class Steps {
 
     WebDriver webDriver;
 
-    public void setUp() throws NoSuchElementException {
+    public void setUp(){
+        WebDriverManager.chromedriver().setup();
+        webDriver = new ChromeDriver();
+    }
+
+    /*public void setUp() throws NoSuchElementException {
         ChromeDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-dev-shm-usage");
@@ -25,8 +31,8 @@ public class Steps {
         chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         chromeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
         webDriver = new ChromeDriver(chromeOptions);
-        // webDriver.get("http://seleniumhq.org");
-    }
+        //webDriver.get("http://seleniumhq.org");
+    }*/
 
     public void tearDown(){
         webDriver.close();

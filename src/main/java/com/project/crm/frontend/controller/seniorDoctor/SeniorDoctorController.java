@@ -86,8 +86,8 @@ public class SeniorDoctorController {
         }
 
         passwordResetTokenService.resetPassword(newPasswordRegisterForm);
-
         return "redirect:/senior-doctor";
+
     }
 
 }
