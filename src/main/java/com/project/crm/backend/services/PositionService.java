@@ -59,10 +59,10 @@ public class PositionService {
         return positionRepo.findById(id).get();
     }
 
-    public Position updatePosition(Long id, PositionRegisterForm position){
+    public void updatePosition(Long id, PositionRegisterForm position){
         Position existingPosition=positionRepo.findById(id).get();
         existingPosition.setName(position.getName());
-        return positionRepo.save(existingPosition);
+        positionRepo.save(existingPosition);
     }
 
     public Optional<Position> deletePosition(Long id) {

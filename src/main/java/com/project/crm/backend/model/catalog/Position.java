@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -19,6 +20,5 @@ public class Position {
     @NotBlank(message = "Обязательное поле")
     private String name;
 
-    @NotBlank(message = "Обязательное поле")
     private int averageWorkTime;
 }
